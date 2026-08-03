@@ -1,0 +1,27 @@
+Mend the monochrome scan reel from `/app/data/manifest.json`, `/app/data/packet_log.jsonl`, `/app/data/telemetry.jsonl`, and `/app/data/revision_ledger.jsonl`.
+
+Write exactly four outputs:
+
+- `/app/mended/reel.y4m`: YUV4MPEG2 mono. Header exactly `YUV4MPEG2 W16 H12 F5:1 Ip A1:1 Cmono\n`, then 14 repeats of `FRAME\n` plus 192 row-major luma bytes.
+- `/app/mended/audit.json`: Keys exactly `width`, `height`, `frames`, `fps`, `video_sha256`, `frame_luma_sums`, `bright_pixels`, `repaired_tiles`, `record_counts`, `tile_record_summary`, `selected_codec_counts`, `frame_direct_replacement_counts`, `frame_parity_repair_counts`, `parity_summary`, `telemetry_mode_by_frame`, `vetoed_valid_tiles`, `consumed_packet_rows`. `video_sha256` is SHA-256 of `reel.y4m`. `frame_luma_sums` and `bright_pixels` (luma >= 200) are 14-element lists. `repaired_tiles`: parity-reconstructed `{frame,tile}` display tiles, sorted by frame then tile.
+- `/app/mended/lineage.json`: Keys exactly `direct_tiles`, `parity_repairs`, `frame_delta_sha256`, `packet_path_sha256`. `direct_tiles`: selected direct provenance sorted by frame then display tile; fields `frame`, `tile`, `packet_id`, `revision`, `codec`, `decoded_sha256`. `parity_repairs`: used parity provenance in processing order; fields `frame`, `tile`, `packet_id`, `members`, `chained`, `payload_sha256`; `members` stay sensor coordinates. `frame_delta_sha256`: SHA-256 of mended frame XOR previous mended frame, using all-zero previous for frame 0. `packet_path_sha256`: SHA-256 of selected direct `packet_id`s then used parity `packet_id`s, each in lineage order, joined with `\n` plus final `\n`.
+- `/app/mended/mend_scan.py`: Python 3 CLI `python3 /app/mended/mend_scan.py INPUT_DATA_DIR OUTPUT_DIR`. Read the input directory, write the output directory, then delete its `packet_log.jsonl` (shipped: `/app/data/packet_log.jsonl`). `consumed_packet_rows` is its row count before deletion. Must generalize to another valid 16x12, 14-frame workspace; do not hardcode shipped `/app/data`.
+
+Manifest fields: `clip_id`, `width`, `height`, `frames`, `fps`, `tile_size` (`4`), `packet_log`, `notes`. Frames are 16x12 in 4x4 tiles (`tiles_per_row`=4, `tiles_per_col`=3). Frame 0 is all-zero; later frames inherit previous mended frame.
+
+`/app/data/telemetry.jsonl`: rows have `effective_from_frame`, `mode` (`forward`, `mirror_x`, `rotate_180`). For frame `f`, use greatest `effective_from_frame <= f`; equal ties use the later JSONL row. Packet `tile` is sensor `[sx,sy]`; display is `[sx,sy]`, `[tiles_per_row-1-sx,sy]`, or `[tiles_per_row-1-sx,tiles_per_col-1-sy]` for those modes. `telemetry_mode_by_frame` lists the 14 chosen modes.
+
+`/app/data/revision_ledger.jsonl` rows have `packet_id` and `op` (`confirm` or `veto`) in file order. Any `veto` permanently vetoes that packet; later `confirm` does not clear it. `vetoed_valid_tiles` counts active tile records that decode, pass checksum, and are vetoed before selection.
+
+Process only `status=active` records. Tile records: codec-decode payload; if `xor_mask_b64` exists, XOR its 16 bytes with the decoded tile to get the final 16-byte luma tile. Discard unless final SHA-256 equals `decoded_sha256`; discard vetoed `packet_id`s next. Selection key `(frame, display_tile)`: highest `revision`, then lexicographically smallest `packet_id`.
+
+Tile codecs:
+
+- `raw`: `payload_b64` decodes to 16 row-major luma bytes.
+- `rle`: `payload_b64` decodes to `(count,value)` pairs expanding in order to exactly 16 bytes.
+- `delta_prev`: final tile is each `payload_b64` byte plus, modulo 256, the same display tile from the previous mended frame; checksum uses that final tile.
+- `zigzag`: `payload_b64` decodes to 16 bytes in 4x4 diagonal zigzag order from upper left; even diagonals traverse bottom-to-top and odd diagonals top-to-bottom.
+
+After direct selection, process active `parity` records by ascending `packet_id`. Map `members` sensor coords through frame telemetry mode before presence tests. A parity payload is the bytewise XOR of final replacement tiles for all mapped members; if `payload_xor_mask_b64` exists, XOR its 16 bytes with decoded `payload_b64` before `payload_sha256` and repair math. Use only when exactly one mapped member lacks a valid replacement; earlier same-frame parity fills count as present. Reconstruct the missing replacement by XOR and apply it. Ignore zero- or multi-missing records.
+
+Audit: `record_counts` has `total`, `by_kind`, `by_status` over every packet row. `tile_record_summary` keys exactly `decode_errors`, `checksum_rejects`, `valid_records`, `selected_direct_tiles`, `superseded_valid_tiles`; `decode_errors` counts active tiles with invalid base64, codec, decoded length, or mask length; `checksum_rejects` counts only 16-byte decoded tiles whose final SHA-256 mismatches. `valid_records` counts active tiles that decoded and passed checksum, including later-vetoed ones; a valid non-vetoed tile is superseded when it lost selection for its display key. `selected_codec_counts` counts selected direct tiles by `raw`, `rle`, `delta_prev`, `zigzag`. `frame_direct_replacement_counts` is after direct selection before parity. `frame_parity_repair_counts` is after parity before applying the frame. `parity_summary` keys: `checked`, `checksum_rejects`, `used`, `ignored_no_missing`, `ignored_many_missing`, `chained_repairs`; `chained_repairs` counts used parity records where any non-missing mapped member was filled by earlier same-frame parity.

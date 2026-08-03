@@ -1,11 +1,16 @@
-# Keep this repo as Cloud Agent / local instruction memory only.
-# Individual Dynamo tasks live in their own forks.
+# Instruction/memory repo: track markdown broadly; keep heavy local artifacts out.
 
 .DS_Store
 .claude/
 
-# Nested task workspaces and local artifacts
-dynamo-*/
+# Caches / local tooling
+**/.pytest_cache/
+**/__pycache__/
+**/.mypy_cache/
+**/.ruff_cache/
+**/node_modules/
+
+# Local non-markdown workspaces and artifacts
 jobs/
 patches/
 1/
@@ -17,5 +22,15 @@ patches/
 *.jpeg
 *.webp
 
-# Nested git metadata if any task dirs are ever staged by mistake
+# Nested git metadata must never be committed as gitlinks
 **/.git/
+
+# Ignore non-markdown content under task folders by default
+dynamo-/**
+!dynamo-/**/
+!dynamo-/**/*.md
+!dynamo-/**/*.MD
+!dynamo-/**/*.markdown
+
+# Still ignore cache READMEs under task folders
+dynamo-/**/.pytest_cache/
