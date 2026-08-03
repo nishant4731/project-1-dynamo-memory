@@ -43,10 +43,18 @@ After finishing or learning something reusable:
 
 ## Cursor Cloud specific instructions
 
-Cloud Agents clone this repo from GitHub. They do not see unsaved local files or unpushed commits.
+This repo (`nishant4731/project-1-dynamo-memory`) is the shared memory for all Dynamo task Cloud Agents.
 
-- Treat the files listed at the top of this `AGENTS.md` as required reading for every Cloud Agent run in this workspace.
-- Prefer updating `PROJECT_MEMORY.md` and the Dynamo playbooks here, then push, so the next Cloud Agent run picks up the same memory as local agents.
+Cloud Agents working on any Dynamo task repo must:
+
+1. Clone or locate this memory repo first (User Rule requires it).
+2. Read the files listed at the top of this `AGENTS.md` before editing the task.
+3. After reusable lessons, update `PROJECT_MEMORY.md` here, commit, and push to `main`.
+
+Notes:
+
+- Cloud Agents do not see unsaved local files or unpushed commits.
 - Do not commit individual `dynamo-*` task folders into this instruction repo; those tasks stay in their own forks.
 - For GitHub CLI, fork, PR, and check work: use authenticated `gh` with network access; confirm `gh api user --jq .login` before private-repo actions.
 - Secrets and env vars for Cloud Agents belong in the Cloud Agents dashboard, not in committed files.
+- Optional stronger setup: add this repo plus the task repo in a multi-repo Cloud environment at [cursor.com/dashboard/cloud-agents](https://cursor.com/dashboard/cloud-agents#environments).
