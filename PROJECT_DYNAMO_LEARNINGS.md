@@ -12,6 +12,13 @@ Use this as the default root-level checklist for faster Dynamo task development.
 - Check fail reasons after pass runs. A `0/5` from timeouts, stuck agents, provider errors, or setup failures is not valid model-stumping evidence.
 - Before PR submission, do a fresh-review pass: instructions, data, tests, solution, task metadata, screenshots, and pass/fail evidence should all tell the same story.
 
+## Cloud Agent Docker / Harbor Gotchas
+
+- On Cursor Cloud Agent VMs, install `docker.io` + `docker-compose-v2` and start `dockerd` with `storage-driver: vfs`. Overlay often fails.
+- Harbor Compose may still fail with cgroup v2 `threaded mode` inside nested containers. That is infrastructure, not a task defect.
+- Fallback: `docker run --privileged --cgroupns=host` with `/solution` RO and `/tests` RW, then run `solve.sh` + `test.sh` for oracle and `test.sh` alone for nop. Expect rewards `1.0` / `0.0`.
+- Full procedure: `CLOUD_AGENT_DOCKER_HARBOR.md`.
+
 ## Static Check Gotchas
 
 - If `task/environment/` has a non-trivial Docker build context, especially a `data/` subdirectory copied into `/app/data`, add `task/environment/.dockerignore` before opening the PR. The Dynamo static gate fails fast with `non-trivial build context (has subdirectories) but no .dockerignore`.
