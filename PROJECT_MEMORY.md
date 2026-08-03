@@ -73,6 +73,10 @@ Keep notes short. Promote broad Dynamo lessons into `PROJECT_DYNAMO_LEARNINGS.md
 
 ## Dated Notes
 
+### 2026-08-04
+
+- `dynamo-331d3a0-file-and-media-operations`: Built first-submission multi-lane desk rebake (`rebake-desk`) for Audio and music processing: calibration-inferred delta8/xor16/parity/clock/bus, verified-anchor offsets, placement supersession with load-bearing known_at+id ties, punch fades, ordered feedback taps and sends, pan+optional MS stereo WAV, exact multi-field report, evidence consumption, and submission-salted held-out verifier coverage. Local solution/reference matched across seeds; mutant sweep caught clock/bus/gain/order/dedup slips. Docker unavailable on this host (socket owned by another user), so Harbor oracle/nop deferred to CI.
+
 ### 2026-08-03
 
 - Cloud Agent Docker for all chats: commit `.cursor/environment.json` + `.cursor/install-docker.sh` in `project-1-dynamo-memory` (vfs dockerd + compose + harbor). A draft build alone is not enough — save/activate a successful personal Cloud Environment Build in the dashboard and attach Dynamo repos/multi-repo group, or new chats will still boot without Docker.
@@ -81,6 +85,8 @@ Keep notes short. Promote broad Dynamo lessons into `PROJECT_DYNAMO_LEARNINGS.md
 - `dynamo-347b43c-machine-learning-and-ai`: QC B5/C3 blocked after otherwise green gates. Fix: mirror `weakest_revert_margin` definition and plan selection order in visible pack notes, bake equal-abs top-terms witnesses into coeffs before calibration so reverse-`term_id` mutants fail, and regenerate the visible pack. Local oracle matched packlib; Docker manual oracle/nop returned 1.0/0.0.
 
 ### 2026-08-04
+
+- `dynamo-ff3804a-games-puzzles-and-interactive-simulation`: QC C3 mutated boolean `anchor_bonus` into `anchor_bonus * adjacent_#_count` and still passed because no graded placement sat next to multiple `#` cells. For boolean/flat adjacency bonuses, ship a held-out cell adjacent to ≥2 blockers and assert flat-vs-count divergence locally before push. QC B1 also flagged undefined "occupied" vs `#` for pulse `row_count`/`col_count`; state that only already-placed cards count and add a same-row `#` pulse witness whose multiplier changes if `#` is counted.
 
 - `dynamo-94cfe93-file-and-media-operations`: Latest PR head failed `qc_gate` with qc_exec routing BLOCK even when the GitHub `qc_exec` job showed success — trust the sticky routing (`PASS`/`BLOCK`) and QC must-fix list, not job green checks alone. Two majors: (1) FORMAT_NOTES underdetermined for which constrained-group member pins absolute position despite `instruction.md` already naming lex-smallest; mirror the pin rule in fixture notes and add a visible/hidden pair where min(name) disagrees with min(original y). (2) `(known_at, patch_id)` sort not load-bearing because same-known_at clamp pairs were inserted in patch_id order (stable known_at-only matched). Insert z-before-a file order targeting an on-canvas replace asset, and assert a known_at-only mutant changes atlas bytes.
 
@@ -326,6 +332,7 @@ Keep notes short. Promote broad Dynamo lessons into `PROJECT_DYNAMO_LEARNINGS.md
 - `dynamo-37191fd-machine-learning-and-ai`: After the AVA salted-seed fix, Stage-1 static failed on Qwen3 token count at 1526 (>1500). Empty retry commits do not help; rewrite `instruction.md` into a denser contract (target ~1200–1300 with margin) while keeping every graded rule, and re-check visible pins after any calibration/fixture harden commit.
 - `dynamo-37191fd-machine-learning-and-ai`: AVA `sound_verifier` blocked a reusable CLI when hidden seeds were a fixed list and params lived in `*_BY_SEED` tables with seed-embedded `cand{seed}` ids. Fix by deriving held-out seeds from `sha256(submitted_tool)` salts, generating params via `bundle_config(seed)`, and using opaque hashed prefixes so a seed→params lookup table cannot pass.
 - `dynamo-b8c7197-file-and-media-operations`: QC C3 can mutate tap `op` validation from `("replace","add")` to also accept `"under"` and still pass if every graded tap schema reject is a non-integer/stride failure. Records allow `under`, taps do not — add a visible and always-present hidden tap with otherwise-valid fields and illegal `op=under`, regenerate expected report/audit/index, and assert `taps.bad_schema >= 2` so the mutant fails exact counter comparison.
+- `dynamo-b8c7197-file-and-media-operations`: Deep Review can block when patches explicitly say "applied bytes are row-major" but taps only say "read in slot order … apply," because agents reasonably write slot-symmetric destinations. State tap write order and saturating `add` in `instruction.md` and fixture notes, keep a stride>1 witness, and change `tests/test_outputs.py` in the same push so enforced cosine does not treat the fairness fix as a near-identical redraw.
 
 ### 2026-08-03
 
