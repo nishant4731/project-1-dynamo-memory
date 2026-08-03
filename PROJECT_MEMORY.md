@@ -75,6 +75,8 @@ Keep notes short. Promote broad Dynamo lessons into `PROJECT_DYNAMO_LEARNINGS.md
 
 ### 2026-08-04
 
+- `dynamo-d262f44-file-and-media-operations`: Built first-submission Video Processing weave-bus (`dynamo/weave-bus`): reusable in-place multi-layer mono luma field compositor with calibration-inferred raw8/delta8/xor8 + parity/clock/weave (`flat`/`weave_tb`/`weave_bt`), verified-anchor pixel offsets, placement supersession with load-bearing known_at+id ties, scratch fades, ordered folds/bridges, opacity-over then field weave packing, exact Y4M/timeline/report, evidence consumption, and submission-salted hidden verifier coverage. Local solution/reference matched across seeds; Docker unavailable on this host so Harbor oracle/nop deferred to CI. PR: https://github.com/handshake-project-dynamo/dynamo-d262f44-file-and-media-operations/pull/1
+
 - `dynamo-331d3a0-file-and-media-operations`: Built first-submission multi-lane desk rebake (`rebake-desk`) for Audio and music processing: calibration-inferred delta8/xor16/parity/clock/bus, verified-anchor offsets, placement supersession with load-bearing known_at+id ties, punch fades, ordered feedback taps and sends, pan+optional MS stereo WAV, exact multi-field report, evidence consumption, and submission-salted held-out verifier coverage. Local solution/reference matched across seeds; mutant sweep caught clock/bus/gain/order/dedup slips. Docker unavailable on this host (socket owned by another user), so Harbor oracle/nop deferred to CI.
 
 ### 2026-08-03
