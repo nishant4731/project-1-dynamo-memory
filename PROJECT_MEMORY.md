@@ -82,6 +82,7 @@ Keep notes short. Promote broad Dynamo lessons into `PROJECT_DYNAMO_LEARNINGS.md
 
 ### 2026-08-04
 
+- `dynamo-c0213c2-file-and-media-operations`: QC B5 blocked after otherwise-green gates because `FORMAT_NOTES.txt` deferred packet rejection reason priority to "the task prompt," and `instruction.md` is not copied into the agent image. A rival that swapped `bad_opacity` before `bad_transform` still matched the visible report. Fix by listing the full first-fail stage order in `FORMAT_NOTES`, shipping a visible dual-fail witness (invalid transform + invalid opacity), and covering advertised identity color-profile fallback with a `cam-d` unmatched-calibration packet.
 - `dynamo-ff3804a-games-puzzles-and-interactive-simulation`: Deep review blocked after pass@2 because both agents solved the real calibration/search crux and then crashed writing `/app/profile.json` in reusable CLI mode under uid 65534. When an artifact is required for the visible bootstrap solve but forbidden during `INPUT_DIR OUTPUT_JSON` grading, state that bootstrap-vs-CLI distinction explicitly; otherwise the verifier's returncode check becomes an undisclosed contradiction. Pair the fairness fix with a disclosed interacting profile dimension (here `anchor_bonus` for placements adjacent to `#`) so difficulty does not collapse once the trap is removed.
 
 ### 2026-08-03
@@ -320,6 +321,7 @@ Keep notes short. Promote broad Dynamo lessons into `PROJECT_DYNAMO_LEARNINGS.md
 
 ### 2026-08-04
 
+- `dynamo-37191fd-machine-learning-and-ai`: After the AVA salted-seed fix, Stage-1 static failed on Qwen3 token count at 1526 (>1500). Empty retry commits do not help; rewrite `instruction.md` into a denser contract (target ~1200–1300 with margin) while keeping every graded rule, and re-check visible pins after any calibration/fixture harden commit.
 - `dynamo-37191fd-machine-learning-and-ai`: AVA `sound_verifier` blocked a reusable CLI when hidden seeds were a fixed list and params lived in `*_BY_SEED` tables with seed-embedded `cand{seed}` ids. Fix by deriving held-out seeds from `sha256(submitted_tool)` salts, generating params via `bundle_config(seed)`, and using opaque hashed prefixes so a seed→params lookup table cannot pass.
 - `dynamo-b8c7197-file-and-media-operations`: QC C3 can mutate tap `op` validation from `("replace","add")` to also accept `"under"` and still pass if every graded tap schema reject is a non-integer/stride failure. Records allow `under`, taps do not — add a visible and always-present hidden tap with otherwise-valid fields and illegal `op=under`, regenerate expected report/audit/index, and assert `taps.bad_schema >= 2` so the mutant fails exact counter comparison.
 
