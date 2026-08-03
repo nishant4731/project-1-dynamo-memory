@@ -75,6 +75,10 @@ Keep notes short. Promote broad Dynamo lessons into `PROJECT_DYNAMO_LEARNINGS.md
 
 ### 2026-08-04
 
+- `dynamo-02d1260-games-puzzles-and-interactive-simulation`: Built blank Puzzle solving scaffold into Tidegate Latch (`dynamo/tidegate-latch`): calibration-inferred mark/terrain/pair/socket/hinge/switch profile, live-weight switchplate mutations, socket-gated hinges with linked `(1+links)` scale, reusable CLI, profile audit, and submission-salted hidden packs. Visible queries made switch_delta and hinge_threshold load-bearing after an initial mutant miss. Docker unavailable on this host (socket permission), so Harbor oracle/nop deferred to CI. PR: handshake-project-dynamo/dynamo-02d1260-games-puzzles-and-interactive-simulation#1.
+
+### 2026-08-04
+
 - `dynamo-90f4c03-file-and-media-operations`: Built first-submission ReelBus salvage (`dynamo/mend-reelbus`): reusable CLI with authenticated sync voting, hinged wedge-curve mining, blinds/passes/splices, snapshot-read couplers, stacked boards, scrims, exact Y4M/report/trail/mosaic/census/curves, evidence consumption, independent `/tests` reference, structural hidden generators, and board/live-coupler/identity-curve/blind mutants. Local oracle/nop/mutant/hidden suite passed; Docker unavailable on this host (socket owned by another user), so Harbor deferred to CI. PR: https://github.com/handshake-project-dynamo/dynamo-90f4c03-file-and-media-operations/pull/1
 
 - `dynamo-a0fb517-model-training-and-ml-infrastructure`: Built blank scaffold into distributed-training AllReduce spool salvage (`rebind-spool`) with calibration-inferred codec/parity/clock profiles, offset-ordered sealing phases, cross-rank taps, evidence consumption, and submission-salted hidden jobs. Local solution/reference matched across visible+hidden seeds; Docker unavailable on this host (socket owned by another user), so Harbor oracle/nop deferred to CI. PR: https://github.com/handshake-project-dynamo/dynamo-a0fb517-model-training-and-ml-infrastructure/pull/1
