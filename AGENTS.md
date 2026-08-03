@@ -12,6 +12,7 @@ Before starting any task in this folder, always read:
 - `FORK_AND_PUSH_GUIDE.md`
 - `PROJECT_DYNAMO_TASK_SOUNDNESS_CHECK.md`
 - `project_dynamo_reviewer_notes.md`
+- `CLOUD_AGENT_DOCKER_HARBOR.md`
 
 For form-filling or submission tasks, also read:
 
@@ -49,7 +50,8 @@ Cloud Agents working on any Dynamo task repo must:
 
 1. Clone or locate this memory repo first (User Rule requires it).
 2. Read the files listed at the top of this `AGENTS.md` before editing the task.
-3. After reusable lessons, update `PROJECT_MEMORY.md` here, commit, and push to `main`.
+3. Before claiming Harbor validation, follow `CLOUD_AGENT_DOCKER_HARBOR.md` (vfs dockerd, cgroup workarounds, manual oracle/nop fallback).
+4. After reusable lessons, update `PROJECT_MEMORY.md` here, commit, and push to `main`.
 
 Notes:
 
@@ -58,3 +60,4 @@ Notes:
 - For GitHub CLI, fork, PR, and check work: use authenticated `gh` with network access; confirm `gh api user --jq .login` before private-repo actions.
 - Secrets and env vars for Cloud Agents belong in the Cloud Agents dashboard, not in committed files.
 - Optional stronger setup: add this repo plus the task repo in a multi-repo Cloud environment at [cursor.com/dashboard/cloud-agents](https://cursor.com/dashboard/cloud-agents#environments).
+- Nested Cloud VMs often need `dockerd --storage-driver=vfs` and may fail Harbor Compose on cgroup v2 threaded mode; use the manual Docker oracle/nop path in `CLOUD_AGENT_DOCKER_HARBOR.md` rather than skipping validation.

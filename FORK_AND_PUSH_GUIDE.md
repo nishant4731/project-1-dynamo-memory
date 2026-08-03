@@ -177,7 +177,14 @@ Expected result:
 - Oracle gets reward `1.0`.
 - Nop gets reward `0.0` or less than full reward.
 
-If Docker is not running, record that limitation and run direct local checks where possible, but rely on the remote pipeline for full container validation.
+On Cursor Cloud Agent VMs, follow `CLOUD_AGENT_DOCKER_HARBOR.md` first:
+
+- Install `docker.io` + `docker-compose-v2`, start `dockerd` with `storage-driver: vfs`.
+- If Harbor Compose fails with cgroup v2 `threaded mode`, do not treat that as a task bug.
+- Use the manual `docker run --privileged --cgroupns=host` oracle/nop fallback from that guide, with `/tests` mounted read-write.
+- Still prefer real Harbor when it works; remote Dynamo CI remains authoritative.
+
+If Docker is not running and cannot be started, record that limitation and run direct local checks where possible, but rely on the remote pipeline for full container validation.
 
 ## 7. Commit Cleanly
 

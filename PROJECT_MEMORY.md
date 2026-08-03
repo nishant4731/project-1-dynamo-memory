@@ -13,6 +13,7 @@ Use it at the start of every new task, and update it whenever a blocker, review 
   - `FORK_AND_PUSH_GUIDE.md`
   - `PROJECT_DYNAMO_TASK_SOUNDNESS_CHECK.md`
   - `project_dynamo_reviewer_notes.md`
+  - `CLOUD_AGENT_DOCKER_HARBOR.md`
 - Inspect the actual task files before guessing the fix.
 - Find the real crux: instruction contract, data, tests, verifier, oracle, hidden cases, Docker packaging, PR checks, or GitHub workflow.
 - Keep changes scoped and avoid unrelated refactors.
@@ -71,6 +72,11 @@ When a task reveals a reusable lesson, append a dated note here with:
 Keep notes short. Promote broad Dynamo lessons into `PROJECT_DYNAMO_LEARNINGS.md` or the relevant focused guide.
 
 ## Dated Notes
+
+### 2026-08-03
+
+- Cloud Agent Docker/Harbor: nested Cursor VMs often cannot use overlay; start `dockerd` with `storage-driver: vfs`, install `docker-compose-v2`, and expect Harbor Compose to fail with cgroup v2 `threaded mode`. Documented full setup + manual `docker run --privileged --cgroupns=host` oracle/nop fallback in `CLOUD_AGENT_DOCKER_HARBOR.md`. Mount `/tests` RW because verifiers chmod it. Apply this for all Dynamo Cloud Agent tasks.
+- `dynamo-347b43c-machine-learning-and-ai`: QC B5/C3 blocked after otherwise green gates. Fix: mirror `weakest_revert_margin` definition and plan selection order in visible pack notes, bake equal-abs top-terms witnesses into coeffs before calibration so reverse-`term_id` mutants fail, and regenerate the visible pack. Local oracle matched packlib; Docker manual oracle/nop returned 1.0/0.0.
 
 ### 2026-08-04
 
