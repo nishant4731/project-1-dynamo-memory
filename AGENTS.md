@@ -32,9 +32,10 @@ While working:
 
 GitHub and push safety:
 
-- **Single account for Cloud Agents: `nishant4731` only.** Do not keep `cursor` / `cursor[bot]` as an active `gh` user and do not `gh auth switch` mid-task. Logout every non-nishant GitHub CLI user at session start.
-- After `gh auth login` as `nishant4731`, strip Cursor managed git URL rewrites that inject `x-access-token` for `cursor[bot]` on `github.com`. Those rewrites make every `git push` look like the bot even when `gh api user` prints `nishant4731`. See `CLOUD_AGENT_DOCKER_HARBOR.md` / auth section in `FORK_AND_PUSH_GUIDE.md`.
-- Confirm once: `gh api user --jq .login` must print `nishant4731`. Use that same identity for every repo in the session (task fork, upstream private org, memory repo).
+- **Single account for Cloud Agents: `nishant4731` only.** Do not keep `cursor` / `cursor[bot]` as an active `gh` user and do not `gh auth switch` mid-task.
+- **Auth does not persist across chats.** Interactive `gh auth login` in one VM is gone in the next chat. Persist nishant via a Cloud Agents dashboard Runtime Secret `GH_TOKEN` (or `NISHANT_GH_TOKEN`) — see `FORK_AND_PUSH_GUIDE.md`. Memory-repo docs alone do not log the account in.
+- At session start: `export GH_TOKEN="${GH_TOKEN:-$NISHANT_GH_TOKEN}"` if needed, then `gh api user --jq .login` must print `nishant4731`. Only prompt for device login if that secret is missing.
+- Strip Cursor managed git URL rewrites that inject `x-access-token` for `cursor[bot]` on `github.com`. Those rewrites make every `git push` look like the bot even when `gh api user` prints `nishant4731`. See `CLOUD_AGENT_DOCKER_HARBOR.md` / `FORK_AND_PUSH_GUIDE.md`.
 - Do not force push unless it is necessary to update an existing PR branch after history was intentionally rewritten or to retrigger a pipeline that requires a new commit shape. Prefer a normal `git push` for ordinary changes.
 - Before any force push, explain why it is needed, confirm the target remote and branch are the user's fork/submission branch rather than upstream or a protected/default branch, and prefer `git push --force-with-lease` over plain `--force`.
 - Run GitHub CLI (`gh`) commands outside the sandbox when they depend on GitHub auth, private repo access, network access, run logs, checks, forks, or PR creation/update. Sandboxed `gh` results can be misleading because credentials, keychain state, and network access may differ.

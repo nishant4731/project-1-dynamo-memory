@@ -146,18 +146,19 @@ Mount `/tests` read-write. Read-only mounts break verifiers that `chmod /tests` 
 
 Policy for Nishant Dynamo Cloud Agents:
 
-1. Keep **only** `nishant4731` in `gh auth status`. Logout `cursor` / any other user.
-2. Do **not** `gh auth switch` during a task.
-3. After login, remove Cursor managed `url.*.insteadof` rewrites that inject `x-access-token` for `cursor[bot]` on `github.com`. Otherwise `git push` is denied as `cursor[bot]` while `gh api user` still prints `nishant4731`.
-4. Point remotes at plain `https://github.com/...` URLs (no embedded bot token) and use `gh auth git-credential`.
-5. Use that same nishant identity for the task fork, upstream private org PR/checks, and `project-1-dynamo-memory`.
+1. **Do not expect `gh auth login` from a previous chat to still work.** Each Cloud Agent VM is fresh.
+2. Persist nishant with a dashboard Runtime Secret: `GH_TOKEN` or `NISHANT_GH_TOKEN` (PAT as `nishant4731`). See `FORK_AND_PUSH_GUIDE.md`.
+3. At chat start: `export GH_TOKEN="${GH_TOKEN:-$NISHANT_GH_TOKEN}"` then `gh api user --jq .login` → `nishant4731`.
+4. Ask for interactive device login only if that secret is missing.
+5. Remove Cursor managed `url.*.insteadof` rewrites that inject `x-access-token` for `cursor[bot]` on `github.com`.
+6. Point remotes at plain `https://github.com/...` URLs and use `gh auth git-credential` / the PAT for pushes that must be nishant.
 
 Quick verify:
 
 ```bash
+export GH_TOKEN="${GH_TOKEN:-$NISHANT_GH_TOKEN}"
 gh api user --jq .login                    # nishant4731
 git config --global --get-regexp '^url\.'  # should be empty / no x-access-token rewrite
-git push origin HEAD                       # must not say denied to cursor[bot]
 ```
 
 If managed rewrites reappear mid-session, clear them again before pushing.

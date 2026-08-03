@@ -51,15 +51,30 @@ For an upstream clone, keep `origin` pointed at the upstream repo. Push changes 
 
 For Nishant Cloud Agent Dynamo work, use **only** `nishant4731`. Do not leave `cursor` logged in and do not switch accounts during the task.
 
+**Important:** `gh auth login` in one Cloud Agent chat does **not** carry to other chats. Each chat is a new VM. Documenting the policy in this memory repo is not the same as saving credentials.
+
+### Persist nishant for ALL chats (required)
+
+1. Create a GitHub PAT as `nishant4731` (repo + PR/issue scopes you need).
+2. Cursor Dashboard → [Cloud Agents → Secrets](https://cursor.com/dashboard/cloud-agents): add Runtime Secret  
+   - Name: `GH_TOKEN` (or `NISHANT_GH_TOKEN` if Cursor overwrites `GH_TOKEN`)  
+   - Value: that PAT  
+   - Scope: user (all agents) or the Dynamo environment
+3. Start a **new** chat and verify (do not print the token):
+
 ```bash
-# Prefer a single identity
+test -n "${GH_TOKEN:-${NISHANT_GH_TOKEN:-}}" && echo GH_TOKEN_present
+# if using NISHANT_GH_TOKEN:
+export GH_TOKEN="${GH_TOKEN:-$NISHANT_GH_TOKEN}"
+gh api user --jq .login   # must print nishant4731
+```
+
+Only if the secret is missing, fall back to interactive login in that chat:
+
+```bash
 gh auth status
 gh api user --jq .login   # must print nishant4731
-
-# If cursor/bot is present, remove it
 gh auth logout --hostname github.com --user cursor 2>/dev/null || true
-
-# Login once as nishant if needed
 gh auth login --hostname github.com --git-protocol https --web
 gh auth setup-git
 ```
