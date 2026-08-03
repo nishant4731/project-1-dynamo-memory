@@ -72,6 +72,10 @@ Keep notes short. Promote broad Dynamo lessons into `PROJECT_DYNAMO_LEARNINGS.md
 
 ## Dated Notes
 
+### 2026-08-03
+
+- Cloud Agents started only on `nishant4731/project-1-dynamo-memory` get a GitHub App token scoped to that memory repo. Private Handshake task repos such as `handshake-project-dynamo/dynamo-347b43c-machine-learning-and-ai` and their forks 404/403 until a personal `gh` account with Dynamo access (`nishant4731` or `utkarsha01`) is available via secrets/multi-repo env, or the task fork itself is the agent workspace. Do not invent task edits from memory alone when the PR sticky and task tree are unreachable.
+
 ### 2026-08-04
 
 - `dynamo-ff3804a-games-puzzles-and-interactive-simulation`: Deep review blocked after pass@2 because both agents solved the real calibration/search crux and then crashed writing `/app/profile.json` in reusable CLI mode under uid 65534. When an artifact is required for the visible bootstrap solve but forbidden during `INPUT_DIR OUTPUT_JSON` grading, state that bootstrap-vs-CLI distinction explicitly; otherwise the verifier's returncode check becomes an undisclosed contradiction. Pair the fairness fix with a disclosed interacting profile dimension (here `anchor_bonus` for placements adjacent to `#`) so difficulty does not collapse once the trap is removed.
