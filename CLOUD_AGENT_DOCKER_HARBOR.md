@@ -114,8 +114,22 @@ Mount `/tests` read-write. Read-only mounts break verifiers that `chmod /tests` 
 6. Push the fork `submission` branch; do not force-push unless required and explained.
 7. If a reusable infra lesson appeared, update `PROJECT_MEMORY.md` here and push `main`.
 
-## GitHub auth reminder
+## GitHub auth (nishant only, all repos)
 
-- Cloud Agents may start as `cursor` bot. Private upstream Dynamo org repos need the human fork owner account (`nishant4731` or the task owner).
-- `gh auth login --web` device codes expire / get overwritten when the bot token becomes active again. Re-check `gh api user --jq .login` before private PR/check queries.
-- Fork git remotes may already include an `x-access-token` for push even when `gh` is bot-scoped; verify with a dry `git push` rather than assuming `gh` identity equals git push identity.
+Policy for Nishant Dynamo Cloud Agents:
+
+1. Keep **only** `nishant4731` in `gh auth status`. Logout `cursor` / any other user.
+2. Do **not** `gh auth switch` during a task.
+3. After login, remove Cursor managed `url.*.insteadof` rewrites that inject `x-access-token` for `cursor[bot]` on `github.com`. Otherwise `git push` is denied as `cursor[bot]` while `gh api user` still prints `nishant4731`.
+4. Point remotes at plain `https://github.com/...` URLs (no embedded bot token) and use `gh auth git-credential`.
+5. Use that same nishant identity for the task fork, upstream private org PR/checks, and `project-1-dynamo-memory`.
+
+Quick verify:
+
+```bash
+gh api user --jq .login                    # nishant4731
+git config --global --get-regexp '^url\.'  # should be empty / no x-access-token rewrite
+git push origin HEAD                       # must not say denied to cursor[bot]
+```
+
+If managed rewrites reappear mid-session, clear them again before pushing.

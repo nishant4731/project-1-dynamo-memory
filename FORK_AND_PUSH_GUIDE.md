@@ -49,26 +49,48 @@ For an upstream clone, keep `origin` pointed at the upstream repo. Push changes 
 
 ## 2. Use The Correct GitHub Account
 
-Check active GitHub CLI accounts:
+For Nishant Cloud Agent Dynamo work, use **only** `nishant4731`. Do not leave `cursor` logged in and do not switch accounts during the task.
 
 ```bash
+# Prefer a single identity
 gh auth status
+gh api user --jq .login   # must print nishant4731
+
+# If cursor/bot is present, remove it
+gh auth logout --hostname github.com --user cursor 2>/dev/null || true
+
+# Login once as nishant if needed
+gh auth login --hostname github.com --git-protocol https --web
+gh auth setup-git
 ```
 
-Switch to the intended account, for example Utkarsha:
+Cursor Cloud often injects managed git rewrites that force `cursor[bot]` tokens onto every `github.com` URL. That breaks pushes to personal repos (memory repo, other forks) even when `gh` shows `nishant4731`. Clear them, then keep `gh` as the credential helper:
 
 ```bash
-gh auth switch --user utkarsha01
+# Remove managed bot URL rewrites (safe to re-run)
+git config --global --get-regexp '^url\.' || true
+git config --global --unset-all 'url.https://x-access-token:' 2>/dev/null || true
+# If unset-all by partial key fails, remove each url.*.insteadof entry that embeds x-access-token@github.com
+python3 - <<'PY'
+import subprocess, re
+try:
+    out = subprocess.check_output(["git", "config", "--global", "--get-regexp", r"^url\."], text=True)
+except subprocess.CalledProcessError:
+    out = ""
+for line in out.splitlines():
+    key = line.split(" ", 1)[0]
+    if "x-access-token" in key or "github.com" in key:
+        subprocess.run(["git", "config", "--global", "--unset-all", key], check=False)
+        print("unset", re.sub(r"(x-access-token:)[^/@]+", r"\1***", key))
+PY
+git config --global --unset-all cursor.managedauthrewritescope 2>/dev/null || true
+gh auth setup-git
+git config --global credential.helper '!gh auth git-credential'
 gh api user --jq .login
+GIT_TERMINAL_PROMPT=0 git ls-remote https://github.com/nishant4731/project-1-dynamo-memory.git HEAD >/dev/null
 ```
 
-The second command should print:
-
-```text
-utkarsha01
-```
-
-If it prints another user, stop and fix GitHub CLI auth before pushing.
+If an older playbook mentions `utkarsha01`, ignore account-switching for Nishant Cloud runs unless a task is explicitly owned by another account. One login, one identity, every repo.
 
 ## 3. Create Or Connect The Fork
 
