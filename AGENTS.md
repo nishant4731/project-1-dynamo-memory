@@ -64,3 +64,4 @@ Notes:
 - Secrets and env vars for Cloud Agents belong in the Cloud Agents dashboard, not in committed files.
 - Optional stronger setup: add this repo plus the task repo in a multi-repo Cloud environment at [cursor.com/dashboard/cloud-agents](https://cursor.com/dashboard/cloud-agents#environments).
 - Nested Cloud VMs often need `dockerd --storage-driver=vfs` and may fail Harbor Compose on cgroup v2 threaded mode; use the manual Docker oracle/nop path in `CLOUD_AGENT_DOCKER_HARBOR.md` rather than skipping validation.
+- For Docker in **all** chats: use the personal Cloud Environment built from `.cursor/environment.json` + `.cursor/install-docker.sh` in this memory repo. Draft builds are not enough — activate a successful Build in the [Environments dashboard](https://cursor.com/dashboard/cloud-agents#environments) and attach Dynamo repos.

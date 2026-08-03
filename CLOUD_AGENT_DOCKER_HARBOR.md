@@ -4,6 +4,34 @@ Use this on Cursor Cloud Agent VMs for every Dynamo task when local Harbor oracl
 
 Cloud Agent environments are often nested containers (`/.dockerenv` present) with cgroup v2 quirks. Docker Desktop assumptions from a laptop do not apply.
 
+## Make Docker available for ALL chats (required)
+
+Docker is **not** global unless a Cloud Environment Build is saved and active.
+
+Canonical config lives in this repo:
+
+- `.cursor/environment.json`
+- `.cursor/install-docker.sh`
+
+### One-time dashboard steps (Nishant)
+
+1. Open [Cloud Agents → Environments](https://cursor.com/dashboard/cloud-agents#environments).
+2. Create or edit a **personal** environment (name e.g. `dynamo-docker`).
+3. Add repos you use for Dynamo work:
+   - `nishant4731/project-1-dynamo-memory`
+   - each `nishant4731/dynamo-*` task fork you care about (multi-repo / repo group)
+4. Set **Install** to: `bash .cursor/install-docker.sh`  
+   (or paste the same script if the memory repo is not the workspace root)
+5. Set **Start** to start `dockerd` with `vfs` (see `.cursor/environment.json` `start`).
+6. Run a Build until it is **SUCCEEDED**, then **Enable / activate** that Build.
+7. Confirm a **new** Cloud Agent chat shows the environment and `docker info` works immediately.
+
+Notes:
+
+- Draft / `trigger-environment-build` builds do **not** become the default until you save/activate in the dashboard.
+- Repo `.cursor/environment.json` wins over personal/team envs for that repo.
+- There is no automatic “every GitHub repo forever” switch; attach the Dynamo repos (or keep this config in each task template).
+
 ## Install
 
 ```bash
