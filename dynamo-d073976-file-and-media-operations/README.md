@@ -1,7 +1,0 @@
-# Aurora Atlas Recovery
-
-This Harbor task asks an agent to recover a transparent icon atlas from flattened design proof exports. The agent receives paired contact sheets composited over known matte colors, revision history, grid metadata, and a ship cutoff. It must output a recovered RGBA PNG atlas, a JSON summary of the canvas, tile order, active revisions, and alpha coverage, plus a reusable recovery CLI.
-
-The main challenge is combining image-processing reconstruction with design-release state: the correct proof snapshot is the newest snapshot with exactly two exports at or before the cutoff, while incomplete singles, three-export bundles, prototypes, and rejected rows are intentionally present as decoys. Proof sheets can use different per-export transforms, the revision log is not chronological, and the solver has to apply the disclosed quantization-robust matte inversion before assembling the atlas.
-
-The verifier checks the requested output artifacts. It rejects missing, empty, or symlinked files, validates the exact JSON schema, compares decoded atlas pixels against protected expected transparent art with small rounding tolerances, confirms timestamp-based revision selection plus alpha coverage, and runs the submitted CLI on protected alternate fixtures covering identity, mismatched flips, rotate-180, incomplete pairs, and three-export decoys to catch visible-instance hardcoding.

@@ -1,7 +1,0 @@
-# Camera Sync Recovery Task
-
-This repository contains one Harbor task in `task/`. The task asks an agent to reconcile corrupted animated camera exports into `/app/sync_report.json` and provide a reusable `/app/solve_sync.py` solver.
-
-The agent must decode per-frame color chips through the GIF palette and manifest colors, normalize 180-degree rotated frames, derive per-frame chip coordinates from bordered three-marker registration targets while ignoring white decoys, reject checksum-corrupted frames, choose the globally best stitched observation path under manifest-configurable continuity bonuses, switch penalties, dwell bonuses, a source-switch budget, cooldown, and a source rejoin holdoff, merge continuous source runs, count events over the selected observations, and emit exact path-accounting counters.
-
-The environment bakes Python, Pillow, ffmpeg, ImageMagick, pytest, and pytest-json-ctrf into the shared agent/verifier image. The verifier hash-pins the shipped visible media inputs, rejects missing/empty/symlinked artifacts, independently decodes the GIF frames, solves the documented path objective, and runs the submitted reusable solver on protected generated media cases that exercise the same disclosed rules. During reusable-solver checks, the verifier uses isolated input copies and blocks verifier-only paths so the solver must compute from the supplied manifest/media instead of delegating to test code.

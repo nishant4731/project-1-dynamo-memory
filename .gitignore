@@ -1,16 +1,11 @@
-# Instruction/memory repo: track markdown broadly; keep heavy local artifacts out.
+# Keep this repo as Cloud Agent / local instruction memory only.
+# Only root markdown playbooks (+ Cursor rules) are tracked.
 
 .DS_Store
 .claude/
 
-# Caches / local tooling
-**/.pytest_cache/
-**/__pycache__/
-**/.mypy_cache/
-**/.ruff_cache/
-**/node_modules/
-
-# Local non-markdown workspaces and artifacts
+# Everything under task folders / local workspaces
+dynamo-*/
 jobs/
 patches/
 1/
@@ -22,15 +17,5 @@ patches/
 *.jpeg
 *.webp
 
-# Nested git metadata must never be committed as gitlinks
+# Nested git metadata
 **/.git/
-
-# Ignore non-markdown content under task folders by default
-dynamo-/**
-!dynamo-/**/
-!dynamo-/**/*.md
-!dynamo-/**/*.MD
-!dynamo-/**/*.markdown
-
-# Still ignore cache READMEs under task folders
-dynamo-/**/.pytest_cache/
