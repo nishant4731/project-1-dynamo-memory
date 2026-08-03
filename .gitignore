@@ -1,0 +1,21 @@
+# Keep this repo as Cloud Agent / local instruction memory only.
+# Individual Dynamo tasks live in their own forks.
+
+.DS_Store
+.claude/
+
+# Nested task workspaces and local artifacts
+dynamo-*/
+jobs/
+patches/
+1/
+
+# Local binaries / archives / screenshots
+*.tar.gz
+*.png
+*.jpg
+*.jpeg
+*.webp
+
+# Nested git metadata if any task dirs are ever staged by mistake
+**/.git/

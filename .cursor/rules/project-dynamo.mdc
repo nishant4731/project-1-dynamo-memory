@@ -1,0 +1,31 @@
+---
+description: Project 1 Dynamo workspace memory and pipeline rules
+alwaysApply: true
+---
+
+# Project 1 Dynamo Rules
+
+This workspace is Project Dynamo task authoring and pipeline work.
+
+Before starting any task, read these root files:
+
+- `AGENTS.md`
+- `PROJECT_MEMORY.md`
+- `PROJECT_DYNAMO_LEARNINGS.md`
+- `DYNAMO-PLAYBOOK.md`
+- `FORK_AND_PUSH_GUIDE.md`
+- `PROJECT_DYNAMO_TASK_SOUNDNESS_CHECK.md`
+- `project_dynamo_reviewer_notes.md`
+
+For form-filling or submission tasks, also read `HANDSHAKE_DYNAMO_FORM_FILLING_GUIDE.md`.
+
+Working rules:
+
+- Apply pipeline lessons proactively; do not rediscover known Harbor, static review, pass@, deep review, or QC pitfalls.
+- Prefer fixing the underlying pipeline/reviewer/task-contract issue over changing task logic blindly.
+- Treat infrastructure failures, setup failures, provider failures, and all-run timeouts as non-evidence for task difficulty.
+- Keep verifier rules, instructions, reference solution, visible data, hidden tests, metadata, and PR evidence aligned.
+- Do not force push unless updating an intentional history rewrite on the user's fork/submission branch; prefer `--force-with-lease`.
+- Confirm `gh api user --jq .login` before private GitHub actions.
+
+After finishing reusable work, update `PROJECT_MEMORY.md` with a short dated note.
