@@ -111,6 +111,10 @@ Keep notes short. Promote broad Dynamo lessons into `PROJECT_DYNAMO_LEARNINGS.md
 
 ### 2026-08-04
 
+- `dynamo-feeda48-mathematics-and-formal-reasoning`: After mix/bind harden, pass@2 was 1/2 but blocked as in-progress-timeout/OOM (not a valid fail); DFS still solved n=16. Fair ratchet (af3b0b2 pattern): strip authoritative weights from instances; require `/app/policy.json` recovered from `public_cases.json` score_probes + `FORMAT_NOTES.txt`; plant wrong `hint_*` decoys; keep mix/bind/residue4; raise hidden scale to n=18×3. Wrong-hint and missed-fit failures are completed wrong answers (valid fails), not OOMs. Local pytest 13/13.
+
+### 2026-08-04
+
 - `dynamo-feeda48-mathematics-and-formal-reasoning`: After tag/parity harden, pass@2 solved 2/2 (agents converged on bitmask + 3D Pareto DP). Fair ratchet: fourth residue, disclosed ordered child `mix` fold + `root_mix`, `mix_weight`/`bind_weight*((peak*mix) mod bind_mod)` so load-only Pareto is unsafe, equal-peak-only dominance (bind is non-monotonic), heavy locals, mix/bind + residue4 witnesses. Keep advertised scale at 16×4 with entailment caching so reference stays under verifier timeout; do not push 24–28×6–8 with mix in the state. Local pytest 13/13.
 
 ### 2026-08-04
