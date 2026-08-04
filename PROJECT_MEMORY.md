@@ -75,6 +75,8 @@ Keep notes short. Promote broad Dynamo lessons into `PROJECT_DYNAMO_LEARNINGS.md
 
 ### 2026-08-04
 
+- `dynamo-94cfe93-file-and-media-operations`: After QC cleared, pass@5 stayed 3/5 with valid fails mostly from premature `fragments/` deletion while agents solved the algorithm. Fair ratchet: disclosed post-composite `echoes.tsv` that samples the live canvas and writes into not-yet-drawn targets' pre-transform sources (distinct from taps), with `echoes_ignored_late`, report keys, FORMAT_NOTES, and an ignore-echo mutant. Keep echo target pixels off the patch-order witness channel/coords so clamp-order mutants remain load-bearing.
+
 - `dynamo-05a032b-games-puzzles-and-interactive-simulation`: Built blank Puzzle solving scaffold into Sigil Peg Vault (`dynamo/sigil-peg-vault`): evidence-mined 32-constant profile with uniqueness proof, digest-bound fragment covers + rival-cover tie-break, seal/orbit interacting solver, reusable CLI, slip consumption, and submission-salted hidden packs. Local remapped pytest 11/11; nop fails; Docker socket owned by another user so Harbor deferred to CI. PR: https://github.com/handshake-project-dynamo/dynamo-05a032b-games-puzzles-and-interactive-simulation/pull/1
 
 - `dynamo-05a032b`: Harbor oracle failed locally-green CLI tests because `tempfile.mkdtemp` parents stay mode 0700; demoted `nobody` cannot traverse into `pack/fragments` even after chowning the leaf tree. Always chmod workspace roots and every ancestor below `/tmp` to 0755 before privilege drop.
