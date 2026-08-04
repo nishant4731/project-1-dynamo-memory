@@ -75,6 +75,10 @@ Keep notes short. Promote broad Dynamo lessons into `PROJECT_DYNAMO_LEARNINGS.md
 
 ### 2026-08-04
 
+- `dynamo-347b43c-machine-learning-and-ai`: QC C3 still failed after README/WRM notes because dropping `weakest_revert_margin` from the counterfactual selection key matched every graded intervention. Fix: concentrate cheap `edit_cost` on two features, bake `tar_wrm_tie` where same-cost plans disagree under WRM vs margin, assert graded interventions diverge under a no-WRM mutant before writing expected outputs, and regenerate the visible pack. Local solution matched packlib on visible + salted hidden seeds.
+
+### 2026-08-04
+
 - `dynamo-02d1260`: Harbor oracle failed (reward 0) after python-path fix because `run_solver_on` chmod'd temp workspace parents to `0711` after setting output dirs `0777`, so demoted uid 65534 could not write `OUTPUT_JSON`. Fix: keep workspace/output dirs world-writable, make `/tmp` ancestors traversable, never clamp writable parents to `0711`.
 
 ### 2026-08-04
