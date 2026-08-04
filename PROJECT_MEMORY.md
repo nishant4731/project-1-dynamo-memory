@@ -77,6 +77,8 @@ Keep notes short. Promote broad Dynamo lessons into `PROJECT_DYNAMO_LEARNINGS.md
 
 - `dynamo-05a032b-games-puzzles-and-interactive-simulation`: Built blank Puzzle solving scaffold into Sigil Peg Vault (`dynamo/sigil-peg-vault`): evidence-mined 32-constant profile with uniqueness proof, digest-bound fragment covers + rival-cover tie-break, seal/orbit interacting solver, reusable CLI, slip consumption, and submission-salted hidden packs. Local remapped pytest 11/11; nop fails; Docker socket owned by another user so Harbor deferred to CI. PR: https://github.com/handshake-project-dynamo/dynamo-05a032b-games-puzzles-and-interactive-simulation/pull/1
 
+- `dynamo-05a032b`: Harbor oracle failed locally-green CLI tests because `tempfile.mkdtemp` parents stay mode 0700; demoted `nobody` cannot traverse into `pack/fragments` even after chowning the leaf tree. Always chmod workspace roots and every ancestor below `/tmp` to 0755 before privilege drop.
+
 ### 2026-08-04
 
 - `dynamo-b704b11-file-and-media-operations`: Built blank File search and filtering scaffold into locker-sieve (`dynamo/locker-sieve`): reusable `/app/sieve_locker.py` with CRC-signed slips, calibration-inferred score profile, kinship hop-budget reachability, seal/referee/embargo markers, ordered blot mask/xor/clip stamps, folio caps + lane floor promotions, multi-artifact receipt binding, and evidence consumption of slips/bonds. Local staged oracle 10/10 and nop failed as required; solution matched reference on visible+4 hidden seeds. Docker Desktop unavailable on this host, so Harbor oracle/nop deferred to CI. PR: https://github.com/handshake-project-dynamo/dynamo-b704b11-file-and-media-operations/pull/1
