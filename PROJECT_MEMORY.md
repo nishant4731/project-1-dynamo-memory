@@ -98,6 +98,8 @@ Keep notes short. Promote broad Dynamo lessons into `PROJECT_DYNAMO_LEARNINGS.md
 
 ### 2026-08-04
 
+- `dynamo-05a032b`: QC C3 failed a second time after the latch-board fix: mutant `fresh = struck and captured not in start_seals` still matched because latch colours are already in `start_seals`. Need a mid-solution witness that freshly seals colour J then reseals J on a later clock hit (`activated_seals == ["J"]` vs mutant `["J","J"]`). Ship protected `vault-echo-*` boards, an `activated_ignores_live_seals` flaw, and assert `total_seal_activations` diverges. Latch alone is not enough for live-vs-start seal membership.
+
 - `dynamo-05a032b`: QC C3 blocked on `dormant_seal_checks` because no graded solution had a seal-clock hit that only resealed an already sealed colour. FORMAT.md stated the rule, but mutants that count those passes as dormant still matched. Ship a tiny protected one-move latch board (`start_seals` contains the captured colour, `start_signature` on the seal clock) and assert the reseal mutant changes `total_dormant_seal_checks`.
 
 ### 2026-08-04
