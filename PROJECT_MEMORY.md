@@ -79,7 +79,7 @@ Keep notes short. Promote broad Dynamo lessons into `PROJECT_DYNAMO_LEARNINGS.md
 
 ### 2026-08-04
 
-- `dynamo-02d1260`: Harbor oracle failed (reward 0) after python-path fix because `run_solver_on` chmod'd temp workspace parents to `0711` after setting output dirs `0777`, so demoted uid 65534 could not write `OUTPUT_JSON`. Fix: keep workspace/output dirs world-writable, make `/tmp` ancestors traversable, never clamp writable parents to `0711`.
+- `dynamo-02d1260`: Harbor oracle failed (reward 0) after python-path fix because `run_solver_on` chmod'd temp workspace parents to `0711` after setting output dirs `0777`, so demoted uid 65534 could not write `OUTPUT_JSON`. Fix on `df8b785`: open `/tmp` ancestors to `0755`, `chown` the temp cohort to `nobody`, keep workspace/output `0777`, demote with `setgroups([])`, hide `/tests` — never clamp writable parents to `0711`. CI then: Docker/Oracle/Nop all ✅.
 
 ### 2026-08-04
 
