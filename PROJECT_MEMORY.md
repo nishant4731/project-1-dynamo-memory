@@ -75,6 +75,10 @@ Keep notes short. Promote broad Dynamo lessons into `PROJECT_DYNAMO_LEARNINGS.md
 
 ### 2026-08-05
 
+- `dynamo-feeda48-mathematics-and-formal-reasoning`: After policy.json harden, pass@2 still 2/2 — agents recovered all 10 constants via disclosed bounds + Gaussian elimination in ~13 steps and solved n=18 in 5–8s. Fair ratchet: remove tight numeric bounds from FORMAT_NOTES; withhold bind/twist from the instruction score line (candidate family only in FORMAT_NOTES); add `seal_bias` into mix and `twist_weight*((valley*root_mix) mod twist_mod)`; make `hint_*` partially correlated (true peak/spread, wrong mix_mod/seal_bias/twist). Local pytest 13/13.
+
+### 2026-08-05
+
 - `dynamo-347b43c-machine-learning-and-ai`: pass@2 went 2/2 solved after the tmux infra fix — agents transcribed the fully specified recipe. Fair ratchet: replace hardcoded `pair_product` with disclosed evidence-mined `pair_op` ∈ {product, absdiff, max} selected as the unique operator that, with the active profile, admits exact integer coefficients; emit `pair_op` in `inspection_summary.json`; keep WRM load-bearing. Avoided `sum` because it is linearly dependent on linear terms.
 
 ### 2026-08-05
