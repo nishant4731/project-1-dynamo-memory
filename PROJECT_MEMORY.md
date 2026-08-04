@@ -75,6 +75,10 @@ Keep notes short. Promote broad Dynamo lessons into `PROJECT_DYNAMO_LEARNINGS.md
 
 ### 2026-08-04
 
+- `dynamo-af3b0b2-mathematics-and-formal-reasoning`: Stage-1 `instruction_concision` failed after the pass@2 harden because the prompt disclosed that modular products make dominance unsafe and that enumeration is not viable. Fix: strip approach hints; add disclosed ordered child `mix` fold + `root_mix` output; keep load-Pareto trap (78 vs 147) and child-order witness. Local 10/10.
+
+### 2026-08-04
+
 - `dynamo-feeda48-mathematics-and-formal-reasoning`: pass@5 blocked at 4/5 (too easy) after otherwise green gates; agents solved with DFS or tree DP. Hardened with disclosed parent/child bridge + ordered-sibling tag costs, global parity XOR, 16×4 scale, const-mode witnesses, and brute-force small-oracle checks.
 
 ### 2026-08-04
