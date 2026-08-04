@@ -75,6 +75,10 @@ Keep notes short. Promote broad Dynamo lessons into `PROJECT_DYNAMO_LEARNINGS.md
 
 ### 2026-08-04
 
+- `dynamo-feeda48-mathematics-and-formal-reasoning`: pass@5 blocked at 4/5 (too easy) after otherwise green gates; agents solved with DFS or tree DP. Hardened with disclosed parent/child bridge + ordered-sibling tag costs, global parity XOR, 16×4 scale, const-mode witnesses, and brute-force small-oracle checks.
+
+### 2026-08-04
+
 - `dynamo-05a032b`: QC C3 blocked on `dormant_seal_checks` because no graded solution had a seal-clock hit that only resealed an already sealed colour. FORMAT.md stated the rule, but mutants that count those passes as dormant still matched. Ship a tiny protected one-move latch board (`start_seals` contains the captured colour, `start_signature` on the seal clock) and assert the reseal mutant changes `total_dormant_seal_checks`.
 
 ### 2026-08-04
@@ -375,6 +379,7 @@ Keep notes short. Promote broad Dynamo lessons into `PROJECT_DYNAMO_LEARNINGS.md
 - `dynamo-37191fd-machine-learning-and-ai`: AVA `sound_verifier` blocked a reusable CLI when hidden seeds were a fixed list and params lived in `*_BY_SEED` tables with seed-embedded `cand{seed}` ids. Fix by deriving held-out seeds from `sha256(submitted_tool)` salts, generating params via `bundle_config(seed)`, and using opaque hashed prefixes so a seed→params lookup table cannot pass.
 - `dynamo-b8c7197-file-and-media-operations`: QC C3 can mutate tap `op` validation from `("replace","add")` to also accept `"under"` and still pass if every graded tap schema reject is a non-integer/stride failure. Records allow `under`, taps do not — add a visible and always-present hidden tap with otherwise-valid fields and illegal `op=under`, regenerate expected report/audit/index, and assert `taps.bad_schema >= 2` so the mutant fails exact counter comparison.
 - `dynamo-b8c7197-file-and-media-operations`: Deep Review can block when patches explicitly say "applied bytes are row-major" but taps only say "read in slot order … apply," because agents reasonably write slot-symmetric destinations. State tap write order and saturating `add` in `instruction.md` and fixture notes, keep a stride>1 witness, and change `tests/test_outputs.py` in the same push so enforced cosine does not treat the fairness fix as a near-identical redraw.
+- `dynamo-b8c7197-file-and-media-operations`: After disclosing tap write-order, pass@2 can flip to 2/2 solved and pass@5 to 4/5 because the prompt telegraphs apply-time `source_sha256` checking. Soften that timing wording, add a disclosed destination-pixel calibration key bias into tap transforms, and ship same-frame tap chains in visible/hidden fixtures so eager hashing and bias-ignorant solvers fail by ordinary byte/counter mismatch.
 
 ### 2026-08-03
 
