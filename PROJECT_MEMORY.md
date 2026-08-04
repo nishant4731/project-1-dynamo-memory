@@ -75,9 +75,13 @@ Keep notes short. Promote broad Dynamo lessons into `PROJECT_DYNAMO_LEARNINGS.md
 
 ### 2026-08-04
 
+- `dynamo-d262f44-file-and-media-operations`: qc_gate blocked after otherwise-green checks with three majors: (1) C3 trailing-wins fade mutant still scored 1 because every scratch had `2F<=L`; (2) B1 ambiguous “pre-scratch old” (per-scratch snapshot vs global/live); (3) B4 import-time side-effect ban graded but undocumented. Fix in `25695a3`: ship `fade-ov` with `F=4,L=5`, state per-scratch pre-write snapshot in instruction+FORMAT_NOTES, document import ban, plus fps_den≠1 / empty-delta8 / timeline `read_bytes` advisories. Local trailing-wins mutant diverged on all probed seeds.
+
 - `dynamo-347b43c-machine-learning-and-ai`: pass@2 failed as a verifier infrastructure crash — `write_expected_outputs` raised when a hash-derived hidden seed lacked a WRM-decisive graded intervention. Fix: never raise on that self-check; bake WRM before concept-order bias shifts (those shifts wipe cheap same-cost flip diversity); keep an early-sorting `tar_.wrm_tie` witness in the first five plans; add disclosed `edit_radius` + near-miss decoy profiles for difficulty. Local WRM=True on visible, crash seed 85645, salted hidden, and stress seeds.
 
 ### 2026-08-04
+
+- `dynamo-b8c7197-file-and-media-operations`: pass@5 blocked at 2/5 after bias-profile harden — agents solved XOR/B/taps/folds/patches; fails were chmod and ambiguous extra `total` counter keys (`decisive_rule_disclosed` FAIL). Fix in one push: enumerate exact nested counter keys (ban extras), disclose frame-index `bad_bounds` with a visible witness, and add a post-fold `echoes.tsv` sidecar that re-samples the live canvas with recovered `B` before patches (patch hashes depend on echoes). Keep Qwen token margin via FORMAT_NOTES.
 
 - `dynamo-b8c7197-file-and-media-operations`: pass@2 stayed 2/2 solved after folds + destination-pixel key bias because agents transcribed the fully specified pipeline. Fair ratchet: replace tap `key_byte` with evidence-mined `B[r]` selected as the unique `bias_profiles.tsv` match to `swatches.tsv` (XOR key decode-only), delete seven evidence files, vary winning profiles/hidden same-frame hop density, and keep Qwen token margin. Mutants that use XOR key or a decoy profile diverge on visible + hidden bytes.
 
