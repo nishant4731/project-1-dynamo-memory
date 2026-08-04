@@ -98,6 +98,10 @@ Keep notes short. Promote broad Dynamo lessons into `PROJECT_DYNAMO_LEARNINGS.md
 
 ### 2026-08-04
 
+- `dynamo-af3b0b2-mathematics-and-formal-reasoning`: Harbor oracle failed after evidence-mined policy harden because stdin mode called `emit_policy()` and rewrote `/app/policy.json` under uid 65534 (`PermissionError`). Fix: write policy once via `--emit-policy` in `solve.sh`; stdin mode only loads/verifies; disclose bootstrap-vs-stdin in `instruction.md`; recover by moduli search + linear fit of probes. Local 11/11 with read-only policy.
+
+### 2026-08-04
+
 - `dynamo-feeda48-mathematics-and-formal-reasoning`: After tag/parity harden, pass@2 solved 2/2 (agents converged on bitmask + 3D Pareto DP). Fair ratchet: fourth residue, disclosed ordered child `mix` fold + `root_mix`, `mix_weight`/`bind_weight*((peak*mix) mod bind_mod)` so load-only Pareto is unsafe, equal-peak-only dominance (bind is non-monotonic), heavy locals, mix/bind + residue4 witnesses. Keep advertised scale at 16×4 with entailment caching so reference stays under verifier timeout; do not push 24–28×6–8 with mix in the state. Local pytest 13/13.
 
 ### 2026-08-04
