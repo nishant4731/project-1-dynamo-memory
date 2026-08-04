@@ -75,6 +75,10 @@ Keep notes short. Promote broad Dynamo lessons into `PROJECT_DYNAMO_LEARNINGS.md
 
 ### 2026-08-05
 
+- `dynamo-b8c7197-file-and-media-operations`: QC C3 blocked after green pass@2/AVA/deep: tap gain mutant `//` → `int(/)` still matched because negative non-integral results + small bias all clamped to 0. Fix: disclose floor-toward−∞; ship late `tap-negfloor` with corner paint (non-multiples of 7) and large bias so floor≠trunc survives clamp; assert trunc mutant diverges on visible + every hidden seed before push.
+
+- `dynamo-37191fd-machine-learning-and-ai`: After Docker/Oracle/Nop and pass@2 cleared, AVA blocked on `verifier_coverage` because `instruction.md` listed `calibration_labels.tsv` as `(selected_record_id, score, label, reasons)` and omitted `feature_id`, the join key used to recover learned params. Fix: document exact label columns including `feature_id` and join/`selected_record_id` match rules in instruction + visible README (repin README).
+
 - `dynamo-331d3a0-file-and-media-operations`: `review / ava_review` went red even though the job log had `routing=static_pass` / `AVA routing: pass` and the verdict gate printed PASS. Failure was only the sticky comment GraphQL post (`Something went wrong while executing your query`), which skipped QC/trials. Fork `gh run rerun --failed` 404s — push a small real SHA (dropped unused `read_wav_pcm`) to re-trigger. Do not treat a red AVA check as a content block without reading the job log routing line. pass@2 on prior head was 1/2 (valid near-miss on punch-blend floor vs toward-zero); keep that crux unless sticky says otherwise.
 
 ### 2026-08-05
@@ -129,6 +133,10 @@ Keep notes short. Promote broad Dynamo lessons into `PROJECT_DYNAMO_LEARNINGS.md
 ### 2026-08-04
 
 - `dynamo-af3b0b2-mathematics-and-formal-reasoning`: Harbor oracle failed after evidence-mined policy harden because stdin mode called `emit_policy()` and rewrote `/app/policy.json` under uid 65534 (`PermissionError`). Fix: write policy once via `--emit-policy` in `solve.sh`; stdin mode only loads/verifies; disclose bootstrap-vs-stdin in `instruction.md`; recover by moduli search + linear fit of probes. Local 11/11 with read-only policy.
+
+### 2026-08-05
+
+- `dynamo-af3b0b2-mathematics-and-formal-reasoning`: pass@5 blocked at 3/5 (agents converged on moduli brute + linear fit + full-state DP). Extreme ratchet: parent-option `anchor` costs (forces per-child-option DP tables), `bind_weight*((peak_load*root_mix)%bind_mod)` in policy recovery, drop unused public `optimum` leak, bushy+18-node hidden cohort, ignore-anchor and bind/Pareto traps. Local remapped pytest 13/13 oracle / all-fail nop.
 
 ### 2026-08-04
 
