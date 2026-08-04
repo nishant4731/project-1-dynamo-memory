@@ -73,6 +73,18 @@ Keep notes short. Promote broad Dynamo lessons into `PROJECT_DYNAMO_LEARNINGS.md
 
 ## Dated Notes
 
+### 2026-08-05
+
+- `dynamo-347b43c-machine-learning-and-ai`: pass@2 went 2/2 solved after the tmux infra fix — agents transcribed the fully specified recipe. Fair ratchet: replace hardcoded `pair_product` with disclosed evidence-mined `pair_op` ∈ {product, absdiff, max} selected as the unique operator that, with the active profile, admits exact integer coefficients; emit `pair_op` in `inspection_summary.json`; keep WRM load-bearing. Avoided `sum` because it is linearly dependent on linear terms.
+
+### 2026-08-05
+
+- `dynamo-b8c7197-file-and-media-operations`: deep review blocked after pass@2 because fold `value` was undefined — agents extended the tap slot-read convention while the oracle used live destination canvas pixels (`stride` hash-only). Fix: state canvas-pixel fold rewrite + hash-only stride in instruction/FORMAT_NOTES, soften visible/hidden fold gains so the two readings diverge, clarify invalid `delta_hex` → `bad_schema`, and vary hidden `frames` across 4..6.
+
+- `dynamo-a0fb517-model-training-and-ml-infrastructure`: PR #1 labeled `accepted` on commit `ac1d6385b969055c91b88b2fd7b0803cd23b3017`. Final evidence: pass@2 0/2 (1 valid-fail + 1 infra setup-timeout), pass@5 0/5 with avg@5=0.000 (5 good-valid-fail), all gates green. Form taxonomy: Model Training and ML Infrastructure / Distributed training; artifacts single_script + generated_output; objectives implement + recover_or_repair_artifact + transform.
+
+- `dynamo-37191fd-machine-learning-and-ai`: Harbor oracle failed with reward 0 while the solution had already written correct outputs. Root cause: `tests/test.sh` ran a Tier-1 C3 precheck via `python3 -I` after clearing `PYTHONPATH`. Isolated mode omits both `''` and the script directory from `sys.path`, so `rulebook_support` import raised `ModuleNotFoundError` and reward stayed 0 before pytest. Fix: dedicated `/tests/c3_dedup_coverage.py` with `sys.path.insert(0, "/tests")`, keep `-I`/empty `PYTHONPATH`, require revision-only mutants to change ≥3 graded `selected_record_id`s, and ship extra same-revision candidate decoys for QC C3.
+
 ### 2026-08-04
 
 - `dynamo-347b43c-machine-learning-and-ai`: pass@2 blocked as infra-only `AgentSetupTimeoutError` during Daytona `_attempt_tmux_installation` (both trials, no agent execution). Packaging fix: preinstall `tmux` in the task Dockerfile and add `environment/.dockerignore`. Same commit keeps WRM load-bearing on 9–10 features with three cheap edit features, dependent calibration prefixes, dual near-miss profiles with uniqueness isolation, and submission timeout 120s.
