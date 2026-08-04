@@ -75,6 +75,10 @@ Keep notes short. Promote broad Dynamo lessons into `PROJECT_DYNAMO_LEARNINGS.md
 
 ### 2026-08-04
 
+- `dynamo-02d1260`: Harbor oracle failed (reward 0) after python-path fix because `run_solver_on` chmod'd temp workspace parents to `0711` after setting output dirs `0777`, so demoted uid 65534 could not write `OUTPUT_JSON`. Fix: keep workspace/output dirs world-writable, make `/tmp` ancestors traversable, never clamp writable parents to `0711`.
+
+### 2026-08-04
+
 - `dynamo-af3b0b2-mathematics-and-formal-reasoning`: Stage-1 `instruction_concision` failed after the pass@2 harden because the prompt disclosed that modular products make dominance unsafe and that enumeration is not viable. Fix: strip approach hints; add disclosed ordered child `mix` fold + `root_mix` output; keep load-Pareto trap (78 vs 147) and child-order witness. Local 10/10.
 
 ### 2026-08-04
@@ -384,6 +388,7 @@ Keep notes short. Promote broad Dynamo lessons into `PROJECT_DYNAMO_LEARNINGS.md
 - `dynamo-b8c7197-file-and-media-operations`: QC C3 can mutate tap `op` validation from `("replace","add")` to also accept `"under"` and still pass if every graded tap schema reject is a non-integer/stride failure. Records allow `under`, taps do not — add a visible and always-present hidden tap with otherwise-valid fields and illegal `op=under`, regenerate expected report/audit/index, and assert `taps.bad_schema >= 2` so the mutant fails exact counter comparison.
 - `dynamo-b8c7197-file-and-media-operations`: Deep Review can block when patches explicitly say "applied bytes are row-major" but taps only say "read in slot order … apply," because agents reasonably write slot-symmetric destinations. State tap write order and saturating `add` in `instruction.md` and fixture notes, keep a stride>1 witness, and change `tests/test_outputs.py` in the same push so enforced cosine does not treat the fairness fix as a near-identical redraw.
 - `dynamo-b8c7197-file-and-media-operations`: After disclosing tap write-order, pass@2 can flip to 2/2 solved and pass@5 to 4/5 because the prompt telegraphs apply-time `source_sha256` checking. Soften that timing wording, add a disclosed destination-pixel calibration key bias into tap transforms, and ship same-frame tap chains in visible/hidden fixtures so eager hashing and bias-ignorant solvers fail by ordinary byte/counter mismatch.
+- `dynamo-b8c7197-file-and-media-operations`: Adding key-bias prose can push Qwen3 tokens over 1500 even when word count looks modest. Compress `instruction.md` into a contract that points to agent-visible `FORMAT_NOTES.txt` for output byte layouts, keep decisive rules in the prompt, and use the freed budget for a load-bearing post-tap `folds.tsv` ledger before patches so difficulty and static pass in one commit.
 
 ### 2026-08-03
 
