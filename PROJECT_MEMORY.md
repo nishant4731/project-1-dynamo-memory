@@ -98,6 +98,10 @@ Keep notes short. Promote broad Dynamo lessons into `PROJECT_DYNAMO_LEARNINGS.md
 
 ### 2026-08-04
 
+- `dynamo-feeda48-mathematics-and-formal-reasoning`: After tag/parity harden, pass@2 solved 2/2 (agents converged on bitmask + 3D Pareto DP). Fair ratchet: fourth residue, disclosed ordered child `mix` fold + `root_mix`, `mix_weight`/`bind_weight*((peak*mix) mod bind_mod)` so load-only Pareto is unsafe, equal-peak-only dominance (bind is non-monotonic), heavy locals, mix/bind + residue4 witnesses. Keep advertised scale at 16×4 with entailment caching so reference stays under verifier timeout; do not push 24–28×6–8 with mix in the state. Local pytest 13/13.
+
+### 2026-08-04
+
 - `dynamo-feeda48-mathematics-and-formal-reasoning`: pass@5 blocked at 4/5 (too easy) after otherwise green gates; agents solved with DFS or tree DP. Hardened with disclosed parent/child bridge + ordered-sibling tag costs, global parity XOR, 16×4 scale, const-mode witnesses, and brute-force small-oracle checks.
 
 ### 2026-08-04
