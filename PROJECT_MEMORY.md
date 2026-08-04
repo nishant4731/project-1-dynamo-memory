@@ -97,6 +97,7 @@ Keep notes short. Promote broad Dynamo lessons into `PROJECT_DYNAMO_LEARNINGS.md
 - `dynamo-90f4c03-file-and-media-operations`: Dynamo eval blocked first push on undisclosed exact schemas (report counter keys, census header, trail keys, curves identity shape), non-atomic tests, and missing real-world audience in `difficulty_explanation`. Fix commit `edfdd0d` expands normative `CONTRACT.txt` schemas, atomizes `test_outputs.py`, and names media-forensics/archival audience.
 
 - `dynamo-a0fb517-model-training-and-ml-infrastructure`: Built blank scaffold into distributed-training AllReduce spool salvage (`rebind-spool`) with calibration-inferred codec/parity/clock profiles, offset-ordered sealing phases, cross-rank taps, evidence consumption, and submission-salted hidden jobs. Local solution/reference matched across visible+hidden seeds; Docker unavailable on this host (socket owned by another user), so Harbor oracle/nop deferred to CI. PR: https://github.com/handshake-project-dynamo/dynamo-a0fb517-model-training-and-ml-infrastructure/pull/1
+- `dynamo-a0fb517-model-training-and-ml-infrastructure`: Oracle validation failed because hidden verifier copied the tool into a `tempfile.mkdtemp` 0700 directory then dropped to uid 65534; nobody could not open the script (`Permission denied`). Fix: chmod tool-copy parent 0755 and chown tool+dir to 65534 before the unprivileged subprocess.
 
 ### 2026-08-04
 
