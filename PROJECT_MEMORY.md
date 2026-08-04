@@ -75,6 +75,10 @@ Keep notes short. Promote broad Dynamo lessons into `PROJECT_DYNAMO_LEARNINGS.md
 
 ### 2026-08-04
 
+- `dynamo-347b43c-machine-learning-and-ai`: pass@2 failed as a verifier infrastructure crash — `write_expected_outputs` raised when a hash-derived hidden seed lacked a WRM-decisive graded intervention. Fix: never raise on that self-check; bake WRM before concept-order bias shifts (those shifts wipe cheap same-cost flip diversity); keep an early-sorting `tar_.wrm_tie` witness in the first five plans; add disclosed `edit_radius` + near-miss decoy profiles for difficulty. Local WRM=True on visible, crash seed 85645, salted hidden, and stress seeds.
+
+### 2026-08-04
+
 - `dynamo-b8c7197-file-and-media-operations`: pass@2 stayed 2/2 solved after folds + destination-pixel key bias because agents transcribed the fully specified pipeline. Fair ratchet: replace tap `key_byte` with evidence-mined `B[r]` selected as the unique `bias_profiles.tsv` match to `swatches.tsv` (XOR key decode-only), delete seven evidence files, vary winning profiles/hidden same-frame hop density, and keep Qwen token margin. Mutants that use XOR key or a decoy profile diverge on visible + hidden bytes.
 
 - `dynamo-90f4c03-file-and-media-operations`: AVA union gate blocked after otherwise green checks on two classic reusable-CLI gaps: (1) `sound_verifier` — visible digest tests only read pre-staged `/app/recovered` and never ran the submitted CLI on the shipped vault; fix with a pristine `/tests/visible_vault` copy + `run_candidate` pin check. (2) `verifier_coverage` — `importlib.spec_from_file_location` for live-coupler mutants/import probes; replace with subprocess / `compile`+`exec` under non-`__main__`. Also submission-salt opaque hidden tags from `sha256(submitted tool)` so fixed answer tables cannot pass the cohort.
