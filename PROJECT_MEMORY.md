@@ -119,6 +119,7 @@ Keep notes short. Promote broad Dynamo lessons into `PROJECT_DYNAMO_LEARNINGS.md
 
 - `dynamo-a0fb517-model-training-and-ml-infrastructure`: Built blank scaffold into distributed-training AllReduce spool salvage (`rebind-spool`) with calibration-inferred codec/parity/clock profiles, offset-ordered sealing phases, cross-rank taps, evidence consumption, and submission-salted hidden jobs. Local solution/reference matched across visible+hidden seeds; Docker unavailable on this host (socket owned by another user), so Harbor oracle/nop deferred to CI. PR: https://github.com/handshake-project-dynamo/dynamo-a0fb517-model-training-and-ml-infrastructure/pull/1
 - `dynamo-a0fb517-model-training-and-ml-infrastructure`: Oracle validation failed because hidden verifier copied the tool into a `tempfile.mkdtemp` 0700 directory then dropped to uid 65534; nobody could not open the script (`Permission denied`). Fix: chmod tool-copy parent 0755 and chown tool+dir to 65534 before the unprivileged subprocess.
+- `dynamo-a0fb517-model-training-and-ml-infrastructure`: QC C3 blocked because tap `(order,tap_id)` and fragment `(start,id)` secondary keys were not load-bearing. Fix: same-order tap pair written in reverse tap_id file order, same-start multi-length saturating fragment triple, local order-only/reverse mutant probes, integer `seal_order` wording, undecodable odd-length raw16 witness, synced symlink path checks.
 
 ### 2026-08-04
 
