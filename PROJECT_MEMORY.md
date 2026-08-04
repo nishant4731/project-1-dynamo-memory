@@ -75,6 +75,8 @@ Keep notes short. Promote broad Dynamo lessons into `PROJECT_DYNAMO_LEARNINGS.md
 
 ### 2026-08-04
 
+- `dynamo-b8c7197-file-and-media-operations`: pass@2 stayed 2/2 solved after folds + destination-pixel key bias because agents transcribed the fully specified pipeline. Fair ratchet: replace tap `key_byte` with evidence-mined `B[r]` selected as the unique `bias_profiles.tsv` match to `swatches.tsv` (XOR key decode-only), delete seven evidence files, vary winning profiles/hidden same-frame hop density, and keep Qwen token margin. Mutants that use XOR key or a decoy profile diverge on visible + hidden bytes.
+
 - `dynamo-90f4c03-file-and-media-operations`: AVA union gate blocked after otherwise green checks on two classic reusable-CLI gaps: (1) `sound_verifier` — visible digest tests only read pre-staged `/app/recovered` and never ran the submitted CLI on the shipped vault; fix with a pristine `/tests/visible_vault` copy + `run_candidate` pin check. (2) `verifier_coverage` — `importlib.spec_from_file_location` for live-coupler mutants/import probes; replace with subprocess / `compile`+`exec` under non-`__main__`. Also submission-salt opaque hidden tags from `sha256(submitted tool)` so fixed answer tables cannot pass the cohort.
 - `dynamo-347b43c-machine-learning-and-ai`: QC C3 still failed after README/WRM notes because dropping `weakest_revert_margin` from the counterfactual selection key matched every graded intervention. Fix: concentrate cheap `edit_cost` on two features, bake `tar_wrm_tie` where same-cost plans disagree under WRM vs margin, assert graded interventions diverge under a no-WRM mutant before writing expected outputs, and regenerate the visible pack. Local solution matched packlib on visible + salted hidden seeds.
 
@@ -85,6 +87,10 @@ Keep notes short. Promote broad Dynamo lessons into `PROJECT_DYNAMO_LEARNINGS.md
 ### 2026-08-04
 
 - `dynamo-af3b0b2-mathematics-and-formal-reasoning`: Stage-1 `instruction_concision` failed after the pass@2 harden because the prompt disclosed that modular products make dominance unsafe and that enumeration is not viable. Fix: strip approach hints; add disclosed ordered child `mix` fold + `root_mix` output; keep load-Pareto trap (78 vs 147) and child-order witness. Local 10/10.
+
+### 2026-08-04
+
+- `dynamo-af3b0b2-mathematics-and-formal-reasoning`: After mix/Pareto harden, pass@2 still solved 2/2 (one golden DP, one DFS+suffix pruning on n=14). Fair ratchet: remove authoritative weights from instances, require probe-fitted `/app/policy.json` from `public_cases.json` + `FORMAT_NOTES.txt`, ship wrong `hint_*` decoys, and raise hidden scale to n=18. Local remapped pytest 11/11 oracle / all-fail nop (`ee8690d`).
 
 ### 2026-08-04
 
