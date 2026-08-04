@@ -75,6 +75,10 @@ Keep notes short. Promote broad Dynamo lessons into `PROJECT_DYNAMO_LEARNINGS.md
 
 ### 2026-08-05
 
+- `dynamo-331d3a0-file-and-media-operations`: `review / ava_review` went red even though the job log had `routing=static_pass` / `AVA routing: pass` and the verdict gate printed PASS. Failure was only the sticky comment GraphQL post (`Something went wrong while executing your query`), which skipped QC/trials. Fork `gh run rerun --failed` 404s — push a small real SHA (dropped unused `read_wav_pcm`) to re-trigger. Do not treat a red AVA check as a content block without reading the job log routing line. pass@2 on prior head was 1/2 (valid near-miss on punch-blend floor vs toward-zero); keep that crux unless sticky says otherwise.
+
+### 2026-08-05
+
 - `dynamo-feeda48-mathematics-and-formal-reasoning`: After policy.json harden, pass@2 still 2/2 — agents recovered all 10 constants via disclosed bounds + Gaussian elimination in ~13 steps and solved n=18 in 5–8s. Fair ratchet: remove tight numeric bounds from FORMAT_NOTES; withhold bind/twist from the instruction score line (candidate family only in FORMAT_NOTES); add `seal_bias` into mix and `twist_weight*((valley*root_mix) mod twist_mod)`; make `hint_*` partially correlated (true peak/spread, wrong mix_mod/seal_bias/twist). Local pytest 13/13.
 
 ### 2026-08-05
