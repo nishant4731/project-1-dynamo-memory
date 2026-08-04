@@ -75,6 +75,8 @@ Keep notes short. Promote broad Dynamo lessons into `PROJECT_DYNAMO_LEARNINGS.md
 
 ### 2026-08-04
 
+- `dynamo-b704b11-file-and-media-operations`: Built blank File search and filtering scaffold into locker-sieve (`dynamo/locker-sieve`): reusable `/app/sieve_locker.py` with CRC-signed slips, calibration-inferred score profile, kinship hop-budget reachability, seal/referee/embargo markers, ordered blot mask/xor/clip stamps, folio caps + lane floor promotions, multi-artifact receipt binding, and evidence consumption of slips/bonds. Local staged oracle 10/10 and nop failed as required; solution matched reference on visible+4 hidden seeds. Docker Desktop unavailable on this host, so Harbor oracle/nop deferred to CI. PR: https://github.com/handshake-project-dynamo/dynamo-b704b11-file-and-media-operations/pull/1
+
 - `dynamo-feeda48-mathematics-and-formal-reasoning`: Built first-submission Formal verification seal-forge (`dynamo/seal-forge`): reusable assume-guarantee contract-tree synthesizer with locally inductive finite machines, simultaneous local updates, parent-guarantee→child-assume entailment, three modular residues, hinge-aware peak/valley scoring, evidence via public cases, and submission-salted hidden verifier coverage. Local pytest 10/10; Docker unavailable so Harbor oracle/nop deferred to CI. PR: https://github.com/handshake-project-dynamo/dynamo-feeda48-mathematics-and-formal-reasoning/pull/1
 
 ### 2026-08-04
