@@ -75,6 +75,8 @@ Keep notes short. Promote broad Dynamo lessons into `PROJECT_DYNAMO_LEARNINGS.md
 
 ### 2026-08-05
 
+- `dynamo-d2e7d26-games-puzzles-and-interactive-simulation` (`dynamo/tapestry-loom-replay`): pass@2 blocked as task/verifier when `w_stain` was unrecoverable — every forecast best candidate had `stain_writes=0` while RULEBOOK promised non-degenerate stain. Fix: ensure selected forecast candidates leave a `~` tile (`case_08`/`case_12`) so `stain_writes>0` on the best vector; verify uniqueness before push.
+
 - `dynamo-331d3a0-file-and-media-operations`: After QC wording fixes, Stage-1 static failed Qwen3 at 1504 (>1500) while o200k was only 1461. Compress instruction into a denser contract that points to FORMAT_NOTES for exact spool JSON types; keep invert bool-only, floor `//`, optional TSV absence, and import ban in the prompt. Verify with the Qwen3 `tokenizer.json` (here 1371) before push — do not trust o200k near the cap.
 
 ### 2026-08-05
