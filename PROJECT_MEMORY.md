@@ -75,6 +75,7 @@ Keep notes short. Promote broad Dynamo lessons into `PROJECT_DYNAMO_LEARNINGS.md
 ## Dated Notes
 
 ### 2026-08-05
+- `dynamo-741aaea-games-puzzles-and-interactive-simulation` (`dynamo/harbor-hop`): pass@2 on `efaf690` blocked 2/2 solved (~37–47 min). Ratchet: rename WGC→bank_transfer, three-warden coupled_load, 14–15 entity visibles, 5×(13–14) dense hidden packs, verifier 1800s. Harbor oracle 1.0 (~5m) / nop 0.0.
 - `dynamo-f227c18-file-and-media-operations` (`dynamo/luma-delta-tape-restitch`): ava_review BLOCK on `4ba869f` (supported_major=2) — sound_verifier: consume checks never retained manifest/FORMAT_NOTES; reference `tape_restitch` importable from `/tests`. Fix: rename to `_tape_ref_impl.py`, `_run_tool` with `python3 -I` + chmod `/tests` 000, assert retained docs, disclose keep-manifest rule. Harbor oracle 1.0 / nop 0.0. Commit `31b0da5`.
 
 - `dynamo-d2e7d26-games-puzzles-and-interactive-simulation` (`dynamo/tapestry-loom-replay`): pass@2 on `40887bb` was 2/2 in ~25m (shed/drawdown/binder transcribed). Fix: recover collision redistribution, shed phase_select, drawdown least-id, binder bonus from calibration; keep pulse `(y,x,id)` disclosed; witness via case_03/04/07/12.
