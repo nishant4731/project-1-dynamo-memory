@@ -150,6 +150,10 @@ Keep notes short. Promote broad Dynamo lessons into `PROJECT_DYNAMO_LEARNINGS.md
 
 - `dynamo-af3b0b2-mathematics-and-formal-reasoning`: pass@5 blocked at 3/5 (agents converged on moduli brute + linear fit + full-state DP). Extreme ratchet: parent-option `anchor` costs (forces per-child-option DP tables), `bind_weight*((peak_load*root_mix)%bind_mod)` in policy recovery, drop unused public `optimum` leak, bushy+18-node hidden cohort, ignore-anchor and bind/Pareto traps. Local remapped pytest 13/13 oracle / all-fail nop.
 
+### 2026-08-05
+
+- `dynamo-af3b0b2-mathematics-and-formal-reasoning`: pass@2 was 1/2 with the only fail classified as in-progress-timeout (public case exposed spark/load Pareto so one agent fixed it, the other was still debugging at 3600s). Cannot raise agent timeout past the hard cap. Fair fix: regenerate public cases so aggressive Pareto still matches optimum (latent crux), keep aggressive Pareto fail on hidden tests, add disclosed option `tint` inside the mix fold, raise verifier budget for bushy cases. Local 15/15 oracle / all-fail nop (`17f6058`).
+
 ### 2026-08-04
 
 - `dynamo-feeda48-mathematics-and-formal-reasoning`: After mix/bind harden, pass@2 was 1/2 but blocked as in-progress-timeout/OOM (not a valid fail); DFS still solved n=16. Fair ratchet (af3b0b2 pattern): strip authoritative weights from instances; require `/app/policy.json` recovered from `public_cases.json` score_probes + `FORMAT_NOTES.txt`; plant wrong `hint_*` decoys; keep mix/bind/residue4; raise hidden scale to n=18×3. Wrong-hint and missed-fit failures are completed wrong answers (valid fails), not OOMs. Local pytest 13/13.
