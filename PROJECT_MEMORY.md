@@ -75,6 +75,10 @@ Keep notes short. Promote broad Dynamo lessons into `PROJECT_DYNAMO_LEARNINGS.md
 
 ### 2026-08-05
 
+- `dynamo-331d3a0-file-and-media-operations`: After QC wording fixes, Stage-1 static failed Qwen3 at 1504 (>1500) while o200k was only 1461. Compress instruction into a denser contract that points to FORMAT_NOTES for exact spool JSON types; keep invert bool-only, floor `//`, optional TSV absence, and import ban in the prompt. Verify with the Qwen3 `tokenizer.json` (here 1371) before push — do not trust o200k near the cap.
+
+### 2026-08-05
+
 - `dynamo-331d3a0-file-and-media-operations`: qc_gate blocked with C3-exec + B1 after green AVA/deep/pass@2. C3: permanent `os.remove(desk_lib.py)` before nobody runs made the next QC `test.sh` fail collection (`ModuleNotFoundError`) so every mutant got reward=0. Fix: stash/restore oracle helpers around the tool run and assert `/tests/desk_lib.py` returns. B1: `invert` was enforced as JSON bool via `type(x) is bool` with a `bad-invert-type` witness (`invert:1`) but instruction only said "typed fields"; spell exact JSON types + bool-only invert in instruction/FORMAT_NOTES. Also opaque tempdir names, `type(x) is int` report guards, no-importlib import probe, and held-out seed 4015 without punches/taps/sends.
 
 ### 2026-08-05
