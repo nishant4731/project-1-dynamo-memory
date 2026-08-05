@@ -75,6 +75,8 @@ Keep notes short. Promote broad Dynamo lessons into `PROJECT_DYNAMO_LEARNINGS.md
 ## Dated Notes
 
 ### 2026-08-05
+- `dynamo-f227c18-file-and-media-operations` (`dynamo/luma-delta-tape-restitch`): ava_review BLOCK on `4ba869f` (supported_major=2) — sound_verifier: consume checks never retained manifest/FORMAT_NOTES; reference `tape_restitch` importable from `/tests`. Fix: rename to `_tape_ref_impl.py`, `_run_tool` with `python3 -I` + chmod `/tests` 000, assert retained docs, disclose keep-manifest rule. Harbor oracle 1.0 / nop 0.0. Commit `31b0da5`.
+
 - `dynamo-d2e7d26-games-puzzles-and-interactive-simulation` (`dynamo/tapestry-loom-replay`): pass@2 on `40887bb` was 2/2 in ~25m (shed/drawdown/binder transcribed). Fix: recover collision redistribution, shed phase_select, drawdown least-id, binder bonus from calibration; keep pulse `(y,x,id)` disclosed; witness via case_03/04/07/12.
 <<<<<<< HEAD
 - `dynamo-741aaea-games-puzzles-and-interactive-simulation` (`dynamo/harbor-hop`): pass@2 on `091ac30` blocked 1 solved + 1 in-progress-timeout at 3600s. SHRINK (not raise timeout): 11–12 entity visibles, 4×(8–10) hidden, keep lex/ferry-right traps; verifier 900s. Harbor oracle 1.0 (~1m) / nop 0.0.
