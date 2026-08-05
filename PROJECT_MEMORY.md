@@ -75,6 +75,7 @@ Keep notes short. Promote broad Dynamo lessons into `PROJECT_DYNAMO_LEARNINGS.md
 ## Dated Notes
 
 ### 2026-08-05
+<<<<<<< HEAD
 - `dynamo-741aaea-games-puzzles-and-interactive-simulation` (`dynamo/harbor-hop`): pass@2 on `091ac30` blocked 1 solved + 1 in-progress-timeout at 3600s. SHRINK (not raise timeout): 11–12 entity visibles, 4×(8–10) hidden, keep lex/ferry-right traps; verifier 900s. Harbor oracle 1.0 (~1m) / nop 0.0.
 - `dynamo-f227c18-file-and-media-operations` (`dynamo/luma-delta-tape-restitch`): qc_gate C3 on `222ab20` — smallest-repair_id mutant still reward=1 because visible duplicate repairs shared xor/outcome. Fix: declare packet hash of repaired plane, diverge loser xor (`r0-dup`=0x11), hidden seed `227180012` + test. Harbor oracle 1.0 / nop 0.0.
 - `dynamo-f227c18-file-and-media-operations` (`dynamo/luma-delta-tape-restitch`): deep_review on `fa6e492` failed `complete_test_coverage` — gate/carry/mix same-identity supersession (greatest id) was never output-affecting (only repairs/packets). Fix: hidden seed `227180011` with duplicate gates/carries/mixes that change graded luma + counters; define `keyframes_applied`/`delta_packets_applied`. Harbor oracle 1.0 / nop 0.0. Commit `222ab20`.
@@ -84,6 +85,13 @@ Keep notes short. Promote broad Dynamo lessons into `PROJECT_DYNAMO_LEARNINGS.md
 - `dynamo-d2e7d26-games-puzzles-and-interactive-simulation` (`dynamo/tapestry-loom-replay`): pass@2 on `d1d4f66` was 1 solve + 1 in-progress timeout after hiding both collision math and pulse sort. Fix (`fb63270`): re-disclose collision redistribution (the expensive reverse-eng sink), keep only pulse sort recoverable, add disclosed never-sampled `^` leave tension+1 and phase+1 with hidden `caret_departure` witness (remove active `^` from visible path). Cannot raise agent timeout above 3600.
 
 - `dynamo-37191fd-machine-learning-and-ai`: Harbor oracle failed after the stability>=40 revision — `SystemRandom` held-out packs sometimes admitted 2 full-domain calibration fits (`expected one calibration fit, found 2`), and a few seeds also failed fragile-relay / spur-witness planting. Fix: enlarge hidden `calibration_rows`, always append diverse score-equation rows, strengthen until solution `infer_parameters` reports a unique fit; harden `_force_relay_with_stability` and spur-threshold witness search. Do not call full `solve_bundle` for the uniqueness probe (candidates are not written yet).
+=======
+- `dynamo-37191fd-machine-learning-and-ai`: pass@2 blocked 2/2 after verifier-local uniqueness fix — agents solved via ~740-label overdetermined visible pack (dead_max/purity readable from marginals). Fair ratchet: shrink visible+hidden calibration to compact boundary packs (~40–50 labels) with clamped label-only decoys; stop always-appending large diverse row sets during strengthen; add route near-tie links; assert `assert_compact_calibration`. Keep verifier-local uniqueness (no `/solution` import).
+
+- `dynamo-37191fd-machine-learning-and-ai`: deep_review blocked after green validation/pass@2 — held-out fixture uniqueness called `_load_solution_module()` / `/solution/audit_rulebook.py`, which is absent in the agent verify sandbox, so every trial crashed before running the agent tool (invalid reward=0). Fix: re-implement full-domain fit counting inside `tests/rulebook_support.py` only; never import `solution/` from the verifier. Lesson: uniqueness/strengthen gates must be verifier-local.
+
+- `dynamo-37191fd-machine-learning-and-ai`: Harbor oracle failed after the stability>=40 revision — `SystemRandom` held-out packs sometimes admitted 2 full-domain calibration fits (`expected one calibration fit, found 2`), and a few seeds also failed fragile-relay / spur-witness planting. Fix: enlarge hidden `calibration_rows`, always append diverse score-equation rows, strengthen until unique; harden `_force_relay_with_stability` and spur-threshold witness search. Do not call full `solve_bundle` for the uniqueness probe (candidates are not written yet).
+>>>>>>> 4397458 (Note af3b0b2 pass@5 twist and score-term Pareto ratchet.)
 
 - `dynamo-4ee9085-games-puzzles-and-interactive-simulation`: QC C3 blocked because every graded case had `leak_count=0` (score `-997*leak_count` unwitnessed). Fix: hidden `leak_gate` open-east-edge scene with `leak_count=1`, four graded probes. Commit `ac79376`.
 
@@ -186,6 +194,10 @@ Keep notes short. Promote broad Dynamo lessons into `PROJECT_DYNAMO_LEARNINGS.md
 ### 2026-08-05
 
 - `dynamo-af3b0b2-mathematics-and-formal-reasoning`: pass@5 blocked at 3/5 (agents converged on moduli brute + linear fit + full-state DP). Extreme ratchet: parent-option `anchor` costs (forces per-child-option DP tables), `bind_weight*((peak_load*root_mix)%bind_mod)` in policy recovery, drop unused public `optimum` leak, bushy+18-node hidden cohort, ignore-anchor and bind/Pareto traps. Local remapped pytest 13/13 oracle / all-fail nop.
+
+### 2026-08-05
+
+- `dynamo-af3b0b2-mathematics-and-formal-reasoning`: After QC green, pass@5 blocked at 3/5 (1 good-valid + 1 in-progress-timeout; need ≥3 fails). All five agents recovered all 13 constants; fails were unsound load/spark Pareto or DP init, while score-term Pareto still passed. Fair ratchet: twist → `((peak_load+valley_load)*root_mix) mod twist_mod` (valley-only disagrees on probes), add score-term Pareto trap, keep A1-fast hidden scale. Local remapped pytest 18/18 in ~53s.
 
 ### 2026-08-05
 
