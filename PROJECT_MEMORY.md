@@ -76,6 +76,9 @@ Keep notes short. Promote broad Dynamo lessons into `PROJECT_DYNAMO_LEARNINGS.md
 ### 2026-08-05
 
 - `dynamo-d2e7d26-games-puzzles-and-interactive-simulation` (`dynamo/tapestry-loom-replay`): pass@2 blocked as task/verifier when `w_stain` was unrecoverable — every forecast best candidate had `stain_writes=0` while RULEBOOK promised non-degenerate stain. Fix: ensure selected forecast candidates leave a `~` tile (`case_08`/`case_12`) so `stain_writes>0` on the best vector; verify uniqueness before push.
+- `dynamo-331d3a0-file-and-media-operations`: qc_gate blocked again after Tier-1 cleared prior C3/B1: (C3) trailing-wins punch-fade mutant still scored 1 because every punch had `2F<=L`; ship `fade-ov` with `L=6,F=4` on visible+hidden automation seeds and assert load-bearing divergence. (E3) `test_import_does_not_write_outputs` executed agent-writable `/app/rebake_desk.py` via `exec(compile(...))`; replace with compile+AST `__main__` guard and no module-level calls. Also chmod oracle stash `0700`/`0600`.
+
+### 2026-08-05
 
 - `dynamo-331d3a0-file-and-media-operations`: After QC wording fixes, Stage-1 static failed Qwen3 at 1504 (>1500) while o200k was only 1461. Compress instruction into a denser contract that points to FORMAT_NOTES for exact spool JSON types; keep invert bool-only, floor `//`, optional TSV absence, and import ban in the prompt. Verify with the Qwen3 `tokenizer.json` (here 1371) before push — do not trust o200k near the cap.
 
@@ -88,6 +91,8 @@ Keep notes short. Promote broad Dynamo lessons into `PROJECT_DYNAMO_LEARNINGS.md
 - `dynamo-b8c7197-file-and-media-operations`: QC C3 blocked again after the floor≠trunc fix: sort mutant `(seq,kind,id)` → `(seq,id)` still passed because existing same-seq ids ordered record before tap alphabetically. Fix: ship `a_kind_tap`/`z_kind_rec` same-seq pair (tap id < record id) on visible+hidden, disclose kind-before-id, assert kindless-sort mutant diverges; keep unclamped negative-gain survivor.
 
 - `dynamo-b8c7197-file-and-media-operations`: QC C3 blocked after green pass@2/AVA/deep: tap gain mutant `//` → `int(/)` still matched because negative non-integral results + small bias all clamped to 0. Fix: disclose floor-toward−∞; ship late `tap-negfloor` with corner paint (non-multiples of 7) and large bias so floor≠trunc survives clamp; assert trunc mutant diverges on visible + every hidden seed before push.
+
+- `dynamo-37191fd-machine-learning-and-ai`: After B5 spur witnesses, deep review + AVA blocked: (1) `score_witness` aborted on some tool-hash seeds when even `margin_weight` made odd target `-35` unreachable via margin-only search (correct agents scored 0); (2) pure `sha256(tool)^salt` hidden seeds were a copyable 4-seed `bundle_config` lookup. Fix: search all profiles and vary frequency/edges for spur witnesses; mix SystemRandom into `hidden_seeds`; reject blank ids in verifier `parse_row`.
 
 - `dynamo-37191fd-machine-learning-and-ai`: QC B5 blocked after Tier-1/AVA green: spurious cut `score<=-35` was in instruction but missing from README, and visible calibration did not pin it (near-threshold rows were already spurious via purity/sign conflict, so `score<=-30` still matched). Fix: document the full label cascade including `score<=-35` in README; ship score==-35 spurious-via-score and score==-34 background witnesses; assert a classify mutant at -30 changes graded outputs.
 
