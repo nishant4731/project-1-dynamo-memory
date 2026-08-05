@@ -76,6 +76,8 @@ Keep notes short. Promote broad Dynamo lessons into `PROJECT_DYNAMO_LEARNINGS.md
 ## Dated Notes
 
 ### 2026-08-06
+- `dynamo-f227c18-file-and-media-operations` (`dynamo/luma-delta-tape-restitch`): qc_gate E4 on `31b0da5` — root tool subprocess could read `/tests` oracle despite chmod 000. Fix: stash `_tape_ref_impl.py`+`expected_visible.json`, demote to uid 65534, world-writable temp trees, restore secrets after. Harbor oracle 1.0 / nop 0.0. Commit `05b516d`.
+
 - `dynamo-37191fd-machine-learning-and-ai`: QC A1+D4 after green pass@2/deep/AVA — `hidden_seeds` used `SystemRandom`, so fixed-oracle regrades flipped reward 0↔1 and oracle sometimes failed on unlucky packs. Fix: deterministic 4-seed cohort from a verified `HELD_OUT_SEED_POOL` shuffled by `Random(sha256(tool) XOR const)`; bump verifier timeout to 300s. Lesson: QC D4 rejects runtime entropy even when expecteds are recomputed.
 
 ### 2026-08-06
