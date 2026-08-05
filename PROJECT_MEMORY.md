@@ -4,6 +4,7 @@ This is the living memory for work in `/Users/nishantchoudhary/Documents/Project
 
 Use it at the start of every new task, and update it whenever a blocker, review issue, PR pipeline issue, or reusable lesson appears.
 
+- `dynamo-9294744-file-and-media-operations` (`dynamo/chroma-vault`): qc_gate E4 after B1/E7 clear — root tool subprocess could still read `/tests` oracle despite chmod 000. Fix: stash `_chroma_ref_impl.py`+`expected_visible.json` during CLI, demote to uid 65534, world-writable temp trees, restore secrets after. Harbor oracle 1.0.
 - `dynamo-9294744-file-and-media-operations` (`dynamo/chroma-vault`): qc_gate B1/E7 — `packets_superseded` ambiguous across two-stage dedupe; `/tests/vault_rebuild.py` importable by tool subprocess. Fix: stage-1-only superseded wording + seed-414 witness; rename oracle to `_chroma_ref_impl.py`; `_run_tool` uses `python3 -I`, cleared env, chmod `/tests` 000 during CLI. Harbor oracle 1.0 (19 tests).
 ## Default Startup Checklist
 
