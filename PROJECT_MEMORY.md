@@ -75,6 +75,8 @@ Keep notes short. Promote broad Dynamo lessons into `PROJECT_DYNAMO_LEARNINGS.md
 
 ### 2026-08-05
 
+- `dynamo-9294744-file-and-media-operations` (`dynamo/chroma-vault`): Removing tie-break directions from FORMAT_NOTES to harden pass@2 caused Stage-1 review `unambiguous` FAIL (no shipped reference recovery either). Fix: restore full revision/packet_id, offset-tie, and greatest-id dedupe disclosure, and add a disclosed post-blend `echoes.tsv` live-Y chaining subsystem with visible/hidden witnesses (seed 929474419). Harbor oracle 1.0 / nop 0.0 (16 tests). Commit `1431666`. Lesson: do not hide graded tie-breaks for difficulty; add disclosed interacting sidecars instead.
+
 - `dynamo-d2e7d26-games-puzzles-and-interactive-simulation` (`dynamo/tapestry-loom-replay`): pass@2 blocked as task/verifier when `w_stain` was unrecoverable — every forecast best candidate had `stain_writes=0` while RULEBOOK promised non-degenerate stain. Fix: ensure selected forecast candidates leave a `~` tile (`case_08`/`case_12`) so `stain_writes>0` on the best vector; verify uniqueness before push.
 - `dynamo-331d3a0-file-and-media-operations`: qc_gate blocked again after Tier-1 cleared prior C3/B1: (C3) trailing-wins punch-fade mutant still scored 1 because every punch had `2F<=L`; ship `fade-ov` with `L=6,F=4` on visible+hidden automation seeds and assert load-bearing divergence. (E3) `test_import_does_not_write_outputs` executed agent-writable `/app/rebake_desk.py` via `exec(compile(...))`; replace with compile+AST `__main__` guard and no module-level calls. Also chmod oracle stash `0700`/`0600`.
 
