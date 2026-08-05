@@ -74,6 +74,7 @@ Keep notes short. Promote broad Dynamo lessons into `PROJECT_DYNAMO_LEARNINGS.md
 ## Dated Notes
 
 ### 2026-08-05
+- `dynamo-741aaea-games-puzzles-and-interactive-simulation` (`dynamo/harbor-hop`): pass@2 on `d897d11` blocked 2/2 solved (~23–36 min). Ratchet: denser alone_pairs on 16–17 entity visibles, ferry_start=right + nontrivial tide, salted 11–14 entity hidden packs; dense alone_pairs prune oracle BFS (avoid sparse 18–22 ents). Harbor oracle 1.0 (~16m) / nop 0.0.
 - `dynamo-d2e7d26-games-puzzles-and-interactive-simulation` (`dynamo/tapestry-loom-replay`): pass@2 on `d1d4f66` was 1 solve + 1 in-progress timeout after hiding both collision math and pulse sort. Fix (`fb63270`): re-disclose collision redistribution (the expensive reverse-eng sink), keep only pulse sort recoverable, add disclosed never-sampled `^` leave tension+1 and phase+1 with hidden `caret_departure` witness (remove active `^` from visible path). Cannot raise agent timeout above 3600.
 
 - `dynamo-37191fd-machine-learning-and-ai`: Harbor oracle failed after the stability>=40 revision — `SystemRandom` held-out packs sometimes admitted 2 full-domain calibration fits (`expected one calibration fit, found 2`), and a few seeds also failed fragile-relay / spur-witness planting. Fix: enlarge hidden `calibration_rows`, always append diverse score-equation rows, strengthen until solution `infer_parameters` reports a unique fit; harden `_force_relay_with_stability` and spur-threshold witness search. Do not call full `solve_bundle` for the uniqueness probe (candidates are not written yet).
