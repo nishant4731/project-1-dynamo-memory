@@ -74,6 +74,8 @@ Keep notes short. Promote broad Dynamo lessons into `PROJECT_DYNAMO_LEARNINGS.md
 ## Dated Notes
 
 ### 2026-08-05
+- `dynamo-37191fd-machine-learning-and-ai`: Harbor oracle failed after the stability>=40 revision — `SystemRandom` held-out packs sometimes admitted 2 full-domain calibration fits (`expected one calibration fit, found 2`), and a few seeds also failed fragile-relay / spur-witness planting. Fix: enlarge hidden `calibration_rows`, always append diverse score-equation rows, strengthen until solution `infer_parameters` reports a unique fit; harden `_force_relay_with_stability` and spur-threshold witness search. Do not call full `solve_bundle` for the uniqueness probe (candidates are not written yet).
+
 - `dynamo-4ee9085-games-puzzles-and-interactive-simulation`: QC C3 blocked because every graded case had `leak_count=0` (score `-997*leak_count` unwitnessed). Fix: hidden `leak_gate` open-east-edge scene with `leak_count=1`, four graded probes. Commit `ac79376`.
 
 - `dynamo-9294744-file-and-media-operations` (`dynamo/chroma-vault`): Removing tie-break directions from FORMAT_NOTES to harden pass@2 caused Stage-1 review `unambiguous` FAIL (no shipped reference recovery either). Fix: restore full revision/packet_id, offset-tie, and greatest-id dedupe disclosure, and add a disclosed post-blend `echoes.tsv` live-Y chaining subsystem with visible/hidden witnesses (seed 929474419). Harbor oracle 1.0 / nop 0.0 (16 tests). Commit `1431666`. Lesson: do not hide graded tie-breaks for difficulty; add disclosed interacting sidecars instead.
@@ -173,6 +175,10 @@ Keep notes short. Promote broad Dynamo lessons into `PROJECT_DYNAMO_LEARNINGS.md
 ### 2026-08-05
 
 - `dynamo-af3b0b2-mathematics-and-formal-reasoning`: pass@5 blocked at 3/5 (agents converged on moduli brute + linear fit + full-state DP). Extreme ratchet: parent-option `anchor` costs (forces per-child-option DP tables), `bind_weight*((peak_load*root_mix)%bind_mod)` in policy recovery, drop unused public `optimum` leak, bushy+18-node hidden cohort, ignore-anchor and bind/Pareto traps. Local remapped pytest 13/13 oracle / all-fail nop.
+
+### 2026-08-05
+
+- `dynamo-af3b0b2-mathematics-and-formal-reasoning`: After green pass@2/AVA/deep, qc_exec A1 blocked even though Harbor oracle was reward=1.0 — Daytona QC failed only `test_larger_case` (1 failed / 15 passed in 157s). Fix: keep semantic harden, shrink DP wall-clock (milder bushy/salted/permuted ranges; n=18 with small path sums), and speed `--emit-policy` recovery order. Local remapped pytest 16/16 in ~44s.
 
 ### 2026-08-05
 
