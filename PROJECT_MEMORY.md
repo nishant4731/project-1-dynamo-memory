@@ -75,6 +75,7 @@ Keep notes short. Promote broad Dynamo lessons into `PROJECT_DYNAMO_LEARNINGS.md
 ## Dated Notes
 
 ### 2026-08-05
+- `dynamo-d2e7d26-games-puzzles-and-interactive-simulation` (`dynamo/tapestry-loom-replay`): pass@2 on `40887bb` was 2/2 in ~25m (shed/drawdown/binder transcribed). Fix: recover collision redistribution, shed phase_select, drawdown least-id, binder bonus from calibration; keep pulse `(y,x,id)` disclosed; witness via case_03/04/07/12.
 <<<<<<< HEAD
 - `dynamo-741aaea-games-puzzles-and-interactive-simulation` (`dynamo/harbor-hop`): pass@2 on `091ac30` blocked 1 solved + 1 in-progress-timeout at 3600s. SHRINK (not raise timeout): 11–12 entity visibles, 4×(8–10) hidden, keep lex/ferry-right traps; verifier 900s. Harbor oracle 1.0 (~1m) / nop 0.0.
 - `dynamo-f227c18-file-and-media-operations` (`dynamo/luma-delta-tape-restitch`): qc_gate C3 on `222ab20` — smallest-repair_id mutant still reward=1 because visible duplicate repairs shared xor/outcome. Fix: declare packet hash of repaired plane, diverge loser xor (`r0-dup`=0x11), hidden seed `227180012` + test. Harbor oracle 1.0 / nop 0.0.
