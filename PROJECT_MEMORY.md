@@ -77,6 +77,7 @@ Keep notes short. Promote broad Dynamo lessons into `PROJECT_DYNAMO_LEARNINGS.md
 ## Dated Notes
 
 ### 2026-08-06
+- `dynamo-d2e7d26-games-puzzles-and-interactive-simulation` (`dynamo/tapestry-loom-replay`): pass@2 on `d873f50` was 2/2 (~20–40m) after shed/drawdown disclosure. Ratchet `73c23c7`: re-hide shed/drawdown; keep seq defined; recover glyph masks, selvage divisors, weft gain 11/8, size-scaled collision step (2- vs 3-shuttle); case_08 zero-delta weft + case_10 border stamps; case_04 least-id≠highest-tension.
 - `dynamo-37191fd-machine-learning-and-ai` (`dynamo/audit-rulebook`): pass@2 again 2/2 after compact packs — agents brute-forced ~83k globals then algebraic residual bias; routing still solvable. Extreme fair ratchet: disclosed `mix_op`/`mix_weight` score term (breaks pure residual separation), sparse `freq_divisor` domain, `purity_cut` channel gates with illegal-channel attractors, parallel same-(from,to,channel) link instances for critical_link-by-index, coverage asserts, regen+repin visible. Oracle ~7–10s; held-out pool re-verified.
 
 - `dynamo-f227c18-file-and-media-operations` (`dynamo/luma-delta-tape-restitch`): qc_gate E4 on `31b0da5` — root tool subprocess could read `/tests` oracle despite chmod 000. Fix: stash `_tape_ref_impl.py`+`expected_visible.json`, demote to uid 65534, world-writable temp trees, restore secrets after. Harbor oracle 1.0 / nop 0.0. Commit `05b516d`.
