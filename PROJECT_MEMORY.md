@@ -165,6 +165,10 @@ Keep notes short. Promote broad Dynamo lessons into `PROJECT_DYNAMO_LEARNINGS.md
 
 ### 2026-08-05
 
+- `dynamo-af3b0b2-mathematics-and-formal-reasoning`: After tint/latent-Pareto, pass@2 still solved 2/2 (both agents recovered all 12 constants via 7⁴ moduli brute + Gaussian elimination, then full-state DP). Fair ratchet (feeda48 pattern): drop published weight/moduli bounds from FORMAT_NOTES; add disclosed `seal_bias` into the mix fold (canonical `0..mix_mod-1`); change twist to `((valley_load*root_mix) mod twist_mod)`; plant partially correlated `hint_*` (true peak/spread, wrong mods/seal); scale hidden cases to max residue moduli + 4-option mid-size + 18-node load. Keep public cases Pareto-safe (latent). Local remapped pytest 16/16 oracle / nop fails (`ae8b2af`).
+
+### 2026-08-05
+
 - `dynamo-af3b0b2-mathematics-and-formal-reasoning`: pass@2 was 1/2 with the only fail classified as in-progress-timeout (public case exposed spark/load Pareto so one agent fixed it, the other was still debugging at 3600s). Cannot raise agent timeout past the hard cap. Fair fix: regenerate public cases so aggressive Pareto still matches optimum (latent crux), keep aggressive Pareto fail on hidden tests, add disclosed option `tint` inside the mix fold, raise verifier budget for bushy cases. Local 15/15 oracle / all-fail nop (`17f6058`).
 
 ### 2026-08-04
