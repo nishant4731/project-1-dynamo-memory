@@ -74,6 +74,7 @@ Keep notes short. Promote broad Dynamo lessons into `PROJECT_DYNAMO_LEARNINGS.md
 ## Dated Notes
 
 ### 2026-08-05
+- `dynamo-4ee9085-games-puzzles-and-interactive-simulation`: QC C3 blocked because every graded case had `leak_count=0` (score `-997*leak_count` unwitnessed). Fix: hidden `leak_gate` open-east-edge scene with `leak_count=1`, four graded probes. Commit `ac79376`.
 
 - `dynamo-9294744-file-and-media-operations` (`dynamo/chroma-vault`): Removing tie-break directions from FORMAT_NOTES to harden pass@2 caused Stage-1 review `unambiguous` FAIL (no shipped reference recovery either). Fix: restore full revision/packet_id, offset-tie, and greatest-id dedupe disclosure, and add a disclosed post-blend `echoes.tsv` live-Y chaining subsystem with visible/hidden witnesses (seed 929474419). Harbor oracle 1.0 / nop 0.0 (16 tests). Commit `1431666`. Lesson: do not hide graded tie-breaks for difficulty; add disclosed interacting sidecars instead.
 
