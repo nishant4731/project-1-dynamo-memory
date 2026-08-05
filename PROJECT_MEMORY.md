@@ -75,6 +75,10 @@ Keep notes short. Promote broad Dynamo lessons into `PROJECT_DYNAMO_LEARNINGS.md
 
 ### 2026-08-05
 
+- `dynamo-331d3a0-file-and-media-operations`: qc_gate blocked with C3-exec + B1 after green AVA/deep/pass@2. C3: permanent `os.remove(desk_lib.py)` before nobody runs made the next QC `test.sh` fail collection (`ModuleNotFoundError`) so every mutant got reward=0. Fix: stash/restore oracle helpers around the tool run and assert `/tests/desk_lib.py` returns. B1: `invert` was enforced as JSON bool via `type(x) is bool` with a `bad-invert-type` witness (`invert:1`) but instruction only said "typed fields"; spell exact JSON types + bool-only invert in instruction/FORMAT_NOTES. Also opaque tempdir names, `type(x) is int` report guards, no-importlib import probe, and held-out seed 4015 without punches/taps/sends.
+
+### 2026-08-05
+
 - `dynamo-b8c7197-file-and-media-operations`: QC C3 blocked again after the floor≠trunc fix: sort mutant `(seq,kind,id)` → `(seq,id)` still passed because existing same-seq ids ordered record before tap alphabetically. Fix: ship `a_kind_tap`/`z_kind_rec` same-seq pair (tap id < record id) on visible+hidden, disclose kind-before-id, assert kindless-sort mutant diverges; keep unclamped negative-gain survivor.
 
 - `dynamo-b8c7197-file-and-media-operations`: QC C3 blocked after green pass@2/AVA/deep: tap gain mutant `//` → `int(/)` still matched because negative non-integral results + small bias all clamped to 0. Fix: disclose floor-toward−∞; ship late `tap-negfloor` with corner paint (non-multiples of 7) and large bias so floor≠trunc survives clamp; assert trunc mutant diverges on visible + every hidden seed before push.
