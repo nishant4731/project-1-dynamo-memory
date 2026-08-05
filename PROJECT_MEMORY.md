@@ -109,6 +109,8 @@ Keep notes short. Promote broad Dynamo lessons into `PROJECT_DYNAMO_LEARNINGS.md
 
 ### 2026-08-05
 
+- `dynamo-feeda48-mathematics-and-formal-reasoning`: Stage-1 eval failed unambiguous/outcome_verified/test_instruction_alignment after the FORMAT_NOTES harden — tests imported `resolve_coupling_features` and scanned for `parse_coupling_candidates`. Fix: grade only end-state (candidate lists present in FORMAT_NOTES + exact `/app/policy.json`); keep oracle parsing candidates internally. Local pytest 14/14.
+
 - `dynamo-feeda48-mathematics-and-formal-reasoning`: AVA `verifier_coverage` blocked after pass@2 0/2 — solution never read FORMAT_NOTES and hard-coded bind/twist shapes. Fix: ship bind/twist feature candidate lists + definitions in FORMAT_NOTES; oracle parses candidates and selects the unique probe-fitting pair; verifier asserts notes content and that dropping `peak_plus_valley_times_mix` fails `resolve_coupling_features`. Local pytest 15/15.
 
 - `dynamo-feeda48-mathematics-and-formal-reasoning`: pass@2 2/2 after A6 fix — agents read full bind/twist formulas from FORMAT_NOTES and GE-fitted all 13 constants. Fair ratchet: strip score family from FORMAT_NOTES (root_mix + key names only); instruction says remaining terms come from score_probes; change twist feature to `((peak+valley)*root_mix) mod twist_mod` so valley-only guesses fail; true-weight / wrong-moduli hints; 12×4 salted + negative-valley witness. Local pytest 14/14.
