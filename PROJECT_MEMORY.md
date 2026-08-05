@@ -83,11 +83,15 @@ Keep notes short. Promote broad Dynamo lessons into `PROJECT_DYNAMO_LEARNINGS.md
 
 - `dynamo-b8c7197-file-and-media-operations`: QC C3 blocked after green pass@2/AVA/deep: tap gain mutant `//` → `int(/)` still matched because negative non-integral results + small bias all clamped to 0. Fix: disclose floor-toward−∞; ship late `tap-negfloor` with corner paint (non-multiples of 7) and large bias so floor≠trunc survives clamp; assert trunc mutant diverges on visible + every hidden seed before push.
 
+- `dynamo-37191fd-machine-learning-and-ai`: QC B5 blocked after Tier-1/AVA green: spurious cut `score<=-35` was in instruction but missing from README, and visible calibration did not pin it (near-threshold rows were already spurious via purity/sign conflict, so `score<=-30` still matched). Fix: document the full label cascade including `score<=-35` in README; ship score==-35 spurious-via-score and score==-34 background witnesses; assert a classify mutant at -30 changes graded outputs.
+
 - `dynamo-37191fd-machine-learning-and-ai`: After Docker/Oracle/Nop and pass@2 cleared, AVA blocked on `verifier_coverage` because `instruction.md` listed `calibration_labels.tsv` as `(selected_record_id, score, label, reasons)` and omitted `feature_id`, the join key used to recover learned params. Fix: document exact label columns including `feature_id` and join/`selected_record_id` match rules in instruction + visible README (repin README).
 
 - `dynamo-331d3a0-file-and-media-operations`: `review / ava_review` went red even though the job log had `routing=static_pass` / `AVA routing: pass` and the verdict gate printed PASS. Failure was only the sticky comment GraphQL post (`Something went wrong while executing your query`), which skipped QC/trials. Fork `gh run rerun --failed` 404s — push a small real SHA (dropped unused `read_wav_pcm`) to re-trigger. Do not treat a red AVA check as a content block without reading the job log routing line. pass@2 on prior head was 1/2 (valid near-miss on punch-blend floor vs toward-zero); keep that crux unless sticky says otherwise.
 
 ### 2026-08-05
+
+- `dynamo-feeda48-mathematics-and-formal-reasoning`: QC A6 (Oracle Edge-Case) blocked after green pass@2/AVA/deep: equal-peak `prune_by_load` treated higher `valley_load` as always better, but `twist_weight*((valley*root_mix) mod twist_mod)` is non-monotone. Fix: keep distinct `(valley, peak)` states (cost-dedupe only); add negative-valley twist witness; make `brute_minimum_score` filter residue/parity targets. Local pytest 14/14 (`500a0c1`).
 
 - `dynamo-feeda48-mathematics-and-formal-reasoning`: After policy.json harden, pass@2 still 2/2 — agents recovered all 10 constants via disclosed bounds + Gaussian elimination in ~13 steps and solved n=18 in 5–8s. Fair ratchet: remove tight numeric bounds from FORMAT_NOTES; withhold bind/twist from the instruction score line (candidate family only in FORMAT_NOTES); add `seal_bias` into mix and `twist_weight*((valley*root_mix) mod twist_mod)`; make `hint_*` partially correlated (true peak/spread, wrong mix_mod/seal_bias/twist). Local pytest 13/13.
 
