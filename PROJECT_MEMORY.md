@@ -102,6 +102,8 @@ Keep notes short. Promote broad Dynamo lessons into `PROJECT_DYNAMO_LEARNINGS.md
 
 ### 2026-08-05
 
+- `dynamo-feeda48-mathematics-and-formal-reasoning`: pass@2 2/2 after A6 fix — agents read full bind/twist formulas from FORMAT_NOTES and GE-fitted all 13 constants. Fair ratchet: strip score family from FORMAT_NOTES (root_mix + key names only); instruction says remaining terms come from score_probes; change twist feature to `((peak+valley)*root_mix) mod twist_mod` so valley-only guesses fail; true-weight / wrong-moduli hints; 12×4 salted + negative-valley witness. Local pytest 14/14.
+
 - `dynamo-feeda48-mathematics-and-formal-reasoning`: QC A6 (Oracle Edge-Case) blocked after green pass@2/AVA/deep: equal-peak `prune_by_load` treated higher `valley_load` as always better, but `twist_weight*((valley*root_mix) mod twist_mod)` is non-monotone. Fix: keep distinct `(valley, peak)` states (cost-dedupe only); add negative-valley twist witness; make `brute_minimum_score` filter residue/parity targets. Local pytest 14/14 (`500a0c1`).
 
 - `dynamo-feeda48-mathematics-and-formal-reasoning`: After policy.json harden, pass@2 still 2/2 — agents recovered all 10 constants via disclosed bounds + Gaussian elimination in ~13 steps and solved n=18 in 5–8s. Fair ratchet: remove tight numeric bounds from FORMAT_NOTES; withhold bind/twist from the instruction score line (candidate family only in FORMAT_NOTES); add `seal_bias` into mix and `twist_weight*((valley*root_mix) mod twist_mod)`; make `hint_*` partially correlated (true peak/spread, wrong mix_mod/seal_bias/twist). Local pytest 13/13.
