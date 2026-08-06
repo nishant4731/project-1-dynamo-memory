@@ -79,6 +79,11 @@ Keep notes short. Promote broad Dynamo lessons into `PROJECT_DYNAMO_LEARNINGS.md
 
 ## Dated Notes
 
+### 2026-08-07 — `dynamo-ffa06a0-games-puzzles-and-interactive-simulation` / QC C3 triple-digit portals (`ed8d643`)
+- Issue: qc_gate BLOCK on `489136a` after green pass@2/deep/AVA — C3-exec: portal `==2`→`>=2` mutant still reward=1; no graded scene had a digit appearing ≥3 times.
+- Fix: hidden `triple_digit_inert` probe (digit `4`×3 with actor step-on); FORMAT_NOTES clarifies once-or-≥3 inert; local mutant portal_uses 0 vs 5. Harbor oracle 1.0 / nop 0.0.
+- Prevention: For exactly-N portal/pair rules, ship a graded N+1 (or N-1) witness so loose comparison mutants diverge.
+
 ### 2026-08-06 — `dynamo-64a5641-file-and-media-operations` (`dynamo/mend-notebook`) — new build, subcat "Text editing and manipulation"
 - Built a text-native port of the recover-field interlace salvage engine: notebook = P pages of L×W symbols over a 64-char base64 alphabet, two blocks head/foot; codecs raw/rle/complement/delta_prev (delta vs previous emitted page's even/odd lines — silent trap), XOR patch repair, permanent moderation rejects, revision/segment_id selection, per-page layout (stack/foot_first/interleave) + case (verbatim/reverse_lines/shift) via effective-from-page precedence, ~18 exact-integer audit counters, byte-exact notebook + XOR delta + segment-path digests, spool consumed (evidence). PR #2.
 - Local no-docker validation (docker/harbor unavailable, py3.9): oracle 8/8, nop rejected, mutant sweep 25/25 killed after adding approve-only+reject-only veto witnesses (veto_cleared hole) and a redundant valid patch (patch_order hole). Held-out generalization across 5 variants witnesses all layouts/cases/codecs.
