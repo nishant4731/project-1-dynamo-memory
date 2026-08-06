@@ -78,6 +78,13 @@ Keep notes short. Promote broad Dynamo lessons into `PROJECT_DYNAMO_LEARNINGS.md
 
 ## Dated Notes
 
+### 2026-08-06 — `dynamo-7328085-machine-learning-and-ai` / entity-lattice-weave
+- Issue: `review / similarity` FAIL on `b163cd6` with GitHub Actions `Service Unavailable` resolving action download info; cosine_similarity PASS; all QC/validation/pass@ skipped. Stale QC sticky still QC-BASE `71d0a62`.
+- Root cause: Infrastructure/action-registry outage, not a duplicate score. A6/B5/C3 content fixes were already on HEAD but never re-evaluated.
+- Fix: Single hardening commit — merge_recipe worked `aliases_applied=4` example; CLI + config-override + must-self-pair mutant guard tests; keep prior A6/B5/C3 logic. Docker 32/32 reward=1.
+- Prevention: On similarity red with no scores / Service Unavailable / 529, prefer one real verifier-surface commit over empty retries; do not treat as task-duplicate evidence.
+
+
 ### 2026-08-06 — `dynamo-c9a0d11-data-science-and-reporting` / AVA+adversarial infra flake (4faddad)
 - Issue: run `31114998918` — pass@2 **PASS** (1/2 valid-fail, JSON key-sort near-miss) and deep_review **PASS**, but `ava_review` **cancelled** (self-hosted runner not acquired) and `adversarial_review` **fail** (action download Service Unavailable). qc/trials skipped downstream.
 - Root cause: platform infra, not task contract. Sticky deep_review content was PASS; adversarial sticky also PASS. Fork `gh run rerun --failed` 404s.
