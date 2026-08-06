@@ -105,6 +105,7 @@ Keep notes short. Promote broad Dynamo lessons into `PROJECT_DYNAMO_LEARNINGS.md
 
 
 ### 2026-08-06
+- `dynamo-d2e7d26-games-puzzles-and-interactive-simulation` (`dynamo/tapestry-loom-replay`): pass@2 on `4aaabfa` was 1/1 solved after collision/shed/drawdown disclosure. Ratchet `a74aec0`: keep collision disclosed (QC B5); re-hide shed/drawdown/loom; binder bonus becomes 2+phase with case_14/hidden phase-2 witnesses; keep weft-gain + forecast-weight recovery.
 - `dynamo-741aaea-games-puzzles-and-interactive-simulation` (`dynamo/harbor-hop`): after mark-stacking ratchet `2117cb2`, `review / cosine_similarity` failed with Actions `Failed to resolve action download info` / `Service Unavailable` (no similarity scores); downstream checks skipped. Infra-only — empty retrigger commit, do not change task logic.
 - `dynamo-741aaea-games-puzzles-and-interactive-simulation` (`dynamo/harbor-hop`): pass@2 on `627e1f9` blocked **2/2 solved** (~21–30 min) after SHRINK. Fair ratchet per sticky: hide once-only mark_ease + floor-at-1 prose; add `cal_once_mark`/`cal_ease_floor` full witnesses; 13-ent visibles / 12–13 hidden; expert 3.5h. Harbor oracle 1.0 (~2m) / nop 0.0.
 - `dynamo-d2e7d26-games-puzzles-and-interactive-simulation` (`dynamo/tapestry-loom-replay`): qc_gate on `265fcde` blocked B5 (collision step underdetermined for held-out sizes) + empty B3. Fix `4aaabfa`: disclose collision/shed/drawdown formulas; case_13 + hidden four-collision pin saturating step≠n-1; keep binder/weft-gain/forecast recovery.
