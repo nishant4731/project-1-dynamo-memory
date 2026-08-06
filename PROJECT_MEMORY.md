@@ -78,6 +78,12 @@ Keep notes short. Promote broad Dynamo lessons into `PROJECT_DYNAMO_LEARNINGS.md
 
 ## Dated Notes
 
+### 2026-08-06 — `dynamo-c9a0d11-data-science-and-reporting` / trustline pass@2 2/2 after winsor format (f7b0a1d)
+- Issue: pass@2 **FAIL** on `f7b0a1d` — **2/2 solved** (~24–52 min, mean 1.000); gate failed; deep_review/ava/qc skipped. Prior commit only disclosed `winsor_audit` 4dp format (task/verifier fix).
+- Root cause: Format disclosure removed the last ambiguity; agents transcribed the full graded contract with spare budget. Global `min_entities=3` would drop E003 witnesses — too blunt.
+- Fix: Keep global `min_entities=2`; set **M_STOCK** `unit_scale=10` + per-metric `min_entities=3` so daily sparse drops 2024-06-13 (entity_count 2) and winsor emit series becomes n=7 with caps **520/770** (day-06 lattice 520.0000); retarget witnesses; holdouts 6209/6401/6805 match; SPEC clarifies winsor series = emitted days only. 85 pytest pass locally.
+- Prevention: After a task/verifier format disclosure redraws pass@2 to 2/2, ratchet with a **per-metric** sparse×scale×winsor interaction — do not raise global min_entities if it deletes unrelated arbitration/contribution witnesses.
+
 ### 2026-08-06 — `dynamo-7328085-machine-learning-and-ai` / entity-lattice-weave
 - Issue: `review/review` static FAIL on `d89d6ac` after qc_gate A6/B4/C3 disclosure edits.
 - Root cause: `instruction.md` was 1620 Qwen3 tokens (max 1500).
