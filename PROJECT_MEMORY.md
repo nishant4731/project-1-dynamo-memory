@@ -62,6 +62,7 @@ Use it at the start of every new task, and update it whenever a blocker, review 
 - If pass@2 or pass@5 solves too often, strengthen the semantic/generalization crux rather than adding vague traps.
 - If pass runs fail only through timeout, setup, or infra, that is not valid difficulty.
 - When agents are near the time budget, avoid adding broad busywork that converts valid failures into invalid timeouts.
+- When pass@2 taxonomy is **in-progress-timeout / near-miss** at the 3600s ceiling, playbook SHRINK wins even if the sticky difficulty suggestion asks to harden packs further. Cannot raise `[agent].timeout_sec` above 3600; OOM-triggering pack size that cuts agents off mid-fix is not a valid fail.
 
 ## Memory Update Protocol
 
@@ -85,6 +86,7 @@ Keep notes short. Promote broad Dynamo lessons into `PROJECT_DYNAMO_LEARNINGS.md
 
 
 ### 2026-08-06
+- `dynamo-741aaea-games-puzzles-and-interactive-simulation` (`dynamo/harbor-hop`): pass@2 on `09b3930` blocked **1 solved + 1 in-progress-timeout** (OOM on 16-ent `visible_right_armada`; agent had working opt solver one `cp` from deploy). Sticky suggest wanted harder packs — playbook SHRINK wins: 12-ent visibles / 11–12 hidden, keep crate-escort+rival_pairs, verifier 900s, expert 3h. Harbor oracle 1.0 (~1.5m) / nop 0.0. Commit `627e1f9`.
 - `dynamo-d2e7d26-games-puzzles-and-interactive-simulation` (`dynamo/tapestry-loom-replay`): pass@2 on `54f36dc`/`73c23c7` was 0/2 in-progress-timeout (near-miss) at 3600s ceiling after 9-family recovery. Shrink `265fcde`: disclose glyphs/selvage/weft/loom; keep collision(size-scaled)/shed/drawdown/binder/forecast recovery. Cannot raise agent timeout above 3600.
 - `dynamo-741aaea-games-puzzles-and-interactive-simulation` (`dynamo/harbor-hop`): pass@2 on `c227eaa` blocked 2/2 solved (~31–45 min). Extreme ratchet: disclosed crate-escort + rival_pairs, enlarged coupled_load, 16-entity visibles, 4×(13–14) dense hidden; expert_time 4h. Harbor oracle 1.0 (~19m) / nop 0.0.
 - `dynamo-d2e7d26-games-puzzles-and-interactive-simulation` (`dynamo/tapestry-loom-replay`): pass@2 on `d873f50` was 2/2 (~20–40m) after shed/drawdown disclosure. Ratchet `73c23c7`: re-hide shed/drawdown; keep seq defined; recover glyph masks, selvage divisors, weft gain 11/8, size-scaled collision step (2- vs 3-shuttle); case_08 zero-delta weft + case_10 border stamps; case_04 least-id≠highest-tension.
