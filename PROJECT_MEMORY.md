@@ -79,6 +79,13 @@ Keep notes short. Promote broad Dynamo lessons into `PROJECT_DYNAMO_LEARNINGS.md
 
 ## Dated Notes
 
+### 2026-08-07 — `dynamo-7328085-machine-learning-and-ai` / entity-lattice-weave pass@2 2/2
+- Issue: pass@2 **FAIL** on `da8fb23` — **2/2 solved** (~20 min); sticky suggested reject min priority coeffs.
+- Root cause: Two-phase recovery requires min-priority fit, so recovered priority stays `(1,1,1)`. Mid-range seed_policy often unit-fits; W_MAX=15 blew A1 (~8–12 min).
+- Fix (`23b4dd4`): cardinality `max(|A|,|B|)`; strip two-phase copy-paste; multi-anchor labels; SystemRandom remapped full-shape ephemeral; keep W_MAX=12. Docker 31 pass ~2 min.
+- Prevention: Do not reject base==1 without changing recovery nesting; always re-time verifier under A1 300s after W_MAX changes.
+
+
 ### 2026-08-07 — `dynamo-ffa06a0-games-puzzles-and-interactive-simulation` / QC C3 triple-digit portals (`ed8d643`)
 - Issue: qc_gate BLOCK on `489136a` after green pass@2/deep/AVA — C3-exec: portal `==2`→`>=2` mutant still reward=1; no graded scene had a digit appearing ≥3 times.
 - Fix: hidden `triple_digit_inert` probe (digit `4`×3 with actor step-on); FORMAT_NOTES clarifies once-or-≥3 inert; local mutant portal_uses 0 vs 5. Harbor oracle 1.0 / nop 0.0.
