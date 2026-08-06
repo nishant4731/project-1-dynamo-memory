@@ -78,6 +78,13 @@ Keep notes short. Promote broad Dynamo lessons into `PROJECT_DYNAMO_LEARNINGS.md
 
 ## Dated Notes
 
+### 2026-08-06 — `dynamo-7328085-machine-learning-and-ai` / entity-lattice-weave
+- Issue: qc_gate BLOCK on `71d0a62` — A6-exec (oracle crash on must_link alias self-pair), B5-exec (`aliases_applied` missing from merge_recipe / not pinned by labels), C3-exec (skip must self-pair mutant still reward=1).
+- Root cause: `left,right=tuple(frozenset({id}))` unpack; `aliases_applied` only in instruction; shipped/holdouts had cannot self-pair but no must self-pair.
+- Fix: skip len<2 in union-find (oracle+solution); ship `E001,A001,must_link`; document aliases_applied + must self-pair semantics in merge_recipe; add self-pairs to witness/cardinality/holdout forges; tests for must tally + aliases_applied multi-site. Docker 29/29 reward=1.
+- Prevention: For every self-pair tally rule, ship both must and cannot witnesses on graded fixtures and assert skip-mutants change audit before push; mirror load-bearing counters in agent-visible merge_recipe, not only instruction.md.
+
+
 ### 2026-08-06 — `dynamo-c9a0d11-data-science-and-reporting` / trustline pass@2 2/2 after winsor format (f7b0a1d)
 - Issue: pass@2 **FAIL** on `f7b0a1d` — **2/2 solved** (~24–52 min, mean 1.000); gate failed; deep_review/ava/qc skipped. Prior commit only disclosed `winsor_audit` 4dp format (task/verifier fix).
 - Root cause: Format disclosure removed the last ambiguity; agents transcribed the full graded contract with spare budget. Global `min_entities=3` would drop E003 witnesses — too blunt.
