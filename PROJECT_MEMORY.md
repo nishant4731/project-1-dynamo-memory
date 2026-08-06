@@ -78,6 +78,12 @@ Keep notes short. Promote broad Dynamo lessons into `PROJECT_DYNAMO_LEARNINGS.md
 
 ## Dated Notes
 
+### 2026-08-06 — `dynamo-c9a0d11-data-science-and-reporting` / AVA+adversarial infra flake (4faddad)
+- Issue: run `31114998918` — pass@2 **PASS** (1/2 valid-fail, JSON key-sort near-miss) and deep_review **PASS**, but `ava_review` **cancelled** (self-hosted runner not acquired) and `adversarial_review` **fail** (action download Service Unavailable). qc/trials skipped downstream.
+- Root cause: platform infra, not task contract. Sticky deep_review content was PASS; adversarial sticky also PASS. Fork `gh run rerun --failed` 404s.
+- Fix: empty CI retrigger commit (no task-logic change). Do not ratchet on deep_review formatting-artifact advisory until pass@5 shows insufficient semantic fails.
+- Prevention: Read job annotations before changing fixtures — runner/503 cancels look like red checks but are non-evidence; empty redraw only.
+
 ### 2026-08-06 — `dynamo-7328085-machine-learning-and-ai` / entity-lattice-weave
 - Issue: qc_gate BLOCK on `71d0a62` — A6-exec (oracle crash on must_link alias self-pair), B5-exec (`aliases_applied` missing from merge_recipe / not pinned by labels), C3-exec (skip must self-pair mutant still reward=1).
 - Root cause: `left,right=tuple(frozenset({id}))` unpack; `aliases_applied` only in instruction; shipped/holdouts had cannot self-pair but no must self-pair.
