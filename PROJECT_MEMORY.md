@@ -127,6 +127,9 @@ Keep notes short. Promote broad Dynamo lessons into `PROJECT_DYNAMO_LEARNINGS.md
 - Prevention: Count Qwen3 tokens after every instruction edit; keep ~20 headroom under 1500.
 
 
+### 2026-08-07
+- `dynamo-741aaea-games-puzzles-and-interactive-simulation` (`dynamo/harbor-hop`): pass@2 on `07b1554`/`2117cb2` still **2/2 solved** (~25 min) after mark/floor recovery. Extreme ratchet: hide crate stacking prose; add disclosed `linked_pairs` (cal+visible+hidden probe; ignore-link → fewer trips); signature adds `boarding_tide*41`; expert 4h. Harbor oracle 1.0 (~5m) / nop 0.0.
+
 ### 2026-08-06
 - `dynamo-d2e7d26-games-puzzles-and-interactive-simulation` (`dynamo/tapestry-loom-replay`): pass@2 on `4aaabfa` was 1/1 solved after collision/shed/drawdown disclosure. Ratchet `a74aec0`: keep collision disclosed (QC B5); re-hide shed/drawdown/loom; binder bonus becomes 2+phase with case_14/hidden phase-2 witnesses; keep weft-gain + forecast-weight recovery.
 - `dynamo-741aaea-games-puzzles-and-interactive-simulation` (`dynamo/harbor-hop`): after mark-stacking ratchet `2117cb2`, `review / cosine_similarity` failed with Actions `Failed to resolve action download info` / `Service Unavailable` (no similarity scores); downstream checks skipped. Infra-only — empty retrigger commit, do not change task logic.
