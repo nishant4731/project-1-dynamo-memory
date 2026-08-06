@@ -77,6 +77,13 @@ Keep notes short. Promote broad Dynamo lessons into `PROJECT_DYNAMO_LEARNINGS.md
 
 ## Dated Notes
 
+### 2026-08-06 — `dynamo-7328085-machine-learning-and-ai` / entity-lattice-weave
+- Issue: `review/review` static FAIL on `d89d6ac` after qc_gate A6/B4/C3 disclosure edits.
+- Root cause: `instruction.md` was 1620 Qwen3 tokens (max 1500).
+- Fix: Compact instruction to 1378 tokens; keep revision_sum / lex roots / self-contained ban; detail in merge_recipe.md.
+- Prevention: Count Qwen3 tokens after every instruction edit; keep ~20 headroom under 1500.
+
+
 ### 2026-08-06
 - `dynamo-d2e7d26-games-puzzles-and-interactive-simulation` (`dynamo/tapestry-loom-replay`): pass@2 on `54f36dc`/`73c23c7` was 0/2 in-progress-timeout (near-miss) at 3600s ceiling after 9-family recovery. Shrink `265fcde`: disclose glyphs/selvage/weft/loom; keep collision(size-scaled)/shed/drawdown/binder/forecast recovery. Cannot raise agent timeout above 3600.
 - `dynamo-741aaea-games-puzzles-and-interactive-simulation` (`dynamo/harbor-hop`): pass@2 on `c227eaa` blocked 2/2 solved (~31–45 min). Extreme ratchet: disclosed crate-escort + rival_pairs, enlarged coupled_load, 16-entity visibles, 4×(13–14) dense hidden; expert_time 4h. Harbor oracle 1.0 (~19m) / nop 0.0.
