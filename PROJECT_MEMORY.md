@@ -2,6 +2,7 @@
 
 This is the living memory for work in `/Users/nishantchoudhary/Documents/Project 1`.
 
+- 2026-08-06 `dynamo-d2e7d26-games-puzzles-and-interactive-simulation` (`dynamo/tapestry-loom-replay`): pass@2 sticky on `4aaabfa` was 1/1 solved (too easy); `a74aec0` pipeline stuck cancelled/skipped. Fair ratchet `83f9837`: disclose never-sampled `swap` → both shuttles `phase=(phase+1) mod 4`, remove visible swap sampling, add hidden `swap_phase` + generated swaps; keep collision disclosed and shed/drawdown/binder/loom/weft/forecast recovery. Harbor oracle 1.0 / nop 0.0. Cannot raise timeout >3600.
 Use it at the start of every new task, and update it whenever a blocker, review issue, PR pipeline issue, or reusable lesson appears.
 
 - `dynamo-9294744-file-and-media-operations` (`dynamo/chroma-vault`): pass@2 2/2 on `87db155` (agents transcribed FORMAT_NOTES in 13–32m). Fair extreme ratchet without hiding graded tie-breaks: disclosed post-echo `veils.tsv` (floor-div gains/bias, lex v9>v10, live chain, OOB/gain_den rejects, `selected_veil_ids`), denser hidden seed 421, soft instruction trap rehash. Harbor oracle 1.0 / nop 0.0.
