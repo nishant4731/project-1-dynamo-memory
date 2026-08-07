@@ -25,10 +25,27 @@ Then:
 
 While working:
 
-- When blocked, identify whether the blocker is local setup, GitHub auth, fork/remotes, Harbor validation, static review, pass@, deep review, QC, or task-contract fairness.
+- When blocked, identify whether the blocker is local setup, GitHub auth, fork/remotes, Harbor validation, static review, cosine similarity, pass@, deep review, QC, or task-contract fairness.
 - Prefer fixing the underlying pipeline/reviewer issue over changing task logic blindly.
 - Treat infrastructure failures, setup failures, provider failures, and all-run timeouts as non-evidence for task difficulty.
 - Keep verifier rules, instructions, reference solution, visible data, hidden tests, metadata, and PR evidence aligned.
+
+### Enforced cosine similarity (`review / cosine_similarity`)
+
+This gate can flip from shadow to **enforced** mid-PR. Once enforced, it runs on **every push** and can block before static/validation/pass@.
+
+- Compared surfaces are only `task/instruction.md` and `tests/test_outputs.py` (first 64 KiB each). Threshold is typically `0.9`; sticky often hides the matched task.
+- Sticky `"too similar to a delivered Dynamo task"` = real **flag** verdict, not infra. Empty commits / close-reopen / `gh run rerun` will **not** clear it.
+- Sticky `"could not produce a verdict (HTTP …)"` / `401` / `503` / `000` / Actions download `Service Unavailable` = infra or auth — empty retrigger or small real fix is fine; do not invent a duplicate-task rewrite.
+- Shadow-mode scores above threshold (e.g. verifier `0.91`) are a warning: the next enforced run will block the same surface.
+- **Never** answer a real flag with prose-only rewording or empty CI redraws. Change **both** compared artifacts with a load-bearing contract change in one commit:
+  1. Add a graded agent-visible deliverable (new output path, digest/ledger bind, profile sidecar, etc.).
+  2. Wire it through FORMAT_NOTES / instruction, solution, reference, calibration if needed, and verifier.
+  3. Reshape `tests/test_outputs.py` (thin harness + helpers / new test names / new asserts) so the verifier embedding moves.
+  4. Harbor oracle `1.0` / nop `0.0` before push.
+- If only one facet is over threshold, keep the green facet stable and move the red one harder; if both are high or near `0.9` after one artifact, add a second cross-artifact invariant (e.g. report digest binding).
+- Long-lived PRs can match an earlier delivered/stored shape of the **same** task lineage at ~0.99 after tiny QC retries — treat that like a sibling duplicate and change the comparison surface, not just wording.
+- Do not churn empty commits while cosine is red with a real flag; fix the surfaces first.
 
 GitHub and push safety:
 

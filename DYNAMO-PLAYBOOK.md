@@ -1061,6 +1061,14 @@ clause needs a deterministic discriminating fixture on every graded seed:
   recur for multi-hour stretches; zero task signal; ride out with empty-commit redraws on
   escalating backoff (~every 2h). Daytona snapshots are content-addressed — a Dockerfile change
   mints a fresh snapshot ID, sidestepping a poisoned cache.
+- **Enforced cosine (`review / cosine_similarity`):** compares only `instruction.md` +
+  `tests/test_outputs.py` (64 KiB cap), threshold usually `0.9`. Once the org flips this gate from
+  shadow → enforced, it blocks **every** subsequent push until both facets clear. Sticky
+  "too similar to a delivered Dynamo task" is a real flag — empty commits never clear it. Fix in
+  one push: new graded artifact/contract + instruction mention + solution/reference wiring +
+  reshape `test_outputs.py` (helpers/new asserts), then Harbor oracle/nop. HTTP/401/503/000 or
+  Actions download failures are infra, not duplicates. Shadow scores ≥0.9 foreshadow the next
+  enforced block. Long PRs can self-match prior SHA shapes after tiny retries — change surfaces.
 - **Similarity/static loop:** if one pushed SHA clears enforced similarity but fails static token
   count, do not make the next SHA a prompt-only trim. Preserve Qwen3 token margin and also reshape
   the compared verifier harness with a real coverage improvement; otherwise the unchanged verifier

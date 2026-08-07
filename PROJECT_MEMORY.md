@@ -79,6 +79,9 @@ Keep notes short. Promote broad Dynamo lessons into `PROJECT_DYNAMO_LEARNINGS.md
 
 ## Dated Notes
 
+### 2026-08-07 — AGENTS.md tip: enforced cosine on every push
+- Added standing guidance in `AGENTS.md` + playbook: once cosine is enforced, every commit re-checks `instruction.md`/`test_outputs.py`; real "delivered Dynamo task" flags need a graded artifact + verifier reshape, never empty retriggers; distinguish infra HTTP/Actions flakes.
+
 ### 2026-08-07 — `dynamo-ffa06a0` / enforced cosine after pulse_ledger (`9eec081`)
 - Issue: cosine gate switched to enforced and blocked with "too similar to a delivered Dynamo task" (prior shadow had verifier ~0.913 ≥ 0.9). Empty retriggers do not clear it.
 - Fix: add graded `/app/output/pulse_ledger.json` (per-tick cumulative counters + `report_digest` SHA-256 bind), rewrite instruction toward Prism Relay, reshape `test_outputs.py`/support, ship calibration ledgers. Harbor oracle 1.0 / nop 0.0. Keep triple-digit C3 witness.
