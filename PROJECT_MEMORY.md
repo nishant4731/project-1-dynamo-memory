@@ -105,6 +105,13 @@ Keep notes short. Promote broad Dynamo lessons into `PROJECT_DYNAMO_LEARNINGS.md
 
 ## Dated Notes
 
+### 2026-08-07 — `dynamo-7328085-machine-learning-and-ai` / orbit-glue domain identity reskin
+- Issue: tip `21aea07` / prior AVA tip blocked enforced cosine (“too similar”); rewording alone does not clear (corpus includes own PR lineage).
+- Root cause: Service tracks task ABOUT-ness; lexical self-sim can worsen while still matching prior desk identity.
+- Fix: Full Orbit Glue identity reskin — `/app/orbit_vault` package, `orbit_glue.py`/`emit_orbit_glue`, `glue_protocol.md`, renamed all outputs (`entity_assign`/`group_profile`/`run_census`/`weight_pack`/`glue_manifest`/`hub_roster`), rewrite instruction+test_outputs; keep engine/rules. Docker 42/42 reward=1.
+- Prevention: On no-score cosine blocks after 2+ tips, do domain identity reskin (paths/binaries/design-note/outputs/task.name) + from-scratch tip rewrite — not prose edits.
+
+
 ### 2026-08-07 — `dynamo-7328085-machine-learning-and-ai` / cosine after AVA tip (4d300de)
 - Issue: AVA/deep compile+`__main__` tip `4d300de` → **cosine_similarity FAIL** (too similar); downstream skipped.
 - Root cause: AGENTS last-3 — fairness-only tip on Medoid Loom surface without a new artifact family.
