@@ -108,6 +108,12 @@ Keep notes short. Promote broad Dynamo lessons into `PROJECT_DYNAMO_LEARNINGS.md
 
 ## Dated Notes
 
+### 2026-08-07 — `dynamo-5803cf1-file-and-media-operations` / pass@2 2/2 after assay (3a21354 → bleed_mod)
+- Issue: pass@2 **FAIL** again — **2/2 solved**, 76 tests (~21–28 min); cosine green; suggestion wanted formula stripping (rejected).
+- Root cause: pad→master assay ratchet still transcription-friendly with full companion specs.
+- Fix: `effective_bleed = max(1, bleed_grid + pad_skew_px + origin_offset_px)`; graded `<sheet_id>.bleed_mod`; Bleed Modulus Desk + `atlas_bleed_bind.py`; 27th bank; local **77 passed**.
+- Prevention: After consecutive 2/2 on mine cross-terms, couple **distinct mines on the same pipeline stage** (origin+pad→bleed) plus orthogonal sidecar in one cosine commit.
+
 ### 2026-08-07 — `dynamo-5803cf1-file-and-media-operations` / pass@2 2/2 after canvas (03ff461 → 3a21354)
 - Issue: pass@2 **2/2** after `.canvas` tip; suggestion wanted formula stripping (do not).
 - Root cause: transcription-easy with full disclosures; new geometry sidecar alone insufficient.
