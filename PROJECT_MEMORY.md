@@ -85,6 +85,12 @@ Keep notes short. Promote broad Dynamo lessons into `PROJECT_DYNAMO_LEARNINGS.md
 
 ## Dated Notes
 
+### 2026-08-07 — `dynamo-c9a0d11-data-science-and-reporting` / trustline pass@5 5/5 (7442a2b)
+- Issue: pass@2/deep_review/ava/qc_gate **PASS** on `7442a2b`; **trials FAIL** — pass@5 **5/5 solved** (avg 1.000); gate blocked (need ≥1 good valid fail / ≤2 solved).
+- Root cause: Agents absorbed stock scale×winsor and freeze path; pass@2's only fail (effective_to vs obs_date under segment_asof) was under-levered (arbitration-only; holdout freeze×sunset often sparse-suppressed).
+- Fix: Shorten E009 `effective_to` to asof day; M_MARGIN `segment_asof=2024-06-08` so E008/E009 emit retail_west; E014→E009 alias with south segment lure; SPEC clarifies freeze applies to `effective_to`; holdouts 7001/7203/7405 (window sparse); witnesses for sparse/lattice/pair_config. 90 pytest pass locally.
+- Prevention: At pass@5 5/5 after a green pass@2 near-miss on freeze×sunset, pin that crux into lattice/sparse/pair_config and cross-metric asof divergence — do not empty-retrigger.
+
 ### 2026-08-07 — Dynamo cosine grades tip commit (empty redraw)
 - Issue: empty retrigger fails `review / cosine_similarity`; downstream skipped.
 - Root cause: cosine grades the **latest commit** task surface; `--allow-empty` is a no-op tip.
