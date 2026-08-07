@@ -90,6 +90,13 @@ Keep notes short. Promote broad Dynamo lessons into `PROJECT_DYNAMO_LEARNINGS.md
 
 ## Dated Notes
 
+### 2026-08-07 — `dynamo-7328085-machine-learning-and-ai` / cosine still red after weave_capsule (eea871e)
+- Issue: tip `eea871e` (capsule desk) still **cosine_similarity FAIL** (“too similar”); downstream skipped. Prior E3 sealed CLI never re-evaluated.
+- Root cause: last-~3 poison — capsule/desk rewrite still too close to CSV-rename + grade-kit lineage; test_outputs still large fixture surface.
+- Fix: Full Medoid Loom Desk reskin — rename all artifacts (`member_map`/`medoid_roll`/`run_tally`/`coeff_pack`/`loom_manifest`/`medoid_loom.py`), ultra-thin class `TestMedoidLoomDeskParity` + `loom_parity.py`, suites via `test.sh`; keep sealed CLI. Docker 40/40 reward=1; tip `test_outputs.py` ~1KB.
+- Prevention: After two failed cosine tips in a row, use c9a0d11-scale clear: rename deliverables + class-only tip verifier (not another sidecar JSON on the same desk prose).
+
+
 ### 2026-08-07 — `dynamo-7328085-machine-learning-and-ai` / cosine after E3 tip (1a798c2)
 - Issue: tip `1a798c2` sealed CLI (qc E3) but **cosine_similarity FAIL** (“too similar”); all downstream skipped. Stale QC sticky still cited pre-seal CLI subprocess.
 - Root cause: last-~3 cosine window — E3 tip only lightly touched instruction/`test_outputs.py` after CSV rename + grade-kit split; not a load-bearing surface move.
