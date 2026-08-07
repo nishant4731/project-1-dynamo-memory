@@ -25,7 +25,7 @@ Working rules:
 - Prefer fixing the underlying pipeline/reviewer/task-contract issue over changing task logic blindly.
 - Treat infrastructure failures, setup failures, provider failures, and all-run timeouts as non-evidence for task difficulty.
 - Keep verifier rules, instructions, reference solution, visible data, hidden tests, metadata, and PR evidence aligned.
-- **Before EVERY `submission` push:** open the cosine sticky/check. Enforced cosine compares `instruction.md` + `tests/test_outputs.py` against delivered tasks **and this PR's last ~3 commits**. If those two files do not both get a load-bearing contract change vs the recent SHAs, do not push (docstrings/empty/tiny wording will fail). Real flag → graded artifact + verifier reshape in one commit; infra HTTP/000/401/503 → empty retrigger OK.
+- **Before EVERY `submission` push:** open the cosine sticky/check. Enforced cosine compares `instruction.md` + `tests/test_outputs.py` against delivered tasks **and this PR's last ~3 commits**. Those last 3 SHAs are a poison window: another sidecar rename / thin-wrapper reshuffle of the same shape will fail. Require a **new schema** + instruction desk rewrite + `test_outputs.py` reshape in one commit (see AGENTS.md hard ban). Docstrings/empty/tiny wording fail. Infra HTTP/000/401/503 → empty retrigger OK.
 - Do not force push unless updating an intentional history rewrite on the user's fork/submission branch; prefer `--force-with-lease`.
 - Confirm `gh api user --jq .login` before private GitHub actions.
 
