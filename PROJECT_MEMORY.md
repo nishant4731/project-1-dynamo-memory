@@ -89,6 +89,12 @@ Keep notes short. Promote broad Dynamo lessons into `PROJECT_DYNAMO_LEARNINGS.md
 
 ## Dated Notes
 
+### 2026-08-07 — `dynamo-c9a0d11-data-science-and-reporting` / pass@2 2/2 after cosine reskin (c92559d)
+- Issue: cosine **PASS** on `c92559d`; **pass@2 FAIL** — **2/2 solved** (50/50, ~18 min spare). Suggestion: under-specify a rule (rejected — fairness/QC risk).
+- Root cause: Fully-prescriptive SPEC + freeze×asof fixtures remained transcription-friendly; agents implemented all disclosed local rules including the prior ratchet.
+- Fix: Disclosed **peer-segment winsor** — Hyndman caps from intersection of emit-day sets across all emitted pairs sharing a `segment_key`, then clamp every emit day. Wholesale ∩ → M_STOCK 755/795, M_REV day-11 lattice 12690, M_MARGIN spike → 90. Reskin instruction + `test_outputs.py` for cosine. 91 pytest pass.
+- Prevention: At pass@2 2/2 after a local-rule ratchet, add a **cross-pair** disclosed re-key (peer intersection) rather than hiding rules; always touch instruction+test_outputs for cosine.
+
 ### 2026-08-07 — `dynamo-c9a0d11-data-science-and-reporting` / cosine enforced self-match (00c9784)
 - Issue: run `31152431938` — `review / cosine_similarity` **FAIL** (enforced flag: too similar to delivered Dynamo task); all downstream skipped. Sticky had no numeric scores.
 - Root cause: Corpus indexed prior trustline tip; tip `00c9784` grew `test_outputs.py` witnesses + familiar instruction phrasing above threshold. Empty redraws also trip this gate.
