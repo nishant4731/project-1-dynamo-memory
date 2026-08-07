@@ -105,6 +105,12 @@ Keep notes short. Promote broad Dynamo lessons into `PROJECT_DYNAMO_LEARNINGS.md
 
 ## Dated Notes
 
+### 2026-08-07 — `dynamo-c9a0d11-data-science-and-reporting` / deep_review flat roll_manifest (1f9f854 → e7865d4)
+- Issue: cosine/pass@2/AVA green on `1f9f854`; **deep_review FAIL** — `decisive_answer_discoverable`: flat vs nested `roll_manifest.json` not disclosed (agent used `{"counters":{…}}`; blocked holdouts/witnesses).
+- Root cause: instruction said only "Spec counters; indent 2; sorted keys"; SPEC listed names without JSON shape.
+- Fix (`e7865d4`): Explicit **flat** top-level counter map + worked JSON example in SPEC/instruction; graded `counter_index.csv`; empty-∩→union fallback disclosed; Census Index Desk + `_census_parity`/`TestCensusIndexDeskParity`. Local **88 passed, 2 skipped**.
+- Prevention: Every exact-match JSON shape needs structure + anti-example (no wrapper); batch fairness disclosures with a new graded artifact for cosine.
+
 ### 2026-08-07 — `dynamo-7328085-machine-learning-and-ai` / orbit-glue domain identity reskin
 - Issue: tip `21aea07` / prior AVA tip blocked enforced cosine (“too similar”); rewording alone does not clear (corpus includes own PR lineage).
 - Root cause: Service tracks task ABOUT-ness; lexical self-sim can worsen while still matching prior desk identity.
