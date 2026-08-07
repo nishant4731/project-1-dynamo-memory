@@ -100,6 +100,12 @@ Keep notes short. Promote broad Dynamo lessons into `PROJECT_DYNAMO_LEARNINGS.md
 
 ## Dated Notes
 
+### 2026-08-07 — `dynamo-c9a0d11-data-science-and-reporting` / cosine after peer-rank (b03a34d → follow-up)
+- Issue: `b03a34d` peer-rank ratchet → cosine **FAIL** (last-3 Cap Ledger / `*_ledger` lineage self-match); pass@2 skipped.
+- Root cause: AGENTS last-3 ban — nested peer_rank_ledger still read as another digest ledger sidecar under desk renames of Cap Ledger.
+- Fix: `anchor_roster.json` schema `trustline-anchor-roster-v1` (`cohorts`/`order`/`scoreboard`/`roster_digest`); table-form Anchor Roster Desk instruction; function-style `test_outputs.py` + `_anchor_parity.py`. Keep peer-rank non-anchor trim. Local 86/2.
+- Prevention: After a ledger tip is cosine-green, the next ratchet must not ship another `*_ledger` — use a different artifact family (roster/profile) + prompt/entrypoint reshape.
+
 ### 2026-08-07 — `dynamo-c9a0d11-data-science-and-reporting` / pass@2 2/2 after peer_cap_ledger (f4e6ce2 → b03a34d)
 - Issue: cosine **PASS** on `f4e6ce2`; **pass@2 FAIL** — **2/2 solved** (~18 min spare). Suggestion again: under-specify winsor/sparse (rejected — fairness/QC).
 - Root cause: Agents transcribed full SPEC including peer ∩; flat ledger alone was another exact transcription surface.
