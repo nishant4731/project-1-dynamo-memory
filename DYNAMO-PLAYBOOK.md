@@ -1064,13 +1064,15 @@ clause needs a deterministic discriminating fixture on every graded seed:
 - **Enforced cosine (`review / cosine_similarity`):** compares only `instruction.md` +
   `tests/test_outputs.py` (64 KiB cap), threshold usually `0.9`. Once the org flips this gate from
   shadow → enforced, it blocks **every** subsequent push until both facets clear. The checker can
-  also match against this PR's **last ~3 commits** / stored lineage snapshots, so empty redraws and
-  tiny wording patches fail immediately even if an older sticky said UNIQUE. Sticky
-  "too similar to a delivered Dynamo task" is a real flag — empty commits never clear it. Fix in
-  one push that diverges from those recent SHAs: new graded artifact/contract + instruction mention
-  + solution/reference wiring + reshape `test_outputs.py` (helpers/new asserts), then Harbor
-  oracle/nop. HTTP/401/503/000 or Actions download failures are infra, not duplicates. Shadow
-  scores ≥0.9 foreshadow the next enforced block.
+  also match against this PR's **last ~3 commits** / stored lineage snapshots, so empty redraws,
+  docstring-only edits, and tiny wording patches fail immediately even if an older sticky said
+  UNIQUE. **Before every push**, agents must re-check the cosine sticky and confirm both compared
+  files get a load-bearing contract change vs those recent SHAs (see `AGENTS.md` mandatory
+  checklist). Sticky "too similar to a delivered Dynamo task" is a real flag — empty commits never
+  clear it. Fix in one push that diverges from those recent SHAs: new/renamed graded
+  artifact/contract + instruction mention + solution/reference wiring + reshape `test_outputs.py`
+  (helpers/new asserts), then Harbor oracle/nop. HTTP/401/503/000 or Actions download failures are
+  infra, not duplicates. Shadow scores ≥0.9 foreshadow the next enforced block.
 - **Similarity/static loop:** if one pushed SHA clears enforced similarity but fails static token
   count, do not make the next SHA a prompt-only trim. Preserve Qwen3 token margin and also reshape
   the compared verifier harness with a real coverage improvement; otherwise the unchanged verifier
