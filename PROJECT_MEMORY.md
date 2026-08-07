@@ -851,3 +851,7 @@ Enforced cosine on `dynamo-741aaea` stayed blocked after `crossing_ledger` + thi
 
 `dynamo-741aaea` blocked at enforced cosine despite hop_trace/ledger renames. Recipe that matches measured sibling: one-push **domain reskin** of visible identity — `data/`→`yarddesk/`, `solver.py`→`consist_runner.py`, `solve_directory`→`plan_yard_desk`, `ENGINE_SPEC.md`→`SWITCH_CHARTER.md`, fixtures `gauge_log.jsonl`/`consists.json`, graded `/app/haul_log.json`, `dynamo/rail-switchyard-desk`, `probe.sh` image tag — then rewrite `instruction.md` + `test_outputs.py` from scratch in rail vocabulary. Do **not** try prose-only edits; measured on another branch, lower lexical self-sim still blocked while a domain reskin dropped service instruction sim ~0.20. Guard working-tree token-cosine vs own recent heads (~0.75 here) is necessary not sufficient. Harbor oracle 1.0 / nop 0.0 before push (`ba93f51`).
 
+## 2026-08-07 — Static `no_extraneous_files` after cosine-clearing reskin
+
+`dynamo-741aaea` `ba93f51` cleared cosine then failed Dynamo eval solely on `no_extraneous_files` because `task/environment/probe.sh` was an unreferenced local smoke helper (excluded by `.dockerignore`). Fix in one push: delete `probe.sh`; do not leave orphan helpers in `task/environment/`. Pair with a load-bearing contract/harness change (here: unambiguous post-cut haul banks + witness + instruction/`test_outputs` reshape) so lineage cosine does not self-match ~1.0 against the prior green cosine head.
+
