@@ -156,6 +156,7 @@ Keep notes short. Promote broad Dynamo lessons into `PROJECT_DYNAMO_LEARNINGS.md
 
 
 ### 2026-08-07
+- `dynamo-741aaea-games-puzzles-and-interactive-simulation` (`dynamo/harbor-hop`): enforced cosine on `3943d97` flagged **too similar to a delivered Dynamo task**. Fix: graded `/app/crossing_ledger.json` + digest, instruction rewrite, `test_outputs.py` thin harness over `verifier_cases.py`. Harbor oracle 1.0 / nop 0.0.
 - `dynamo-741aaea-games-puzzles-and-interactive-simulation` (`dynamo/harbor-hop`): linked_pairs head `9dc9cfb` had **no check suite** (rollup None) after push — pipeline never ran. Retrigger with boarding-tide signature witness test + CLI recompute note (`comparison surface`), not empty-only.
 - `dynamo-741aaea-games-puzzles-and-interactive-simulation` (`dynamo/harbor-hop`): pass@2 on `07b1554`/`2117cb2` still **2/2 solved** (~25 min) after mark/floor recovery. Extreme ratchet: hide crate stacking prose; add disclosed `linked_pairs` (cal+visible+hidden probe; ignore-link → fewer trips); signature adds `boarding_tide*41`; expert 4h. Harbor oracle 1.0 (~5m) / nop 0.0.
 
