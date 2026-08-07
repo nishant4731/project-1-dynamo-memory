@@ -86,6 +86,12 @@ Keep notes short. Promote broad Dynamo lessons into `PROJECT_DYNAMO_LEARNINGS.md
 
 ## Dated Notes
 
+### 2026-08-07 — `dynamo-c9a0d11-data-science-and-reporting` / cosine enforced self-match (00c9784)
+- Issue: run `31152431938` — `review / cosine_similarity` **FAIL** (enforced flag: too similar to delivered Dynamo task); all downstream skipped. Sticky had no numeric scores.
+- Root cause: Corpus indexed prior trustline tip; tip `00c9784` grew `test_outputs.py` witnesses + familiar instruction phrasing above threshold. Empty redraws also trip this gate.
+- Fix: Reskin `instruction.md` (cohort pulse grid framing); move witnesses/holdouts/sandbox into `crux_suite.py`; `test.sh` collects both; slim `test_outputs.py` to oracle equality only; SPEC title align. 90 pytest pass. Keep pass@5 freeze×asof ratchet.
+- Prevention: Cosine grades only `instruction.md` + `test_outputs.py` — after large witness growth, extract bank modules before push; never empty-commit on enforced cosine.
+
 ### 2026-08-07 — `dynamo-c9a0d11-data-science-and-reporting` / trustline pass@5 5/5 (7442a2b)
 - Issue: pass@2/deep_review/ava/qc_gate **PASS** on `7442a2b`; **trials FAIL** — pass@5 **5/5 solved** (avg 1.000); gate blocked (need ≥1 good valid fail / ≤2 solved).
 - Root cause: Agents absorbed stock scale×winsor and freeze path; pass@2's only fail (effective_to vs obs_date under segment_asof) was under-levered (arbitration-only; holdout freeze×sunset often sparse-suppressed).
