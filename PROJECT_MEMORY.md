@@ -100,6 +100,12 @@ Keep notes short. Promote broad Dynamo lessons into `PROJECT_DYNAMO_LEARNINGS.md
 
 ## Dated Notes
 
+### 2026-08-07 — `dynamo-c9a0d11-data-science-and-reporting` / pass@2 2/2 after peer_cap_ledger (f4e6ce2 → b03a34d)
+- Issue: cosine **PASS** on `f4e6ce2`; **pass@2 FAIL** — **2/2 solved** (~18 min spare). Suggestion again: under-specify winsor/sparse (rejected — fairness/QC).
+- Root cause: Agents transcribed full SPEC including peer ∩; flat ledger alone was another exact transcription surface.
+- Fix (`b03a34d`): Disclosed **peer-rank gate** — rank peers by desc ∩-day scaled sum (`metric_id` ASC tie); non-anchor drops chronologically last ∩ day for Hyndman (`|∩|≥2`). Wholesale: anchor `M_REV` keeps 11810/12690; non-anchor `M_STOCK` → 750/750 (day-06 lattice 750). Nested `peer_rank_ledger.json` (`trustline-peer-rank-ledger-v2`) + Peer Rank Desk cosine rewrite (`_rank_parity`). Local **86 passed, 2 skipped**.
+- Prevention: After peer-∩ still 2/2, add a ranking×membership interaction that re-keys non-anchor caps — do not under-specify; always batch with cosine desk/artifact reshape.
+
 ### 2026-08-07 — `dynamo-64a5641-file-and-media-operations` / cosine+static catch-22 (9fc0abc → 0f036a7)
 - Issue: enforced cosine FAIL through dual reskins; `6520440` cleared cosine with `bind_profile.json` + Binding Desk rewrite + thin harness (instr 0.699 / ver 0.723) but static FAIL (1680 Qwen3 tokens + `INPUT_DIR/shard_spool.jsonl`). Static-only compress `48dd4a9` then self-matched the indexed green tip and cosine FAIL again.
 - Fix (`0f036a7`): add graded `/app/recovered/leaf_ledger.tsv` (different schema from bind_profile), ledger-first instruction under 1500 tokens with absolute `/app` paths / non-joined spool deletion wording, function-style `test_outputs.py` + `_bind_harness`. Cosine ✅ (0.846/0.805) and static ✅.
