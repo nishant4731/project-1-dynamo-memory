@@ -862,3 +862,7 @@ Enforced cosine on `dynamo-741aaea` stayed blocked after `crossing_ledger` + thi
 
 `dynamo-741aaea` `ba93f51` cleared cosine then failed Dynamo eval solely on `no_extraneous_files` because `task/environment/probe.sh` was an unreferenced local smoke helper (excluded by `.dockerignore`). Fix in one push: delete `probe.sh`; do not leave orphan helpers in `task/environment/`. Pair with a load-bearing contract/harness change (here: unambiguous post-cut haul banks + witness + instruction/`test_outputs` reshape) so lineage cosine does not self-match ~1.0 against the prior green cosine head.
 
+## 2026-08-07 — After cosine-green head, static-only fix needs another domain reskin
+
+`dynamo-741aaea`: `ba93f51` cosine PASS then static FAIL (`probe.sh` extraneous). Follow-up `287975f` (delete probe + post-cut clarify + reword) hit cosine FAIL vs self-lineage. Clearing required a second domain reskin (`e7d8b58` Canal Lock Convoy: `lockbay/`, `convoy_runner.py`, `plan_lock_bay`, `LOCK_CHARTER.md`, `transit_log.json`, `dynamo/canal-lock-convoy`) while keeping no `probe.sh` and post-trip bank disclosure. Harbor 1.0/0.0; cosine PASS again.
+
