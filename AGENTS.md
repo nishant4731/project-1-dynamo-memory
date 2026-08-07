@@ -35,6 +35,8 @@ While working:
 This gate can flip from shadow to **enforced** mid-PR. Once enforced, it runs on **every push** and can block before static/validation/pass@.
 
 - Compared surfaces are only `task/instruction.md` and `tests/test_outputs.py` (first 64 KiB each). Threshold is typically `0.9`; sticky often hides the matched task.
+- **Recent-commit window:** the checker can also compare the current `instruction.md` / `test_outputs.py` against this PR's **last ~3 commits** (and stored/delivered snapshots of the same lineage). That is why empty commits, amend-style redraws, and tiny QC wording patches often fail immediately with `"too similar to a delivered Dynamo task"` even when an older duplicate sticky said UNIQUE.
+- Therefore every new push under an enforced cosine gate must change the compared surfaces enough to diverge from those last few SHAs — not just invent a new git SHA. Prefer one load-bearing commit that moves both files; do not push a pipeline-only empty commit after a cosine flag.
 - Sticky `"too similar to a delivered Dynamo task"` = real **flag** verdict, not infra. Empty commits / close-reopen / `gh run rerun` will **not** clear it.
 - Sticky `"could not produce a verdict (HTTP …)"` / `401` / `503` / `000` / Actions download `Service Unavailable` = infra or auth — empty retrigger or small real fix is fine; do not invent a duplicate-task rewrite.
 - Shadow-mode scores above threshold (e.g. verifier `0.91`) are a warning: the next enforced run will block the same surface.
@@ -45,7 +47,7 @@ This gate can flip from shadow to **enforced** mid-PR. Once enforced, it runs on
   4. Harbor oracle `1.0` / nop `0.0` before push.
 - If only one facet is over threshold, keep the green facet stable and move the red one harder; if both are high or near `0.9` after one artifact, add a second cross-artifact invariant (e.g. report digest binding).
 - Long-lived PRs can match an earlier delivered/stored shape of the **same** task lineage at ~0.99 after tiny QC retries — treat that like a sibling duplicate and change the comparison surface, not just wording.
-- Do not churn empty commits while cosine is red with a real flag; fix the surfaces first.
+- Do not churn empty commits while cosine is red with a real flag; fix the surfaces first so the new commit is structurally different from the prior 3.
 
 GitHub and push safety:
 

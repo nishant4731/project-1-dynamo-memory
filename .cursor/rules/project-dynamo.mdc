@@ -21,10 +21,11 @@ For form-filling or submission tasks, also read `HANDSHAKE_DYNAMO_FORM_FILLING_G
 
 Working rules:
 
-- Apply pipeline lessons proactively; do not rediscover known Harbor, static review, pass@, deep review, or QC pitfalls.
+- Apply pipeline lessons proactively; do not rediscover known Harbor, static review, pass@, deep review, cosine, or QC pitfalls.
 - Prefer fixing the underlying pipeline/reviewer/task-contract issue over changing task logic blindly.
 - Treat infrastructure failures, setup failures, provider failures, and all-run timeouts as non-evidence for task difficulty.
 - Keep verifier rules, instructions, reference solution, visible data, hidden tests, metadata, and PR evidence aligned.
+- Enforced `review / cosine_similarity` compares `instruction.md` + `tests/test_outputs.py` and can match this PR's last ~3 commits / lineage snapshots. Empty or near-identical retries fail; each new commit under that gate must diverge those surfaces with a real graded contract change.
 - Do not force push unless updating an intentional history rewrite on the user's fork/submission branch; prefer `--force-with-lease`.
 - Confirm `gh api user --jq .login` before private GitHub actions.
 
