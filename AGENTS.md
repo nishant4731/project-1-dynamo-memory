@@ -88,6 +88,17 @@ This gate can flip from shadow to **enforced** mid-PR. Once enforced, it runs on
 - If only one facet is over threshold, keep the green facet stable and move the red one harder; if both are high, add another cross-artifact invariant.
 - Long-lived PRs can self-match earlier SHAs of the **same** task at ~0.99 after tiny retries — change surfaces, not just wording.
 
+### Cosine self-poisoning & the difficulty catch-22 (learned 2026-08-07, dynamo-ea98175)
+
+Mechanism confirmed from the failing job log: the gate POSTs `instruction.md` + `tests/test_outputs.py` to `https://ai.joinhandshake.com/api/internal/task-similarity/checks` and blocks when `.facetResults.{instruction,verifier}.maxScore >= ~0.9` — the **max similarity to any COMPLETED task**. It is a **semantic embedding** score, not lexical. Consequences that cost a full session:
+
+- **Every evaluated submission of your task joins the comparison corpus.** After a version is scored, later iterations of the *same concept* self-match it at ≥0.9. Renaming columns/variables and rewording prose does **not** reliably drop a semantic score while the underlying task concept (same inputs + same core trap) is unchanged.
+- **A fresh PR does NOT reset it.** The corpus is keyed to the task/repo, not the PR number. Closing PR #2 and opening PR #3 with the identical hardened task still failed cosine.
+- **The difficulty catch-22.** The *easy* version of a task is usually UNIQUE and clears cosine (e.g. 0.717/0.832), but it fails pass@2 as too easy. The distinctive hardening you add to beat pass@2 (a specific silent trap, e.g. bitemporal label-maturation) is exactly what a *later* hardened iteration self-matches once the first hardened version is indexed. So you can end up able to clear cosine **or** clear pass@2, but not both, purely as an artifact of having iterated on-PR.
+- **Therefore: get difficulty right BEFORE the first substantive push.** Design the hard trap up front, reason through pass@2-hardness locally (does the naive/expected agent approach diverge on many rows?), and submit the *hard* version first. Do **not** submit an easy version and then harden it on-PR across several pushes — each near-duplicate push poisons your own future comparisons.
+- Manual re-runs do not re-run similarity ("push a new commit to request a new comparison"); and firing several PR events quickly cancels runs via the `cancel-in-progress` concurrency group, surfacing as fake cosine/gate failures.
+- If you are already poisoned (hard version self-matches your own earlier hard snapshot), surface edits will not save you — either escalate to Dynamo maintainers (index may over-match your own lineage) or pivot to a **genuinely different task concept** (different inputs + different core trap), not just a renamed feature set.
+
 GitHub and push safety:
 
 - **Single account for Cloud Agents: `nishant4731` only.** Do not keep `cursor` / `cursor[bot]` as an active `gh` user and do not `gh auth switch` mid-task.
