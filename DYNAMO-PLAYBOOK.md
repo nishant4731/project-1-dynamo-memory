@@ -197,10 +197,6 @@ ALL-GREENs three times in a row.
 ### Full pipeline order (every push)
 Each push cancels the in-flight run and starts fresh. Downstream jobs **skip** when an upstream gate fails.
 
-**Never retrigger with `git commit --allow-empty`.** `review / cosine_similarity` grades the
-**tip commit** task surface; an empty HEAD fails cosine and skips the rest of the pipeline.
-Always push a real non-empty `task/` diff (see root `AGENTS.md` — Dynamo CI retrigger).
-
 ```
 review/review          Stage 1 — deterministic static checks + Dynamo eval (31 rubric criteria)
     ↓
@@ -1065,6 +1061,22 @@ clause needs a deterministic discriminating fixture on every graded seed:
   recur for multi-hour stretches; zero task signal; ride out with empty-commit redraws on
   escalating backoff (~every 2h). Daytona snapshots are content-addressed — a Dockerfile change
   mints a fresh snapshot ID, sidestepping a poisoned cache.
+- **Enforced cosine (`review / cosine_similarity`):** compares only `instruction.md` +
+  `tests/test_outputs.py` (64 KiB cap), threshold usually `0.9`. Once the org flips this gate from
+  shadow → enforced, it blocks **every** subsequent push until both facets clear. The checker can
+  also match against this PR's **last ~3 commits** / stored lineage snapshots, so empty redraws,
+  docstring-only edits, and tiny wording patches fail immediately even if an older sticky said
+  UNIQUE. **Before every push**, agents must re-check the cosine sticky and confirm both compared
+  files get a load-bearing contract change vs those recent SHAs (see `AGENTS.md` mandatory
+  checklist). Sticky "too similar to a delivered Dynamo task" is a real flag — empty commits never
+  clear it. Fix in one push that diverges from those recent SHAs: new/renamed graded
+  artifact/contract + instruction mention + solution/reference wiring + reshape `test_outputs.py`
+  (helpers/new asserts), then Harbor oracle/nop. HTTP/401/503/000 or Actions download failures are
+  infra, not duplicates. Shadow scores ≥0.9 foreshadow the next enforced block.
+- **Similarity/static loop:** if one pushed SHA clears enforced similarity but fails static token
+  count, do not make the next SHA a prompt-only trim. Preserve Qwen3 token margin and also reshape
+  the compared verifier harness with a real coverage improvement; otherwise the unchanged verifier
+  can compare against the prior PR SHA at ~1.0 and block before validation.
 - Harbor first run: 10-min EnvironmentStartTimeoutError = cold docker cache (long base pull) —
   `docker build` manually to warm it; on macOS a dead Docker Desktop VM shows the same error.
 - `docker run` heredoc stdin needs `-i`.
@@ -1100,6 +1112,20 @@ instant blocker — it must be real audio work).
   `analyze`, `transform`, `implement`, `generate`.
 - **pass@ score** = the count of SOLVED trials from the latest non-superseded PR comment
   (0–2 is the GOOD outcome). Screenshot the pass@ comment and attach.
+
+### PR monitoring
+- When multiple GitHub accounts are cached locally, treat `gh auth switch` as global mutable
+  state. Run private Dynamo PR polls as short serial commands prefixed with the intended account
+  switch, e.g. `gh auth switch --hostname github.com --user utkarsha01 && gh pr checks ...`.
+  Do not parallelize `gh` polling across accounts; GraphQL 404s may be account drift, not repo or
+  pipeline failure.
+
+### pass@ ambiguity fixes
+- If pass@ feedback shows agents solved the main artifact but failed a report convention, pin that
+  convention directly in the prompt and visible fixture notes. For path-valued fields, name the
+  frame for each one: manifest-relative, output-root-relative, input-root-relative, or absolute.
+- When the ambiguity fix makes the task easier, add a fair disclosed subsystem that interacts with
+  real task behavior and is witnessed visibly and in protected tests. Avoid pure formatting ratchets.
 
 ---
 
