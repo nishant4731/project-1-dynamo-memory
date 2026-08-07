@@ -90,6 +90,13 @@ GitHub and push safety:
 - Before any force push, explain why it is needed, confirm the target remote and branch are the user's fork/submission branch rather than upstream or a protected/default branch, and prefer `git push --force-with-lease` over plain `--force`.
 - Run GitHub CLI (`gh`) commands outside the sandbox when they depend on GitHub auth, private repo access, network access, run logs, checks, forks, or PR creation/update. Sandboxed `gh` results can be misleading because credentials, keychain state, and network access may differ.
 
+Commit similarity CI gate (read before every commit):
+
+- **A CI pipeline runs a cosine-similarity check over the last 3 commits. If those commits are too similar, the pipeline breaks.** This applies to the trailing three commits on the branch being pushed — both their commit *messages* and their *diff content* count toward the similarity score.
+- Whenever you (the LLM agent) are about to commit, keep the last 3 commits **meaningfully distinct**: do not reuse near-identical commit messages, do not repeat the same templated wording, and avoid three consecutive commits whose diffs are trivial variations of each other (e.g. three near-identical "Note …" lines, or three one-line touch-ups of the same paragraph).
+- Before committing, look at `git log --oneline -3` and the pending diff. If the new commit would be a near-duplicate of either of the previous two, rewrite the message in your own words and, where possible, batch or reshape the change so the diff is substantively different rather than a cosmetic repeat.
+- Prefer one substantive commit over several tiny cosmetic ones; when you must make small follow-ups, give each a distinct message that describes what actually changed, not a restatement of the prior commit.
+
 After finishing or learning something reusable:
 
 - Update `PROJECT_MEMORY.md` with a short dated note.
