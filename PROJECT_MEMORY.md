@@ -103,8 +103,15 @@ Keep notes short. Promote broad Dynamo lessons into `PROJECT_DYNAMO_LEARNINGS.md
 
 ## Dated Notes
 
+### 2026-08-07 — `dynamo-5803cf1-file-and-media-operations` / deep_review frame_count
+- Issue: deep_review **FAIL** (`decisive_answer_discoverable`) — sheet `frame_count` enforced but undisclosed (confused with SPT header); pass@2 valid fail.
+- Root cause: key listed without sheet-level meaning; example degenerate.
+- Fix (`e342c46`): canvas-length formula in SPT_FORMAT; non-degenerate example; instruction + test binding.
+- Prevention: every exact-match manifest key needs definition + example that diverges from lookalikes.
+
 ### 2026-08-07 — cosine domain reskin (`dynamo/kiln-mosaic-replayer` `039c54d`)
 - After pass@5 5/5 on lumen/prism identity, pushed Kiln Mosaic reskin (CLI `/app/kiln_cast.py`, `KILN_SPEC.md`, `kiln_cases/`, `frame.ppm`/`run_report.json`/`stamp_outlook.json`/`tick_pulse.json`, task name) + re-hidden prism/weights recovery + always-write outlook. Enforced cosine cleared: instruction 0.765 / verifier 0.827. Harbor 1.0/0.0. Lesson: rename domain identity; do not paraphrase.
+
 
 ### 2026-08-07 — `dynamo-64a5641` eval unambiguous after weld_trace (22d4a05 → next)
 - Issue: cosine/static green on `22d4a05`; eval FAIL only `unambiguous` — `leaf_delta_sha256`, `weight_vector`, `leaf_mark_sums`, `digit_marks` named but undefined (over-compressed instruction). Provenance #17 was PASS.
