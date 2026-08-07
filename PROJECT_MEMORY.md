@@ -79,6 +79,11 @@ Keep notes short. Promote broad Dynamo lessons into `PROJECT_DYNAMO_LEARNINGS.md
 
 ## Dated Notes
 
+### 2026-08-07 — `dynamo-ffa06a0` / enforced cosine after pulse_ledger (`9eec081`)
+- Issue: cosine gate switched to enforced and blocked with "too similar to a delivered Dynamo task" (prior shadow had verifier ~0.913 ≥ 0.9). Empty retriggers do not clear it.
+- Fix: add graded `/app/output/pulse_ledger.json` (per-tick cumulative counters + `report_digest` SHA-256 bind), rewrite instruction toward Prism Relay, reshape `test_outputs.py`/support, ship calibration ledgers. Harbor oracle 1.0 / nop 0.0. Keep triple-digit C3 witness.
+- Prevention: When cosine is enforced and sticky says delivered-task match, change instruction+verifier comparison surfaces with a real new artifact — do not empty-retrigger.
+
 ### 2026-08-07 — `dynamo-7328085-machine-learning-and-ai` / entity-lattice-weave pass@2 2/2
 - Issue: pass@2 **FAIL** on `da8fb23` — **2/2 solved** (~20 min); sticky suggested reject min priority coeffs.
 - Root cause: Two-phase recovery requires min-priority fit, so recovered priority stays `(1,1,1)`. Mid-range seed_policy often unit-fits; W_MAX=15 blew A1 (~8–12 min).
