@@ -1069,10 +1069,13 @@ clause needs a deterministic discriminating fixture on every graded seed:
   UNIQUE. **Before every push**, agents must re-check the cosine sticky and confirm both compared
   files get a load-bearing contract change vs those recent SHAs (see `AGENTS.md` mandatory
   checklist). Sticky "too similar to a delivered Dynamo task" is a real flag — empty commits never
-  clear it. Fix in one push that diverges from those recent SHAs: new/renamed graded
-  artifact/contract + instruction mention + solution/reference wiring + reshape `test_outputs.py`
-  (helpers/new asserts), then Harbor oracle/nop. HTTP/401/503/000 or Actions download failures are
-  infra, not duplicates. Shadow scores ≥0.9 foreshadow the next enforced block.
+  clear it. Fix in one push that diverges from those recent SHAs: **new schema** graded
+  artifact/contract (not another rename of the same flat sidecar) + instruction desk rewrite +
+  solution/reference wiring + reshape `test_outputs.py` (module name/import style/test names), then
+  Harbor oracle/nop. Sidecar rename chains (`*_audit` → `*_ledger` → `*_profile` without schema +
+  prompt + entrypoint divergence) self-match the PR's last ~3 commits — see `AGENTS.md` hard ban.
+  HTTP/401/503/000 or Actions download failures are infra, not duplicates. Shadow scores ≥0.9
+  foreshadow the next enforced block.
 - **Similarity/static loop:** if one pushed SHA clears enforced similarity but fails static token
   count, do not make the next SHA a prompt-only trim. Preserve Qwen3 token margin and also reshape
   the compared verifier harness with a real coverage improvement; otherwise the unchanged verifier
