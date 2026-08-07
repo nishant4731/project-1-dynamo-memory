@@ -89,6 +89,12 @@ Keep notes short. Promote broad Dynamo lessons into `PROJECT_DYNAMO_LEARNINGS.md
 
 ## Dated Notes
 
+### 2026-08-07 — `dynamo-c9a0d11-data-science-and-reporting` / cosine after peer-winsor (3509bdc → f4e6ce2)
+- Issue: `3509bdc` peer-segment winsor ratchet → `review / cosine_similarity` **FAIL** (too similar to delivered Dynamo task); downstream skipped.
+- Root cause: Last-3 lineage self-match on pulse-cohort instruction + slim oracle `test_outputs.py` after `c92559d`; peer-winsor alone did not change cosine surfaces enough.
+- Fix (`f4e6ce2`): Graded `peer_cap_ledger.json` (`trustline-peer-cap-ledger-v1` + `ledger_digest`); Cap Ledger Desk instruction rewrite; thin `TestCapLedgerDeskParity` + `_pulse_parity.py`; oracle/solution/SPEC/task.toml/crux_suite aligned. Local **86 passed, 2 skipped**.
+- Prevention: After a pass@2 ratchet that fails cosine, batch **new schema deliverable + desk rewrite + verifier entrypoint reshape** in one commit (AGENTS last-3 ban); never empty-retrigger.
+
 ### 2026-08-07 — `dynamo-c9a0d11-data-science-and-reporting` / pass@2 2/2 after cosine reskin (c92559d)
 - Issue: cosine **PASS** on `c92559d`; **pass@2 FAIL** — **2/2 solved** (50/50, ~18 min spare). Suggestion: under-specify a rule (rejected — fairness/QC risk).
 - Root cause: Fully-prescriptive SPEC + freeze×asof fixtures remained transcription-friendly; agents implemented all disclosed local rules including the prior ratchet.
