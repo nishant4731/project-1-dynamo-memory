@@ -67,6 +67,7 @@ While working:
 - Prefer fixing the underlying pipeline/reviewer issue over changing task logic blindly.
 - Treat infrastructure failures, setup failures, provider failures, and all-run timeouts as non-evidence for task difficulty.
 - Keep verifier rules, instructions, reference solution, visible data, hidden tests, metadata, and PR evidence aligned.
+- **Before every commit, apply the "Commit similarity CI gate" procedure below** — the cosine-similarity check breaks the pipeline if the last 3 commits (messages and diffs) are too similar.
 
 ### Enforced cosine similarity (`review / cosine_similarity`) — detail
 
@@ -90,12 +91,12 @@ GitHub and push safety:
 - Before any force push, explain why it is needed, confirm the target remote and branch are the user's fork/submission branch rather than upstream or a protected/default branch, and prefer `git push --force-with-lease` over plain `--force`.
 - Run GitHub CLI (`gh`) commands outside the sandbox when they depend on GitHub auth, private repo access, network access, run logs, checks, forks, or PR creation/update. Sandboxed `gh` results can be misleading because credentials, keychain state, and network access may differ.
 
-Commit similarity CI gate (read before every commit):
+Commit similarity CI gate (MANDATORY — read and apply before EVERY commit):
 
-- **A CI pipeline runs a cosine-similarity check over the last 3 commits. If those commits are too similar, the pipeline breaks.** This applies to the trailing three commits on the branch being pushed — both their commit *messages* and their *diff content* count toward the similarity score.
+- **A CI pipeline runs a cosine-similarity check over the last 3 commits. If those commits are too similar, the pipeline breaks.** This applies to the trailing three commits on the branch being pushed — both their commit *messages* and their *diff content* count toward the similarity score. The same enforced `review / cosine_similarity` (and `similarity`) check also compares the task's `task/instruction.md` and `task/tests/test_outputs.py` against prior submitted versions and the wider corpus; a retry that leaves those two files near-identical (empty commit, cosmetic reword, helper rename, re-push of the same shape) can score ~0.98+ and fail — never trust an older UNIQUE sticky after retries.
 - Whenever you (the LLM agent) are about to commit, keep the last 3 commits **meaningfully distinct**: do not reuse near-identical commit messages, do not repeat the same templated wording, and avoid three consecutive commits whose diffs are trivial variations of each other (e.g. three near-identical "Note …" lines, or three one-line touch-ups of the same paragraph).
-- Before committing, look at `git log --oneline -3` and the pending diff. If the new commit would be a near-duplicate of either of the previous two, rewrite the message in your own words and, where possible, batch or reshape the change so the diff is substantively different rather than a cosmetic repeat.
-- Prefer one substantive commit over several tiny cosmetic ones; when you must make small follow-ups, give each a distinct message that describes what actually changed, not a restatement of the prior commit.
+- **Required pre-commit procedure, every time:** (1) run `git log --oneline -3` and read the pending diff; (2) if the new commit's message OR diff would be a near-duplicate of either of the previous two, STOP and rewrite the message in fresh wording *and* reshape the change so the diff is substantively different; (3) only then commit. Vary the message for each successive commit — describe what actually changed, never restate the prior commit.
+- Prefer one substantive commit over several tiny cosmetic ones. When a task fix is genuinely small, make a real semantic change across instruction + verifier + solution + reference together (or add a genuinely new disclosed artifact/mechanism) rather than pushing a near-duplicate — cosmetic prose edits alone will not move the similarity score enough.
 
 After finishing or learning something reusable:
 
