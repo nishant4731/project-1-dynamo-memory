@@ -90,6 +90,13 @@ Keep notes short. Promote broad Dynamo lessons into `PROJECT_DYNAMO_LEARNINGS.md
 
 ## Dated Notes
 
+### 2026-08-07 — `dynamo-7328085-machine-learning-and-ai` / entity-lattice-weave qc_gate E3 CLI
+- Issue: pass@2/deep/ava PASS but **qc_gate FAIL** — E3 Reward/Harness Plumbing: `test_cli_entrypoint_writes_graded_artifacts` ran `subprocess` on agent-writable `/app/output/lattice_link.py`.
+- Root cause: CLI graded by executing MODULE in-place; agent can abuse that path as verifier/reward plumbing (same class as feature_bake `_run_module` E3).
+- Fix: `run_submitted_cli` — sealed copy + `python -I` + nobody + reward/`/tests` locked; CLI test uses it; instruct argv sealed-copy note; touch instruction+tests for cosine. Docker 33/33 reward=1.
+- Prevention: Never `subprocess` agent-writable graded modules; always sealed copy under privdrop (emitter + CLI).
+
+
 ### 2026-08-07 — `dynamo-c9a0d11-data-science-and-reporting` / cosine after peer-winsor (3509bdc → f4e6ce2)
 - Issue: `3509bdc` peer-segment winsor ratchet → `review / cosine_similarity` **FAIL** (too similar to delivered Dynamo task); downstream skipped.
 - Root cause: Last-3 lineage self-match on pulse-cohort instruction + slim oracle `test_outputs.py` after `c92559d`; peer-winsor alone did not change cosine surfaces enough.
