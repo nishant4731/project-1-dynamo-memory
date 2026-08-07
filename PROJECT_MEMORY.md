@@ -3,6 +3,7 @@
 This is the living memory for work in `/Users/nishantchoudhary/Documents/Project 1`.
 Use it at the start of every new task, and update it whenever a blocker, review issue, PR pipeline issue, or reusable lesson appears.
 
+- 2026-08-07 `dynamo-d2e7d26`: after mandatory checklist, cosine still flagged `8631711` (loom_audit rename too close to last commits). Stronger clear `b0693ac`: add graded `profile.json`, Shedline Warp Desk instruction rewrite, thin `test_outputs.py` + `contract_suite.py`. Docstring-only never enough.
 - 2026-08-07 `dynamo-d2e7d26`: cosine flag after docstring-only `7328deb` (matched last commits). Cleared with `loom_audit.json` rename + forecast/entry digest chain + instruction rewrite + `test_harness.py` split. Reinforces mandatory last-3-commit cosine checklist in AGENTS.md.
 - 2026-08-07 `dynamo-d2e7d26`: Stage-1 `test_instruction_alignment` FAIL on `371fd05` (missing per-test docstrings + bundled multi-requirement test). Fix: atomic docstringed tests + reword zero-delta weft failure phrase.
 - 2026-08-07: `AGENTS.md` now has a **mandatory pre-push cosine checklist** (look at sticky + last ~3 commits every time). Docstring-only / atomic-split-only edits are not enough after a cosine-green artifact SHA. Cursor rule + playbook updated the same way.
