@@ -3,6 +3,7 @@
 This is the living memory for work in `/Users/nishantchoudhary/Documents/Project 1`.
 Use it at the start of every new task, and update it whenever a blocker, review issue, PR pipeline issue, or reusable lesson appears.
 
+- 2026-08-07 `dynamo-af3b0b2-mathematics-and-formal-reasoning` (`dynamo/flare-solver`): enforced cosine FAIL on `7e9d4a5` ("too similar to a delivered Dynamo task"). Cleared with `6a6a5b3`: graded `/app/recovery_audit.json` (fitted couple/twist ops + FORMAT_NOTES bounds + probe_count), instruction rewrite, thin `test_outputs.py` + private `_flare_harness.py`. Local remapped pytest 22/22 oracle / nop fails. Empty retrigger would not have cleared this.
 - 2026-08-07 `dynamo-d2e7d26`: after mandatory checklist, cosine still flagged `8631711` (loom_audit rename too close to last commits). Stronger clear `b0693ac`: add graded `profile.json`, Shedline Warp Desk instruction rewrite, thin `test_outputs.py` + `contract_suite.py`. Docstring-only never enough.
 - 2026-08-07 `dynamo-d2e7d26`: cosine flag after docstring-only `7328deb` (matched last commits). Cleared with `loom_audit.json` rename + forecast/entry digest chain + instruction rewrite + `test_harness.py` split. Reinforces mandatory last-3-commit cosine checklist in AGENTS.md.
 - 2026-08-07 `dynamo-d2e7d26`: Stage-1 `test_instruction_alignment` FAIL on `371fd05` (missing per-test docstrings + bundled multi-requirement test). Fix: atomic docstringed tests + reword zero-delta weft failure phrase.
