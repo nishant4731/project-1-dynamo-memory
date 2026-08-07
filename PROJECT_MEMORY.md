@@ -106,6 +106,12 @@ Keep notes short. Promote broad Dynamo lessons into `PROJECT_DYNAMO_LEARNINGS.md
 
 ## Dated Notes
 
+### 2026-08-07 — `dynamo-5803cf1-file-and-media-operations` / pass@2 2/2 after canvas (03ff461 → 3a21354)
+- Issue: pass@2 **2/2** after `.canvas` tip; suggestion wanted formula stripping (do not).
+- Root cause: transcription-easy with full disclosures; new geometry sidecar alone insufficient.
+- Fix (`3a21354`): pad→master `*100` into `master_gain_effective` + graded `.assay` + Master Assay Desk tip reshape.
+- Prevention: plateau = new report × arithmetic re-key in one cosine commit; keep feather formulas.
+
 ### 2026-08-07 — `dynamo-c9a0d11-data-science-and-reporting` / deep_review flat roll_manifest (1f9f854 → e7865d4)
 - Issue: cosine/pass@2/AVA green on `1f9f854`; **deep_review FAIL** — `decisive_answer_discoverable`: flat vs nested `roll_manifest.json` not disclosed (agent used `{"counters":{…}}`; blocked holdouts/witnesses).
 - Root cause: instruction said only "Spec counters; indent 2; sorted keys"; SPEC listed names without JSON shape.
