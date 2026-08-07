@@ -84,6 +84,13 @@ Keep notes short. Promote broad Dynamo lessons into `PROJECT_DYNAMO_LEARNINGS.md
 
 ## Dated Notes
 
+### 2026-08-07 — Dynamo cosine grades tip commit (empty redraw)
+- Issue: empty retrigger fails `review / cosine_similarity`; downstream skipped.
+- Root cause: cosine grades the **latest commit** task surface; `--allow-empty` is a no-op tip.
+- Fix: Enforced in `AGENTS.md` — never empty-commit Dynamo retriggers; always push a real `task/` diff.
+- Prevention: Prefer one meaningful task commit; if tip is empty, land a new non-empty `task/` commit.
+
+
 ### 2026-08-07 — AGENTS.md tip: enforced cosine on every push
 - Added standing guidance in `AGENTS.md` + playbook: once cosine is enforced, every commit re-checks `instruction.md`/`test_outputs.py`; real "delivered Dynamo task" flags need a graded artifact + verifier reshape, never empty retriggers; distinguish infra HTTP/Actions flakes.
 
