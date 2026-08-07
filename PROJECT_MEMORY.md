@@ -105,6 +105,13 @@ Keep notes short. Promote broad Dynamo lessons into `PROJECT_DYNAMO_LEARNINGS.md
 
 ## Dated Notes
 
+### 2026-08-07 — `dynamo-7328085-machine-learning-and-ai` / AVA+deep compile & __main__ quotes
+- Issue: cosine/pass@2 **PASS** on Medoid Loom tip; **ava_review BLOCK** `no_false_rejection` (oracle_guard bans `compile(`); **deep_review FAIL** undisclosed source-formatting (`if __name__ == "__main__"` exact double quotes).
+- Root cause: Guard/substring bans exceeded instruction (self-contained = no oracle delegation); tip asserted a quote style not in the contract.
+- Fix: Drop `compile` from `oracle_guard`; accept either `__main__` quote style; disclose stdlib compile OK + quote-agnostic main; clarify endpoint-absent winners still in `constraints_active`. Docker 41/41 reward=1.
+- Prevention: Never ban stdlib APIs wider than instruction; never exact-match Python quote style for `__main__`.
+
+
 ### 2026-08-07 — `dynamo-5803cf1-file-and-media-operations` / cosine after frame_count (e342c46 → 03ff461)
 - Issue: frame_count disclosure tip (`e342c46`) cosine **FAIL** vs digest/picked lineage.
 - Root cause: last-3 self-match — tip/instruction change without new graded artifact.
