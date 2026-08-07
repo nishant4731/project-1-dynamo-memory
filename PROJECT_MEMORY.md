@@ -105,6 +105,13 @@ Keep notes short. Promote broad Dynamo lessons into `PROJECT_DYNAMO_LEARNINGS.md
 
 ## Dated Notes
 
+### 2026-08-07 — `dynamo-7328085-machine-learning-and-ai` / cosine after AVA tip (4d300de)
+- Issue: AVA/deep compile+`__main__` tip `4d300de` → **cosine_similarity FAIL** (too similar); downstream skipped.
+- Root cause: AGENTS last-3 — fairness-only tip on Medoid Loom surface without a new artifact family.
+- Fix: graded `anchor_index.csv` (final cluster_id per `is_anchor=1`); Anchor Index Desk instruction; function-style tip + `anchor_parity.py`; keep compile/`__main__` fairness. Docker 42/42 reward=1.
+- Prevention: Fairness-only AVA fixes that touch tip files must ship with a *new* deliverable family (CSV index/roster), not prose-only on the last green desk.
+
+
 ### 2026-08-07 — `dynamo-7328085-machine-learning-and-ai` / AVA+deep compile & __main__ quotes
 - Issue: cosine/pass@2 **PASS** on Medoid Loom tip; **ava_review BLOCK** `no_false_rejection` (oracle_guard bans `compile(`); **deep_review FAIL** undisclosed source-formatting (`if __name__ == "__main__"` exact double quotes).
 - Root cause: Guard/substring bans exceeded instruction (self-contained = no oracle delegation); tip asserted a quote style not in the contract.
