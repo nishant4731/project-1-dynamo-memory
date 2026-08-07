@@ -103,6 +103,12 @@ Keep notes short. Promote broad Dynamo lessons into `PROJECT_DYNAMO_LEARNINGS.md
 
 ## Dated Notes
 
+### 2026-08-07 — `dynamo-5803cf1-file-and-media-operations` / cosine after frame_count (e342c46 → 03ff461)
+- Issue: frame_count disclosure tip (`e342c46`) cosine **FAIL** vs digest/picked lineage.
+- Root cause: last-3 self-match — tip/instruction change without new graded artifact.
+- Fix (`03ff461`): `<sheet_id>.canvas` + canvas rules; desk instruction; thin tip + `atlas_canvas_bind.py`; keep frame_count disclosure.
+- Prevention: fairness edits that touch cosine surfaces need a new deliverable path in the same push.
+
 ### 2026-08-07 — `dynamo-5803cf1-file-and-media-operations` / deep_review frame_count
 - Issue: deep_review **FAIL** (`decisive_answer_discoverable`) — sheet `frame_count` enforced but undisclosed (confused with SPT header); pass@2 valid fail.
 - Root cause: key listed without sheet-level meaning; example degenerate.
