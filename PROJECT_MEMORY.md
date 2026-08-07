@@ -90,6 +90,13 @@ Keep notes short. Promote broad Dynamo lessons into `PROJECT_DYNAMO_LEARNINGS.md
 
 ## Dated Notes
 
+### 2026-08-07 — `dynamo-7328085-machine-learning-and-ai` / cosine after E3 tip (1a798c2)
+- Issue: tip `1a798c2` sealed CLI (qc E3) but **cosine_similarity FAIL** (“too similar”); all downstream skipped. Stale QC sticky still cited pre-seal CLI subprocess.
+- Root cause: last-~3 cosine window — E3 tip only lightly touched instruction/`test_outputs.py` after CSV rename + grade-kit split; not a load-bearing surface move.
+- Fix: graded `weave_capsule.json` (tag/medoid_roster/ledger_fingerprint); Anchor Weave Capsule Desk instruction rewrite; slim `test_outputs.py` + `holdout_grade_suite.py` via `test.sh`; keep sealed `run_submitted_cli`. Docker 36/36 reward=1; Qwen tokens ~1340.
+- Prevention: After QC harness-only tip fails cosine, batch new graded artifact + desk rewrite + verifier split in one commit (AGENTS last-3); never empty-retrigger.
+
+
 ### 2026-08-07 — `dynamo-7328085-machine-learning-and-ai` / entity-lattice-weave qc_gate E3 CLI
 - Issue: pass@2/deep/ava PASS but **qc_gate FAIL** — E3 Reward/Harness Plumbing: `test_cli_entrypoint_writes_graded_artifacts` ran `subprocess` on agent-writable `/app/output/lattice_link.py`.
 - Root cause: CLI graded by executing MODULE in-place; agent can abuse that path as verifier/reward plumbing (same class as feature_bake `_run_module` E3).
