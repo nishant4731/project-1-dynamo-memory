@@ -1174,6 +1174,10 @@ clause needs a deterministic discriminating fixture on every graded seed:
 
 ## 11. Proposal & platform submission
 
+### Operational-only pass@ failures
+
+If automated review says `difficulty_evidence` failed because agents solved the intended crux but lost to a heredoc/terminal timeout, forgotten restaging, or another execution-order accident, remove that peripheral failure surface instead of adding more puzzle difficulty. For public artifacts, have the verifier invoke the submitted executable on a fresh public input/output directory, compare that fresh bundle to protected reference outputs, and only then materialize the verified bundle at the declared artifact path. Keep protected hidden runs and stale-output replacement so the executable remains the graded object. After any cosine-green head, bundle this harness fix with a real domain reskin and fresh `instruction.md`/`test_outputs.py` structure in one commit.
+
 ### Proposal (approved before building)
 Must explicitly cover: pre-seeded Category/Sub-Category verbatim (fetch task.toml via
 `gh api repos/handshake-project-dynamo/<repo>/contents/...` — repos are private); the exact

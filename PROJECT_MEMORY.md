@@ -1,5 +1,7 @@
 # Project 1 Memory
 
+- 2026-08-09 `dynamo-2aca767-games-puzzles-and-interactive-simulation` PR #2: automated review blocked `difficulty_evidence` after pass@2 agents recovered the renderer crux but failed only on a terminal heredoc timeout and stale public staging. Fix pattern: make the verifier run the submitted executable fresh on the public board and materialize the verified bundle for artifact collection, while keeping protected/stale/hidden renderer checks; pair that semantic harness change with a fresh domain reskin and rewritten cosine surfaces in one commit.
+
 This is the living memory for work in `/Users/nishantchoudhary/Documents/Project 1`.
 Use it at the start of every new task, and update it whenever a blocker, review issue, PR pipeline issue, or reusable lesson appears.
 
