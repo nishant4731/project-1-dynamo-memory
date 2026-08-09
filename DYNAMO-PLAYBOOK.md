@@ -1255,3 +1255,7 @@ instant blocker — it must be real audio work).
 **Bottom line:** what earns the score is breadth of exact-integer accounting + byte-exact naming +
 operational irreversibility + evidence-mined parameters — agents solve every *intended* clever
 crux; they die on peripheral exactness and on having destroyed their only copy of the data.
+
+### 2026-08-09 — Pair pass@2 hardening with a fresh cosine surface
+
+If a Dynamo task is sound but pass@2 is 2/2 solved, add a disclosed, load-bearing subsystem that changes the physical/graded outputs and the receipt or audit trail. In the same push, reskin the task identity and rewrite both cosine-compared files (`instruction.md` and `tests/test_outputs.py`) from scratch. For `dynamo-ea98175`, a per-runner trace hash plus a ping-kind switch bonus worked as the coupled artifact/objective change; calibration was kept neutral for the new bonus while full-data witnesses exercised it. Verify reference/solution parity, full-run timing, nonzero interaction witnesses, artifact declarations, and local oracle/nop before the one push.
