@@ -1178,6 +1178,8 @@ clause needs a deterministic discriminating fixture on every graded seed:
 
 If automated review says `difficulty_evidence` failed because agents solved the intended crux but lost to a heredoc/terminal timeout, forgotten restaging, or another execution-order accident, remove that peripheral failure surface instead of adding more puzzle difficulty. For public artifacts, have the verifier invoke the submitted executable on a fresh public input/output directory, compare that fresh bundle to protected reference outputs, and only then materialize the verified bundle at the declared artifact path. Keep protected hidden runs and stale-output replacement so the executable remains the graded object. After any cosine-green head, bundle this harness fix with a real domain reskin and fresh `instruction.md`/`test_outputs.py` structure in one commit.
 
+For a renderer/replay task that then reaches pass@2 2/2, inspect whether every calibration row publishes a complete per-tick trace. If agents can localize every ordering bug by diffing all traces, keep only a small, named, diverse trace-witness subset and leave final scalar reports/panels/score equations as the remaining evidence. Add a corpus-policy assertion for both presence and absence, update the normative charter and prompt, and refreeze before pushing.
+
 ### Proposal (approved before building)
 Must explicitly cover: pre-seeded Category/Sub-Category verbatim (fetch task.toml via
 `gh api repos/handshake-project-dynamo/<repo>/contents/...` — repos are private); the exact
