@@ -901,3 +901,7 @@ When a verifier runs a fresh candidate replay after dropping to UID/GID 65534, a
 ## 2026-08-10 — Host GitHub CLI and container interpreter mismatch
 
 For `dynamo-2d56214-data-science-and-reporting`, host GitHub CLI was available at `/opt/homebrew/Cellar/gh/2.94.0/bin/gh` and authenticated as `nishant4731`; use that host binary for fork, PR, checks, and logs. Harbor validation exposed a container-specific interpreter mismatch: the approved `python:3.13-slim-bookworm` image uses `/usr/local/bin/python3`, not `/usr/bin/python3`. Fix both `solution/solve.sh` and `tests/test.sh` together before repushing; a host-compatible temporary test copy can use `/usr/bin/python3` without changing the submitted container contract.
+
+## 2026-08-10 — Chronicle-style reporting tasks need explicit semantic contracts
+
+For `dynamo-59931c0-data-science-and-reporting`, AVA/deep review rejected an initially plausible reporting task because nested JSON keys, canonical byte serialization, and SVG structure were under-specified. Disclose the exact schema (including nested keys and list alignment), verify canonical JSON bytes and manifest digests, inspect per-panel SVG semantics rather than element counts, and require the exact declared output inventory in variant tests. If a cosine-green head is followed by a fix, bundle the contract and verifier hardening with a fresh domain identity rewrite of both compared surfaces in one substantive push; `gh` is the required host-side tool for PR checks and logs.
