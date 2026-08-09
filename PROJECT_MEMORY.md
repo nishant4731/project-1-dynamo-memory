@@ -909,3 +909,7 @@ For `dynamo-59931c0-data-science-and-reporting`, AVA/deep review rejected an ini
 ## 2026-08-10 — Charter policy recovery: disclose exact wire schemas and seal unprivileged test paths
 
 For `dynamo-10a667d-systems-infrastructure-and-operations`, rubric review correctly rejected an exact-match verifier when the agent-visible brief omitted the decision field order, reason token set, and TSV header. Add those normative details to the instruction/brief before pushing. Hosted nobody validation also requires chmodding the pytest temporary-directory traversal parents while preserving fixture immutability; otherwise permission errors can look like task failures. When pass@2 is too easy, remove candidate-set spoilers and mix calibration evidence before the first substantive push, then pair any later fix with a fresh identity/surface rewrite so enforced cosine does not self-match.
+
+## 2026-08-10 — Ion Lattice contract and multi-workload stream checks
+
+For `dynamo-9c64468-hardware-embedded-and-low-level-systems`, keep every recovery formula, tie-break, and NDJSON key set in the agent-visible rules so exact verification remains fair. For nobody replays, chmod only the fresh output directory writable while keeping protected fixtures sealed. If each workload emits its own stream header, validate repeated headers and per-kind schemas rather than assuming a single global header; hosted Harbor caught that distinction even though the public oracle matched.
