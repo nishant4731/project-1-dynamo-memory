@@ -1259,3 +1259,7 @@ crux; they die on peripheral exactness and on having destroyed their only copy o
 ### 2026-08-09 — Pair pass@2 hardening with a fresh cosine surface
 
 If a Dynamo task is sound but pass@2 is 2/2 solved, add a disclosed, load-bearing subsystem that changes the physical/graded outputs and the receipt or audit trail. In the same push, reskin the task identity and rewrite both cosine-compared files (`instruction.md` and `tests/test_outputs.py`) from scratch. For `dynamo-ea98175`, a per-runner trace hash plus a ping-kind switch bonus worked as the coupled artifact/objective change; calibration was kept neutral for the new bonus while full-data witnesses exercised it. Verify reference/solution parity, full-run timing, nonzero interaction witnesses, artifact declarations, and local oracle/nop before the one push.
+
+### 2026-08-09 — Stateful objective follow-up for pass@5
+
+When pass@5 reports good-valid failures caused by operational wedges rather than the intended crux, do not rely on those failures as difficulty evidence. Add a fair, disclosed stateful interaction that changes the objective and a protected audit artifact in one cosine-safe reskin. Bind the state transition, component, per-step rows, and canonical hash through instruction, charter, solution, reference, fixtures, and tests; verify a nonzero witness and full-run parity. Keep metadata factual: static pristine verifier fixtures are not salted cohorts.
