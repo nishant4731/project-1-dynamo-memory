@@ -1263,3 +1263,7 @@ If a Dynamo task is sound but pass@2 is 2/2 solved, add a disclosed, load-bearin
 ### 2026-08-09 — Stateful objective follow-up for pass@5
 
 When pass@5 reports good-valid failures caused by operational wedges rather than the intended crux, do not rely on those failures as difficulty evidence. Add a fair, disclosed stateful interaction that changes the objective and a protected audit artifact in one cosine-safe reskin. Bind the state transition, component, per-step rows, and canonical hash through instruction, charter, solution, reference, fixtures, and tests; verify a nonzero witness and full-run parity. Keep metadata factual: static pristine verifier fixtures are not salted cohorts.
+
+### 2026-08-09 — Final pass@5 hardening: end-context closure and expected-byte checks
+
+Tighten self-referential canonical-byte tests to compare the submitted bytes against serialization of the protected expected frame. When intended crux failures are absent, a fair terminal closure keyed by final sequential state, selected count, and absolute last index creates a genuine whole-plan dependency; bind it into the objective, receipt, fixture, and witness tests. After a cosine-green head, pair this with a complete visible identity reskin and fresh instruction/verifier surfaces in the same push.

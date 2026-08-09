@@ -875,3 +875,7 @@ On `dynamo-ea98175-machine-learning-and-ai` PR #4, cosine/static/eval/duplicate/
 ## 2026-08-09 — Stateful objective follow-up for pass@5
 
 On the same Dynamo PR, pass@5 failures were terminal heredoc wedges rather than algorithmic misses (3/5 solved, 2 good-valid failures). A fair hardening pass therefore added a disclosed sequential state lattice that affects subset score, receipt components, per-step state rows, and a canonical state-document hash, with a protected nonzero witness. Also correct metadata claims against the actual verifier: synthetic/generated provenance is fine, but do not claim solver-byte salting when verification uses a static pristine fixture copy.
+
+## 2026-08-09 — Final pass@5 hardening: end-context closure and expected-byte checks
+
+For the follow-up on `dynamo-ea98175`, the protected verifier's canonical-board assertion was tightened to serialize the protected expected frame rather than the submitted frame. The task also gained a disclosed terminal closure keyed by final state, selected-plan cardinality, and absolute last index, with a receipt component and nonzero witness; this is a fair end-context crux that defeats incremental scoring. Because a cosine-green head was already indexed, the change was paired with a full Cairn identity reskin and fresh rewrites of both compared surfaces in one commit.
