@@ -879,3 +879,7 @@ On the same Dynamo PR, pass@5 failures were terminal heredoc wedges rather than 
 ## 2026-08-09 — Final pass@5 hardening: end-context closure and expected-byte checks
 
 For the follow-up on `dynamo-ea98175`, the protected verifier's canonical-board assertion was tightened to serialize the protected expected frame rather than the submitted frame. The task also gained a disclosed terminal closure keyed by final state, selected-plan cardinality, and absolute last index, with a receipt component and nonzero witness; this is a fair end-context crux that defeats incremental scoring. Because a cosine-green head was already indexed, the change was paired with a full Cairn identity reskin and fresh rewrites of both compared surfaces in one commit.
+
+## 2026-08-09 — CinderAtrium PR recovery after QC/AVA findings
+
+On `dynamo-2aca767-games-puzzles-and-interactive-simulation` PR #2, one final task commit (`33db566`) addressed the prior QC triple-digit portal gap and AVA extra-output gap together: the hidden portal mutant now diverges, and the verifier requires exactly the six declared bundle files. The commit also reduced non-crux calibration breadth, regenerated fixtures, and performed a full CinderAtrium identity reskin with fresh rewrites of both cosine-compared files. Cosine, static, evaluation, duplicate, and Docker/Oracle/Nop validation all passed on that SHA. The refreshed pass@2 result was 1/2 with one solved trial and one productive timeout; because the timeout cap is 3600 seconds, do not raise it above the cap or push prose-only retries.
