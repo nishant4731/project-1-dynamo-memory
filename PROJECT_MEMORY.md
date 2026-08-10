@@ -913,3 +913,7 @@ For `dynamo-10a667d-systems-infrastructure-and-operations`, rubric review correc
 ## 2026-08-10 — Ion Lattice contract and multi-workload stream checks
 
 For `dynamo-9c64468-hardware-embedded-and-low-level-systems`, keep every recovery formula, tie-break, and NDJSON key set in the agent-visible rules so exact verification remains fair. For nobody replays, chmod only the fresh output directory writable while keeping protected fixtures sealed. If each workload emits its own stream header, validate repeated headers and per-kind schemas rather than assuming a single global header; hosted Harbor caught that distinction even though the public oracle matched.
+
+## 2026-08-10 — Cobalt Relay: make zero branches and hidden profile variation explicit
+
+On the same hardware task, deep review found that saying “zero remainder treated as bank count” left the `gcd` branch ambiguous; state the zero-span assignment as an explicit `if/otherwise` rule and define aggregate fields such as `total_blocks` directly. Avoid contradictory “no network” wording when `allow_internet` metadata exists, use label-free replay temp prefixes, and keep per-case timeouts below the verifier’s total budget. To prevent a public-profile hardcode from passing AVA, vary the hidden calibrated profile itself (not just dimensions) and disclose that profile transfer is graded. Pair these fixes with a fresh domain identity rewrite of both cosine surfaces in one commit.
