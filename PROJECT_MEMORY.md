@@ -921,3 +921,7 @@ On the same hardware task, deep review found that saying “zero remainder treat
 ## 2026-08-10 — Exact-byte digests need a separate write terminator rule
 
 On the same hardware task, pass@2 showed two independent agents solving the algorithm but hashing the trailing newline because the rules defined canonical JSON as newline-terminated while only saying to hash the “compact object.” For every byte-exact digest, define `compact(x)` as the exact hash-input bytes with no newline, state the digest operation before adding digest fields, and separately state that output files append their final newline after hashing. A visible “hash before adding sha256” sentence is not enough when the file terminator is described nearby.
+
+## 2026-08-10 — Rejection probes must be self-consistent out-of-range cases
+
+On `dynamo-9c64468-hardware-embedded-and-low-level-systems`, AVA correctly identified that an inconsistent calibration probe can be rejected by equation consistency even when explicit coefficient-bound validation is removed. To prove the validator enforces the advertised bounds, build a consistent probe set from a deliberately out-of-range coefficient and add profile probes at a specific invalid stepped value (for example, `sm_count=7`). Keep rejection replay directories label-neutral and writable under UID 65534.
