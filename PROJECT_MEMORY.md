@@ -927,3 +927,7 @@ On the same hardware task, pass@2 showed two independent agents solving the algo
 ## 2026-08-10 — Rejection probes must be self-consistent out-of-range cases
 
 On `dynamo-9c64468-hardware-embedded-and-low-level-systems`, AVA correctly identified that an inconsistent calibration probe can be rejected by equation consistency even when explicit coefficient-bound validation is removed. To prove the validator enforces the advertised bounds, build a consistent probe set from a deliberately out-of-range coefficient and add profile probes at a specific invalid stepped value (for example, `sm_count=7`). Keep rejection replay directories label-neutral and writable under UID 65534.
+
+## 2026-08-10 — Inference difficulty cannot come from hidden domains or hash shape
+
+For `dynamo-10a667d-systems-infrastructure-and-operations`, pass@2 agents recovered the intended policy but exposed two fairness defects: an undisclosed finite coefficient set made a different documented-domain value equally valid, and the fingerprint's exact policy-object nesting was not stated. Treat those as invalid failures. Publish every candidate domain and a canonical compact hash-preimage example, prove unique recovery over that disclosed space, and preserve difficulty with a genuinely load-bearing shared parameter fitted across all action families. Also note the static rubric's structural expectations: give each explicit output requirement an atomic `test_*` function with a requirement docstring, and name the real-world audience and operational reason in `difficulty_explanation`.
