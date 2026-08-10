@@ -917,3 +917,7 @@ For `dynamo-9c64468-hardware-embedded-and-low-level-systems`, keep every recover
 ## 2026-08-10 — Cobalt Relay: make zero branches and hidden profile variation explicit
 
 On the same hardware task, deep review found that saying “zero remainder treated as bank count” left the `gcd` branch ambiguous; state the zero-span assignment as an explicit `if/otherwise` rule and define aggregate fields such as `total_blocks` directly. Avoid contradictory “no network” wording when `allow_internet` metadata exists, use label-free replay temp prefixes, and keep per-case timeouts below the verifier’s total budget. To prevent a public-profile hardcode from passing AVA, vary the hidden calibrated profile itself (not just dimensions) and disclose that profile transfer is graded. Pair these fixes with a fresh domain identity rewrite of both cosine surfaces in one commit.
+
+## 2026-08-10 — Exact-byte digests need a separate write terminator rule
+
+On the same hardware task, pass@2 showed two independent agents solving the algorithm but hashing the trailing newline because the rules defined canonical JSON as newline-terminated while only saying to hash the “compact object.” For every byte-exact digest, define `compact(x)` as the exact hash-input bytes with no newline, state the digest operation before adding digest fields, and separately state that output files append their final newline after hashing. A visible “hash before adding sha256” sentence is not enough when the file terminator is described nearby.
