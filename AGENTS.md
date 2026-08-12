@@ -23,6 +23,33 @@ Then:
 - Apply the pipeline lessons proactively instead of rediscovering them.
 - If any listed file is missing, note that briefly and continue with the files that exist.
 
+## Mandatory: complete validation and GitHub feedback loop for every change
+
+This is a hard completion gate for every task change made anywhere under the `Project 1` folder. Codex must not report a task as complete, and must not push a Dynamo `submission` branch, after only a unit test, smoke test, static sweep, or one green GitHub check. A partial validation result is not a passing result.
+
+Before the first substantive push, design and validate the final task version as a whole:
+
+- Make the difficult version first. Do not push an easy task and plan to make pass@2 harder in later cosmetic or incremental commits; an enforced cosine pass can index the earlier surface and self-poison later revisions.
+- Make pass@2 difficulty fair and output-affecting: use multiple interacting, disclosed subsystems; varied protected fixtures; a reusable-solver/generalization requirement; and direct adversarial or mutant checks for each decisive rule. Do not manufacture difficulty with hidden conventions, undisclosed serialization, arbitrary timeouts, leaked answers, nondeterminism, or malformed inputs.
+- Reconcile `instruction.md`, normative environment notes, fixtures, metadata, reference solution, verifier, artifacts, and review evidence before running the final checks. Every verifier-enforced key, type, ordering, tie-break, normalization, path frame, and byte-level convention must be stated or uniquely derivable from agent-visible material.
+
+Run every applicable local check and inspect its result, including the full sequence documented in `DYNAMO-PLAYBOOK.md` and `PROJECT_DYNAMO_TASK_SOUNDNESS_CHECK.md`: regeneration/refreezing and reference pins; syntax/compile and diff checks; image build and preflight; reference/oracle; the complete verifier/unit sweep and build count; cross-checks and documentation-name checks; wrong-output, nop, adversarial, mutation, tamper, and isolation probes; and Harbor oracle `1.0` plus nop below full reward (using the documented manual Docker fallback only when Harbor is unavailable). If a repository does not provide one of these checks, record that fact and run the closest equivalent; never silently omit it.
+
+Before committing, inspect `git status`, the complete pending diff, and `git log --oneline -3`; apply the commit-similarity procedure below. Prefer one cohesive, substantively distinct commit containing the complete task contract and all known fixes. Do not use empty retrigger commits or a burst of near-identical commits.
+
+After every push, GitHub CLI monitoring is mandatory and must run outside the sandbox when it depends on authentication, private repositories, Actions logs, PR checks, or network state:
+
+```bash
+export GH_TOKEN="${GH_TOKEN:-$NISHANT_GH_TOKEN}"
+gh api user --jq .login
+gh pr checks <pr-number> --repo <owner>/<repo> --watch
+gh pr view <pr-number> --repo <owner>/<repo> --comments
+```
+
+The active account must be `nishant4731`, and the remote and PR must point to the intended fork/submission branch. If any check fails, do not call the task done: read the failed job's actual log and PR sticky/comments with `gh`, classify the cause as task contract, verifier/reference, static/review, cosine/similarity, pass@2, deep review, AVA/QC/eval, Harbor, authentication, cancellation, or other infrastructure, and collect all available feedback before editing. Fix the root cause and rerun the complete local gate; then push one cohesive follow-up and wait for that single pipeline to finish before making another change. Treat cancelled runs, provider errors, authentication failures, and action-download failures as infrastructure evidence only, but still verify the succeeding run rather than assuming it passed.
+
+Completion requires all applicable local checks and all required GitHub checks to be green, with Harbor oracle/nop evidence recorded. If an external service remains blocked after the documented retries and diagnosis, report the exact blocker and evidence instead of claiming successful validation.
+
 ## Mandatory: look at cosine last-commit window before EVERY push
 
 **Do this on every Dynamo submission push. No exceptions. Do not skip when the change feels “small” or “docs-only”.**
@@ -110,6 +137,8 @@ This gate can flip from shadow to **enforced** mid-PR. Once enforced, it runs on
 - **Domain reskin clears self-match; prose does not.** When the corpus likely includes your own earlier PR heads, measured lexical self-sim of `instruction.md`/`test_outputs.py` is necessary but not sufficient. Rewording can lower lexical self-sim and still BLOCK; renaming the task domain/identity can raise lexical self-sim and still PASS with a much lower service score. Do not burn rounds on paraphrases. In one push: rename visible identity (probe dir, CLI path/module, contract filename, output filenames, `[task].name`), then rewrite the two graded files from scratch in the new vocabulary. Apply longest-first string substitutions across all sources; fix Dockerfile COPY/chmod, `artifacts = [...]`, mutation literals, and regenerated fixtures. Harbor oracle 1.0 / nop 0.0. Pair needed difficulty ratchets into the same identity push.
 
 - **CRITICAL correction — a reskin that PASSED gets indexed too, so leaving the two graded facets untouched on your NEXT push is not "safe," it's the single surest way to fail.** Confirmed on df4e109, 2026-08-07: after a reskin (`6cf9015`) passed cosine, a follow-up commit (`e438acd`) that ratcheted pass@2 difficulty entirely inside private generator/harness files — deliberately leaving `instruction.md` and `tests/test_outputs.py` **byte-identical** to the passing commit, reasoning "unchanged compared files can't regress a passing score" — **still blocked**. Byte-identical content trivially self-matches its own now-indexed predecessor at ~1.0; "I didn't touch the compared files" is not a shield, it's the failure mode itself, because the comparison is against the corpus (which now contains that exact byte string), not against a diff. **The practical rule: every push that follows a cosine-PASSING push needs its own fresh identity change to the two compared facets — even a push that is 100% about verifier/generator internals and touches neither file's *meaning*.** Bundle a trivial-but-real reskin (new domain vocabulary, rewritten instruction/test files) into EVERY push after the first pass, not just the ones where you consciously changed the graded contract.
+
+- **MEASURED COUNTER-EVIDENCE (2026-08-12, dynamo-e488890 PR #3) — do not reskin reflexively.** On a fresh repo, commit 1 passed enforced cosine (instruction `0.7117`, verifier `0.8000`, fingerprint `0.7911`) and ran the whole pipeline through pass@2. Commit 2 was the *same task, same domain, same vocabulary*: local token-cosine of the two compared facets against commit 1 measured **0.9222 / 0.9776 (joined 0.9775)** — deep in the "this will block" band by the a3f35ff heuristic — and it **PASSED**, scoring `0.7323 / 0.8057 / 0.7961`. The service numbers barely moved. Conclusion: the corpus is **delivered/accepted Dynamo tasks**, and an in-flight PR head on the same repo is **not** in it. So the df4e109/a3f35ff "every push after a cosine-green push needs its own fresh identity change" rule is about lineages whose earlier version was actually *delivered* — it is NOT a per-push tax on an ordinary PR. Before spending a session on a reskin, push the real fix and read the score; a reskin costs an hour, breaks literals, and redraws pass@2 for nothing. What commit 2 *did* carry was load-bearing (a whole new graded deliverable wired through instruction → contract → reference → verifier, plus new verifier cases), which is the documented "new graded artifact + verifier reshape" lever — that, not a rename, is what to reach for first.
 
 ### Cosine self-poisoning & the difficulty catch-22 (learned 2026-08-07, dynamo-ea98175)
 
