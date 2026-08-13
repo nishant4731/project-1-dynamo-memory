@@ -1409,3 +1409,19 @@ the task is calibrated against, so a task can be shut out at pass@2 without ever
 against its own reference agent. When a concept reaches this point, stop ratcheting: either the
 task is rebuilt on an undisclosed-policy shape, or the calibration question goes to the Dynamo
 team with the four measurements attached.
+
+The fifth draw resolved it, and it corrects the conclusion above. The blocker was not that stated
+rules are always implemented correctly; it was that the contract quoted the example case's full
+report and ledger, so every agent debugged its implementation against a reference before
+submitting. Cutting the example down to a sixteen-sample format sheet — enough to pin both ledger
+row shapes, the dash placeholders, the digests and the canonical JSON, and nothing more, with the
+contract saying outright that reproducing it proves nothing — flipped pass@2 to 0/2 solved with 2
+valid failures and difficulty_crux PASS on both trials. Both agents failed on the same subsystem,
+the two-adder reachable set behind the shift-add adder budget, by different mistakes; one built
+the correct 722-value set and then reasoned itself down to 224 partway through, over-charging 498
+odd-parts and cascading through the ledger digest into every held-out chain.
+
+So the working rule for this reference pair is a conjunction: the graded work must include a
+search or construction the agent cannot verify locally, and the shipped material must pin file
+conventions without confirming any computed value. A worked example that quotes real answers is an
+oracle, and it neutralises every starved branch behind it. Ship the format sheet, not the answer.
