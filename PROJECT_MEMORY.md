@@ -1190,3 +1190,57 @@ It measured 1/2, then 2/2, then 1/2, then 2/2. The pattern is the finding: **bot
 The irreversibility lever, which the playbook ranks first by observed lethality, fired **zero times in four trials**. Every agent copied `/app/vault` to `/tmp` and developed against the copy. It did so even after the instruction stopped telling them to: the sentence prescribing the remedy was removed while the hazard stayed disclosed, and the trajectories still show "backup-and-develop" as the first step both times. The playbook's own caveat on this lever ("some agents test on a /tmp copy; it fired 0/5 once") should be read as the expected case for current agents, not the exception.
 
 So across two entirely different task shapes and about ten evaluated heads in one repo, the reference pair solved every fair, deterministic, fully-derivable pipeline put in front of it, and the only failures available were ambiguities that are themselves blockers. That is worth treating as a property of the current reference agent rather than a fixable property of the task: adding interacting subsystems raises solve time but not the failure rate, and each ratchet costs a three-hour pipeline. Before building the next task in this category, decide whether anything in the design can fail an agent *without* being ambiguous — and if the honest answer is only "an obscure convention", that is a rejection waiting to happen rather than difficulty.
+
+## 2026-08-13 — dynamo-137a569 (rollup-evalrun): starved branches are not enough against a complete charter
+
+First push was all-green through validation (cosine PASS, Dynamo eval 31/31, similarity UNIQUE,
+oracle 1.0 / nop 0.0 on Harbor) and then **pass@2 returned 2/2 solved in 9.5 and 15 minutes of a
+60-minute budget**. Eight plausible misreadings had been *measured* to be byte-identical on the
+visible pack and rejected on 3-5 of 9 held-out packs, and both agents still cleared every one of
+them — the analysis notes they "derived these from the charter's normative text", independently
+converging on sorted-id permutation search, all-records fallback scope and `fractions.Fraction`.
+
+Lesson: the starve-the-sample lever raises the cost of *being wrong*, but it does not stop a
+careful reader from being right the first time. Against a complete normative contract with ~380
+lines of implementation, the agent never needs the sample. Blindness is necessary, not sufficient
+— the other half is that the answer must not be *derivable by reading*. Pair starvation with a
+subsystem whose constants are genuinely unwritten and must be induced from evidence, and with an
+identity re-keying that forces every earlier rule to be revisited, and size the whole thing so
+solve time approaches the budget rather than a sixth of it.
+
+### 2026-08-13 — Starving the sample only pays when the starved branch is hard to implement
+
+`dynamo-8ab540c` (`dynamo/rate-chain-bringup`, DSP and signal hardware) was built directly on the
+crosstalk-bench lever: a bit-exact model of a decimation datapath whose shipped chain runs at
+interpolation 1, start phase 0, differential delay 1, never wraps a CIC register, never clips,
+never lands on a rounding tie, never caps or zeroes a shift and has whole-number group delays.
+Twelve decisive rules were therefore fully specified in `CHAIN_CONTRACT.md` and completely
+unobservable in the agent's own testing, with byte-exact differential grading on ten protected
+chains plus a submission-salted one. First push cleared enforced cosine, the 31-criterion Dynamo
+eval, the duplicate check and Harbor validation on the first attempt.
+
+**pass@2 came back 2/2 solved at roughly seven minutes per trial with zero valid failures.** The
+trial analysis was explicit: "the contract's prescriptive language was detailed enough to
+uniquely determine the implementation without relying on unguided derivation." The platform's own
+advisory agreed and recommended replacing closed-form formulas with behavioural descriptions.
+
+The difference from `dynamo-44fbd85`, where the same lever produced 0/5 with five valid fails, is
+the *kind* of starved branch. There it was Hermite normal form over the integers — an algorithm
+whose plausible implementations are subtly wrong, so being unable to exercise it was fatal. Here
+each starved branch was a single stated rule, and a careful reader gets a stated rule right the
+first time. Sample starvation multiplies an existing per-rule error probability; for one-line
+rules against this reference pair that probability is close to zero, so twelve of them still
+multiply to nothing.
+
+The ratchet that followed keeps the whole engine and adds the missing ingredient: each case now
+ships a design brief instead of a finished chain, and the model has to enumerate the ordered
+factor sequences for its decimation tail, score them with a disclosed multiply cost whose tap-count
+rule follows the cumulative decimation at each stage's output, and pick the cheapest with a
+lexicographic tie-break. Both shipped briefs are ones where largest-factor-first happens to be
+optimal, so the shortcut still looks right locally, while six of the ten protected briefs punish it
+and four are decided only by the tie-break. The contract's CIC recurrences, requantiser, tie
+predicate and latency referral were also rewritten as behavioural prose that still determines every
+value uniquely. Practical rule for the next task in this family: before spending a build on a
+starved branch, ask whether a competent implementation would plausibly get it wrong on the first
+try with no way to check — if not, spend the difficulty budget on a subsystem that requires
+derivation instead.
