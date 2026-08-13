@@ -1390,3 +1390,22 @@ Operational note carried forward: both pass@2 failures across the two heads were
 ALL-GREEN on `d6c91e9`: cosine `0.6426 / 0.8182 / 0.7873`, static, Dynamo eval 31/31, duplicate UNIQUE, Harbor validation, pass@2 1/2, Deep Review, Ava, Tier-1, qc_eval, qc_exec, the 44-check qc_gate, and pass@5 **2/5 solved with 3 good-valid failures, avg@5 0.400**, plus the final gate. Two commits, no reskin needed.
 
 The failure taxonomy is the useful part. Two of the three failures were Terminus-2 heredoc wedges — one agent's 23,336-character single heredoc wedged the tmux session at the `>` continuation prompt and ate the next 49 minutes of escape attempts. **The third is the one the design was built for, and it also vindicates the irreversibility lever the previous entry had written off:** that agent ran an unverified, clock-buggy tool directly on the irreplaceable `/app/case` at step 22 and consumed the spool for good; after fixing the sign error its corrected tool still under-counted per-leg conflicts, because the accumulator sat *after* the `continue` that drops a record under a `refuse` receiver. Every individually-tested clause passed for that agent — it lost on the interaction between two rules, which is precisely what a blind shipped fixture cannot show. Both passing agents developed against `/tmp` copies first. So budget operational irreversibility at roughly one kill in five rather than zero, and stop treating "agents always copy to /tmp" as a law.
+
+A fourth draw closed the question. The hypothesis after three was that difficulty can survive
+disclosure when the stated core is short to state and hard to implement, so the next push added
+exactly that: each stage reports the fewest adders in a shift-add realisation of its coefficients,
+a bounded reachability search no library computes, where signed-digit recoding overcharges a
+hundred and one graded coefficients and is exact on every visible one. Both trials built the
+two-adder reachability table over odd parts below 4096 and solved in 26 and 46 minutes. The
+analysis said the convergence "suggests these techniques are well-established enough in training
+data that the model can reliably derive them from the contract specification alone".
+
+Four levers on one task — starved one-line rules, a combinatorial optimisation with a stated
+objective and a wrong rule of thumb, an exact-decimal conversion whose float route is silently
+wrong, and a bespoke bounded search with no library implementation — all drew 2/2. Depth of the
+stated computation is not the axis. Being stated at all is, and QC fairness requires everything
+graded to be stated. Note also that the blocking gate ran DeepSeek V4 Pro, not the Opus-4.8 pair
+the task is calibrated against, so a task can be shut out at pass@2 without ever being measured
+against its own reference agent. When a concept reaches this point, stop ratcheting: either the
+task is rebuilt on an undisclosed-policy shape, or the calibration question goes to the Dynamo
+team with the four measurements attached.
