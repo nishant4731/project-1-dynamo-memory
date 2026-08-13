@@ -1472,3 +1472,53 @@ non-existent directory. The fix is written and verified locally (182 checks, ora
 as a patch, but qc_gate required no fixes (`QC-FIXES-B64` empty) and the head was already in the
 accepted band — pushing would redraw pass@5 and cosine for reviewer optics. Apply it only if a
 human reviewer asks for a revision.
+
+## 2026-08-14 — dynamo-6e8e4c7 (dynamo/tessera-reconcile): the worked example is the difficulty
+
+Data Querying and Databases / NoSQL and document stores. Task: reconcile a repair bundle
+dumped out of a masterless document store — ring placement with a cyclic walk, home vs
+live replica lists, positional hinted handoff, a dotted-context survival rule, tombstone
+reaping, sibling pruning, a repair plan and a transfer ledger with globally scheduled
+rounds, twenty-five counters, byte-exact.
+
+Three heads, every gate green except one, and the same verdict each time:
+
+| head | change | pass@2 |
+|---|---|---|
+| `55d3ec8` | blind-branch design: ten decisive branches the shipped bundle never enters | 1 solved · 1 valid fail |
+| `83d0b72` | QC fixes (absent-context default pinned, non-ASCII witnessed) | **2/2 solved**, 15–23 min of 60 |
+| `c2b95f2` | + digest sketches, transfer sourcing, round scheduling, a fourth artifact, 25 counters | **2/2 solved**, ~25 min |
+
+The ratchet moved the clock and not the failure rate, exactly as
+[[dynamo-spec-mold-caps-at-80pct-solve]] and [[dynamo-starved-branches-need-algorithmic-depth]]
+predict. The trial analysis named the real cause without being asked: both agents
+"verified their output SHA-256 hashes or byte-level output against the spec's built-in
+worked example before running on the main bundle", and it attributed their convergence to
+"the clear prescriptive structure of `TESSERA_SPEC.md` itself".
+
+**The contract quoted all four artifacts of a two-key example bundle in full** — every
+counter, every digest, the whole row ordering. That is an end-to-end oracle. Ten starved
+branches never faced a first draft; they faced an implementation already debugged on every
+other axis, which is the exact mechanism `dynamo-8ab540c` recorded on its fifth draw.
+
+Head four replaces section 9 with a **format sheet**: invented fragments fixing the
+canonical JSON shape, both table headers, the dot spelling and the dash placeholder,
+belonging to no bundle and deliberately inconsistent with each other; `example_bundle` is
+deleted. Layout stays confirmable, no computed value does. Two verifier checks hold the
+line — one fails if the shipped contract quotes any graded bundle's artifact bytes or rows,
+the other requires it to still spell every field and counter name, so shrinking the example
+cannot quietly cost discoverability (QC B4).
+
+Three build lessons worth carrying:
+
+1. **A search subsystem is dead code unless the hidden answer strictly restricts the
+   candidates.** Sketched buckets (a count plus a salted digest, recovered by subset search)
+   were first placed on broadcast keys, so `count == len(listed)` on 17 of 17 and "a sketch
+   holds whatever the others listed" reproduced the reference exactly. Forcing a proper
+   subset in the generator, adding a `keys_sketch_proper` coverage property and a mutation
+   anchor for each naive shortcut fixed it.
+2. **A canonicalisation rule inside a digest is unobservable when the reference enumerates
+   candidates already in canonical order.** Enumerate in reverse so the sort is load-bearing.
+3. **`[::-1]` is not an adversarial mutation of a container order** — on four separate
+   fixtures the reversed bucket order produced the same eviction order as sorted. Use
+   `sorted(..., reverse=True)`.
