@@ -1244,3 +1244,65 @@ value uniquely. Practical rule for the next task in this family: before spending
 starved branch, ask whether a competent implementation would plausibly get it wrong on the first
 try with no way to check — if not, spend the difficulty budget on a subsystem that requires
 derivation instead.
+
+## 2026-08-13 — `dynamo-3d96edf` ALL-GREEN on ONE commit: pass@2 1/2, pass@5 1/5 with 3 good valid fails
+
+`dynamo/fabric-retime-audit` (Hardware Embedded and Low Level Systems / RTL and digital design) went
+green on every gate on its first substantive push, `9d8887f`: cosine `0.657/0.832/0.784`, static
+checks, Dynamo eval 31/31 PASS with zero failures, similarity, validation, **pass@2 1/2 with one
+good valid fail**, deep review, Ava, tier1, qc_eval, qc_exec, **qc_gate 44/44 clean with an empty
+fix list**, **pass@5 1/5 solved · 3 good-valid · 1 in-progress-timeout · avg@5 0.200**, final gate.
+`difficulty_crux` PASS and `approach_validity` PASS on all five trials; `task_specification` PASS on
+all seven trials across both gates, so no ambiguity was ever charged against it.
+
+**The design was the blind-sample-branch lever, and the trial analyser confirmed the mechanism in
+its own words.** The task is a retiming audit of extracted synchronous blocks: per block, register
+legality, the extracted critical path, the largest delay-to-register cycle ratio as an exact reduced
+fraction, the minimum retimed clock period, the canonical componentwise-minimum retiming, and the
+register/critical-path accounting after replaying it. The contract discloses every rule *and* every
+structure a pack may contain; the shipped pack contains none of the awkward ones — no parallel arcs,
+no self-arcs, no zero-delay cell, no unwired cell, no disconnected piece, no multi-register arc, no
+combinational loop. On root cause A the analyser wrote: *"the worked_fabric topology happened to
+tolerate the misanchor; all 9 graded packs exposed it."* That is the lever working exactly as
+[[dynamo-blind-sample-branch]] predicts — starve the sample, never the rule.
+
+**The single highest-value pre-push step was a naive-variant probe harness.** Before the first push
+I patched the reference into ~15 plausible-wrong variants and required each to be byte-identical on
+the shipped pack *and* the worked example while diverging on held-out packs. Six qualified. The
+pass@2 failure and two of the four pass@5 failures were *that exact list*: the retiming solved from
+the reversed constraint graph then shifted per component. A variant that matches everywhere is a C3
+fixture hole; a variant that differs on the shipped pack buys no difficulty. This costs twenty
+minutes and predicts the gate. Recorded as [[dynamo-naive-variant-probe-predicts-fails]].
+
+**Two smaller confirmations.** (1) A mutation that no fixture can kill is a signal to look harder,
+not to delete the mutation: `arc_constraint_dropped` survived every pack and 4,000 random blocks,
+which showed the arc-legality constraints are subsumed by the W/D pair constraints for the pointwise
+minimum — the honest fix was to drop that anchor and enforce legality with a direct assertion
+instead, and to delete an unreachable `else "-"` branch the same reasoning exposed. (2) A dead
+branch found this way is exactly what qc_gate C3 hunts, so the audit paid for itself twice.
+
+**Operational notes.** Verifier runtime is the real constraint on this mold: 52 mutations across
+8 probe packs ran 640s in-container; cutting the probe corpus to 4 packs kept 0 survivors and
+0 single-pack catches while dropping the suite to 354s. Validate oracle **and** nop **and** a
+copied-answer stub **and** an attack run (planted `/conftest.py`, `/pytest.ini`, PATH shim,
+`sitecustomize.py`) — all four ran before the push and gave 1/0/0/1. And background shells on this
+Mac do not reach `gh`'s keychain: capture `gh auth token` into a file and export `GH_TOKEN` for any
+long poll, or every background check reads as a spurious 401.
+
+The follow-up draws settled it. The tail-design ratchet (enumerate ordered factor sequences, score
+with a disclosed multiply cost, lexicographic tie-break, with largest-factor-first optimal on both
+visible briefs and wrong on six of ten protected ones) drew 2/2 again. Adding the crux that
+measured 0/5 on `legacy-accum-port` — coefficients written as exact decimal text, where parsing
+them as binary floats before scaling is one word wrong on thirty-one held-out coefficients and
+right on every visible one — drew 2/2 again, with the analysis noting both agents used
+`decimal.Decimal` with `ROUND_HALF_EVEN` "explicitly matching the contract's rule" and both
+rejected the largest-factor-first heuristic in favour of the exhaustive cost search. Solve time
+went 7 minutes to 21 and 31 minutes of a 60 minute budget; the failure rate stayed at zero.
+
+So the rule for this reference pair is not about starvation or volume at all: anything written in
+the contract gets implemented correctly, and fairness requires every graded rule to be written in
+the contract. A contract-driven task is therefore only hard when the difficulty survives being
+stated in full — an algorithm short to state and hard to implement, as in crosstalk-bench's
+Hermite normal form. Traps, conventions, bit-exactness cruxes and optimisations with a stated
+objective all fail that test. Three pass@2 draws is enough; do not spend a fourth on the same
+concept.
