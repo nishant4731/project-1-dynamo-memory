@@ -1306,3 +1306,81 @@ stated in full — an algorithm short to state and hard to implement, as in cros
 Hermite normal form. Traps, conventions, bit-exactness cruxes and optimisations with a stated
 objective all fail that test. Three pass@2 draws is enough; do not spend a fourth on the same
 concept.
+
+## 2026-08-13 — cairn-pack ALL-GREEN, and the stated-optimum crux that every agent solved
+
+`dynamo-e88ef21-data-processing-and-etl` (`dynamo/cairn-pack`, File format parsing and
+serialization) went all-green on `5316996`, three heads: cosine, static 25/25, Dynamo eval 31/31,
+similarity UNIQUE, validation, pass@2 (0/2 then 1/2, "Rerun Recommended: NO" both times),
+Deep Review, Ava, Tier-1, qc_eval, qc_exec, qc_gate, trials **pass@5 1/5 solved, 4 good-valid
+fails, avg@5 0.200, zero timeouts and zero infra**, final gate.
+
+The task: replay a pack of legacy framed-binary spools into a byte-exact columnar container plus a
+thirteen-counter report, via a reusable `/app/cairnpack.py` the verifier re-runs on 25 held-out
+packs. The designed crux was the 19c8cbd recipe ported to serialization — section 8 asks for the
+*shortest legal container*, and the nine columns are not independent because every coded text
+column feeds one shared dictionary whose codes are varints, so the natural per-column choice is a
+greedy approximation of a stated optimum. The shipped pack was arranged so greedy and optimal
+coincide and no expected output ships anywhere, and a greedy packer built from the reference was
+measured locally at reward 0 with `test_container_bytes` and `test_report_bytes` both passing.
+
+**The crux did not discriminate.** All seven evaluated trials (two pass@2 draws plus five pass@5)
+produced the correct shipped container — `cairn_bytes` 1188, `column_tags` [5,6,4,2,2,2,2,3,1],
+`dict_entries` 32 — and the pass@2 advisory says in as many words that both trials solved the
+joint 64-subset encoding. So "stated global optimum whose greedy reading is plausible and wrong"
+is **not** reliably hard for Opus-4.8/Terminus-2; 19c8cbd's 0/5 came from a search whose optimum
+was expensive to reach, not from agents failing to notice the objective was joint. When the
+optimum is small enough to brute force once you see it (64 subsets here), naming it in the
+contract is naming the algorithm.
+
+**What actually produced the failures was the output-directory contract.** The charter says the
+packer creates `<out_dir>` when absent and *deletes every file already in it*, and the prompt says
+it writes only inside `<out_dir>`. Four of five pass@5 trials — and they had solved the whole
+algorithm — called `shutil.rmtree(out_dir)` then `os.makedirs(out_dir)`, which removes the
+directory entry itself and needs write permission on the *parent*. The probe harness gives the
+landing directory mode 0777 inside a 0755 room the demoted uid does not own, so `os.rmdir` raises
+`PermissionError` before any output exists. One trial cleared the contents instead and passed.
+This is a legitimate, disclosed, realistic requirement (an output directory handed to you by a
+caller may be a mount point), and the analyser marked `task_specification` and `approach_validity`
+PASS on every trial — but `difficulty_crux` is FAIL on all four, so the difficulty evidence is a
+peripheral idiom rather than the modelling problem. Two consequences worth carrying: it is a
+strong, cheap kill lever on any reusable-CLI task with a clear-the-output rule; and it is exactly
+the shape a human R1 can push back on, so keep the disclosure explicit and expect the question.
+
+**Deliberately not fixed.** Making the room writable so `rmtree` succeeds would have removed four
+of the five failures from agents who had already solved everything else, i.e. converted an
+accepted 1/5 into a likely 4-5/5 reject. On an all-green head the redraw risk dominates.
+
+Three process notes. QC blocked once with C3 on a *parsing width* rule — the charter said a uvar
+"asks for more than 64 value bits is malformed" and no graded pack contained an over-long varint,
+so deleting the guard scored reward 1. Auditing the whole clause family rather than the named line
+found two more unwitnessed rules (an empty text value, and creating `<out_dir>` when absent); the
+repair restated the limit as "at most ten bytes" so prose and code share one boundary, added an
+`overlong` pack whose padded key varint is accepted without the guard and truncated with it, a
+`blank` pack, a probe handed a non-existent output directory, and two anchors, then reproduced
+QC's mutation verbatim in the image — oracle 1, mutant 0 on `test_held_out_packs - overlong`.
+Land such a fix at the file the finding names (`/app/cairnpack.py`) or tier1 reads it as not
+attempted. And cosine passed on all three heads including one whose two compared files were
+byte-identical to its predecessor, confirming again that in-flight PR heads are not in the
+delivered corpus.
+
+Shell trap that cost two rounds of confusing 401s: `export GH_TOKEN="${GH_TOKEN:-$NISHANT_GH_TOKEN}"`
+in a fresh shell where neither variable exists exports an **empty** `GH_TOKEN`, which overrides a
+perfectly good keyring credential. Check `gh auth status` before assuming a private-repo 401 is
+platform-side.
+
+## 2026-08-13 — `dynamo-6bb0151` tapline-recut: the blind-sample lever, measured before the first push
+
+`dynamo/tapline-recut` (Security / Network Forensics, PR #1) cleared every gate on two commits: cosine (instruction `0.6426`, verifier `0.8182`, fingerprint `0.7873`), static, Dynamo eval **31/31**, duplicate UNIQUE, Harbor validation, pass@2 **1/2 with a valid fail** on both heads, Deep Review with no blocking issues, Ava, Tier-1, and the 44-check QC gate (39 pass, 5 minor advisory, 0 blocking).
+
+**The design instrument worth keeping: a blindness table, run before the first push.** For each plausible misreading of the contract, patch the reference tool with a one-line substitution and run it on the shipped fixture *and* on every held-out fixture. Measured here: **14 of 17 wrong variants left the shipped case byte-identical to the correct answer while failing 9–12 of the 12 held-out cases** — receiver-side profile swap, last-wins everywhere, no modulus on sequence arithmetic, sums never checked, extension split at the first dot, snapped record dropped, clock chain one hop only, offset order instead of stamp order, reset not closing a leg, latest-open wins, no leading hole. It is a different instrument from the mutation sweep: the sweep mutates the *referee* and asks whether grading discriminates; this mutates the *submission* and asks whether the agent's own testing could ever notice. The table also wrote itself into `difficulty_explanation` and the PR body, and the Dynamo eval quoted those exact branches back when grading `essential_difficulty` PASS.
+
+**Cosine did not care that commit 2 left `instruction.md` nearly untouched.** Local word-cosine of the two compared facets against the immediately preceding head measured `1.0000` / `0.9985` (joined `0.9989`) — the shape `AGENTS.md` calls a certain block — and the gate passed anyway, on a head whose predecessor had already run pass@2. That is the third confirmation that the corpus holds *delivered* tasks, not in-flight PR heads: do not spend a session on a reflex reskin.
+
+**AVA found a real hole that the mutation sweep could not: `os.walk` reports files, so an emptied-but-surviving directory is invisible.** A submission that deleted every spool table and left `spool/` standing scored reward 1 while the contract says to delete the directory. The fix that held is to grade a case by its **directory set** as well as its files — a recut case must end holding exactly the directories its settled image implies — which simultaneously rejects scratch directories left inside the case and a symlinked output directory. Any task whose contract says "delete X" or "leave nothing else behind" needs this; a tree comparison keyed on file paths cannot express it.
+
+**Answer AVA's advisories by demonstration, not by argument.** The advisory said a submission might import the oracle from `/tests`. Rather than assert the seal, the suite now runs a probe as the same unprivileged user with the same scrubbed environment and requires that the builder, referee, mutation table and digests are unreachable in either home. Scope such a probe to the *private material* by name — asserting that nothing at all under `/tests` is readable fails locally on macOS bind mounts, which do not enforce directory modes, and that is a host artifact rather than a task defect.
+
+**Verifier idempotence, again.** The delete-oracle was replaced with a move into a root-only stash (`/var/lib/tapline-sealed`, 0700) that the kit looks up in either home, and `bash /tests/test.sh` twice in one container was verified to score 1 both times before pushing. QC's A1 probe re-runs the verifier; a delete makes run 2 raise while Harbor validation stays green.
+
+Operational note carried forward: both pass@2 failures across the two heads were the Terminus-2 heredoc wedge — the agent writes a ~36 KB deliverable in one `cat > file << 'EOF'`, the shell drops to PS2, and the remaining ~45 minutes go to inert recovery. The gate counts these as valid fails, but `difficulty_crux` reads FAIL on them, so they are agent tooling rather than task signal.
