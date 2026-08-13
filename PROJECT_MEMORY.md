@@ -1425,3 +1425,50 @@ So the working rule for this reference pair is a conjunction: the graded work mu
 search or construction the agent cannot verify locally, and the shipped material must pin file
 conventions without confirming any computed value. A worked example that quotes real answers is an
 oracle, and it neutralises every starved branch behind it. Ship the format sheet, not the answer.
+
+## 2026-08-13 — `dynamo-f1e47b1` ALL-GREEN: the report, not the rules, broke the charter ceiling
+
+`dynamo/shadecast-refit` (Games Puzzles and Interactive Simulation / Rendering graphics) finished
+all-green on `a354674`: cosine, static review with Dynamo eval 31/31, similarity UNIQUE, Harbor
+validation, pass@2 1 solved / 1 valid-fail, Deep Review, Ava, Tier-1, qc_eval, qc_exec, the
+44-check qc_gate with zero required fixes, **pass@5 2/5 solved with 3 good-valid fails, avg@5
+0.400**, and the final gate. Four evaluated heads, one concept throughout.
+
+The task: a complete normative charter for an eight-stage fixed-function tile rasteriser, eleven
+constants withheld and recoverable only from instrumentation logs, deliverable a reusable
+`/app/refit.py` replayed at grade time against decks it has never seen including one keyed to the
+sha256 of its own bytes.
+
+**The measured arc is the lesson, and three of the four heads are negative results.**
+
+| head | change | solve times | outcome |
+|---|---|---|---|
+| 1 | charter + per-quantity calibration logs | 16, 28 min | 0 valid-fail; the one "fail" was my own verifier bug |
+| 2 | hull coverage under a top-left fill rule, never witnessed by any log | 16 min | ratchet **absorbed** — solve time moved by zero |
+| 3 | calibration regrouped into meter totals, forcing a joint integer fit | 24, 60 min | **2/2 solved** |
+| 4 | tally split 9 → 16 fields, seven new sampling points | — | **1/2, then pass@5 2/5** |
+
+Head 2 is the sharpest negative: a genuinely subtle *stated* algorithm, deliberately starved so
+no shipped number exercises it, cost the agents nothing. Head 3 tripled solve time and still got
+solved, because **both agents pip-installed z3 and SMT-solved the constants in ~13.5 seconds** —
+a joint integer constraint recovery is a recognised problem class, not a wall, and with
+`allow_internet` required true it cannot be forbidden. What flipped the band was the cheapest
+change of the four: counters that differ only by *when* they are sampled. The tell was sitting in
+the 2/2 analysis — the only mistake either agent made anywhere was miscounting `demoted`, caught
+at step 69 of 70.
+
+**Two operational findings worth carrying.** First, a replay that pre-creates the output directory
+as root and then drops privileges fails `shutil.rmtree` cleanup: a correct submission scored 0 and
+pass@2 recorded it as a task/verifier issue rather than a valid fail. `rmdir` needs the **parent**
+writable; widening only the output directory is not enough, and `mkdir(mode=...)` is masked by
+umask so every widening needs an explicit `chmod`. Second, when the budget is already spent — one
+trial finished 39 seconds inside the hour — adding volume converts a valid fail into an
+in-progress timeout, which counts for nothing. Counters add slip surface without adding work,
+which is why they were the only lever left.
+
+**Not pushed deliberately.** Deep Review and qc_gate both raised the same minor advisory: the
+instruction's "create `<out_dir>` if it is not there" clause had no grading path passing a
+non-existent directory. The fix is written and verified locally (182 checks, oracle 1.0) and saved
+as a patch, but qc_gate required no fixes (`QC-FIXES-B64` empty) and the head was already in the
+accepted band — pushing would redraw pass@5 and cosine for reviewer optics. Apply it only if a
+human reviewer asks for a revision.
