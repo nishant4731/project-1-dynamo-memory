@@ -1522,3 +1522,123 @@ Three build lessons worth carrying:
 3. **`[::-1]` is not an adversarial mutation of a container order** — on four separate
    fixtures the reversed bucket order produced the same eviction order as sorted. Use
    `sorted(..., reverse=True)`.
+
+## 2026-08-14 — dynamo-379e527 (`dynamo/thornfield-warden`): mold port into a saturated subcategory, first-commit green through validation
+
+Assigned repo `dynamo-379e527-games-puzzles-and-interactive-simulation`
+(category *Games Puzzles and Interactive Simulation* / *World simulation*), a
+subcategory where ~17 tasks had already been delivered. Rather than invent a new
+engine, the accepted `dynamo-d44c669` **reconstruction** architecture was ported
+whole: a labelled decision log the agent must recover a policy from, a private
+`_engine`/`_gen`/`_kit`/`_proof` split under `tests/`, differential grading of a
+reusable CLI on pristine held-out fixtures.
+
+**What was added over the sibling mold** — the world is *stateful*. The recovered
+dispatch policy feeds back into a six-phase tick loop (creep → spill → alarm →
+dispatch → work → upkeep), so one mis-scored pairing posts the wrong warden,
+changes that plot's blight, and diverges every later tick irrecoverably. Fatigue,
+idle ticks, task standing and a per-grade posting quota all carry across ticks.
+38 integer constants and an 8-rung refusal ladder are recovered from 557 jointly
+varying log rows.
+
+**First push (`b171391`) results:** `changes` ✅ · `cosine_similarity` ✅
+(instruction 0.7039, verifier 0.8500, fingerprint 0.8411 against a 0.90
+threshold) · static checks ✅ 25/25 · Dynamo eval ✅ PASS 30/31 + 1 N/A ·
+`similarity` ✅ UNIQUE · `validation` ✅ · `ratelimit` ✅.
+
+**Reusable lessons confirmed:**
+
+1. **A saturated subcategory is not a reason to author a new concept.** Porting
+   the proven engine cleared enforced cosine on push 1. What matters is that the
+   two *compared* facets are fresh: `tests/test_outputs.py` was rewritten thin
+   (all reusable machinery stayed in the private `_warden_kit.py` /
+   `_warden_proof.py`, which are not compared), and `instruction.md` was written
+   from scratch in a different voice. A first draft that reused the sibling's
+   sentence skeletons verbatim was discarded before pushing.
+2. **Ship the fairness proof as executable tests.** Three families, all required
+   empty: every transposition of two ladder rungs must contradict the log; every
+   one-step perturbation of each of the 38 constants must either contradict the
+   log or change nothing graded; and 18 rival *shapes* (dropped conjunct, removed
+   hinge/cap/step/clamp, each comparison flipped strict↔inclusive) must all be
+   ruled out. A fourth test asserts no graded pairing asks the policy about a
+   feature value outside the log's observed span (the B5 extrapolation answer).
+   Dynamo eval cited these by name when passing `unambiguous` and `anti_cheat`.
+3. **Cache the corpus before perturbing.** `perturbation_survivors()` silently
+   reported a false survivor because the log labels were lazily computed *while
+   the first perturbation was active*, so the log agreed with the mutated policy
+   by construction. Prime the cache first.
+4. **A "provably inert" documented constant is a C3 liability.** `MIN_RELIEF` and
+   `FATIGUE_CAP` could never bind given the refusal ladder, so their mutants
+   survived the sweep. The fix is to delete the clause, not to witness it. A
+   third, `IDLE_CAP`, survived only because `8 → 9` is equivalent under a
+   floor-division by 2 — retune the constant to an odd value so ±1 is observable.
+5. **"Caught by a single season" is as much a hole as "survived".** Four mutants
+   were killed by exactly one fixture; the fix was to add two purpose-built
+   held-out seasons (a tiny veteran crew over a long season so the posting quota
+   binds; an all-heath holding with a low-grade matched crew so the conditional
+   bonus is straddled) and a third that posts nothing at all so the `-1` / `-`
+   sentinels have two witnesses.
+6. **Docker Desktop on this laptop cannot bind-mount `~/Documents`.** The manual
+   Harbor fallback has to bake `solution/` and `tests/` into a throwaway
+   validation image (`FROM <env-image>` + two COPYs) instead of `-v`. Keep that
+   Dockerfile inside the repo, not `/tmp`, or the build context scan fails on
+   unrelated socket files.
+
+**Outcome of that first push (`b171391`, PR #9):** every gate green with no
+follow-up commit — `changes`, `cosine_similarity`, static 25/25, Dynamo eval
+30 PASS + 1 N/A, `similarity` UNIQUE, `validation`, `pass2`, `deep_review`,
+`ava_review`, `tier1`, `qc_eval`, `qc_exec`, `qc_gate` (41 checks pass, 3 minor
+advisories, `QC-FIXES-B64` empty). The three QC advisories were one probe:
+mutating `blight_peak`'s initial value `0 → -1` survived, which is provably
+equivalent because `blight_total` is never negative and every season runs at
+least one tick — a reminder that an initialiser only a non-negative quantity is
+compared against is inert by construction, not a coverage hole.
+
+`pass@2` returned **0/2 solved · 1 valid fail · 1 in-progress-timeout**, with
+`difficulty_crux`, `approach_validity`, `task_specification` and `reward_hacking`
+all PASS and the analyser stating "No task or verifier fix is indicated". Both
+trials burned ~99% of the 3600 s budget, so the >90%-of-budget rule applies: do
+not ratchet. The stratification is the useful part — one agent recovered the
+8-rung ladder correctly with ~6 s left and never propagated it into its
+simulator; the other deadlocked in a non-converging numeric coefficient fit at
+235/557 rows. **The lever that produced that is the state feedback**: because the
+recovered policy decides which warden is posted, and that changes the plot's
+blight, the alarms and every later queue, a single wrong constant is not a
+mislabelled row but an unrecoverable divergence across all 17 graded seasons.
+
+### 2026-08-14 — the format sheet flipped pass@2 and pass@5 still came back 5/5
+
+Head `d762a69` cleared every gate — cosine, static, Dynamo eval, duplicate, validation,
+**pass@2 1 solved / 1 valid fail** (twice in a row, `approach_validity` PASS both times),
+deep review, AVA, tier1, qc_eval, qc_exec, **qc_gate 44/44** — and then **pass@5 returned
+5 solved, 0 valid fails**. One trial finished in 1478s of 3600s; another hit an
+`AgentTimeoutError` and still solved.
+
+Two things this pins down.
+
+**pass@2 is a weak predictor in the good direction too.** Two consecutive 1/2 draws with
+clean analytical failures on the intended crux did not survive five trials. Do not read an
+in-band pass@2 as evidence the pass@5 band is reachable; the playbook's "pass@2 does not
+predict pass@5" cuts both ways.
+
+**Removing the oracle raised the failure rate without changing the ceiling.** Shrinking the
+worked example to a format sheet moved pass@2 from 2/2 to 1/2 — a real effect, and the
+mechanism [[dynamo-starved-branches-need-algorithmic-depth]] describes — but the concept is
+still a complete normative contract, and against five trials a complete contract is still
+transcription. Both pass@2 failures were the same *shape*: a value computed at the wrong
+scope (per-key vs global) by an agent optimising its own code, not a failure to derive a
+rule. That is a coding slip with a ~20-30% per-trial rate, which is exactly the
+fully-specified-spec ceiling [[dynamo-spec-mold-caps-at-80pct-solve]] predicts.
+
+Accumulated cost of ignoring the rule "either the concept has it from the start or it does
+not": four evaluated heads on one repo — blind branches, a QC fairness fix, three
+interacting subsystems (digest sketches, transfer sourcing, global round scheduling, a
+fourth artifact, 25 counters), and the oracle removal. Solve time went 15-23 min → 25 min →
+29-50 min. The failure rate never reached the band.
+
+The only lever left with measured support is
+[[dynamo-reconstruction-beats-specification]]: stop stating the policy and make it
+recoverable from a large, jointly-varying decision log, so the agent has to *search* rather
+than read. On this task that means the dispatcher — which transfers a round admits, under
+per-node concurrency caps, a round byte budget and a priority order, none of it written
+down, all of it induced from a few hundred logged past decisions.
