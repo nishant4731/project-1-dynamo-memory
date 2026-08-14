@@ -1642,3 +1642,144 @@ recoverable from a large, jointly-varying decision log, so the agent has to *sea
 than read. On this task that means the dispatcher — which transfers a round admits, under
 per-node concurrency caps, a round byte budget and a priority order, none of it written
 down, all of it induced from a few hundred logged past decisions.
+
+## 2026-08-14 — dynamo-ce5b6ea (dynamo/quayside-settle): a volume-bound task has no fixed point
+
+Data Querying and Databases / SQL querying. A container-terminal demurrage
+settlement: ten policy constants recoverable only from a calibration ledger,
+then a full settlement pipeline over a SQLite warehouse, byte-exact, graded
+differentially on nine held-out yards plus one keyed to the submission's digest.
+
+Every review and QC gate passed: cosine six times without a reskin, static plus
+Dynamo eval, duplicate UNIQUE, Harbor validation, Deep Review, Ava, Tier-1,
+qc_eval, qc_exec and the 44-check qc_gate. Only the difficulty draw stayed red.
+
+Seven pass@2 draws and one pass@5 on one concept, and the shape of the result
+never changed: heavier drew in-progress timeouts, lighter drew 2/2 solved. The
+pass@5 that mattered read 2 solved, 0 valid fails, 3 in-progress timeouts, with
+`low_timeout` FAIL in four of five trials and two agents cut off within five
+seconds of the wall — one whose only defect was a missing `sort_keys`, one whose
+corrected script was written and never ran.
+
+The lesson is the one to carry: **the difficulty was typing, not reasoning.**
+The charter stated every rule, so an agent with clock left got everything right,
+and tuning volume only moved trials across the finish-the-hour line. Twenty of
+thirty-one plausible misreadings were byte-identical on the shipped yard and it
+bought nothing, because blind branches only catch a solver who guesses and a
+solver reading a complete charter does not guess. A recovery bounded by a
+disclosed grid is not a wall either — both agents brute-forced the ten constants
+in minutes, exactly as `dynamo-z3-collapses-joint-integer-fits` predicts.
+
+Two process notes worth keeping. Deep Review caught a real self-contradiction I
+introduced while fixing an earlier one — a section-1 claim that an invisible row
+"takes no part in anything at all" that amendment accounting flatly contradicted
+— which is a reminder that a global visibility clause has to be scoped to
+outcomes, not to counting. And the mutation sweep twice found genuine fixture
+holes when new counters landed (no report lag exactly at the grace window; no
+correction ever filed against a departure leg); both were fixed by adding
+witnesses rather than dropping the mutant.
+
+### 2026-08-14 — dynamo-379e527 ALL-GREEN: the block came from the hard side, and the fix was to *provide* volume
+
+Final: **pass@5 2 solved · 3 good valid fails · 0 in-progress timeouts · avg@5 0.400**,
+`gate` green, every check passing on head `b7245e9`.
+
+The instructive part is the middle. After a first commit that went green through
+QC and returned pass@5 1 solved / 1 valid / **3 in-progress timeouts**, the task
+spent five pass@2 draws blocked — never for being easy, always because failing
+trials were still converging at the buzzer. In-progress timeouts count for
+nothing, so the gate saw one countable failure where it needed three.
+
+Four corrections that cut the crux (score terms → 31 constants, report keys
+20 → 14, a second straddle on every boundary, ladder 8 → 6 rungs) all failed to
+move it. What worked was the opposite move: **ship the tedium instead of deleting
+it.** A read-only `/app/thornfield_io.py` implementing the season reader and the
+entire byte layout — with every constant and rung of the previous head kept —
+converted the next draw into a valid failure and pass@5 into 2/3/0.
+
+Carry these:
+
+1. **Diagnose which side of the band you missed.** `low_timeout: FAIL` with
+   `difficulty_crux: PASS` is the hard side. Adding difficulty there makes it
+   worse, and so does cutting it — the budget goes on total work, the difficulty
+   lives only in the crux, so the lever is volume that is not the crux.
+2. **pass@2 pins the agent to 3600 s via `override_timeout_sec` whatever
+   `task.toml` says; `trials` honours the configured value.** `[agent].timeout_sec
+   = 7200` is valid config and passes static checks — it just cannot help the
+   pre-check. Calibrate the two stages separately.
+3. **Provide, do not delete.** Stage the verifier's own copy of the provided
+   module into every graded run so extending it is harmless and rewriting it buys
+   nothing; keep the normative layout in the spec so writing your own stays
+   viable; prove it with a submission that imports the module and must reproduce
+   the reference bytes.
+4. **Cross-check any volume cut against the failures the trials actually
+   produced.** Each must stay reachable or you cut difficulty by accident.
+5. **Held-out grading earned the score.** The decisive failing trial recovered the
+   correct structure and ladder order and reproduced the shipped season *and* the
+   worked example byte-for-byte, then failed 11 of 15 held-out seasons on
+   slightly-off integers. A starved sample plus held-out seasons is what caught it.
+6. `cosine_similarity` passed on all six pushes, including ones leaving
+   `instruction.md` and `tests/test_outputs.py` byte-identical — an in-flight PR
+   head is not in the corpus, so no reflexive reskin was needed.
+
+### 2026-08-14 — ALL-GREEN: withholding one subsystem is what finally moved pass@5
+
+`dynamo-6e8e4c7` (`dynamo/tessera-reconcile`) went all-green on `026163a`:
+cosine, static, Dynamo eval, duplicate UNIQUE, validation, **pass@2 0/2 with valid
+fails**, deep review, AVA, tier1, qc_eval, qc_exec, **qc_gate 44/44**, and
+**pass@5 0 solved · 3 good valid fails · avg@5 0.000**, final gate PASS.
+
+Six evaluated heads on one repo. The first five were all contract-driven and all
+capped: blind branches (1/2 → 2/2), a QC fairness fix (2/2), three interacting
+subsystems — digest sketches, transfer sourcing, global round scheduling, a
+fourth artifact, 25 counters — (2/2), and removing the worked example (1/2 twice,
+then **pass@5 5/5**). Solve time climbed 15 → 50 minutes; the failure rate never
+reached the band.
+
+**The sixth head withheld one subsystem and that alone flipped it.** The
+dispatcher — which of the waiting transfers each round admits, and therefore the
+ledger's `round` column and the order its lines are written in — stopped being
+stated. It has to be recovered from 185 logged rounds of past dispatches on other
+clusters. Immediately: pass@2 0/2, then 0/2 again, then pass@5 0/5 with 3 valid
+fails. The analyser's taxonomy on the first draw was "terminal wedge (analytical
+loop exhaustion)": both agents spent 50+ of 60 minutes searching sort-key ×
+constraint combinations and never wrote a line of the deliverable.
+
+This is [[dynamo-reconstruction-beats-specification]] reproduced exactly, and it
+confirms the harder rule from [[dynamo-starved-branches-need-algorithmic-depth]]:
+depth of a *stated* computation is not the axis; being stated at all is. Five
+ratchets on a contract-driven concept bought nothing. Do not spend the second one.
+
+**Making an inferred policy fair is most of the work, and it is mechanical.**
+The evidence has to *pin* the policy, and the way to know is to search:
+
+1. Ship an identifiability audit that replays every logged round against every
+   neighbouring reading — each limit one larger and one smaller, each limit
+   dropped, each component of the order reversed, **and each component dropped** —
+   and requires all of them contradicted. Ship it as a verifier test, because QC
+   B5 asks exactly this question.
+2. Random evidence pins intervals, not points. A threshold needs two calibration
+   rounds built around it: one filled to the boundary to the byte, one deferring
+   a candidate that would pass it by one. The second also shows a deferral does
+   not close the round — otherwise unobservable.
+3. **Then stand in for the solver.** After the audit was clean I brute-forced
+   every ordering of the five candidate fields with every sign against the log
+   alone: two readings survived 182 rounds, differing only in source-vs-target
+   position, and they disagree whenever a repair row splits across two replicas
+   shipping equal bytes. The hand-written rival list had missed it. Three more
+   calibration runs — a fan-out scrambled against id order, five replicas alike
+   but for the source, and a heavy pair whose source and target orders disagree —
+   took it to exactly one policy over 185 rounds. **Run the naive search; the
+   curated rival set is not a substitute.**
+4. Withholding a rule creates ambiguity elsewhere. QC caught that "the first node
+   whose bucket holds that dot" reads two ways once sketched buckets exist
+   (recovered set vs listed versions) — decisive on six graded keys. Say which,
+   and add a coverage property so the sentence stays witnessed.
+5. Keep the withheld part withheld: a test asserts the contract spells no
+   constant of the policy, and another that the log names no graded bundle's
+   nodes, keys or ledger rows.
+
+Also confirmed again: a job can fail with the verdict step green. `cosine_similarity`
+failed once at `Post or update similarity result` with `Connect Timeout Error` while
+`Check task similarity against delivered tasks` had succeeded — read the job's step
+list before treating a red gate as a verdict.
