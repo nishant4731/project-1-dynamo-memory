@@ -1783,3 +1783,166 @@ Also confirmed again: a job can fail with the verdict step green. `cosine_simila
 failed once at `Post or update similarity result` with `Connect Timeout Error` while
 `Check task similarity against delivered tasks` had succeeded — read the job's step
 list before treating a red gate as a verdict.
+
+## 2026-08-14 — dynamo-ce5b6ea, second concept: the determinacy trap, confirmed twice
+
+After `quayside-settle` was closed as volume-bound, PR #6 rebuilt the repo's task
+as `meterline-refit`: an analytics warehouse's compute-credit rate card recovered
+from its billing ledger, then the period's unpriced runs repriced. Deliberately
+tiny deliverable — ten constants, one credits column, twelve counters, verifier
+in seconds — so the clock could not decide the outcome again.
+
+The design premise held up under measurement: every settled row in every graded
+ledger divides exactly on compute, scan, spill and discount, so reproducing all
+of them confirms the constants and no rounding rule, and 16 of 24 plausible
+misreadings reproduce every settled row while getting all ten graded ledgers
+wrong. Every gate passed — cosine, static with Dynamo eval 31/31, duplicate
+UNIQUE, Harbor validation — and pass@2 came back 2/2 solved at 27 and 46
+minutes.
+
+The ratchet aimed at the one step the trial log showed an agent fighting: the
+commissioning suite moved onto the deepest-discounted plan so each probe bounds
+its constant to a four-credit window instead of dividing it out exactly. Result:
+2/2 again, one agent done in 28 minutes with 32 to spare, and the trajectory
+records it writing "an explicit 4-nested-loop brute-force scan ... confirming a
+single candidate".
+
+**The finding to carry.** Across two concepts and nine pass@2 draws on this repo,
+every failing analysis reported `approach_validity PASS` and
+`task_specification PASS`. QC fairness requires every graded rule to be stated or
+uniquely derivable; once it is, this reference pair reads it precisely and
+implements it, and neither blind branches nor inferred constants change that — a
+search an author can prove terminates is a search an agent can run. The axis is
+not how hard the computation is. The one lever in the playbook that neither
+concept used is the salvage/repair mold's operational irreversibility, where the
+kill is destroying the only copy of the data with a draft run rather than
+computing anything wrongly.
+
+## 2026-08-15 — dynamo-25a45c7 (dynamo/atlas-curate): the reconstruction mold ported to interpretability
+
+Machine Learning and AI / Interpretability and model inspection, on a fresh repo, so
+the hard version went in on commit 1 as the cosine playbook demands.
+
+The concept is `dynamo-reconstruction-beats-specification` applied to a new
+subcategory. An SAE feature-atlas curator: the charter fully specifies bundle
+formats, four ordered rejection checks, four exact-integer statistics and the
+byte shape of both artifacts, and a read-only reader module ships the parsing and
+serialization so the hour is not spent typing (`dynamo-provide-the-plumbing-clears-the-hard-side`).
+Only the admission policy is withheld — four integer limits and a total preference
+order, recoverable only by replaying 1261 logged rounds over 70 historical pools.
+
+**The design choice that carries it:** the preference order's leading term is a
+property of the exhibit being built, not of the candidate, and it saturates. Standing
+in as the solver and brute-forcing measured the wall directly: searching over the
+candidate's own recorded fields fits the log **nowhere** (0 hits), adding the obvious
+raw panel count still fits nowhere (0 hits), and only the saturating form fits, at
+exactly one policy. That is a productive-looking dead end rather than a wrong answer,
+which is what consumes the budget.
+
+**Two audit lessons worth more than the task**, both now standalone memories:
+
+- The hand-written rival family reported 0 survivors over 419 rivals and was wrong.
+  Enumerating the full ranking space found four survivors, all keys ranking on a
+  field the real policy ignores. Enumerate, never curate —
+  [[dynamo-enumerate-the-rival-space]]. Final state: 31,599 enumerated rankings, 0
+  survivors, shipped as a verifier test.
+- A rule can be stated, witnessed in the fixture, and still inert. The signed
+  floor-division convention did nothing while the admission floor was positive,
+  because negatives were filtered out before reaching a graded byte. Moving the floor
+  to -12 killed three mutants at once — [[dynamo-inert-rules-are-c3-holes]].
+
+Also confirmed: the mutation sweep found four real fixture holes that every other
+check had passed, and each was fixed by adding a witness (an equality-cells
+dashboard, a two-positive candidate, a seated negative separation) rather than by
+dropping a mutant. Final sweep 52/52 built, 0 survivors, no-op control alive.
+
+Local gate before the single push: oracle 1.0 / nop 0.0 in the built image (24/24
+tests, 76 s), plus four adversarial submissions all scoring 0 — a hardcoded lookup
+(clears the visible bundle, fails all ten held-out), a symlinked artifact, a
+`/conftest.py` + `pytest.ini` + PATH-shim + import-time-reward plumbing attack, and a
+curator that tries to read `/tests`.
+
+Operational notes: Docker Desktop on this laptop cannot mount from `~/Documents`
+(macOS TCC) — stage the task under the session scratchpad to run containers. The
+`python:3.13-slim` base puts the interpreter at `/usr/local/bin/python3`, not
+`/usr/bin/python3`; the verifier's absolute-interpreter call has to match the base
+image or every submission run dies with FileNotFoundError.
+
+
+## 2026-08-15 — dynamo-9c93375 (dynamo/tidewell-reseat): the withheld-policy mold ported into Configuration Repair
+
+Assigned repo `dynamo-9c93375-debugging-and-repair` (*Debugging and Repair* /
+*Configuration Repair*) arrived as an empty scaffold. Rather than author a new
+concept, the shape that `dynamo-6e8e4c7` and `dynamo-379e527` both reached the
+accepted band with was ported whole: a complete normative contract with exactly
+one subsystem withheld and recoverable from a log of past decisions, a reusable
+CLI graded differentially on pristine held-out fixtures, and the fairness proof
+shipped as executable verifier tests.
+
+**The task.** A half-applied rollout leaves settings across a gauging field
+unusable. `RESEAT_CONTRACT.md` states the three-layer merge, two damage
+semantics (`void` reads unset whatever the layers carry; `suspect` keeps reading
+its recorded value until mended), canonical spelling of four key kinds, how
+corroboration is tallied over online stations at the moment a round opens, the
+round loop with mends applied together at the end, three artifacts, 26 counters
+and the byte layout. It states *nothing* about the adjudicator — which surviving
+offer is accepted and which of six refusals is recorded otherwise. That is
+recovered from 561 logged seats: five per-origin freshness limits, a scope
+limit, a grade floor, a corroboration minimum binding on only some origins, a
+three-term standing, an origin order for the standing/age tie, and a refusal
+order. Because a mend corroborates its value for the rest of the field, one
+misread limit changes what lands in the opening round and every verdict after.
+
+**First push (`fe947e2`, PR #2):** `changes` ✅ · `cosine_similarity` ✅
+(instruction 0.7068, verifier **0.8928**, fingerprint 0.7888 against a 0.90
+threshold) · static checks ✅ 25/25 · Dynamo eval ✅ PASS · `similarity` ✅ ·
+`validation` ✅.
+
+**Lessons worth carrying.**
+
+1. **A linear scoring policy can never be pinned exactly by a log, and chasing
+   that is the wrong target.** Finitely many strict sign constraints always leave
+   an open cone around the true weight ray, so an exhaustive grid search will
+   always report survivors. What fairness needs is that every survivor is
+   *order-identical over the reachable feature space*. The lever that collapses
+   the cone to the ray is a **level contest**: a pair the reference ranks equal,
+   emitted twice with the next tie-break field swapped between them, so any rival
+   that breaks the tie picks the wrong one in exactly one of the two. Solve
+   `w·Δ = 0` for two independent Δ in the realisable ranges rather than sampling.
+   Measured: four non-proportional surviving triples → one (the exact 2× multiple).
+
+2. **"Caught by a single fixture" is usually an allocation-order bug, not a
+   coverage hole.** Purpose-built witnesses compete for fixture room (free slots,
+   and stations left to plant a backing count on); the ones built last silently
+   fall back. Three tie-break mutants were killed by 1 of the 6 verifier fixtures
+   and 10 of 10 locally — moving those witnesses to the front of the generator
+   took them to 8-10 of 10 with no other change. Give the slot allocator an
+   explicit `room=N` requirement, and where two offers differ only in a *label*
+   the output records, give them the **same value** so they share one planted
+   backing count.
+
+3. **Run the local sweep against exactly the fixture subset the verifier
+   sweeps.** A sweep that is green over the full corpus can still fail inside the
+   verifier, which sweeps six of ten.
+
+4. **Delete rules the graded output cannot observe rather than witnessing them.**
+   A stated seat order within a round is unobservable once the tally is frozen
+   and mends are applied together, so the clause came out of §6; likewise a
+   round-number sort key is inert while runs take two or three rounds. Both would
+   have been C3 liabilities.
+
+5. **Rewrite crash-only mutants to produce output.** Five anchors crashed rather
+   than emitting wrong artifacts (a swapped layer lookup raising `KeyError`, a
+   dropped `continue` making a generator un-serialisable). A crash counts as
+   caught but proves nothing about the verifier.
+
+6. **The verifier facet sits at 0.8928 against a 0.90 threshold on the first
+   push**, because the hardening kit's shape is shared with delivered siblings
+   even when `instruction.md` is written fresh (0.7068). Prepared mitigation if a
+   follow-up push is needed: move `_rival_policies`, the audit re-derivations and
+   the small case accessors out of `test_outputs.py` into the private kit — worth
+   ~7.2 KB of a 35 KB file and a real structural reshape.
+
+7. Docker build with `-f /tmp/Dockerfile.validate` scans `/private/tmp` and dies
+   on other sessions' socket files (`failed to xattr /private/tmp/.s.PGSQL.5432.lock`).
+   Keep the throwaway validation Dockerfile at the repo root, not in `/tmp`.

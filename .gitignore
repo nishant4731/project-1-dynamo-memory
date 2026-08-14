@@ -6,6 +6,7 @@
 
 # Everything under task folders / local workspaces
 dynamo-*/
+dynamo/
 jobs/
 patches/
 1/
