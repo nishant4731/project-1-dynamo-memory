@@ -1946,3 +1946,121 @@ threshold) · static checks ✅ 25/25 · Dynamo eval ✅ PASS · `similarity` �
 7. Docker build with `-f /tmp/Dockerfile.validate` scans `/private/tmp` and dies
    on other sessions' socket files (`failed to xattr /private/tmp/.s.PGSQL.5432.lock`).
    Keep the throwaway validation Dockerfile at the repo root, not in `/tmp`.
+
+## 2026-08-15 — dynamo-9a0adfd (dynamo/coppergate-deal): the identifiability proof is also the agent's oracle
+
+Games Puzzles and Interactive Simulation / Board and card games. A card-market
+board game whose table AI never left the shipping build: the agent writes
+`/app/coppergate_sim.py`, recovers 22 integer constants and the applied order of
+six decline checks from a 583-row bid log, and replays whole matches byte-exactly
+on boards it has never seen. Fourth port of the `d44c669` reconstruction engine.
+
+**Everything except the difficulty draw was green on every head** — `changes`,
+enforced `cosine_similarity` (instruction **0.6241**, verifier **0.8578**,
+fingerprint **0.8180** against 0.90), static 25/25, Dynamo eval PASS on every
+criterion, duplicate UNIQUE, Harbor validation, ratelimit.
+
+**The finding, and it generalises.** The [[reconstruction]] mold says withhold the
+policy and make it recoverable from a labelled log; QC B5 then demands you prove
+the log pins it uniquely. That proof *is* a perfect self-check for the agent —
+the pass@2 analyser caught one confirming "0 appetite mismatches and 0 verdict
+mismatches across all 583 bid_log rows". Recovery therefore costs time and never
+correctness, which makes the task volume-bound, and volume-bound tasks oscillate:
+
+| head | lever | pass@2 |
+|---|---|---|
+| `11a4a2c` | full board | 0/2, both in-progress timeouts, `difficulty_crux` PASS |
+| `31ecb62` | cut spill + crest, provided `reach()` | 2/2 solved, 15 and 24 min |
+| `e8a1589` | round became a stated assignment, shipped match starved of contention | 2/2 solved, 19 and 23 min |
+| `f52b83a` | removed the worked example | (in flight) |
+
+**The diagnostic to copy:** replay every mutant of the reference against the
+*evidence corpus* and count how many it leaves label-identical. Here **41 of 76**
+were invisible to the bid log — the whole round loop and serialisation. That says
+where the remaining difficulty must live. It also says what the worked example
+really is: the only oracle for those 41. Both agents wrote genuine round-loop
+bugs (`STEP[cried_suit]` instead of the lot's own suit; `spend_total` accumulated
+globally; a lexicographic sentinel of `"-"` rather than one sorting after every
+id) and caught **every one** against §9 before submitting. In a reconstruction
+task a worked example is an answer key for exactly the half the evidence cannot
+check — ship the byte layout as normative prose plus a read-only I/O module that
+implements it, and publish no computed output at all.
+
+**Counter-result worth keeping:** a *stated* optimum gets implemented even when
+the sample is starved. Making the round a max-cardinality-then-max-appetite
+assignment, with the shipped match built never to contend so a greedy pass is
+byte-identical there, produced no failures — both agents read §3 and "wrote
+coppergate_sim.py using DFS assignment". `withhold-an-algorithm-not-a-clause`
+bites only when the agent has no reason to look for the rule; a spelled-out
+objective is a reason.
+
+**Ops note:** rebuild the base env image *before* the validation image after any
+fixture regeneration. A stale `coppergate-env` layer against a fresh
+`reference_pins.json` produced a fake `ORACLE=0` on
+`test_the_read_only_inputs_survived_the_agent_run`.
+
+### 2026-08-15 — ALL-GREEN on head `d8a1cbe`: publish what every agent recovers, keep what they all die on
+
+Final: **pass@5 2 solved · 3 good-valid-fail · 0 soft-timeout · 0 in-progress-timeout ·
+avg@5 0.400**, `gate` ✅, and all sixteen required checks green — cosine, static
+25/25, Dynamo eval PASS, duplicate UNIQUE, Harbor validation, pass@2, deep
+review, Ava, tier1, qc_eval, qc_exec, qc_gate (37 checks, `QC-FIXES-B64` empty),
+trials. Two evaluated heads, one concept.
+
+**The measured arc is the lesson.**
+
+| head | what was withheld | pass@2 | pass@5 |
+| --- | --- | --- | --- |
+| `fe947e2` | the whole adjudicator: five freshness limits, scope limit, grade floor, corroboration minima, the refusal order **and** the score | 0 solved · 0 valid · **2 in-progress-timeout** | — |
+| `d8a1cbe` | only the score among admissible offers, with its *shape* stated | 1 solved · 1 valid | **2 solved · 3 valid · 0 timeouts** |
+
+Head 1 failed on the **hard side**: `difficulty_crux` PASS, `approach_validity`
+PASS, `task_specification` PASS, `low_timeout` FAIL on both trials. Neither agent
+wrote a line of the deliverable. Both had independently recovered every
+threshold — the same five freshness limits, the same refusal order — and both
+died on the score. So the parameters that ate the hour were exactly the ones
+that discriminated nobody.
+
+**The rule to carry: when `low_timeout` FAILs while `difficulty_crux` PASSes,
+publish every parameter the trials recovered identically and keep only the one
+they all died on.** This is [[dynamo-provide-the-plumbing-clears-the-hard-side]]
+applied to *disclosure* rather than to code — the thing to hand over is not
+always a module, it is sometimes half the spec. Contract §7 grew an admission
+table and a refusal order; §7.3 kept back only which of several admissible
+offers wins.
+
+**Second finding, and the more surprising one: stating the SHAPE of the withheld
+quantity cost far less difficulty than expected.** The pass@2 advisory noted both
+agents had searched for a lexicographic ordering over offer fields rather than a
+quantity computed from them, and suggested saying so without naming terms or
+weights. That was done — "scored, best taken, fixed fallback beneath" — and at
+pass@5 **two of five agents still wedged for the full hour in exactly that wrong
+hypothesis space**, enumerating field orderings and bounded-integer brute forces.
+Disclosing the family is what QC B5 wants anyway; it converts wedges into
+finishers much less often than the fear suggests. Do not pay difficulty for
+withholding a function class.
+
+**Failure stratification at pass@5** (the part reviewers read): two terminal
+wedges on the intended crux with `difficulty_crux` PASS, and one near-miss where
+an agent recovered the score, produced a byte-identical `store.json`, and lost
+everything to a four-space prefix on every TSV row — it read the indented
+markdown code block in §9/§12 as literal content and reasoned its way past the
+"no padding" sentence in §11. Legitimate (`approach_validity` PASS), but a fenced
+code block would have removed the hazard; worth doing on the next task that
+quotes a table in a contract.
+
+**Not pushed deliberately.** Two non-blocking advisories are written, verified and
+held as a patch: AVA's `sound_verifier` note that `run_candidate` walks only the
+staged tree, so a submission scribbling to a hard-coded `/tmp` path is unobserved
+(fix: snapshot the shared writable roots around the child run, plus a fourth
+planted offence); and deep_review's note that `CORPUS`/`corpus_case()` read as
+orphaned. The head is in the accepted band and `QC-FIXES-B64` is empty, so
+pushing would redraw pass@5 and cosine for findings that block nothing — the
+`shadecast-refit` precedent. Apply only if a human reviewer asks.
+
+**Cosine calibration:** the verifier facet came in at **0.8928** on head 1 against
+a 0.90 threshold — scored against a *delivered sibling*, not against this PR's own
+earlier head. Moving the rival-policy builder and the two independent case audits
+into the private kit (5.6 KB of a 35.2 KB file) took head 2 to **0.8683**. Budget
+roughly 1.5 points of service score per sixth of the facet removed; it buys
+margin, not safety.
