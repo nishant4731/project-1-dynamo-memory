@@ -50,6 +50,39 @@ The active account must be `nishant4731`, and the remote and PR must point to th
 
 Completion requires all applicable local checks and all required GitHub checks to be green, with Harbor oracle/nop evidence recorded. If an external service remains blocked after the documented retries and diagnosis, report the exact blocker and evidence instead of claiming successful validation.
 
+## Mandatory: harvest the Pass@2 Difficulty Suggestion and the trial feedback before the next commit
+
+**Whenever a pipeline run fails — for any reason, on any stage — do not start editing until you have pulled every piece of feedback that run produced, including the advisory ones that did not cause the failure.** The same harvest is mandatory after a run that *passed* but landed in a bad band (pass@2 2/2 solved, pass@5 3–5/5 solved). The next commit must be written against this evidence, not against a guess about why the run went red.
+
+Read all of these, in this order:
+
+1. **`pass2_suggestion` — the Pass@2 Difficulty Suggestion sticky.** It is advisory, never blocks, and is capped at ~2 runs/day/task, so it is easy to lose: it can be present on a run whose `gate` is red for an unrelated reason, and it will not be regenerated on the next push. Read it on *every* failed run, even when the failure was cosine, static review, validation, AVA, or QC and pass@2 never ran or already passed. Copy its text into the task's working notes before pushing again.
+2. **The pass@2 trial detail.** Per trajectory: fail reason, *Agent Approach*, golden vs agent values, failing tests, solve time vs the agent budget, and the `difficulty_crux` / `approach_validity` / `task_specification` / `reward_hacking` columns. Classify each failure as solved / good valid fail / invalid fail / timeout / operational wedge before deciding anything.
+3. **The pass@5 `trials` panel when the run reached it.** Solved count, per-trajectory validity, and `difficulty_crux` on each trajectory — the headline fraction alone is not the finding.
+4. **The failed job's own log and sticky** for the stage that actually went red, per the classification list in the section above.
+
+Pull them with `gh` outside the sandbox:
+
+```bash
+gh pr view <pr-number> --repo <owner>/<repo> --comments
+```
+
+```bash
+gh run view <run_id> --repo <owner>/<repo> --json status,conclusion,jobs
+```
+
+```bash
+gh run view --job <job_id> --repo <owner>/<repo> --log
+```
+
+Stickies are edited in place and truncate long findings — when the sticky and the job log disagree, or the sticky looks clipped, the **job log** is the record. For deeper pass@ evidence use *View logs & artifacts → trials → Upload Harbor Output*.
+
+Then apply the evidence deliberately, not literally:
+
+- Treat the suggestion as **input, not an instruction**. It is an LLM hint and can be wrong about the cause. Weigh it against the measured taxonomy: when failures are in-progress timeouts, heredoc/terminal wedges, or near-misses at the budget ceiling, the correct move is usually to **shrink non-crux volume or provide plumbing**, even if the suggestion asks to harden further — an agent that never finishes is not difficulty evidence. `[agent].timeout_sec` cannot exceed 3600s.
+- A suggestion or trial finding that is genuinely load-bearing must be answered with a real, output-affecting change in **one** cohesive commit — and that commit still has to clear the cosine last-commit window checklist below before it is pushed.
+- Record, in `PROJECT_MEMORY.md`, what the suggestion said, what the trial taxonomy actually showed, and whether the next commit adopted or rejected the suggestion **with the reason**. Rejections are as reusable as adoptions; several of the entries already there exist because a suggestion was followed blindly once.
+
 ## Mandatory: look at cosine last-commit window before EVERY push
 
 **Do this on every Dynamo submission push. No exceptions. Do not skip when the change feels “small” or “docs-only”.**
@@ -241,3 +274,45 @@ Notes:
 
 - Cloud Agents do not see unsaved local files or unpushed commits.
 - Do not commit individual `dynamo-*` task folders into this instruction repo; those tasks stay in their own forks.
+
+## Mandatory: on every accepted task, record the playbook by category and subcategory
+
+The pipeline assigns each repo a fixed **category** and **subcategory** (`[metadata]`
+in `task.toml`). What clears the gates is strongly subcategory-specific: the mold that
+draws valid fails in `Security / Vulnerability analysis` is not the one that works in
+`Games / World simulation`. So the moment a task reaches **ALL-GREEN** (or its label is
+accepted), before moving on, write the playbook down keyed by that pair.
+
+Write **two** things:
+
+1. **A memory file** under
+   `~/.claude/projects/-Users-utkarsha-Documents-Project-1/memory/`, named
+   `dynamo-<category>-<subcategory>-playbook.md` (kebab-case, e.g.
+   `dynamo-security-vulnerability-analysis-playbook.md`), `type: project`, indexed in
+   `MEMORY.md`. If the file already exists, **update it** — one playbook per
+   category+subcategory pair, never a second file for the same pair.
+
+2. **A section in `PROJECT_MEMORY.md`** in this repo, under a
+   `## <Category> / <Subcategory>` heading, then commit and push, so Cloud Agents see
+   it too.
+
+Both must carry, for that subcategory:
+
+- **Category / subcategory** and the task repo + final head SHA.
+- **The mold that worked** — what the agent is asked to produce and where the
+  difficulty lives (reconstruct-a-policy, repair-in-place, starved-sample, …).
+- **Measured pass@2 and pass@5** on the accepted head: solved / valid-fail /
+  timeout counts and `avg@5`.
+- **Which crux actually drew the valid fails**, quoted from the trial analysis —
+  this is the single most reusable fact.
+- **Hurdles, per gate, in the order they blocked**: cosine, review, validation,
+  pass@2, AVA, deep_review, tier1, qc_eval/qc_exec, qc_gate, trials. For each, what
+  it complained about and the change that cleared it.
+- **Levers measured not to work** for this subcategory, with the numbers, so the
+  next task does not re-run them.
+- **The gate-vs-gate tensions** seen here (e.g. QC B1 demands a rule be stated
+  precisely, and stating it precisely is what lets pass@2 solve it) and how the
+  tension was resolved.
+
+Then start the next task in the same subcategory from that file rather than from
+first principles.
