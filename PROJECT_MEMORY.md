@@ -1,5 +1,17 @@
 # Project 1 Memory
 
+- 2026-08-19 `dynamo-e2765c3-regulated-knowledge-work-and-business-operations` (`dynamo/covenant-margin`, PR #1) `973d629` final hosted run `32183732247`: **entire required pipeline green** — enforced cosine, static/rubric 31/31, duplicate UNIQUE, Docker/oracle/nop, pass@2, Deep Review, AVA, Tier 1, QC evaluator, QC execution, 44-check QC gate, pass@5 trials, cost report, and top-level gate all succeeded. Pass@5 was **0/5 solved**, **4 good-valid fails**, **0 soft/in-progress/infra timeouts**, and **1 task/verifier issue**, avg@5 **0.000**. Two trajectories showed genuine implementation failures: one wrong base plan and one omission exclusion that did not propagate. Three independently encoded reserve `cases` as an ID-keyed object instead of an ordered array; one analyzer called the wording task-ambiguous because the spec said “one object per” without the explicit word “array,” while task-specification remained PASS 5/5 and the overall gate accepted four failures as good-valid. Deep Review and AVA passed; AVA advisories noted that the verifier does not re-run the tool on the visible pack, generated held-outs share a fixed structural family, and the shebang is not directly exercised. QC ran 37 checks plus execution probes with 34 pass / 3 inconclusive minor advisories and no blocking defect. Preserve this evidence if any future revision is considered: explicitly saying `cases` is an array would improve fairness but may remove the dominant observed discriminator, so it must be paired with a genuine algorithmic ratchet and a fresh cosine-safe surface rather than pushed as a wording-only retry.
+
+- 2026-08-19 `dynamo-e2765c3-regulated-knowledge-work-and-business-operations` (`dynamo/covenant-margin`, PR #1) `973d629` hosted pass@2: **1 solved / 1 completed valid fail / 0 timeout / 0 task-verifier issue**, so the gate passed and Deep Review/AVA launched. Both agents completed in ~25.6-29 minutes with `task_specification`, `reward_hacking`, `low_timeout`, and `approach_validity` PASS. Both recovered the profile and implemented the intended bounded multi-book decomposition plus all six independent omission solves. The only miss serialized reserve `cases` as an ID-keyed JSON object instead of the specified ordered array with explicit `omitted_asset`; it was a one-line near-miss, so `difficulty_crux` and `near_miss` both FAIL for that trajectory. This is valid pass@2 evidence but not proof that the allocation crux defeated an agent; retain that distinction for the pass@5 taxonomy. The new `pass2_suggestion` job was skipped, so the prior harvested suggestion remains the only advisory. Enforced cosine passed lower at **0.647115 instruction / 0.677106 verifier / 0.812925 fingerprint**, static/rubric 31/31, duplicate UNIQUE, and hosted Docker/oracle/nop all green.
+
+- 2026-08-19 `dynamo-e2765c3-regulated-knowledge-work-and-business-operations` (`dynamo/covenant-margin`, PR #1) hardened head `973d629`: adopted the measured pass@2 finding with a bounded exact 3-book / 4-scenario / 27-asset allocation, six genuinely cross-book assets, and a new graded `/app/covenant_reserve.json` containing six independent one-asset omission re-optimizations plus base-plan and alternate-assignment digests. The disclosed bounds (<=10 multi-book, <=12 fixed/book) enable a reusable exact decomposition; the prior global DFS times out beyond 50s on the new visible case while the reference solves sampled bundles in 1-5.2s. Rewrote both enforced-cosine facets as a load-bearing four-argument/four-artifact transaction; local token cosine vs `0405442` is **0.7832 instruction / 0.6801 verifier**, versus latest service scores **0.6868 / 0.7166 / 0.8276** (threshold 0.9). Final exact-tree validation: image `sha256:72e619886e459223e00cd8bd78b8c9947e99a164582b5664aedf81da69c01bb1`; oracle **6/6 reward 1.0**; nop **3 failures / reward 0.0**; all **19/19** anchored mutants killed; direct optimizer cross-check **12/12** with flexible-asset witnesses; double refreeze/pins/syntax/diff/name checks passed; reserve symlink, input tamper, visible-output lookup, and `/tests` isolation probes all failed safely. Harbor CLI was unavailable on the Mac, so these rewards use the playbook's manual Docker oracle/nop fallback. Await the single cohesive push and complete GitHub feedback loop; do not declare done before every downstream check is green.
+
+- 2026-08-19 `dynamo-e2765c3-regulated-knowledge-work-and-business-operations` (`dynamo/covenant-margin`, PR #1) `0405442`: cosine (**0.686780 instruction / 0.716595 verifier / 0.827605 fingerprint**), static/rubric (31/31), duplicate UNIQUE, and hosted oracle **1.0** / nop **0.0** all passed. Pass@2 then blocked as **2 solved / 0 valid fail / 0 timeout / 0 task-verifier issue**. Both trajectories had task-specification, reward-hacking, difficulty-crux, near-miss, low-timeout, and approach-validity PASS; they solved byte-exactly in ~16 minutes (27% budget) and ~35 minutes (58%). Both enumerated the 972 profile candidates, implemented PIT/rounding/digests, and used ordinary exhaustive DFS with cost pruning over only 15 eligible assets. The fresh `pass2_suggestion` correctly identifies that the allocation size never made full per-book/per-scenario suffix feasibility decisive and recommends high-20s/low-30s assets, three books, and four scenarios; it optionally suggests widening profile recovery. Adopt the core allocation-scale finding, but benchmark the reference before freezing so the task does not become a raw timeout. Pair the scale ratchet with a genuinely new graded, globally coupled output contract and reshape both cosine facets in one cohesive commit; retain 3,600s agent maximum. Pass@5/deep/AVA/QC/trials were skipped by the pass@2 gate.
+
+- 2026-08-19 `dynamo-e2765c3-regulated-knowledge-work-and-business-operations` (`dynamo/covenant-margin`, PR #1) follow-up head `827a9d5`: enforced cosine passed again at instruction **0.686945**, verifier **0.720356**, fingerprint **0.815125** (threshold 0.9); all deterministic static checks passed. Read-only rubric review then failed only criterion 17/31 because `difficulty_explanation` omitted synthetic/programmatic data provenance; all other criteria passed. The run stopped before validation/pass@2/deep/AVA/QC/trials, and `pass2_suggestion` was explicitly skipped, so there is no agent-difficulty evidence to apply. The advisory questioned whether the submission-derived seed can ever produce a non-identifiable/infeasible pack; an exhaustive local sweep of the entire reachable range **90000..98998 (8,999/8,999 seeds)** generated and solved successfully. Next commit adopts the valid provenance request, explicitly aligns the already-enforced read-only-pack rule across spec/instruction/direct test so both cosine facets move substantively, refreshes the contract pin, then reruns the complete local oracle/nop gate.
+
+- 2026-08-19 `dynamo-e2765c3-regulated-knowledge-work-and-business-operations` (`dynamo/covenant-margin`, PR #1) first substantive head `f5ff4e2`: enforced cosine passed with instruction **0.692475**, verifier **0.723204**, and fingerprint **0.815228** at threshold 0.9. Stage-1 static then blocked solely on `task/environment/Dockerfile` using broad recursive `chmod -R`; all downstream jobs were skipped, so this run produced no pass@2 suggestion, trajectories, pass@5 evidence, AVA/QC/deep-review findings, or difficulty signal. The follow-up removes the unnecessary chmod and also discloses the already-enforced invalid-arity/no-`/app`-write CLI boundary in instruction/spec while renaming the corresponding direct test, so both cosine facets carry a real contract-alignment delta rather than an empty/static-only retrigger.
+
 - 2026-08-16 `dynamo-7e6bfa7-software-engineering` (`dynamo/tessera-decant`, PR #1) `6147751`: evidence-driven pass@5 ratchet adds `reclamation_index.tsv`, a fourth audit seeded from the plan chain and feeding the manifest. One row per actual victim records global/removal ordinals, immutable initial-register or earlier-admission origin, victim values, and all later admission steps reusing the exact path; report adds reclamation digest/chain and `recycled_victims`. This targets the measured recycled-path/terminal-history shortcut while leaving capacity search size unchanged. The agent-visible helper supplies only canonical row framing; provenance and future reuse remain agent work. Archive refrozen to **427** entries (header-only index because deficits remain zero); seven protected fixtures carry 65–68 victims, both origin classes, and six have real reuse. Verifier now has 38 tests and **104/104** anchored mutants, with direct provenance/reuse/chain surveys. Exact commit image `sha256:225bd64bb388b6a677e92cc9471996764762a77d804665f0b56ed84c49bad6b2`; oracle **38/38 reward 1.0**, nop **12 failures reward 0.0**, double refreeze identical, syntax/diff/name/integrity/tamper/isolation all green. Await auth/target check, push and complete GitHub feedback loop.
 
 - 2026-08-16 `dynamo-7e6bfa7-software-engineering` (`dynamo/tessera-decant`, PR #1) `2f5d278`: all correctness gates passed (cosine, static, duplicate, hosted validation, pass@2, Deep Review, AVA, Tier 1, QC eval/exec and 44-check QC gate), but final trials blocked at **3 solved / 2 good-valid-fail / 0 timeouts / 0 task-verifier issues / avg@5 0.600**; the required band is at least 3 fails with at least one good valid. The three solves were byte-exact and finished with 17–29 minutes of slack. `task__UKJj6o7` was a gross protected-only failure: it implemented DP but a deficit/eviction bug left 53 settled instead of 13–16, with chain cascades. `task__3aDPawQ` was a genuine near-miss: it conflated report `evicted` tickets with `evicted_admissions` and reconstructed later evictions by recycled lane/shard/name strings, selecting the first ledger occurrence instead of the correct admission identity. All five had task-specification, reward-hacking, low-timeout and approach-validity PASS; both failures had difficulty-crux PASS; there was no invalid/task/verifier cluster. Pass@2 itself passed with **0 solved / 1 clean valid fail / 1 in-progress timeout**: both agents ignored the explicit bounded-state instruction and used exponential powerset/DFS; the valid failure also looped on syntax typos, while the timeout agent was still redesigning. The current pass2-suggestion job was quota-skipped, so no fresh advisory exists; retain the previously adopted archive-blindness suggestion. Do not raise timeout: 3600 is the platform maximum. Evidence supports one cohesive, disclosed, protected-only, output-affecting ratchet at the optimizer-state ↔ terminal-reconciliation boundary, not more raw fixture volume or clock pressure; it must target a shortcut shared by the three solves and keep local oracle 1.0/nop 0.0 before the next push.
@@ -2790,3 +2802,846 @@ bind, and 8400 gives 3 shards closed by count to 12 by bytes.
 byte-identical on every store the agent can read and wrong on the held-out ones.
 Measured: identical on the live store and the sample pair, differing on 10 of 12 held
 out (the 2 survivors carry no damaged lines).
+
+### 2026-08-17 (cont.) — dynamo-65cf2ab PR #5: real QC finding, then a platform outage
+
+`dynamo/approximant-forge` reached its best state on head `664e971`: twelve green checks —
+changes, cosine, static + Dynamo eval 31/31, duplicate UNIQUE, validation, ratelimit, **pass@2 at
+0 solved / 1 valid fail with "Rerun Recommended: NO"**, deep_review, ava_review, tier1 and
+qc_exec. AVA, tier1 and qc_exec had never reported on any concept in this repo before; all
+passed. The single blocker was one QC Major, and it was correct.
+
+**The QC finding worth keeping.** `runner_up` searched the continued-fraction candidate set, but
+the second-closest fraction under a denominator ceiling is neither a convergent nor a
+semiconvergent — it is a **Farey neighbour** of the winner (`p*b - a*q = 1` below, `c*q - p*d = 1`
+above, each at its largest denominator inside the ceiling, via extended Euclid), because nothing
+under the ceiling lies strictly between those two except the winner. On the cited instance the
+reference gave -122/177 where the truth is -224/325. My generator had brute-forced the *best*
+approximant on every corpus and never the runner-up; it now brute-forces every graded column.
+
+**Three further defects, all mine, all found by gates rather than by me:** a path encoding that
+mapped `0/1` and `1/1` both to `-` (and a spec that called `0/1` the tree's root when the root is
+`1/1`); hand-written worked examples that the engine does not produce, which cost two agents their
+whole hour and made that draw's "valid fails" invalid; and a verifier budget too small to hold its
+own runs, so a submission wedged on an O(N) traversal consumed the verification and destroyed a
+trial. Each now has a guard: quoted rows regenerated from the engine every run, every graded
+column brute-forced, and the budget derived from worst case (7 corpora x 120s inside 1500s).
+
+**Then a platform outage, and how to tell.** Three consecutive runs failed on three different,
+unrelated jobs: `review` + `claude-cost-report` together with neither posting a sticky;
+`cosine_similarity` on compared surfaces **byte-identical** to two heads that had passed it at
+0.607/0.700/0.759 against a 0.9 threshold; and `changes` on a commit whose entire diff was seven
+README lines and nothing under `task/`. GitHub's own API was returning 503s and 404s throughout.
+The diagnostic that settles it cheaply is `git diff <passing-head> <failing-head> --
+task/instruction.md task/tests/test_outputs.py` — empty output means no cosine verdict can have
+changed for content reasons. Stop retriggering after the second such failure and escalate; no
+task-side edit moves a score that was 0.61.
+
+### 2026-08-17 — dynamo-7e6bfa7 PR #2: pass@5 family-certificate ratchet
+
+Run `32017643054` passed every gate through QC but failed only final trials at **4/5 solved**
+and **1 good valid fail**. All five approaches were valid, there were no task/specification,
+reward-hacking, timeout, or verifier failures, and the four exact solvers converged on the same
+bounded DP/top-two design in roughly 45–50 minutes. The one valid failure used an insufficient
+uncapped DP key and omitted the actual-byte comparator, causing eight transaction divergences
+while passing all structural checks. The pass@2 suggestion was quota-skipped; there was no new
+advisory to adopt. Pass@2 itself was already in band at 1 solved / 1 good valid fail. Therefore
+the next commit adopts the measured trial taxonomy, not a guessed timeout change: add the new
+`capacity_family.tsv` audit, which counts and fingerprints **every** feasible subset tying rank 1
+on victim count and exact freed bytes, including exact multiplicity, modular tick/identity sums,
+and the greatest remaining-order member. This forces a counting/aggregation semiring beyond the
+learned top-two optimizer while remaining polynomial, fully disclosed, and output-affecting.
+`[agent].timeout_sec` remains at the platform maximum 3600; increasing it is impossible and the
+trial data showed no timeout problem. Protected families reach 4,003 members. Local evidence
+before commit: two refreezes are identical and match all 433 archive entries; solution and
+independent reference match byte-for-byte on all seven pins; all 129 mutation anchors are unique
+and every mutation dies on both probe seeds; full Docker oracle 49/49 and reward 1.0 in 257s;
+nop has 12 required failures and reward 0.0 in 290s. Both enforced cosine surfaces carry the
+load-bearing new contract/verifier coverage in the same cohesive change.
+
+The first remote run for this ratchet, `32053823746` at `f26e6fd`, is pure infrastructure
+evidence, not a task verdict. Cosine returned HTTP `000` and continued without a score. The
+deterministic-review job then failed in five seconds because `static-report.sh` invoked `gh` and
+GitHub returned HTTP `503`; the job log contains no static rule failure at all. Every downstream
+stage was skipped. Keep the task bytes unchanged and use the documented close/reopen retry once
+GitHub accepts API writes; do not harden or reskin from this run.
+
+The next close/reopen retry, run `32054746697`, also failed as infrastructure: the similarity
+service produced a clear verdict, but GitHub became unavailable while the job posted its sticky.
+No task feedback or pass@ evidence was produced. On the later retry `32058870473`, GitHub worked
+far enough to give a real result. Enforced cosine passed with instruction `0.6932825874674069`,
+verifier `0.7592561984505548`, fingerprint `0.7419155221412005` at threshold `0.9`. Static review
+then found the sole deterministic defect: `instruction.md` was 1,651 Qwen3 tokens against the
+1,500-token limit. Pass@2 suggestion, pass@2 detail and pass@5 trials were skipped, so there was
+no new difficulty advice to adopt or reject.
+
+The follow-up preserves the hard contract while compressing the prompt from 1,039 to 724 words.
+It also makes the verifier's family evidence explicit: both modular aggregate fields must lie in
+`[0, 1000000007)` and the protected corpus must contain a family beyond top two. This changes both
+cosine facets with a load-bearing family assertion rather than an empty or prose-only retrigger.
+Local gate on the rebuilt image: syntax/TOML/diff clean; oracle 49/49 and reward 1.0 in 215.19s;
+nop 12 expected failures / 37 structural passes and reward 0.0 in 203.31s. The verifier run also
+reconfirmed current pins, archive bytes, protected surveys, 129/129 mutation construction and
+death on both probes, report tamper, policy-axis, isolation, and no-write boundary checks.
+
+Run `32060640944` at `8ac19f8` proved the family ratchet is difficult enough: pass@2 was **0/2**
+with one good valid failure and one in-progress timeout, no task/specification or reward-hacking
+issue, and "Rerun Recommended: NO". One agent never wrote an executable after spending its
+budget analysing; the other reached 27/29 structural checks but reset audit chains to zero and
+used recursive subset enumeration, so all seven candidate replays exceeded their per-run
+budget. The pass@2 suggestion was quota-skipped and pass@5 was not reached. This is evidence to
+keep the 3600-second platform-maximum agent timeout and the bounded-solver contract, not to add
+more time or more task volume.
+
+The only blocker was AVA `sound_verifier`: all seven rewarded replays used source-visible fixed
+seeds, so a table containing their exact completed trees could earn reward without a reusable
+solver. The fix keeps those seven deterministic replays and their authoring pins, but adds an
+eighth verifier-time entropy-seeded cistern. Its expectation is independently computed and
+sealed before the submitted executable runs; the raw seed and expected tree are never exposed
+to the candidate. The graded entrypoint explicitly asserts that this replay's seed and expected
+tree differ from every fixed fixture, and task metadata/prompt disclose verifier-time generated
+cases. Local rebuilt-image evidence: first oracle 51/51, reward 1.0 in 254.39s; second oracle and
+verifier invocation in the same container 51/51, reward 1.0; nop 14 expected output failures /
+37 structural passes, reward 0.0. The 129-lesion two-seed sweep and prose control passed in both
+full verifier invocations.
+
+Run `32076586158` at `dab584a` cleared every substantive gate through pass@2, AVA,
+deep review, tier1, `qc_eval`, and `qc_exec`; only the consolidated QC/final gate
+failed. The pass@2 draw was strong difficulty evidence: **0/2 solved, 2/2 good valid
+fails, 0 task/verifier/reward-hacking/timeout issues, 27/30 tests in each trajectory,
+and "Rerun Recommended: NO"**. Both agents reached the intended peer-family crux but
+lost the exact greatest-member identity: one dropped the predecessor bitmask while
+extending a DP state, and the other ordered hash integers instead of the specified
+identity tuple. The pass@2 suggestion was quota-skipped, and pass@5 trials were not
+reached because QC blocked; there was no unharvested difficulty advice to apply.
+
+QC's D4 finding was valid: `secrets.randbits` made two otherwise identical clean
+verifier runs select different held-out cisterns. The correct reconciliation with the
+AVA anti-table requirement is neither runtime entropy nor a public fixed constant.
+Derive the protected seed from a domain-separated SHA-256 digest of the submitted
+`/app` tree captured before execution. Identical clean submissions now select the same
+case, while embedding a fixed answer table changes the submitted tree and therefore
+the graded case. The seed remains outside the seven source-visible fixed replay seeds,
+and expected truth is still computed independently before candidate execution. This
+adopts QC's determinism requirement while rejecting its literal fixed-seed suggestion,
+because the immediately preceding AVA run demonstrated that a source-visible fixed
+lookup set is rewardable without a reusable solver.
+
+The same cohesive fix copies each pristine generated cistern before the independent
+oracle mutates it, rather than mining the deterministic payload twice. That preserves
+bytes and semantics while cutting a full verifier invocation from about 254 seconds to
+197 seconds, restoring margin under QC's 300-second probe wrapper. Local evidence:
+two clean oracle containers derived the identical seed `6114828854251513556`; adding
+an answer-table file changed it to `5563116262244360337`; nop derived a different
+submission seed. The full oracle passed 51/51 with reward 1.0 in 196.83 seconds, a
+second solve plus verifier invocation passed 51/51 with reward 1.0 in 197.00 seconds,
+and nop had the expected 14 output failures / 37 structural passes with reward 0.0 in
+195.15 seconds. The 129-lesion two-seed sweep, prose control, archive/reference pins,
+submission-bound replay, isolation, tamper, executable-boundary, and no-write checks
+all ran inside both complete oracle invocations.
+
+Run `32089509183` at `fc25e22` passed changes, enforced cosine
+(`0.681924` instruction / `0.756729` verifier / `0.787657` fingerprint against
+`0.9`), static review, duplicate, validation, ratelimit, pass@2, AVA, and deep
+review. Pass@2 again confirmed the intended difficulty: **0/2 solved**, one good
+valid family-aggregation failure and one in-progress timeout, no task/verifier or
+reward-hacking issue, and "Rerun Recommended: NO". The completed agent passed
+three of eight cisterns but corrupted exact peer-family count/modular/max-member
+aggregation on five; the other spent its hour prototyping and never installed an
+executable. The pass@2 suggestion was quota-skipped and pass@5 was skipped after
+Tier 1 held, so there was no new suggestion or pass@5 evidence to apply.
+
+Tier 1 accepted D4 but correctly surfaced the prior QC sticky's second encoded
+Major, E2: a post-agent whole-`/app` snapshot catches writes during verifier
+replays, but cannot detect an agent that modified supplied evidence before the
+verifier starts. The follow-up therefore enumerates and independently pins every
+declared immutable input: `/app/archive` (complete paths, empty directories, file
+bytes, and symlink targets), `/app/DECANTER_NOTES.md`, `/app/tessera_io.py`, and
+`/app/tessera_starter.py`; helper and starter read-only mode is also enforced.
+The contract names the same closed set, while the replay snapshot continues to
+guard every other unrelated `/app` path at runtime. Direct probes rejected a
+modified contract, a nested archive replacement, and writable helper mode; the
+untouched image had zero faults. Full sequential Docker evidence: oracle 51/51,
+reward 1.0 in 202.10 seconds; nop 14 expected failures / 37 structural passes,
+reward 0.0 in 204.46 seconds. Both remain safely below QC's 300-second probe cap
+and both executed the complete 129-lesion two-seed sweep.
+
+Run `32097053821` at `2afde88` confirmed that the E2 repair itself is correct:
+changes, enforced cosine (`0.682451` instruction / `0.793261` verifier /
+`0.796156` fingerprint), static review, duplicate review, validation, ratelimit,
+pass@2, AVA, deep review, Tier 1, `qc_eval`, and the `qc_exec` job all completed.
+Pass@2 remained in the intended band at **0/2 solved**: one good valid analytical
+failure and one in-progress timeout, with no task/specification or reward-hacking
+issue and "Rerun Recommended: NO". The suggestion job was quota-skipped, so the
+previous suggestions remain the complete advisory record; pass@5 trials were
+skipped because the consolidated QC gate held.
+
+The consolidated QC result is a real verifier-runtime problem rather than a task
+contract defect or GitHub outage. Its four deterministic wrappers (A1 oracle,
+E5 symlink output, C1 stub output, and D4 repeatability) each killed
+`bash /tests/test.sh` at the wrapper's fixed 300-second limit. `qc_eval` routed
+PASS and the QC result reported no blocking soundness finding, but `qc_exec`
+routed ERROR/BLOCK fail-closed. The local 202--204-second proof therefore lacked
+enough margin for the hosted two-CPU worker. The next change should preserve all
+129 mutations on both protected seeds and every output check while moving the
+expensive archive-blindness *authoring audit* out of every candidate-time verifier
+invocation; its source/lesion certificate can be checked cheaply at runtime and
+the exhaustive recomputation must remain an explicit local pre-push gate. This
+rejects the old suggestion to increase timeouts: agent/verifier metadata is already
+at the 3600-second platform maximum, and the failing limit is QC's non-configurable
+300-second subprocess wrapper.
+
+The runtime fix keeps every decisive check but separates candidate-time and
+release-time mutation proof. The ordinary verifier still constructs all **129**
+uniquely anchored lesions and executes every one, assigning them evenly across
+the same two complementary protected seeds. The explicit release mode executes
+all 129 on **both** seeds. Likewise, candidate-time verification checks a
+three-digest certificate over the exact reference source, complete lesion
+catalogue, and 61-rule archive-blind set, while release validation recomputes
+the exhaustive archive audit. This removes redundant authoring work from each
+of QC's four fresh candidate probes without sampling task outputs or weakening
+the independent generated-cistern comparisons.
+
+Final local evidence for this split: the exhaustive archive recomputation found
+exactly 61/61 disclosed blind rules; the full two-seed sweep built 129/129
+lesions, ran 258 mutant transactions, and had zero survivors in 162.76 seconds;
+the prose control still matched. Two archive refreezes were byte-identical to
+both committed before/after trees. Under an explicit Docker `--cpus 2` limit,
+the candidate-time oracle passed 51/51 with reward 1.0 in 203.06 seconds, a
+repeat invocation passed 51/51 with reward 1.0 in 238.58 seconds, and nop had
+the expected 14 output failures / 37 soundness passes with reward 0.0 in
+192.39 seconds. The dynamic archive-blind recomputation was also measured in
+the two-CPU verifier and pushed the oracle to 289.04 seconds, too close to the
+fixed hosted cap, which is why it remains in the explicit release gate rather
+than every candidate invocation.
+
+Committed the cohesive runtime fix as `b8a42d9` (`Split release proofs from
+five-minute verifier`) and pushed it normally to `nishant4731:submission` for
+PR #2. GitHub run `32109060945` started at that exact head; `review / changes`
+passed and enforced cosine was in progress when monitoring returned to the
+heartbeat. The automation prompt now tracks this run and head.
+
+Run `32109060945` at `b8a42d9` cleared every stage through consolidated QC,
+including the previously failing fixed-300-second probes, but failed the final
+pass@5 difficulty gate. This was not GitHub infrastructure and not a task or
+verifier defect. Pass@2 was **0/2 solved**, with one good valid failure and one
+in-progress timeout; task specification, reward hacking, difficulty crux, and
+approach validity all passed, and the suggestion job was quota-skipped. Pass@5
+was **0/5 solved**, but the gate counted only one good valid failure and four
+in-progress timeouts; it requires at least three counted failures including one
+good valid failure. The one counted failure spent all 52 steps analysing and
+never wrote an implementation. The other four were still actively debugging at
+the 3600-second platform ceiling. Their independent implementations had multiple
+substantive defects: exponential or over-costly subset searches, 17x family
+undercount or 2.5x overcount, a four-field family value passed to a six-field
+writer, an inserted-row/original-ticket type mismatch, incomplete terminal
+state, and a malformed report. All five approaches were valid and all five
+failed on the disclosed bounded optimizer/family/reconciliation band; there was
+no hidden rule or invalid failure.
+
+The older advisory that suggested raising the agent timeout is rejected again:
+`[agent].timeout_sec` is already at the hard 3600-second maximum, and the latest
+trial analysis says additional time alone would not repair the multiple
+interacting bugs. The correct response is to shrink non-crux implementation
+volume so agents reach a terminal wrong result inside the hour while preserving
+the difficult, output-affecting optimizer. The next revision should prefill the
+recovered installation constants plus the already-solved naming, admission-lap,
+and later-eviction plumbing in the read-only starter, leaving the reusable
+best-two/constrained subset optimizer and exact peer-family aggregation as the
+single marked gap. This deliberately applies the measured trajectory taxonomy:
+it does not make the crux easier, but removes work that caused legitimate
+algorithmic failures to be misclassified as in-progress timeouts.
+
+Implemented that pass@5 recovery as one cohesive contract change. The starter
+now contains the three reconstructed constants, canonical UTF-8 naming,
+digest-lap scheduling, later-eviction reconciliation, and a `capacity_inputs`
+snapshot helper. Its sole `NotImplementedError` is `choose_victim_plans`, which
+must still produce the globally best two feasible subsets, exact peer-family
+semiring certificate, and protected-row constrained optimum under the 40-row
+envelope. Instruction, notes, metadata, starter pin, and the verifier's static
+starter contract were reconciled. Both enforced cosine surfaces changed; the
+latest sticky was opened first and confirmed enforced green scores of `0.681443`
+instruction / `0.794918` verifier / `0.791557` fingerprint at threshold `0.9`.
+The changes are load-bearing rather than an empty retrigger: they redefine the
+agent-visible implementation boundary and the verifier now requires exactly one
+optimizer gap plus finished supplied plumbing.
+
+Local validation on rebuilt image
+`sha256:d4070d79b7e45ff2400bd68dbc550ee616313ced178f67302b84c13dea6699de`:
+the standalone oracle passed 51/51 with reward `1` in 185.88s; nop produced the
+expected 14 output/boundary failures, passed 37 soundness checks, and earned
+reward `0` in 167.35s. A second oracle built by filling only the new starter's
+optimizer gap passed 51/51 with reward `1` in 194.46s, directly proving the
+single-gap scaffold integrates correctly. The release sweep constructed all
+129 unique lesions, killed every lesion on both complementary seeds (258 mutant
+transactions, zero survivors), and accepted the prose control. The exhaustive
+archive-blind audit killed all 61 certified blind rules. Two independent archive
+refreezes each produced 433 entries, matched one another and the committed
+archive exactly; checkout gaps and policy rivals were empty. Python syntax,
+TOML parsing, base-image policy, reference pins, protected-input modes/digests,
+submission-bound replay, report tamper, isolation, `git diff --check`, and
+documentation-name checks passed. Agent and verifier timeouts remain at the
+platform maximum 3600 seconds.
+
+Committed this revision as `5118f93` (`Focus trials on the ranked capacity
+crux`) and pushed normally to `nishant4731:submission`. PR #2 remains open and
+mergeable at that exact head. New GitHub run `32131680045` started; the changes
+job passed and enforced cosine was in progress at handoff. The PR body was
+replaced with the current single-gap design, the pass@5 classification evidence,
+and the final local validation numbers. The heartbeat now tracks this new run
+and head; do not edit while it is running.
+
+Run `32131680045` at `5118f93` passed enforced cosine (`0.668800` instruction /
+`0.759776` verifier / `0.783599` fingerprint), static and duplicate review,
+validation, pass@2, AVA, deep review, Tier 1, both QC jobs and the QC gate, but
+failed the final pass@5 trials gate. This is task-difficulty/classification
+evidence, not GitHub infrastructure. Pass@2 was the intended **0/2 solved** and
+both failures were good valid analytical failures: rank 1/rank 2 were correct,
+while exact peer-family greatest-member propagation failed on protected seeds.
+The suggestion job was quota-skipped, so the two older contradictory advisories
+remain the complete suggestion record and neither is adopted literally.
+
+Pass@5 was **0/5 solved**. All five approaches and specifications were valid and
+all five failed the disclosed peer-family aggregation band, but the gate counted
+only two good valid failures and classified three as in-progress timeouts; it
+requires three counted failures including one good valid. Two terminal failures
+had wrong family hashes on one or four protected cases while rank 1/rank 2 were
+correct. The three timeout trajectories were still patching or profiling at the
+3600-second hard platform ceiling: one dropped every family skip edge with
+`new = {}`, one retained a slow/non-general single-best partial family witness,
+and one had both aggregate and cloned-reference state corruption. Three agents
+never executed the live cistern, but the shared decisive error was still their
+family accumulator/state propagation, not an undisclosed output rule.
+
+The evidence rejects another timeout increase: 3600 seconds is already the hard
+maximum. It also rejects simply removing the family certificate, because all
+seven current trajectories identify it as the genuine hard crux. The next
+cohesive revision instead supplies a generic `fold_peer_family` in the immutable
+starter. The helper provides only safe backward 0/1 traversal, exact-byte /
+capped-shard state routing, and the already-disclosed identity token. It does
+not choose rank 1/rank 2 or define the accumulator, extension, merge, modular
+totals, or greatest full member. This deliberately removes the repeated
+skip-edge plumbing failure while preserving the output-affecting family algebra
+that produced valid wrong answers. The intended effect is to convert borderline
+hour-long debugging into either a completed correct solver or a terminal,
+classifiable algebraic failure.
+
+While validating that revision, the changed immutable starter selected a new
+submission-bound replay for nop. That replay happened not to preserve one
+unrelated exact-half clock witness, causing a coverage-only test to fail even
+though the candidate-independent fixed corpus still covered the rule. This
+exposed a pre-existing fairness bug: source bytes were allowed to choose not
+only an output-graded replay but also extra per-seed coverage requirements.
+The verifier now uses the seven fixed shipped/heldout replays for coverage
+certification and continues to byte-grade the submission-bound replay in its
+dedicated output and stability tests. A candidate tree can still change the
+heldout output case, but cannot accidentally create a new undocumented
+coverage obligation. Nop returned to the intended 14 output/boundary failures
+and 37 soundness passes.
+
+Local validation for the generic peer fold revision used rebuilt image
+`sha256:d000cc231e1a10a9c61774adf093d9b84537f245ea1f725f1420c567511c822a`.
+The fold's supplied traversal was cross-checked against brute-force truth on
+2,700 randomized small peer families, including exact-byte, capped-shard,
+modular-sum and greatest-member comparisons. The final oracle passed 51/51 and
+earned reward `1`; the last two-CPU wall measurement was 310.78 seconds after
+several sustained Docker sweeps, while an earlier fresh run of the same image
+completed in 259.57 seconds. Nop earned reward `0` with exactly 14 expected
+failures and 37 soundness passes. The explicit release sweep constructed all
+129 lesions, killed each on both complementary seeds (258 executions, zero
+survivors), and the exhaustive archive audit matched all 61/61 certified blind
+rules. Two independent archive refreezes each had 433 entries and were
+byte-identical to the committed archive. Python syntax, shell syntax, TOML,
+base-image policy, reference pins, immutable-input pins, static gap count,
+submission-bound replay, adversarial probes and `git diff --check` passed.
+
+Committed the cohesive traversal/fairness revision as `9d11749` (`Bound the
+peer-family state traversal`) and pushed normally to `nishant4731:submission`.
+PR #2 remains open and mergeable at exact head
+`9d11749f0255216c619c5edd8bec3e4d10b4eb9f`; the PR body records the harvested
+pass@2/pass@5 taxonomy and final local evidence. GitHub run `32158493654`
+started for that head, with `review / changes` green and enforced cosine in
+progress. The heartbeat now tracks this run and must not edit while it remains
+active.
+
+Run `32158493654` at `9d11749` passed enforced cosine (`0.675112`
+instruction / `0.763324` verifier / `0.776635` fingerprint), static and
+duplicate review, validation, pass@2, AVA, deep review, Tier 1, QC eval, QC
+exec, and the QC gate. It failed only the final pass@5 classification. The
+failure is task-difficulty/classification evidence rather than GitHub
+infrastructure: the trials job and final gate both completed normally, and the
+gate explicitly reported `trials=failure` with every earlier stage green. A
+Claude aggregation call emitted `Claude Code returned an error result:
+success`, but all five per-trajectory analyses, artifacts, rewards, and the
+deterministic classifier were present, so that incidental analyzer exception
+did not cause or invalidate the verdict.
+
+The complete feedback harvest was performed before editing. The current
+`pass2_suggestion` job was quota-skipped, so the two older contradictory
+stickies remain the full advisory record: one proposed exceeding the 3600s
+timeout (impossible because 3600 is the platform cap), while the other proposed
+removing algorithm detail after a previous easy version. Neither is followed
+literally. Current pass@2 was **0/2 solved, 2 good valid failures**. Both agents
+correctly derived the bounded rank/family approach but consumed the hour reading
+and planning; one never created the executable, and the other copied the
+unmodified starter four minutes before timeout after a 31-minute malformed LLM
+response. Both `task_specification`, `reward_hacking`, `difficulty_crux`,
+`low_timeout`, and `approach_validity` passed. This proves the task is hard but
+also shows the agent-visible reading path still delays implementation.
+
+Pass@5 was **2/5 solved** with one terminal good-valid failure and two
+in-progress timeouts. The two successful agents completed the intended bounded
+DP and exact family algebra in roughly 47 minutes and at the one-hour boundary.
+The terminal failure finished in about 38 minutes with rank 1/rank 2 correct but
+used SHA-derived tokens instead of full five-field identities when choosing the
+greatest peer-family member; 28/30 tests passed and the disclosed family rule
+was decisive. Both timeout failures also had correct rank 1/rank 2 and failed
+the disclosed peer-family algebra: one had wrong family output on four of eight
+replays and was still validating a replacement DP without ever running the
+live cistern, while the other had wrong family output on every replay and was
+cut off during diagnosis after producing the live audits. Their
+`task_specification`, `difficulty_crux`, and `approach_validity` all passed, but
+`low_timeout` failed because they were still making progress. The deterministic
+gate therefore counted `2 solved + 1 good-valid + 2 in-progress-timeout` and
+blocked because it needs three counted failures including one good valid.
+
+This evidence does **not** justify making the algorithm broader: three of five
+agents already failed the exact output-affecting family crux, while added
+subsystems would increase the same timeout misclassification. The next
+revision instead front-loads a compact capacity implementation brief at the
+top of the existing immutable notes and explicitly tells agents that the
+already-supplied transaction, archive, and 744-line I/O helper do not need to
+be reverse-engineered before coding. It preserves every ranked/family rule,
+fixture, output byte, and verifier meaning. The intended pass@5 effect is to
+convert hour-long reading/debugging into terminal correct or terminal algebraic
+results, not to disclose the family solution or relax the hard rule.
+
+The complete local gate for that front-loaded brief is green. Rebuilt image
+`sha256:587e88c1f5dec6f84ae439721acceb32b64d1d34b3c994ddcb936b86288761e5`
+passed **51/51** verifier tests and earned oracle reward **1.0**; the nop run
+had exactly **14 expected failures / 37 soundness passes** and reward **0.0**.
+Both runs constructed and killed all **129/129** candidate-time lesions. The
+explicit release sweep then rebuilt all 129 unique lesions, killed each on both
+protected seeds (**258 executions, zero survivors**), and accepted the prose
+control. The exhaustive archive recomputation matched all **61/61** certified
+blind rules. Two independent archive refreezes each produced **433** entries
+and were byte-identical to one another and the committed archive. Python and
+shell syntax, TOML parsing, base-image policy, immutable-input SHA pins,
+`git diff --check`, static one-gap/brief assertions, policy uniqueness,
+submission-bound replay, tamper/stand-in checks, and reference/import isolation
+all passed. Harbor CLI remained unavailable, so oracle/nop used the documented
+manual Docker fallback. High local wall times (2350s oracle / 1684s nop) came
+from several unrelated concurrent Docker workloads on the shared desktop; the
+unchanged mutation/runtime logic previously completed in the hosted QC limit.
+
+Committed the complete brief revision as `6174bd4` (`Front-load the ranked
+capacity contract`) and pushed it normally to `nishant4731:submission`; PR #2
+remains open and mergeable at that exact head. Two fresh Dynamo Review runs,
+`32192949895` (synchronize) and `32193056177` (documented close/reopen retry),
+both ended instantly with GitHub conclusion `startup_failure`, timestamped at
+creation, with **zero jobs**. The ordinary rerun API returned 404 because no
+workflow job existed. Neither attempt checked out repository code or produced
+similarity/static/pass@2/pass@5/QC feedback, artifacts, or a job log. Taxonomy:
+GitHub/reusable-workflow startup infrastructure, not task or verifier evidence.
+GitHub's public status page still reported Actions operational, so this may be
+a repo/reusable-workflow startup incident not yet reflected globally. Keep the
+validated head unchanged and let the heartbeat retry a fresh close/reopen only
+after a reasonable interval; do not burn another task commit.
+
+A third documented close/reopen retry after ~13 minutes produced run
+`32194068059`; it also ended at its creation timestamp with
+`startup_failure` and zero jobs. This repeated the identical infrastructure
+signature three times while PR #2 stayed open/mergeable at `6174bd4`. Increase
+the next retry interval; continued rapid cycling cannot produce task evidence.
+
+The 30-minute retry `32196366093` failed identically. Run metadata isolates the
+cause more precisely: the last real pipeline `32158493654` resolved the central
+reusable Dynamo workflow at SHA `dbcf7ca7cb02b12c6220a18090fcb6df4649b597`,
+whereas all four zero-job startup failures resolve it at the newer SHA
+`28c37dfcfaf7a85b0798717ec198213f43cd2295`. Each failure has a completed check
+suite with `latest_check_runs_count=0`. Therefore this is a central Dynamo
+reusable-workflow startup regression, not repository task content and not an
+ordinary GitHub Actions runner outage. Stop close/reopen retries until the
+referenced central workflow SHA changes; polling the run metadata is sufficient.
+
+At the user's explicit request, a later close/reopen retrigger created real run
+`32199910033` at unchanged head `6174bd4`. It still resolves central workflow
+SHA `28c37dfcfaf7a85b0798717ec198213f43cd2295`, but this time jobs were created:
+`review / changes` passed and enforced cosine queued. Thus the central SHA
+itself was not permanently invalid; the earlier zero-job startup condition
+cleared externally. Monitor this single run without editing and harvest all
+feedback if it fails.
+
+Run `32199910033` cleared changes, enforced cosine, static/rubric review,
+duplicate review, and hosted Docker/oracle/nop validation, then failed only in
+the pass@2 wrapper because the external `harbor / pass@k` commit status never
+finished within the wrapper's 60-minute wait. No platform job was resolved,
+`pass2-output/` did not exist, the pass2 artifact upload reported no files, and
+the suggestion job then failed to download the absent `pass2-output` artifact.
+It posted no new suggestion; the PR sticky remained the prior run's two
+trajectories (`task__nSJoRL3`, `task__2K3CFo4`) unchanged. Pass@5, AVA, Deep
+Review, Tier 1, and QC were skipped. The only stage artifact contains
+`valid=0`, `proceed=false`, and no trajectory evidence. Although the wrapper's
+fallback rendered this as “0 of 0 valid failures” and set `infra_only=false`,
+the actual job log is authoritative: this is external pass@ platform/status
+infrastructure, not task difficulty or verifier evidence. Do not edit the
+fully validated task; retry the exact head unchanged and judge only a run that
+produces real pass@ artifacts/trajectories.
+
+The documented unchanged-head retry created run `32205374145` at `6174bd4`;
+`review / changes` passed and enforced cosine queued. Monitor it without edits.
+
+For `dynamo-b4518d3` / Veilbound PR #1, first submission commit `b3512a7`
+passed enforced cosine (`0.624781` instruction / `0.689531` verifier /
+`0.781923` fingerprint at threshold `0.9`), deterministic static review, all
+31 applicable rubric criteria, TB2/TB3 duplicate review, and remote Harbor
+Docker/oracle/nop validation. The subsequent pass@2 job in run `32174452011`
+failed during GitHub Actions' own **Set up job** phase: `actions/checkout`
+could not be downloaded from `codeload.github.com` after three HTTP 429
+responses. The raw job log and all six annotations confirm no repository
+checkout and no agent trajectory occurred. `pass2_suggestion`, `trials`, Tier
+1, QC, AVA, and deep review were therefore skipped, so there was no advisory
+text, agent approach, golden-vs-agent output, solve time, or trajectory
+classification to harvest. Taxonomy: operational infrastructure failure, zero
+difficulty evidence. The cost-report job independently hit the same 429. No
+task change is adopted; rerun the failed jobs unchanged and judge the first
+real trajectories only after their complete logs exist.
+
+For `dynamo-a7b6396` / Startup Relay Forge PR #1, first submission commit
+`dc3d124` passed enforced cosine (`0.617971` instruction / `0.736622`
+verifier / `0.780407` fingerprint at threshold `0.9`), all 31 rubric
+criteria, TB2/TB3 duplicate review, and remote Harbor Docker/oracle/nop
+validation. Run `32174152927` then failed pass@2 with **0/2 solved, 0 valid
+fails, and 2 task/verifier issues**. Both agents independently recovered the
+correct 11-field profile, implemented the compact Pareto state/pulse DP,
+selected the correct optimum, and produced a functionally correct overlay in
+about 31 and 40 minutes. Both encoded plan `check_bits` as an integer array;
+the private reference required a compact ASCII bitstring. That type was absent
+from both `instruction.md` and agent-visible `STARTUP_SPEC.md`, while the
+instruction's broad statement that JSON numeric fields are integers made the
+array interpretation especially reasonable. Each agent passed 20/27 tests;
+all seven failures cascaded from this one plan/hash/script serialization gap.
+Per-trajectory taxonomy was uniformly task_specification FAIL,
+difficulty_crux FAIL, near_miss FAIL, approach_validity FAIL, with
+reward_hacking/refusals/low_timeout PASS. Pass@5 did not run.
+
+Difficulty suggestion 1 said to disclose that `check_bits` is a JSON string of
+one `0`/`1` character per check, clarify that the integer rule applies only to
+the four numeric plan fields, optionally add a tiny example, then re-run before
+hardening. This suggestion is adopted narrowly because it exactly matches the
+two independent trajectories and the job log. The next cohesive commit must
+fix both agent-visible surfaces and the generated normative board, regenerate
+the visible fixture, and rerun syntax/determinism/build/oracle/nop before push.
+It must not change optimizer mechanics yet: the initial trials did not measure
+the intended difficulty once the serialization ambiguity defeated both sound
+solutions.
+
+The resulting contract-fix commit `9d4c6b0` was locally revalidated on image
+`sha256:44918353e58df5a8fc16afdcb05dddc9c2d6a22931f9fe1eca5c71d2e44c3acf`:
+31/31 oracle tests passed in 113.47s with reward `1`, and nop earned reward
+`0`. GitHub run `32181791894` did not evaluate the revision: its enforced
+cosine job failed during runner action preparation because `actions/checkout`
+returned HTTP 429 on all three archive-download attempts. The repository was
+never checked out; rubric, validation, pass@2, pass@2 suggestion, and pass@5
+were skipped. This is pure GitHub infrastructure evidence, not a similarity or
+difficulty verdict. The prior enforced cosine sticky remains green. Use the
+documented infra exception to push one empty retrigger commit without changing
+task surfaces; do not reskin or alter the task in response to this run.
+
+For `dynamo-b4518d3` / Veilbound PR #1, the unchanged-head rerun
+`32175767775` recovered from the earlier GitHub codeload 429 and produced a
+real pass@2 result: **0/2 solved, 2/2 good valid failures**, with no task,
+verifier, timeout, refusal, or reward-hacking issue. Both trials passed
+`task_specification`, `reward_hacking`, `difficulty_crux`, `low_timeout`, and
+`approach_validity`. One agent implemented the required Pareto-family DP but
+had a submission-bound corner-case defect, passing all five fixed crowns and
+missing each of the three salted artifact comparisons by one byte. The other
+used a greedy single-best-child DP, so it discarded child Pareto alternatives
+before the sibling Cartesian product and failed the disclosed min-floor
+interaction. It likewise failed only the three submission-bound artifact
+tests. The two failures are therefore a healthy split: one near-miss and one
+architectural miss, both on the intended exact-combinatorics crux. The
+pass@2-suggestion job was skipped (daily/task cap), so there is no suggestion
+to adopt or reject. No task edit is warranted; preserve commit `b3512a7` and
+continue through pass@5/deep/AVA/QC on this evidence.
+
+The same Veilbound rerun then cleared deep review, AVA, Tier 1, and all 37 QC
+checks, but pass@5 landed in the blocked easy band at **3/5 solved**. The two
+failures were both good valid failures: `task__pdondPT` found the Pareto DP but
+materialized every concrete tree and was SIGKILLed for memory on
+`held-low-tide`; `task__YHXqgaf` used the right algebraic architecture but had a
+salted-case arithmetic/canonicalization defect and failed only the three exact
+publication comparisons. All five trials passed task specification, reward
+hacking, refusal, low-timeout, and approach validity; both failures passed the
+difficulty crux. The three solvers finished the original contract in roughly
+13--30 minutes. Taxonomy: genuinely sound task, but insufficient pass@5
+difficulty (3 solved + 2 good-valid; gate requires at least three counted
+failures). The pass@2-suggestion job was skipped, so no advisory suggestion
+exists. The next commit should add one disclosed, output-affecting
+generalization contract that forces the reusable frontier/family solver to
+certify more than the single winning root family, rather than adding hidden
+conventions, arbitrary case volume, or tighter timeouts. Because this is a
+post-cosine surface update, change both graded facets and wire the new artifact
+through instruction, rulebook, core, solution, independent reference,
+verifier, brute cross-check, mutants, metadata, and local oracle/nop evidence
+in one cohesive push.
+
+For `dynamo-a7b6396` / Startup Relay Forge PR #1, replacement run
+`32182124091` evaluated contract-fix commit `9d4c6b0` (with unchanged-content
+infrastructure retrigger head `98c8c89`) successfully through pass@2. Enforced
+cosine remained green (`0.618172` instruction / `0.739339` verifier /
+`0.771346` fingerprint at threshold `0.9`), and static review, all rubric
+criteria, duplicate review, and remote Harbor Docker/oracle/nop validation
+were green. Corrected pass@2 was **0/2 solved, 2/2 good valid failures**, with
+0 task/verifier issues, 0 timeouts, and rerun not recommended. Both trials
+passed task specification, reward hacking, refusals, low-timeout, and approach
+validity. One agent made a broad analytical miss across three independently
+disclosed rules: it serialized the profile as an array rather than the named
+object, treated exact domain lists as inclusive ranges, and made `export` skip
+already-present values; it failed 9/13 tests and the difficulty crux. The other
+agent correctly solved profile recovery, state replay, global DP, tie-breaking,
+and every output byte, but omitted the executable bit on the Bash overlay; it
+passed 30/31 tests and was classified as a legitimate peripheral near-miss.
+The earlier difficulty suggestion sticky was unchanged and described the
+already-adopted `check_bits` disclosure; the suggestion job was skipped for
+this run, so there was no new suggestion to adopt or reject. This is healthy
+difficulty evidence and does not warrant a task edit. Preserve `9d4c6b0` and
+continue through AVA, deep review, Tier 1, QC, and pass@5.
+
+The same run later passed automated deep review, AVA, Tier 1, the 37-check QC
+evaluation job, and Tier-2 execution probes individually, but aggregate QC
+blocked on one soundness mutation. QC replaced the reference
+`shell_quote()` apostrophe splice with naive single-quoting; all 31 tests still
+passed because no protected selected value contained an apostrophe. This is a
+real verifier-coverage gap for the disclosed canonical Bash quoting rule, not
+agent-difficulty evidence. Pass@5 was skipped. The next commit must add a
+protected, output-affecting apostrophe-bearing value and a direct canonical
+quote/source assertion, confirm that the exact QC mutant earns reward 0, and
+rerun determinism, the full mutation build count, image/preflight, oracle, nop,
+tamper/isolation, and Harbor before push. The prior pass@2 suggestion was
+unchanged/skipped and contributes no new instruction.
+
+The QC coverage fix adds a seed-varying immutable shell value containing an
+apostrophe under one of `BANNER`/`OWNER`/`LABEL`/`NOTE`, in both exported and
+local states. The agent-visible contract explicitly warns that printable values
+exercise apostrophe quoting, and a focused protected test requires the standard
+`'"'"'` splice. The visible fixture refroze deterministically. Final local image
+`sha256:d1fab1dbce3da1cd2a1524ae70518943eaf98a8c786983321d38ccb165ff9f02`
+passed 35/35 tests with reward `1`; the exact QC naive-quote mutant failed 15
+tests with reward `0`; nop earned `0`. The three suites were run concurrently,
+so oracle wall time was 191.17s, below the 300s verifier budget; the individual
+tool calls retain their enforced 90s caps. `harbor` was unavailable on this
+host, so these results use the documented manual Docker fallback. Local
+token-cosine against `HEAD` is high (`0.9934` per facet) because this is the
+same task, but both compared surfaces carry a load-bearing new protected-value
+contract/test; prior same-PR commit `9d4c6b0` already demonstrated that the
+service does not self-index an ordinary in-flight head (it passed at
+`0.618172`/`0.739339`). Do not reskin; push the real QC fix cohesively.
+
+Commit `905e6b3` passed enforced cosine again (`0.625611` instruction /
+`0.734375` verifier / `0.770035` fingerprint) but run `32191815267` stopped at
+rubric review: 30 applicable criteria passed and only
+`difficulty_explanation_quality` failed. The reviewer said `task.toml` did not
+state that packs are deterministic seeded synthetic fixtures generated by
+`tests/pack_factory.py`, and named a shell-platform persona without describing
+the paid real-world workflow for the matrix/overlay/proof artifacts. All later
+stages, including pass@2 suggestion and pass@5, were skipped; the prior
+`check_bits` suggestion sticky was unchanged. Adopt this feedback literally in
+metadata/README and agent framing, grounding modular scoring as a deterministic
+policy surrogate for cost/change rollout tradeoffs. Pair it with a direct
+seeded-fixture byte-reproducibility assertion so both enforced cosine surfaces
+change for a load-bearing authoring-integrity reason, then rerun the complete
+local gate before the next push.
+
+The provenance/workflow revision leaves the frozen startup board and image
+unchanged (`sha256:d1fab1dbce3da1cd2a1524ae70518943eaf98a8c786983321d38ccb165ff9f02`)
+and adds a direct same-seed byte-reproducibility check. Final manual Docker
+fallback results on the revised tests: oracle **36/36**, reward `1`; exact
+naive-apostrophe mutant **15 failed / 21 passed**, reward `0`; nop reward `0`.
+Concurrent wall times were 171.78s / 185.98s / 127.08s, all below the 300s
+verifier cap. Both cosine surfaces change in the cohesive metadata fix:
+instruction grounds the synthetic rollout scenario and `test_outputs.py`
+exposes the seeded-fixture integrity check.
+
+Commit `cf3df2e` passed enforced cosine (`0.638707` instruction / `0.730469`
+verifier / `0.770673` fingerprint), all rubric criteria, duplicate review, and
+authoritative remote Harbor Docker/oracle/nop validation in run `32192945446`.
+Pass@2 then failed only because the platform-owned `harbor / pass@k` commit
+status never appeared or completed during the resolver's 60-minute poll. The
+job log explicitly says the platform status did not finish within 60 minutes;
+there was no `pass2-output/`, no artifact, and the deterministic gate received
+0 trials / 0 valid failures. The commit-status API still showed no matching
+`harbor / pass@k` status after the workflow ended. Pass@5, deep review, AVA,
+Tier 1, and QC were skipped. Suggestion job succeeded but posted no new sticky;
+the only visible suggestion remained the already-adopted historical
+`check_bits` clarification. Taxonomy: external platform infrastructure timeout,
+zero task-difficulty evidence. Do not edit task content; use an unchanged-head
+infrastructure retrigger.
+
+The unchanged-content infrastructure retrigger `f22bc58` reproduced the same
+external failure in run `32198129040`. Cosine, rubric, duplicate review, rate
+limit, and authoritative Harbor validation were green again, but
+`review / pass2` job `95907665048` polled from 2026-08-18 23:47 UTC until
+2026-08-19 00:48 UTC and then emitted `the platform's 'harbor / pass@k' status
+did not finish within 60 minutes`. No `pass2-output/` files were produced, so
+the later 0/0 verdict is a resolver fallback rather than a difficulty result.
+This is the second consecutive documented provisioning timeout with zero agent
+trials; do not make another task revision or empty retrigger without platform
+intervention/new evidence. PR #1 remains OPEN and ready for review
+(`isDraft=false`) on `nishant4731:submission`; report the platform status
+provisioning blocker rather than claiming a fully green pipeline.
+
+For `dynamo-b4518d3` / Veilbound PR #1, the pass@5 hardening adds a fourth
+graded `atlas.json` contract in one cohesive revision. Each case now declares
+2--4 single-card withdrawals. The atlas certifies every context-safe retained
+root metric family for the full deck and each withdrawn deck (exact counts,
+two modular sums, and both code extremes), then names the withdrawal with the
+worst lexicographic winner. This deliberately targets the 3/5 fast solvers:
+they must retain full root frontiers and reuse the family DP across multiple
+starting decks, rather than emit only one winning root. The input/schema,
+rulebook, public fixture, core, starter, solution, independent reference,
+verifier, metadata, instruction, and cosine-scored pytest entrypoint all move
+together. Local word-cosine against first head `b3512a7` is 0.8142 instruction,
+0.6716 verifier, 0.7500 joined; maxima across 142 sibling tasks are 0.6480 and
+0.5358. The public atlas has four audits with frontier sizes 4/3/2/5. Literal
+enumeration matches every retained family on 16/16 small games and the full
+anchored mutation sweep kills 32/32, including withdrawal omission, wrong
+removal, row-order, and critical-card mutants. Final image
+`sha256:de9432e79e1db26bd5eee070c998de3f4ecd75798f702330d52156fbba7ae2fe`
+has no solution/tests, passes the exact 11-test manual Docker oracle with
+reward 1 in 1m17s, and nop earns reward 0 with 10 failures; core-pin and output
+symlink tampering also earn 0. The verifier directly seeds stale files,
+directories, and symlinks, and invalid withdrawal duplicates/unknowns/order.
+Harbor CLI is unavailable on this Mac, so this is the documented manual Docker
+fallback. Before push, inspect the full diff/log/status and read the latest
+cosine sticky; do not make another change unless the next pipeline supplies
+new evidence.
+
+Veilbound hardening head `c3c9891` passed enforced cosine at **0.687609
+instruction / 0.709824 verifier / 0.749735 fingerprint**, all deterministic
+static checks, all 31 applicable rubric criteria, duplicate UNIQUE, and hosted
+Docker/oracle/nop validation. Run `32193680829` then failed only because the
+outer `review / pass2` waiter reached its hard 60-minute ceiling before the
+external `harbor / pass@k` commit status completed. The raw log says exactly
+`status did not finish within 60 minutes`; no pass2-output directory existed,
+0/0 trajectories were classified, and the suggestion job could not download
+an artifact, explicitly skipped generation with no model charge. Deep, AVA,
+Tier 1, QC, and pass@5 were consequently skipped; gate red only reflected
+`trials=failure`/pass2. Taxonomy: external orchestration timeout, zero task or
+difficulty evidence. Do not edit the task. Retrigger the unchanged head through
+the ready-for-review workflow path (or the documented infra-only empty commit
+only if necessary) and require a real trajectory panel before deciding
+anything.
+
+The unchanged-head ready-for-review retry for Veilbound, run `32199080222`,
+successfully obtained a real external pass@2 result just before the outer
+waiter's 60-minute boundary. Harbor job
+`d96f124d-92e5-4cd7-a8aa-66e09bfc4b68` reports **1 solved / 1 genuine valid
+failure / 0 soft timeouts**. Trial 1 passed 11/11. Trial 2 passed 9/11 and its
+only defect was incorrect `fingerprint_sums` in two atlas comparisons: it
+derived a wrong incremental Cartesian-product accumulator instead of applying
+the disclosed normative formula / executable `policy_fingerprint()`
+definition. Both agents used the intended memoized belief-state DP with
+context-safe Pareto pruning and multi-root reuse; both approaches were marked
+valid and within budget. The analyzer marked task specification, reward
+hacking, refusals, low-timeout, and approach validity PASS for both; the failed
+trial's difficulty crux PASS confirms genuine output-affecting difficulty, not
+a contract or verifier defect. The single near-miss classification reflects a
+real analytical bug, not an arbitrary threshold. The current pass@2 suggestion
+job was skipped and no suggestion sticky exists, so there is no new advisory
+to adopt or reject. Do not revise the task from this evidence; continue through
+deep/AVA/Tier1/QC and pass@5, then harvest the complete pass@5 trial panel.
+
+Veilbound pass@5 gate-2 job
+`a2143fe0-1a49-40e6-9911-c45240cac3fe` finished SUCCESS with **2 solved / 3
+genuine failures / 0 soft timeouts** across five completed and five analyzed
+trials. Two agents passed all 11 tests. Trials 2 and 4 never produced a
+complete implementation after self-inflicted unterminated-heredoc terminal
+wedges; their files still contained an empty `combine_choice` stub or `???`
+SyntaxError placeholder, so extra time would not have helped. Trial 3 passed
+10/11 and produced byte-exact values, but combined postponed annotations with
+a module-level dataclass and failed the disclosed inert isolated-import probe.
+All five `task_specification`, `reward_hacking`, `refusals`, and
+`approach_validity` classifications passed. The analyzer noted the Trial 3
+Python import mechanic is orthogonal to the main DP/family-algebra crux, but it
+is a real disclosed deliverable boundary, not a hidden convention; the task is
+in the desired 2/5 solved band and the gate passed, so do not revise a fully
+accepted task for that non-clustered near-miss. Main run `32199080222` is fully
+green through cosine, rubric, duplicate, hosted oracle/nop, pass@2, deep, AVA,
+Tier 1, QC, and final gate. PR #1 has the `accepted` label. The current
+pass@2-suggestion job was skipped and posted no advisory, so no suggestion was
+available to adopt or reject.
+
+## Debugging and Repair / Configuration Repair
+
+Repo `dynamo-9c93375-debugging-and-repair`, PR #2, ALL-GREEN on head `6d81de3`
+(2026-08-19). Every gate green; label `accepted`.
+
+**The mold.** A complete normative contract with exactly one subsystem withheld
+and recovered from a log of past decisions; a reusable CLI graded byte-exact and
+differentially on nine unseen fields plus one shaped from the submission's own
+SHA-256. Ported from `dynamo-6e8e4c7` / `dynamo-379e527`.
+
+**What made it accepted, after eight heads: the withheld score is not linear.**
+One term earns at a full rate up to a threshold and a reduced rate above it.
+Measured over the reachable offer space (10731 ordered pairs) before any prose
+was written: no straight-line reading is order-identical to it anywhere, so it
+stays recoverable and fair, while the closest straight line agrees on **96.84%**
+of ordered pairs. It is wrong on **4 of the 10** graded fields and right on the
+visible one — so a fit converges, validates against most of the log, passes the
+only check a solver can run, and fails the held-out replay.
+
+**Measured on the accepted head:** pass@2 0 solved / 2 valid-fail / 0 timeouts;
+pass@5 **0 solved / 3 good-valid-fail / 2 in-progress-timeout**, avg@5 0.000.
+The trial analysis: "All five failures trace to inability to recover the bent
+(capped) non-linear scoring function... The task's difficulty crux — intended by
+the author — is the direct cause in every case." Agents independently reported
+converging on "a linear best that matches ~96.84% of ordered pairs (matching the
+task.toml-predicted failure rate exactly)".
+
+**Hurdles, gate by gate, in the order they blocked.**
+1. `ava_review` sound_verifier: the stray scan walked only the staged tree, so a
+   submission writing a hard-coded `/tmp` path scored 1.0. Snapshot the shared
+   writable roots around the child run.
+2. `deep_review` no_brittle_time_dependence: that snapshot then failed a correct
+   solution, because the Daytona daemon appended to `/tmp/daytona-daemon.log`
+   inside the run window. Record `st_uid`; charge only the child's own writes.
+3. `pass2` too easy at 2/2 solved: a linear score falls to z3, perceptrons and
+   LP in ~34 minutes. Bend it.
+4. `qc_gate` C3: section 5 said an int normalising to zero is written `0` with no
+   sign, and no graded field had ever contained one — canonical ints were drawn
+   from 1 upwards. Plant a setting whose only offer spells `-000`, on seven of
+   ten fields but not the visible one, and verify by replaying qc_gate's own
+   probe rather than by rebuilding.
+5. `trials` 0/5 with three uncounted timeouts: nobody delivered. Ship the
+   non-crux I/O in the image and ask for the artifact early.
+6. `trials` 0/5 with four uncounted timeouts: two trials died on
+   `KeyError: 'age'` — the log pre-populates `age`, a case carries `stamp`.
+   Two of our own files disagreed about the shape of one object, and it cost two
+   whole trials. `read_case` now returns offers carrying the derived age.
+7. `trials`, final: agents never *hypothesised* a bend, so they searched linear
+   forms until the clock stopped. Section 7.3 stopped promising the score climbs
+   at the same rate across the range of what it reads. That converted two
+   uncounted timeouts into countable valid fails and cost **zero** solves.
+
+**Levers measured not to work in this subcategory.**
+- Widening the implementation surface. Re-keying backing to the station's class
+  was wrong on 9 of 10 fields under a naive reading and drew **0 of 5** failures;
+  every solver implemented it correctly. Breadth of consequence is not difficulty.
+- Naming the wrong reading. "Not an order imposed on them" took pass@5 from
+  2 solved / 3 valid to **4 solved / 1 valid**.
+- Sample-starving a stated rule: a general implementer writes it correctly anyway.
+
+**The gate-vs-gate tension.** QC B5/C3 demand every rule be stated and witnessed,
+and stating a rule is what lets pass@2 solve it. Resolution: state everything
+except one subsystem, and make that subsystem's *shape* — not its parameters —
+the hard part. Disclosing the hypothesis class ("not necessarily a constant
+rate") cost 0 solves and bought 2 countable fails; disclosing a dead end ("not an
+ordering") cost 2 valid fails. **Disclose the hypothesis class, never the dead
+end.**
+
+**Operational.** A pass@2 in-progress-timeout (agent cut off mid-fix) and a
+pass@5 analytical wedge (full budget on analysis, nothing written) are different
+objects: the second can score a good valid fail. `[agent].timeout_sec` is capped
+at 3600s, and an `expert_time_estimate_hours` far above that makes every serious
+attempt read as timeout-assisted; keep them within about 2x.
