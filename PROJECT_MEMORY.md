@@ -3789,6 +3789,34 @@ the rule; the defect is narrow fixture coverage, not task ambiguity or
 difficulty. Local validation must confirm the exact C3 mutant earns 0 and the
 whole mutation sweep keeps zero survivors and zero one-relay-only kills.
 
+### Accepted result (run `32305680434`, head `f257f65`)
+
+The C3 follow-up varied protected and salted processor cardinalities across
+2/3/4/5, added the exact constant-5 mutant, extended the sweep with the narrow
+relay, and regenerated stable pins. Local validation: 31/31 oracle with reward
+1; nop and `/bin/true` reward 0; the exact QC-mutated submitted solution reward
+0 with six protected relay failures; 64/64 semantic probes built with no
+survivors or one-relay-only kills; reference/solution byte-exact agreement on
+all fixed relays plus two salted shapes; three stable refreezes with pin-file
+SHA-256 `4529c8a304682166d18d52daa4fbc2796a47847cf7c1643c750df671e9a37b4d`.
+
+Hosted run `32305680434` passed enforced cosine (`instruction=0.70445`,
+`verifier=0.76337`, `fingerprint=0.82790`, threshold `0.9`), static/rubric,
+duplicate, Docker/oracle/nop validation, deep review, AVA, Tier 1, all 37 QC
+checks/probes, QC gate, Pass@2, Pass@5, and the final gate. Pass@2 was 0/2:
+one genuine crux failure at block-byte/store/disposition propagation (16/31,
+about 26 minutes) and one Daytona HTTP 502 setup failure; no task/verifier
+issue or agent timeout. Pass@5 was **1/5 solved, 3 good valid failures, 1
+Daytona infrastructure loss, avg@5 0.200**, with all graded approaches valid
+and no task/verifier issue or timeout. The valid failures stratified across
+coverage status preimage, store mutation ordering/retention, and exact recovery
+semantics. PR #3 received the `accepted` label at head `f257f65`.
+
+Reusable lesson: when QC demonstrates a survived solution-side constant, fix
+the protected data dimension and add the exact mutant; do not change the engine
+or task concept. A small compared-surface disclosure plus load-bearing fixture
+coverage passed enforced cosine without a needless domain reskin.
+
 ## Security / Network Forensics
 
 **Repo:** `dynamo-2d0d4c3-security` PR #1 · `dynamo/dragnet-restitch` · head `d05e34c`
