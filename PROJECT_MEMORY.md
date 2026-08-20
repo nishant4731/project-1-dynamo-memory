@@ -3491,6 +3491,34 @@ intervention/new evidence. PR #1 remains OPEN and ready for review
 (`isDraft=false`) on `nishant4731:submission`; report the platform status
 provisioning blocker rather than claiming a fully green pipeline.
 
+User-authorized infrastructure retry `9b7dc79` (`Retry pass2 platform
+provisioning`) finally cleared the complete hosted pipeline in run
+`32226549338`; PR #1 is OPEN, `isDraft=false`, and labeled `accepted`.
+Every required job passed: changes, enforced cosine, static/rubric review,
+duplicate review, hosted Docker/oracle/nop, pass@2, Deep Review, AVA, Tier 1,
+QC evaluator/execution and 37-check QC gate, pass@5 trials, cost report, and
+top-level gate. Pass@2 took 1h08m but produced real evidence: **0/2 solved,
+2/2 valid fails**, no task/verifier/infra/agent timeout issue. One agent was a
+35/36 near-miss that omitted the overlay execute bit; the other used an
+uncompacted full-state DP and exceeded the protected 68-group invocation cap.
+The suggestion job was quota-skipped, so the historical `check_bits` advisory
+(already adopted) remained the only suggestion.
+
+Final pass@5 took 1h12m and passed the difficulty gate at **1/5 solved,
+4 good-valid fails, avg@5 0.200**, with zero task/verifier, infra/setup, or
+in-progress timeout classifications. Two valid failures were genuine protected
+generalization failures (uncompacted state enumeration and incomplete profile
+recovery); two were 35/36 near-misses that produced byte-perfect artifacts but
+omitted `chmod +x` on the overlay. All five approaches were classified valid
+and specification-sufficient. Deep Review passed with no blocker but advised
+making the overlay permission wording more explicit and checking `X_OK` on
+every protected invocation, not only the visible bundle. AVA passed with one
+minor coverage advisory: the arity probe does not explicitly test the complete
+five-flag invocation plus one extra argument. QC passed all 37 checks/probes.
+Because the full required pipeline is green and the PR is accepted, do not push
+these non-blocking calibration/coverage suggestions into this delivered head;
+retain them for a future task template or a maintainer-requested revision.
+
 For `dynamo-b4518d3` / Veilbound PR #1, the pass@5 hardening adds a fourth
 graded `atlas.json` contract in one cohesive revision. Each case now declares
 2--4 single-card withdrawals. The atlas certifies every context-safe retained
@@ -3645,3 +3673,183 @@ pass@5 analytical wedge (full budget on analysis, nothing written) are different
 objects: the second can score a good valid fail. `[agent].timeout_sec` is capped
 at 3600s, and an `expert_time_estimate_hours` far above that makes every serious
 attempt read as timeout-assisted; keep them within about 2x.
+
+## Software Engineering / Tessera Decanter — PR #2 hardening evidence
+
+Run `32244392394` at head `6174bd4` produced real difficulty evidence after
+several infrastructure-only retries: **both Pass@2 trials solved with reward
+1.0**, all verifier tests passed, and both approaches were valid and completed
+inside the agent budget. The harvested suggestion and trajectories are under
+`/tmp/dynamo-run-32244392394.FADzJA`. The suggestion correctly identified that
+the opening capacity brief and supplied `fold_peer_family` helper prescribed
+the decisive algorithm: agents independently translated the same ranking keys,
+top-two state hint, exact traversal, token framing, and merge guidance into the
+same dynamic program.
+
+The next cohesive revision adopts the load-bearing part of that suggestion.
+It preserves every normative output, tie-break, token, modulus, scale, and
+impossibility rule, but removes state-retention advice and removes the supplied
+peer-family traversal entirely. The starter now supplies only transaction
+plumbing plus `capacity_inputs`; the implementer must derive the global
+best-two search, exact family traversal/aggregate, and constrained replan from
+the disclosed behavioral contract. This is fair, output-affecting difficulty,
+not hidden serialization or a shorter timeout. Local validation after the
+change: image `sha256:dd89117c5ce557a54ff41aee7557edea7b907dd06d766354cca4f5437d64db65`;
+oracle 51/51 reward 1; nop reward 0 with 14 failures/37 passes; exhaustive
+release sweep 129 builds × 2 protected seeds = 258 executions with zero
+survivors; archive-blind set 61/61 and certificate clean; two independent
+433-entry refreezes identical and equal to the shipped archive; approved base
+image, artifact-name, syntax, pin, tamper, import-isolation, and diff checks
+green. Harbor CLI was unavailable locally, so these oracle/nop runs used the
+documented manual Docker fallback.
+
+Run `32253104361` on hardening head `919ec1a` then failed Pass@2 with a
+different taxonomy: **0 solved / 0 valid-fail / 2 speed-only timeouts**. Both
+trials had task specification, reward hacking, difficulty crux, near-miss,
+refusal, and approach validity PASS, but `low_timeout` FAIL. One agent finished
+a correct meet-in-the-middle plus family-DP design; the other validated both
+the top-two DP (`top2_ok`) and family DP in prototypes. Neither wrote a complete
+deliverable before Harbor's already-maximal 3600-second agent limit expired.
+The analyzer explicitly says the divergence was operational rather than
+conceptual. The new pass2-suggestion job was daily-limit skipped, so there is
+no new generated advisory; evidence is under
+`/tmp/dynamo-run-32253104361.TAIVrW`.
+
+This is not countable difficulty evidence and must not be hardened further.
+Because `[agent].timeout_sec` is already at the platform maximum, the next
+revision rejects “increase timeout” as unavailable and follows the measured
+taxonomy: restore the exact peer-state routing/token-framing helper while
+keeping the decisive top-two ranked-state design undisclosed. The helper's
+accumulator meaning and merge/extension algebra remain for the agent to derive.
+This removes non-crux traversal plumbing without restoring the earlier direct
+“retain enough partial candidates” hint that let both agents solve.
+The balanced revision revalidated on image
+`sha256:90ef933e913e47ccd4db9ebc9587ae037f3e34442b1b44b3de8bb1a6c116d532`:
+oracle 51/51 reward 1; nop reward 0 with 14 failures/37 passes; exhaustive
+129-build/two-seed sweep 258 executions with zero survivors; archive-blind
+61/61 and certificate clean; two 433-entry refreezes deterministic and equal
+to shipped evidence; syntax, TOML, base-image, artifact-name, pin, tamper,
+isolation, and diff checks green.
+
+## Systems Infrastructure / Signal Relay Recovery — PR #3 first Pass@2
+
+Run `32291760808` on head `a2542f8` passed changes, enforced cosine
+(`instruction=0.7008`, `verifier=0.7647`, `fingerprint=0.8230`, threshold
+`0.9`), rubric, duplicate, and hosted Docker/oracle/nop validation, then failed
+Pass@2 as genuinely too easy: **2 solved / 0 valid-fail / 0 timeout / 0
+task-verifier issue**. Both DeepSeek-v4-pro trajectories passed all 29 tests
+and all 56 mutation probes with reward 1.0, in about 23 and 15.5 minutes. Both
+read the contract, independently implemented the reference method, tested a
+disposable copy, and produced byte-exact live and held-out results; every
+task-specification, reward-hacking, near-miss, refusal, low-timeout, and
+approach-validity classification passed. Pass@5 and later reviews were skipped.
+
+The mandatory difficulty suggestion identified two forms of excessive
+hand-holding: contract sections 4–5 present the fixed-point resolution and
+reach-greedy admission as numbered executable steps, while shipped
+`signal_io.py` implements the cache-key and telemetry-block constructors. It
+also noted that the visible relay's `slots=99` and `tool_cap=99` never exercise
+the disclosed admission ordering even though held-out relays do. Adopt this
+diagnosis deliberately: convert the admission section to a uniquely determining
+output invariant, remove recipe/artifact constructors from the agent-visible
+helper, and make visible contention output-affecting. Do not rely on prose
+rewording alone; pair it with a new graded derivation and verifier/mutation
+coverage so the follow-up is a substantive contract revision. The evidence
+rejects timeout tuning, arbitrary hidden rules, or verifier tightening: both
+solves were legitimate and had ample time.
+
+### Hardened Pass@2 and QC C3 feedback (run `32296659427`, head `34998a8`)
+
+The prior Pass@2 suggestion was adopted as a load-bearing contract change:
+`signal_io.py` no longer constructs recipe keys or blocks, the admission rule
+is expressed as a disclosed counterfactual wake-closure invariant, the visible
+budgets are contested, and `admission_audit.json` binds every candidate profile.
+The hardened run passed enforced cosine (`instruction=0.7055`,
+`verifier=0.7603`, `fingerprint=0.8272`), static/rubric, duplicate, hosted
+Docker/oracle/nop, and Pass@2 with **0 solved / 2 valid-fail / 0 timeout / 0
+task-verifier issue**.
+
+Trial `task__tHb2oYT` failed the genuine hash-salvage/store-retention crux in
+about 45 minutes: it identified the scratch artifact but omitted the store
+write, yielding `blobs_retained=16` rather than `17` and 21/30 tests. Trial
+`task__RxExkL4` completed the substantive recovery correctly in about 28
+minutes and passed all held-out relays, but omitted the direct-exec shebang,
+yielding 29/30. Treat only the first as strong hardness evidence; the second is
+an incidental near-miss. Deep review and AVA both passed, with non-blocking
+notes about making the shebang explicit and varying the sealed-run skeleton.
+
+QC static evaluation and deterministic probes passed, but the isolated C3
+probe blocked the run: replacing the computed `tools_in_force` value with the
+constant `5` still earned reward 1 because every forged relay used five tools.
+Pass@5 was therefore skipped. The next commit adopts this evidence directly:
+vary protected and salted processor-set cardinalities across 2/3/4/5, disclose
+that dimension in the instruction, assert it in `test_outputs.py`, and add the
+exact constant-5 semantic mutant. Do not change the recovery algorithm or hide
+the rule; the defect is narrow fixture coverage, not task ambiguity or
+difficulty. Local validation must confirm the exact C3 mutant earns 0 and the
+whole mutation sweep keeps zero survivors and zero one-relay-only kills.
+
+## Security / Network Forensics
+
+**Repo:** `dynamo-2d0d4c3-security` PR #1 · `dynamo/dragnet-restitch` · head `d05e34c`
+(2026-08-20). Earlier delivered task in this subcategory: `dynamo/tapline-recut`
+(`dynamo-6bb0151`). Local playbook with full detail:
+`dynamo-security-network-forensics-playbook.md` in the auto-memory directory.
+
+**Mold — repair in place, crux hidden in graph shape.** A flow-correlation
+appliance died mid-fold; the agent writes `/app/dragnet_restitch.py`, which sifts
+packed `segments/` and an unfolded `inbox/` against six ordered rejection causes,
+folds operations in `seq` order (files are numbered in *flush* order), merges
+co-observations, re-takes every check value, repacks under two segment bounds,
+rebuilds a byte-offset index, walks a contact graph into `REACH.tsv`, files
+refusals with collision ordinals, consumes the evidence and writes 33 counters.
+
+**The crux is temporal reachability starved by graph shape.** `REACH.tsv` gives,
+per host that opens a contact, the number of **distinct** hosts a time-respecting
+trail reaches, the greatest of the earliest arrival times, and which host that is.
+The shipped dragnet is built with one contact into each host, so its graph is a
+**forest** with widely separated time bands: summing children instead of unioning,
+ignoring the time constraint, and reading "not below" as "strictly after" are all
+byte-identical there and wrong on every graded dragnet. Blindness table: **14 of
+30 one-line misreadings left the shipped dragnet byte-identical and were wrong on
+2–12 of 12 held out**; the headline was wrong on 12/12.
+
+**Measured pass@2 across eight completed draws, both sides of the band:**
+without the supplied plumbing 0/2-valid-fail ×2 (plus two draws lost to
+in-progress timeouts, and later 1 solved/1 valid fail and 0 solved/2 valid fails);
+with a read-only `/app/dragnet_io.py` handing over the mechanical half, 2 solved
+×2 and 1 solved/1 valid fail. **Handing over the plumbing cured the timeouts and
+moved the task to the easy side; it was withdrawn.** Every genuine valid failure
+across every draw came from the *operational* one-shot rule — an agent running the
+irreversible restitch on the live dragnet before its tool was right, or a second
+time "to verify idempotency" — never from the algorithmic crux, which agents
+master. That is the reusable finding for this subcategory.
+
+**Gate-by-gate.** Cosine never blocked (8 passes; instruction 0.673 / verifier
+0.816 / fingerprint 0.764 on a fresh domain). Static + Dynamo eval 31/31 on push 1.
+Duplicate UNIQUE. Validation green. Deep review green throughout. **qc_gate blocked
+five times, every one the same C3 family** — a rule stated but never *exercised*:
+the incoherent-amend boundary (`last == first`), the inclusive bounds witnessed on
+the edge but not just outside it, the merge keeper's `fid` tie-break (no group
+shared a top `seq`), nested consumption (`discard`'s recursive walk vs a top-level
+count), and then a B1 the nesting fix itself created. AVA blocked twice: once
+fail-closed noise (`confirmed_major=0`, `parse_failures=1`), once a real item —
+"lowest host id" never said ids compare as text. Tier-1 held on E5 because the
+symlink guard predated its pinned base.
+
+**The instrument that found four of the five QC blocks before QC did, once I
+started using it:** reproduce QC's own method — mutate the **submitted solution**,
+not the reference, with single-token changes to every constant, comparison,
+pattern and tie-break the contract states, install each as the graded deliverable
+and run the whole graded corpus. A reference-side mutation table tests whether
+*grading* discriminates; only the solution-side sweep tests whether the *corpus*
+contains the row that makes the discrimination possible.
+
+**Infrastructure was the dominant cost, not the task.** Six of eleven pipeline
+runs died on platform faults with distinct signatures, all cleared by close/reopen
+with no task change: `the platform's 'harbor / pass@k' status did not finish
+within 60 minutes` with the analyser reporting `0 of 0 runs` (twice, on push
+events); `##[error]other side closed` after validation had already set
+`ORACLE="true"` and `NOP="true"`; and `DaytonaNotFoundError` with the sticky
+saying outright "not a problem with your task". `0 of 0 runs` is the diagnostic —
+a real too-easy verdict says `2 of 2`.
