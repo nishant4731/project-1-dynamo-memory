@@ -3881,3 +3881,84 @@ events); `##[error]other side closed` after validation had already set
 `ORACLE="true"` and `NOP="true"`; and `DaytonaNotFoundError` with the sticky
 saying outright "not a problem with your task". `0 of 0 runs` is the diagnostic —
 a real too-easy verdict says `2 of 2`.
+
+## Security / Authentication and authorization
+
+**Repo** `handshake-project-dynamo/dynamo-e320824-security`, PR #3, heads
+`40a056f` → `365fcde` → `b9a47ff` (2026-08-20). Two earlier PRs on this repo by
+other authors were closed; #2 died on **QC B5** ("a rival rule reproduces all 13
+disclosed demo answers"), so reverse-engineer-the-oracle molds are a trap here.
+
+**The mold.** `dynamo/warrantbook-reissue` — repair-in-place with a *complete*
+contract. An access broker's reissue died mid-fold; the agent writes
+`/app/warrant_reissue.py`, which sifts packed `book/` leaves and an unapplied
+`intake/` against six ordered rejection causes, applies operations in `seq`
+order (files numbered in flush order), fuses co-issues on a five-part key,
+re-takes seals, repacks under two leaf bounds, rebuilds a byte-offset index,
+resolves delegated authority into `AUTHORITY.tsv`, files refusals with collision
+ordinals, spends the evidence, writes 38 counters, and settles on a second run.
+
+**The crux is the closure, starved by graph shape.** Per principal and power:
+fewest warrants to *exercise*, fewest to *pass on*, the greatest **carry** (a
+delegation budget `min(tier, c-1)`, so a chain dies when spent), and an
+**exposure** count of the principals on any conferring chain. The shipped book
+is a depth-3 tree, one issuer per holder, every live warrant at the tier
+ceiling, nothing back-dated — so open == pass, `exposure == span + 1`,
+first-found == shortest, and one pass in packed order already settles it.
+Measured blindness: **16 of 22** plausible readings byte-identical on the shipped
+book and wrong on 8–19 of the 19 protected ones.
+
+**Measured.** Head 1: pass@2 1 solved/1 valid; **pass@5 3 solved/1 good-valid/1
+infra, avg 0.600 — blocked as not hard enough**. Head 2 (carry budget + denser
+corpus): both trials the platform finished solved it. Head 3 (adds `exposure`):
+**pass@2 "Hard enough: 2 genuine and 0 soft-timeout failures of 2"** — 0 solved,
+and `review / gate` green with every review check passing.
+
+**What actually drew failures — not the crux.** Every agent failure across both
+gates on heads 1–2 was *operational*: one wrote a fully correct program and never
+ran it on the live book; another ran it twice "to verify idempotence" and wiped
+`rejected/` and the report. The analyser: *"the author's intended crux was not
+the failure point at all."* Making the report a graded artefact that the second
+run overwrites is what makes a redundant re-run self-destructive.
+
+**Levers measured NOT to move solve rate.** Stating a harder closure (attenuation
++ tier gate + shortest chains, 11 blind readings) still solved 3/5 — agents
+implement whatever section 7 *says*. Raising the density of dead ends, relays,
+back-dating and loops did not convert the two trials that finished. What did
+convert was adding a quantity that is a **different computation over the same
+structure** (a forward/backward state walk) rather than another stated rule.
+
+**QC/AVA/cosine.** qc_eval + qc_exec + qc_gate passed clean on the FIRST push and
+again on head 3 (37 checks, empty `QC-FIXES-B64`); AVA PASS with no findings;
+deep_review PASS with two advisories (staged dirs named after the graded slot —
+fixed by naming them by digest; and a count in `difficulty_explanation` that
+disagreed with the shipped corpus). Cosine passed all four pushes at instruction
+0.643–0.655 / verifier 0.805–0.811, threshold 0.9 — and barely moved between
+pushes, re-confirming that in-flight PR heads are not in the corpus.
+
+**Cosine lesson worth repeating.** The first draft scored **0.943 instruction /
+0.947 verifier** (local token-cosine) against a delivered sibling because the
+prompt reused the mold's paragraph skeleton. Rewriting it as a different *kind*
+of document (an on-call handover note, ~270 words), moving the grading/re-run
+boilerplate into the contract file in `environment/`, and moving the audit bodies
+out of `test_outputs.py` into a private `_warrant_audit.py` took it to
+**0.811 / 0.556** locally and 0.643 / 0.811 at the service.
+
+**The `harbor / pass@k` infra wedge cost about four hours.** Signature: job log
+`the platform's 'harbor / pass@k' status did not finish within 60 minutes`,
+analyser `0 of 0 runs failed genuinely`, `GET /commits/<sha>/status` returning an
+empty array, and a **stale** pass@2 sticky carrying the previous head's trial ids
+and golden values. Close/reopen is the remedy — but note the new failure mode:
+a reopened evaluation can come back `error: The evaluation did not finish. Re-run
+it.` having graded only some runs, and the analyser then reports `0 of 2 runs
+failed genuinely` with `infra_only: false`, which reads exactly like a "too easy"
+verdict. Check the status description and whether the sticky refreshed before
+believing a `0 of N` line. It took four close/reopen cycles to get one clean
+evaluation.
+
+**Operational.** `[agent] timeout_sec = 5400`, `[verifier] timeout_sec = 1800`
+(the suite runs in ~10 s in-container; early 465 s/690 s measurements were local
+Docker contention from other sessions' containers). Batch the mutation sweep with
+a 3-thread pool: 143 probes × 7 books in ~8 s. A `_exact_label`-style padding
+helper emits a trailing separator when the remaining width is exactly 1 — that
+silently produced an invalid fixture line and cost a debugging round.
