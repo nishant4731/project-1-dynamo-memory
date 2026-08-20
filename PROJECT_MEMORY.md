@@ -3908,11 +3908,22 @@ first-found == shortest, and one pass in packed order already settles it.
 Measured blindness: **16 of 22** plausible readings byte-identical on the shipped
 book and wrong on 8–19 of the 19 protected ones.
 
-**Measured.** Head 1: pass@2 1 solved/1 valid; **pass@5 3 solved/1 good-valid/1
-infra, avg 0.600 — blocked as not hard enough**. Head 2 (carry budget + denser
-corpus): both trials the platform finished solved it. Head 3 (adds `exposure`):
-**pass@2 "Hard enough: 2 genuine and 0 soft-timeout failures of 2"** — 0 solved,
-and `review / gate` green with every review check passing.
+**Measured — head 3 is ALL-GREEN.** Head 1: pass@2 1 solved/1 valid; **pass@5 3
+solved/1 good-valid/1 infra, avg 0.600 — blocked as not hard enough**. Head 2
+(carry budget + denser corpus): both trials the platform finished solved it.
+Head 3 `b9a47ff` (adds `exposure`): pass@2 **2 genuine of 2**, pass@5 **0 solved
+· 4 genuine · 0 soft-timeout · 1 timeout — "Hard enough"**, `review / gate`
+green and the combined commit status `success`.
+
+**All five pass@5 trials failed on the intended crux**, `difficulty_crux` PASS on
+every one. The analyser: *"The shipped live warrantbook is a simple tree that
+masks the bug, so the agent's own self-testing passed, but the verifier's
+held-out corpus exposed it."* The five sub-bugs are the reusable part: the holder
+missing from its own exposure set; a backward-only walk with no carry-state
+threading; the exercisable map mirrored into the `pass` column; a fixed-point
+that settles on the wrong carry; and **BFS/queue propagation instead of iterative
+relaxation — "correct on trees, diverges on non-tree graphs"**. Each is the
+*natural code*, not a misreading of the prose.
 
 **What actually drew failures — not the crux.** Every agent failure across both
 gates on heads 1–2 was *operational*: one wrote a fully correct program and never
@@ -3926,7 +3937,11 @@ run overwrites is what makes a redundant re-run self-destructive.
 implement whatever section 7 *says*. Raising the density of dead ends, relays,
 back-dating and loops did not convert the two trials that finished. What did
 convert was adding a quantity that is a **different computation over the same
-structure** (a forward/backward state walk) rather than another stated rule.
+structure** (a forward/backward walk over principal-and-carry states) rather than
+another stated rule — one whose naive answer, `span + 1`, is exactly right on the
+shipped tree and wrong on all nineteen protected books. State a rule and nobody
+fails it; state a rule whose natural implementation happens to be correct on the
+instance the agent can see, and everybody does.
 
 **QC/AVA/cosine.** qc_eval + qc_exec + qc_gate passed clean on the FIRST push and
 again on head 3 (37 checks, empty `QC-FIXES-B64`); AVA PASS with no findings;
