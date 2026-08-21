@@ -3977,3 +3977,154 @@ Docker contention from other sessions' containers). Batch the mutation sweep wit
 a 3-thread pool: 143 probes × 7 books in ~8 s. A `_exact_label`-style padding
 helper emits a trailing separator when the remaining width is exactly 1 — that
 silently produced an invalid fixture line and cost a debugging round.
+
+## Data Processing and ETL — Lineage Capsule retry evidence (2026-08-20)
+
+**Repo/PR.** `handshake-project-dynamo/dynamo-be2364b-data-processing-and-etl`,
+PR #3, branch `nishant4731:submission`. Head `00508f5` added a protected
+equal-canonical-blob/original-ID-tuple witness for the QC mutant that compared
+only `candidate[0]`. Head `dee1550` was the single documented infrastructure
+retry after the platform failed to publish its pass@ status.
+
+**Mandatory feedback harvest for run 32320418513.** The pass@2 suggestion gate
+triggered (`first_attempt`) but the `pass2-output` artifact did not exist, so the
+job explicitly logged `skipping suggestion (no model charge)`; there was no
+suggestion text to adopt. Pass@2 produced **0/0 trials** and failed with
+`the platform's 'harbor / pass@k' status did not finish within 60 minutes`.
+Consequently there were no Agent Approach, golden-vs-agent, failing-test, solve
+time, difficulty-crux, approach-validity, task-specification, or reward-hacking
+rows to classify. Pass@5/trials, deep review, AVA, Tier 1, and QC were skipped;
+the aggregate gate was red only because pass@2 failed and those downstream jobs
+were unsanctioned skips. This repeats run 32315856328's identical 60-minute 0/0
+platform wedge.
+
+**Decision for the next commit.** Reject any pass@ difficulty ratchet based on
+these runs: they contain no agent result and therefore no difficulty evidence.
+The next task change instead answers the still-visible earlier QC finding with a
+second load-bearing, structurally varied equal-blob leaf-tie cohort. It changes
+both graded cosine surfaces, protected generation/pins, and metadata together;
+the purpose is broader mutant discrimination plus a non-empty platform redraw,
+not harder hidden conventions or more mechanical volume.
+
+**Result of the load-bearing redraw.** Commit `5ca664c` added the second anchored
+leaf-tie cohort and passed the complete local gate: Docker oracle 32/32 and
+reward 1, nop reward 0, 19/19 solution mutants killed (including the exact QC
+blob-only comparator), randomized parser/canonical cross-check 80/80, 11 pinned
+cohorts × 3 artifacts, and charter/artifact tamper rewards 0. GitHub run
+`32337624176` passed changes, enforced cosine (instruction 0.7594045, verifier
+0.8151270, fingerprint 0.7987182; threshold 0.9), static/rubric, duplicate,
+hosted validation, and rate limit.
+
+**Second mandatory harvest / same infrastructure wedge.** Run `32337624176`
+again produced no `pass2-output`; the suggestion job logged `artifact unavailable
+— skipping suggestion (no model charge)`. Pass@2 had 0/0 trajectories and the
+same exact `harbor / pass@k` 60-minute timeout, so there are still no approach,
+golden/agent, test, solve-time, rubric-column, or pass@5 findings to apply.
+Deep/AVA/Tier-1/QC/trials were skipped and the aggregate gate was red only for
+pass2 plus its unsanctioned downstream skips. Do not edit task logic again from
+this evidence. Apply the established close/reopen redraw remedy while keeping
+head `5ca664c` and the PR ready-for-review.
+
+**Close/reopen outcome and current QC block.** Reopened run `32342554568`
+received a real platform pass@2 job (`9045fce0-32d2-4344-8ebb-c7cc09739651`):
+1 solved and 1 valid fail. The valid failure was a terminal/heredoc wedge after
+the agent chose a fragile large single-write strategy; `task_specification`,
+`reward_hacking`, `near_miss`, `low_timeout`, and `approach_validity` all passed,
+while `difficulty_crux` failed because the agent never reached the algorithm.
+The successful trial finished in about 22 minutes. `pass2_suggestion` was skipped,
+so there is no suggestion text. Deep Review, AVA, and Tier 1 passed; Tier 1
+explicitly recognized both leaf-tie cohorts as addressing C3. Pass@5 was started
+externally but the workflow trial panel was skipped when QC blocked.
+
+QC eval and exec individually passed, but `qc_gate` found a new real E3 major:
+`tests/test.sh` used a fixed `/var/lib/lineage-capsule-verifier` directory and
+skipped moving trusted tests whenever an agent-preseeded `test_outputs.py`
+already existed there. Pytest would then execute the planted file. Fix by
+removing any pre-existing file/symlink/tree at the exact staging path, recreating
+it mode 0700, and moving the mounted `/tests` payload unconditionally before
+pytest. Add a named assertion that the running verifier source is the staged
+trusted file. This is harness security, not pass@ difficulty evidence.
+
+**E3 fix and run 32349396702 mandatory harvest.** Commit `1b0192e` implemented
+that exact fix: reward 0 is written first, the fixed staging tree is always
+removed and recreated mode 0700, trusted `/tests` files are moved
+unconditionally, and a verifier test asserts that `test_outputs.py` is the
+regular non-symlink staged source. The complete local gate passed again: oracle
+33/33 and reward 1, nop reward 0, an exact agent-preseeded fake verifier was
+replaced and rewarded 0, 19/19 mutants killed, randomized cross-check 80/80,
+11 cohorts x 3 pins, and charter/artifact tamper probes rewarded 0. Hosted
+changes, enforced cosine (instruction 0.7622502, verifier 0.8416650,
+fingerprint 0.7992765), static/rubric, duplicate, and Docker/oracle/nop
+validation all passed on `1b0192e`.
+
+Run `32349396702` then repeated the platform-status wedge: the workflow polled
+`harbor / pass@k` for the full hour and logged `status did not finish within 60
+minutes`; the commit-status API contained no matching status, `pass2-output/`
+did not exist, and pass@2 therefore reported 0/0 rather than agent outcomes.
+The suggestion gate was eligible but could not download `pass2-output`, logging
+`artifact unavailable — skipping suggestion (no model charge)`, so there is no
+advisory text to adopt. There are no fresh Agent Approach, golden-vs-agent,
+failing-test, solve-time, difficulty-crux, approach-validity,
+task-specification, or reward-hacking rows. Pass@5/trials, deep review, AVA,
+Tier 1, and QC were skipped; old PR stickies still name `5ca664c` and must not be
+read as current-head results. Classify this failure as infrastructure only and
+reject any task or difficulty edit. Use the documented close/reopen event redraw
+with the same `1b0192e` head and keep PR #3 ready-for-review.
+
+**First close/reopen redraw for `1b0192e`.** Run `32355280880` did create a
+concrete `harbor / pass@k` status and job
+`d689a401-7339-49b2-a71b-4786474839c0`, unlike the prior empty-status run, but
+the platform left that status `pending` for more than 68 minutes. The GitHub
+pass@2 poller independently reached its full 60-minute cutoff and logged the
+same `status did not finish within 60 minutes` error. No `pass2-output` artifact
+was created; pass@2 therefore had 0/0 trajectories, and the eligible suggestion
+job again logged `artifact unavailable — skipping suggestion (no model charge)`.
+There are no fresh trial approaches, golden/agent values, failing tests,
+solve-time or rubric columns, and pass@5/trials plus deep/AVA/Tier-1/QC were
+skipped. All upstream gates were green. This is a second infrastructure-only
+failure on the E3-fixed head, not difficulty evidence; do not edit or push a
+speculative task change. A further close/reopen redraw is the only documented
+in-scope recovery, but if the same platform status remains wedged, report the
+job id and run ids as the external blocker rather than claiming completion.
+
+**Final redraw blocker.** A second close/reopen started run `32361045643`; all
+task-owned stages through hosted validation and rate limiting passed again, but
+Pass@2 reused the exact same external job
+`d689a401-7339-49b2-a71b-4786474839c0`. Its `harbor / pass@k` status still has
+the original `created_at`/`updated_at` of `2026-08-20T09:42:55Z` and remains
+`pending`. No fresh job/status was issued. This retry cannot change outcome
+without the external platform updating or replacing that stuck job. Stop
+close/reopen churn; leave PR #3 open and ready-for-review on `1b0192e`, and
+report the pending Harbor job plus runs `32349396702`, `32355280880`, and
+`32361045643` as the exact infrastructure blocker. The `needs-revision` label
+and blocked merge state are pipeline artifacts, not evidence of another task
+defect.
+
+### 2026-08-21 — dynamo-2d0d4c3 pass@5, first measurement: 3 solved / 2 valid fails
+
+`dynamo/dragnet-restitch` reached pass@5 on head `a009a4b` after every review gate
+went green (cosine 16 consecutive, static + Dynamo eval 31/31, duplicate, Harbor
+validation, pass@2, AVA, deep review, Tier-1, qc_eval, qc_exec, **qc_gate "no
+blocking soundness defects — 37 checks + probes ran clean"**, and `review / gate`).
+
+**pass@5: 3 solved · 2 genuine valid fails · 0 soft timeouts · 0 timeouts. Needs 3.
+One short.** Failures stratified; `task_specification` and `approach_validity` PASS
+on all five; no task or verifier defect. **`difficulty_crux` FAIL on both failures**
+— neither came from the intended crux. All five agents implemented the temporal
+reach table correctly. The two failures were (a) running the irreversible restitch
+on the live dragnet twice and then `rm -rf`-ing it, and (b) applying `duplicate_id`
+to `amend`/`retract` fids. Clean solvers finished in 16 and 26 steps, ~28–45 min.
+
+**The finding to carry into any irreversibility task: the agent's own terminal
+recording is a second copy.** Trial 1 destroyed the live dragnet, then rebuilt it
+from `/logs/agent/recording.cast` and passed 44/44. My instruction claimed "there
+is no second copy in the image and no way to rebuild one", which is false whenever
+the agent has `cat`-ed the artefact. Either keep the live artefact too large to
+dump, or drop the claim — do not rest difficulty on it.
+
+**Corollary on this concept, now measured at both gates:** a fully-stated
+algorithmic crux — even one whose wrong readings are byte-identical on the shipped
+fixture (14 of 30 in the blindness table) — is implemented correctly by this model.
+Every counted failure at pass@2 and pass@5 came from operational discipline or an
+ordinary prose misreading, never from the starve. Blindness tables predict what an
+agent *could* not verify, not what it will get wrong.
