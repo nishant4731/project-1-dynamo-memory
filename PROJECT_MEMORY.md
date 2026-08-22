@@ -4366,3 +4366,56 @@ readings among them; mutation sweep **161 probes, 0 anchor misses, 0 survivors,
 none caught by a single circuit**, no-op control green; Harbor-style oracle
 `1.0` / nop `0.0`; and candidates carrying the naive `crown`, `hold` and knot
 readings each pass every live-circuit check and still score `0`.
+
+## Games Puzzles and Interactive Simulation / Interactive text games — dynamo-568d798 first push (2026-08-22)
+
+Repo `handshake-project-dynamo/dynamo-568d798-games-puzzles-and-interactive-simulation`,
+PR #1, head `d122117`, task `dynamo/lanternfall-restage`.
+
+**Mold:** the e320824 repair-in-place engine ported into a parser-game world
+build. The agent writes `/app/lanternfall_restage.py`, which sifts packed
+"passages" and unapplied "revisions" against six ordered refusal causes, applies
+moves in sequence order, fuses twins on a five-part key, re-takes marks, repacks
+under a record bound and a byte bound, rebuilds a per-leaf byte-offset index,
+walks a progression table, files refusals with ordinals, spends `revisions/` and
+`drafts/`, and writes 39 counters. `STAGE_CANON.md` states everything.
+
+**The crux (new, and the reusable part):** a *puzzle-progression* least fixed
+point. A way is walked only once its `head` has been stood in AND every token in
+its `keys` is in hand, and lands the walker `cost` turns after the LATEST of
+those moments — so scene turns and token turns are one mutually recursive fixed
+point, not a BFS. Two further columns are second computations over the same
+structure: `route` (distinct scenes on SOME self-supporting run, a union over
+runs) and `linchpin` (lowest token a scene cannot be reached without, answered by
+striking every way demanding a code and re-walking).
+
+**The starve is graph shape, exactly as in the auth/network-forensics
+playbooks.** The shipped playhouse is one act, every way one turn, every key in
+hand before the way that wants it, one run into each scene. On it a single sweep
+in packed order settles every turn, `route == depth + 1`, and the lowest key
+demanded on the way IS the linchpin. Blindness table: **13 of 24 plausible
+one-line misreadings left the shipped house byte-identical and were wrong on 9 to
+19 of 19 protected houses.**
+
+**First-push gate results:** changes ✅, cosine ✅ (instruction 0.6343, verifier
+0.8563, fingerprint 0.8006 — a fresh domain in a subcategory with many delivered
+tasks), static 25/25 ✅, Dynamo eval **30 PASS + 1 N/A, zero failures**,
+duplicate check UNIQUE ✅, validation ✅ (platform oracle 1.0 / nop 0.0),
+ratelimit ✅. pass@2 in flight.
+
+**Two mechanical findings worth carrying:**
+
+- Two probes in the first sweep were *provably* unkillable rather than
+  unwitnessed: a `(seq, file, line)` sort tie-break (Python's stable sort already
+  gives line order, so dropping `line` is a no-op) and preserving twin-group
+  insertion order (a later sort erases it). Both were **removed from the engine
+  and the canon** rather than witnessed — an inert clause QC C3 can mutate for
+  free is worse than no clause. Reaching 0 survivors then needed forge work:
+  near-twins differing only in `cost` and only in `first`, twins whose `seq`
+  ties, redraws that genuinely change the `drop`, a stale `refused/*.rej` the
+  restage must clear, sweep houses whose stranded warren holds more leaf files
+  than the restage writes back, and four new fault kinds.
+- An empty-satchel `-` marker in the roster was an unwitnessed branch. Removing
+  the convention outright (satchels are always one or more codes joined by `+`)
+  was cheaper than planting a witness — and handing some acts TWO satchel tokens
+  is what makes the `+` split load-bearing.
