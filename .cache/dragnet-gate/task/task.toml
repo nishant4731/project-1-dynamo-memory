@@ -1,0 +1,267 @@
+artifacts = ["/app/dragnet_restitch.py", "/app/data/dragnet", "/app/dragnet_io.py"]
+
+[task]
+name = "dynamo/dragnet-restitch"
+description = "Restitch a stranded network dragnet: sift the segments and the unfolded inbox, merge the co-observations, walk the contact graph forward into a reach table and backward into a pivot table, and spend the evidence — in place, exactly as the charter describes."
+
+[metadata]
+# --- Pre-seeded for you when this repo was created — DO NOT EDIT ---
+category = "Security"                      # diversity category, assigned to your task by the Dynamo team
+subcategory = "Network Forensics"                   # diversity subcategory, assigned by the Dynamo team
+# --- Fixed for this dataset — LEAVE AS-IS ---
+model_tested = "Opus-4.8"           # difficulty-benchmarking model (do not change)
+agent_tested = "Terminus-2"        # difficulty-benchmarking agent (do not change)
+# --- You fill these in ---
+task_objective = ["recover_or_repair_artifact", "implement", "analyze"]
+artifact_type = ["single_script_or_program", "network_endpoint_or_protocol_artifact", "database_or_structured_store"]
+expert_time_estimate_hours = 6
+difficulty_explanation = """
+The audience is an incident responder who owns a flow-correlation appliance:
+someone who has had a fold die half way and has had to reconcile the packed
+segments, the unfolded deliveries and the index by hand before anyone could
+answer "who could that host have reached". Every record, damaged line and inbox
+operation comes from a seeded builder, so the dragnets are synthetic, but the
+failure is the ordinary one and so is the reconciliation it forces.
+
+There are two contact-graph tables and they are not the same computation.
+`REACH.tsv` looks forward from a host; `PIVOT.tsv` looks back at one, giving how
+many distinct hosts approach it, the least moment such an approach *began*, and
+whose. The pair counts agree, so a reader who assumes the second table is the
+first one transposed gets its `sources` column right and its `opened` column
+wrong: that column records when an approach started rather than when it landed,
+and no forward walk carries it. The natural implementation — reversing the
+contacts and walking them the way the forward table is walked — answers a
+different question, because the order the times must respect reverses with the
+edges; the backward pass has to run in descending `first` and keep the *latest*
+moment a host may still be left. Measured against exhaustive trail enumeration on
+four hundred random graphs the reference agrees everywhere; measured against the
+graded corpus, reversing the edges and walking forward is wrong on twelve of
+thirteen dragnets, running the pass in ascending order is wrong on twelve, and
+three further misreadings — the inclusive edge of the usability test, keeping the
+earliest rather than the latest departure, and the tie-break on `origin` — are
+byte-identical on the shipped dragnet and wrong on ten, six and four of them.
+
+The forward table is a graph-shape trap rather than a hidden rule, and the relay
+window is what arms it. A host holds what a contact brought it for 380000 and no
+longer, so a trail may only continue on a contact that opens inside that window.
+The consequence is the part that is easy to miss and expensive to get wrong: a
+host is no longer reached *at a time* but at every time some trail lands it
+there, and those arrivals are not ordered by usefulness. An earlier arrival can
+have lapsed before an onward contact opens that a later one is still standing
+for, so the earliest arrival does not dominate and cannot be the only one carried
+forward. The natural code — one earliest arrival per host, which is exactly right
+without a window — has to become a set of arrivals, and the same is true of the
+backward pass. The shipped dragnet cannot show this: one contact opens into each
+of its hosts, so every host has exactly one arrival, and its bands are regular
+enough that no wait it needs comes near the window. Measured over the graded
+corpus, keeping only the earliest arrival is byte-identical on the shipped
+dragnet and wrong on **eleven of thirteen** held-out ones; keeping only the
+latest is wrong on seven; ignoring the window is wrong on twelve forward and
+twelve backward; and both exclusive readings of the window's edges are wrong on
+eleven and nine. Seven of ten plausible misreadings are blind on the dragnet the
+agent can see. `REACH.tsv` reports, per host that opens a contact, how many **distinct**
+hosts a time-respecting trail reaches, the greatest of the earliest times those
+hosts are reached, and which host that is. The charter states that definition
+outright. The dragnet the image ships is a quiet shift: exactly one contact lands
+on each host, so its contact graph is a forest, no host is reachable by two
+trails, the bands are far enough apart that every chain is time-feasible, and no
+contact begins on the millisecond another ends. On that dragnet a tool that adds
+its children's counts instead of taking the union of the hosts they reach is
+byte-identical to a correct one; so is one that ignores the timing constraint
+altogether; so is one that reads "not below" as "strictly after". The dragnets it
+is graded on are webbed, stalled and touching, and all three readings are wrong on
+every one of them. The `horizon` and `farthest` columns need the earliest arrival
+at each host rather than any arrival, which a depth-first walk does not give.
+
+That is one of fourteen. A blindness table was run before the first push: each
+plausible misreading was patched into the reference as a one-line change and run
+against the shipped dragnet and against thirteen held out. Fourteen of thirty left
+the shipped dragnet byte-identical to the correct answer and were wrong on two to
+twelve of the held-out ones — the reach three above, the tie-break that picks
+the farthest host, the co-observation rule taking the group's greatest `last` and
+`bytes` rather than the winning observation's, a four-tuple that reopens later
+being a separate flow rather than the same one, the amend that is dropped as
+incoherent, the segment record bound, and five of the sieve's clauses (booleans
+and decimals not being integers, an unexpected key, the label's shape and its
+length, a window that is not open).
+
+Nothing has to be inferred. The charter gives the record schema, the canonical
+payload the check value covers, the six rejection causes and the order they are
+tried in, the three inbox operations and the sequence order they apply in, the
+co-observation rule and its tie-break, the two segment bounds, the byte layout of
+the index, the definition of a trail, the refusal naming and its ordinals, all
+thirty-five counters and what a restitch consumes. The difficulty is not working
+out what to do; it is that the two graph tables are separate temporal passes that
+share their totals, and that everything around them is exact to the byte.
+
+The rest of the failure surface is where exactness lives. A segment is bounded
+twice over — at most thirteen records and at most 3450 bytes — so where one ends
+depends on how long the records that landed in it happen to be, and the index
+records a **byte** offset that starts again at each segment, so a line-numbered
+reading, or one that forgets to restart, produces an index that looks perfectly
+well formed and points at the wrong records. Inbox files are numbered in flush
+order while operations apply in sequence order, and every dragnet carries a pair
+that contends: an admit and an amend of it one sequence later, filed the other way
+round. Amends and retracts are judged against the flows as they stand at that
+moment, so a retract at a lower sequence than the admit it chases is an orphan,
+and an amend that arrives after its flow was retracted is one too. Duplicate ids
+are judged in reading order, which is not folding order. Thirty-three counters are
+each sampled at a different point in those passes, and seven are one step from a
+neighbour they are easy to conflate with: what the segments turned away against
+what the inbox did, orphan amends against incoherent ones, observations settled
+against flows settled, files written under `refused/` against the ones that needed
+an ordinal, and `bytes_written`, which is short by the record count if the
+trailing newlines are left out.
+
+The last of it is the settling rule. The restitch consumes the inbox and the
+scratch directory, and the report describes the restitch that repaired the
+dragnet, so a second restitch of an already-restitched dragnet has nothing left to
+fold and must leave `segments/`, `CONTACT.tsv`, `REACH.tsv` and `PIVOT.tsv`
+byte-for-byte as they were while still writing a coherent report of a pass that
+did nothing. A tool that folds unconditionally passes the first run and fails the
+second. The live dragnet is restorable from `/app/data/dragnet.spare.tar`, so this
+is measured on the work, not on the operator's nerve.
+"""
+solution_explanation = """
+Read `DRAGNET_CHARTER.md` end to end before touching anything, and work against a
+copy of `/app/data/dragnet` in `/tmp`. Run the tool against the live dragnet as
+soon as it produces plausible output rather than at the end: a restitch spends the
+inbox, but `rm -rf /app/data/dragnet && tar -C /app/data -xf
+/app/data/dragnet.spare.tar` puts it back exactly as it shipped, as often as
+needed.
+
+The restitch is a single pass in the order the charter sets out. Read every
+segment file in name order and then every inbox file in name order, and sift each
+line against the six causes in the order given, keeping the turned-away lines in
+reading order and claiming each `fid` as it stands so a later line carrying it is
+a duplicate. Sort the operations that stood by sequence, then by file name, then
+by line, because the file numbers follow the flush order rather than the accept
+order; apply each against the flows as they stand at that instant, so an amend or
+retract naming a flow that is not there yet, or is no longer there, is an orphan,
+and an amend whose `last` does not clear its flow's `first` is incoherent.
+
+Group what is left on source, destination, both ports and `first`; a group is one
+flow, taking the lowest `fid`, the greatest `last`, `bytes` and `pkts`, and the
+sensor, state and sequence of the observation with the greatest sequence. Re-take
+every check value, sort by `first` then `fid`, lay the records into segments under
+both bounds and build the index as you go, so each row carries the byte offset of
+its record from the start of the segment it landed in, restarting at zero.
+
+For the reach table, carry for each origin **every** time each host is left
+standing there, not just the earliest: walk the closed contacts in ascending
+`first`, and take a contact whenever it leaves the origin itself or opens no
+earlier than one of its source's arrivals and no more than a relay window after
+it, adding its `last` to its destination's arrivals. Keeping only the earliest
+arrival is right on a graph where each host is entered once and wrong as soon as
+two trails converge on one at different moments. The distinct hosts and the least
+arrival at each fall out of that pass, and with them the horizon and the farthest
+host. The backward pass is the mirror and needs the same care: walking contacts
+in descending `first`, a contact is enough when it arrives at the target itself or
+some contact out of where it ends opens inside its relay window and is itself
+enough. File the refusals under their source files' names
+with ordinals for collisions, remove the inbox and the scratch directory, and
+write the report.
+
+Then run it on `/app/data/dragnet`, restoring from the spare archive and running
+it again for each correction, and leave the last full run in place.
+"""
+verification_explanation = """
+Grading is exact and structural: the verifier restitches its own pristine copy of
+each crashed dragnet with a reference that exists only in the `/tests` overlay,
+and compares the submitted result to it entry by entry — every segment, the index,
+the reach table, every file under `refused/` and the report, by SHA-256, with the
+directory set compared too, so an emptied-but-surviving directory or a stray
+scratch directory is caught by name. No tolerance is involved anywhere.
+
+The live dragnet is graded as the agent left it, which is what makes the restitch
+a one-shot operation. The submitted program is then re-run on a fresh crash of
+that same dragnet, on thirteen dragnets it has never seen, and on one whose hosts,
+damage and inbox are derived from the SHA-256 of the submission itself, which
+defeats any answer keyed to dragnet contents — fifteen graded restitches of the
+same program. One of the thirteen has no `segments/` directory at all, because
+the correlator died before it packed anything, so every flow it settles arrives
+through the inbox. Each runs in a scratch directory under an isolated interpreter with
+the overlay sealed and root dropped to an unprivileged uid; if the verifier cannot
+drop privileges it refuses to grade rather than accept a run it could not isolate.
+
+Five of those dragnets are restitched a second time, on the dragnet the program
+itself produced, to grade the settling rule the charter states: a second restitch
+leaves every segment, `CONTACT.tsv` and `REACH.tsv` byte-for-byte alone. That is
+where a program that treats an absent inbox or scratch directory as an error, or
+repacks from a dragnet it has already repacked, comes apart.
+
+Every path grading reads is walked component by component before it is read.
+Each component must exist, must not itself be a link, and must satisfy
+`os.path.realpath(prefix) == prefix`, so a link anywhere above a leaf is refused
+even when the leaf is an ordinary file; the live dragnet is then walked whole and
+refused if it holds a link of either kind at any depth, and the submitted program
+is separately required to resolve to its own path. A dedicated test builds a
+symlinked leaf, a symlinked parent and a link buried inside a tree and requires
+each to be rejected, and requires a clean tree to be accepted. The guarded paths
+are: `/app/data`, the
+dragnet root, the segment and refusal directories and every file in them,
+`CONTACT.tsv`, `REACH.tsv`, the report, the charter and the submitted program.
+
+The report is parsed with floats, NaN and Infinity rejected and compared with
+type-strict equality, so a boolean cannot pass for an integer. Separate atomic
+checks confirm the segments are named and bounded as the charter says, that every
+index row's byte offset lands on the record it names and carries that record's
+own fields, that the index is ordered by rising `first` then rising `fid`, and
+that the reach table's own identities hold against the index beside it — its rows
+are exactly the hosts that open a contact, in ascending order, its counts are in
+range, its horizons are no later than any contact ends, and the report's
+`reach_origins`, `contacts` and `reach_pairs` agree with what is on disk. Those
+checks consult no reference, so reference drift fails the suite rather than
+redefining the contract. Two further checks read the agent-visible charter itself
+and confirm that every value the reference grades by is stated there verbatim —
+both segment bounds, the label limit, the two port limits, the canonical
+serialisation, the three states, the three operation kinds, the six causes, every
+column of all three tables, all thirty-five counters and every field of a record —
+and that the eleven keys the check value covers are the eleven the charter lists,
+without `seq` and without `sum`. The reference is therefore pinned to the
+contract the agent can read, not only to itself. The charter's format sheet is checked to quote only lines
+the reference actually writes, and the charter and roster are digest-pinned so a
+run that edits them fails.
+
+Finally ninety-eight single-rule mutations of the reference — the canonical payload
+and the width of the check value, every clause of the sieve and the order the
+causes are tried in, the fold's ordering and its tie-break, each half of the
+co-observation rule, both segment bounds and the newline in the size, the byte
+offset and its per-segment restart, every column of the index and the reach table,
+each part of the trail definition and the earliest-arrival rule, the refusal
+ordinals, each inclusive edge, the consumption steps and eleven report counters
+— are each required to leave a dragnet we reject on at least two of seven sweep
+dragnets, while a no-op edit of the reference must still pass. Every tie-break
+the charter states is decided by a planted case: a co-observation group whose
+members share the greatest `seq`, so the keeper is settled by the lowest `fid`;
+two flows that are not co-observations but open on the same millisecond, so the
+settling order is settled by the `fid`; two contacts finishing on the same
+instant, so the farthest host is settled by the lowest host id; and a pair of
+operations sharing a sequence number across two inbox files. What a restitch
+consumes is a tree rather than a flat directory — the collector spilled into
+`scratch/spill/`, `scratch/spill/deeper/` and a subdirectory of `inbox/` whose
+contents §1 excludes from the source files — so a count that stops at the top
+level is caught, while a reader that descends into the spill is caught too. Every edge
+the
+charter states inclusively is witnessed from both sides: a settled flow sits
+exactly on it — the two port limits, a flow of one byte, a flow of one packet, a
+sequence of zero, a label of exactly 120 characters, the shortest window the
+charter allows, a segment landing exactly on the byte budget, and an amend whose
+`last` falls exactly on its flow's `first` — and a turned-away line sits one step
+outside it, so an edge cannot be loosened any more than a rule can be dropped.
+"""
+
+[verifier]
+timeout_sec = 1200.0
+
+[agent]
+timeout_sec = 5400.0
+
+[environment]
+build_timeout_sec = 900.0
+cpus = 2
+memory_mb = 4096
+storage_mb = 10240
+gpus = 0
+allow_internet = true
+mcp_servers = []

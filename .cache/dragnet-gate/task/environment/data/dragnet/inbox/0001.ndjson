@@ -1,0 +1,8 @@
+{"bytes":5451326,"fid":"f-00008","last":459803,"op":"amend","pkts":273925,"seq":521,"state":"closed"}
+{"bytes":7683056,"fid":"f-00006","last":455435,"op":"amend","pkts":399791,"seq":502,"state":"closed"}
+collector: short write at offset 40961
+{"fid":"f-00011","op":"retract","seq":540}
+{"bytes":7679396,"dport":8080,"dst":"h-008","fid":"f-00029","first":1601478,"label":"dns/ticket-renew/psexec/webdav-put/axfr/bind-simple/axfr/bind-simple","last":1658265,"op":"admit","pkts":537204,"sensor":"tap-04","seq":521,"sport":8106,"src":"h-027","state":"closed","sum":"17ff7c58aac4e155"}
+{"bytes":5813697,"dport":4444,"dst":"h-018","fid":"f-00028","first":1606978,"label":"winrm/ticket-renew/axfr/tds-login/axfr/ticket-renew","last":1656513,"op":"admit","pkts":629660,"sensor":"tap-06","seq":571,"sport":8500,"src":"h-033","state":"reset","sum":"f73ada2894d14f63"}
+{"fid":"f-00031","op":"retract","seq":590}
+{"bytes":1294459,"fid":"f-00018","last":866154,"op":"amend","pkts":539720,"seq":579,"state":"closed"}

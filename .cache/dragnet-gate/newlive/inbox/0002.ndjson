@@ -1,0 +1,7 @@
+{"bytes":7042232,"fid":"f-00032","last":1665692,"op":"amend","pkts":373171,"seq":546,"state":"closed"}
+{"bytes":3017896,"fid":"f-00043","last":857462,"op":"amend","pkts":251617,"seq":581,"state":"timeout"}
+{"bytes":6395987,"dport":135,"dst":"h-019","fid":"f-00024","first":1207747,"label":"mssql/tunnel-established/pssession/keepalive","last":1255497,"op":"admit","pkts":544799,"sensor":"tap-02","seq":566,"sport":41225,"src":"h-009","state":"closed","sum":"3857ed459d88f684"}
+{"bytes":9377000,"dport":5985,"dst":"h-016","fid":"f-00052","first":1201757,"label":"mssql/named-pipe/dcom-activation/share-enumerate/keepalive","last":1253943,"op":"admit","pkts":309918,"sensor":"tap-06","seq":559,"sport":13315,"src":"h-041","state":"closed","sum":"edc30439b79215f5"}
+{"bytes":7837681,"dport":443,"dst":"h-027","fid":"f-00025","first":1202812,"label":"rpc/epmapper/dcom-activation","last":1259274,"op":"admit","pkts":570821,"sensor":"tap-05","seq":549,"sport":34143,"src":"h-031","state":"closed","sum":"87c42e94e4920339"}
+{"bytes":4096,"fid":"f-80001","last":900000,"op":"amend","pkts":31,"seq":526,"state":"closed"}
+{"bytes":5400126,"dport":22,"dst":"h-033","fid":"f-00008","first":404757,"label":"kerberos/psexec/webdav-put/session-setup/share-enumerate/tgs-rep/named-pipe","last":452103,"op":"admit","pkts":273864,"sensor":"tap-05","seq":520,"sport":55840,"src":"h-011","state":"closed","sum":"e14c05f6f196ff7f"}
