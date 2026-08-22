@@ -1,5 +1,9 @@
 # Project 1 Memory
 
+- 2026-08-23 `dynamo-3fc7e1b-data-processing-and-etl` (`dynamo/quench-weave`, PR #11), head `3ed8135`, run `32599486642`: enforced cosine passed lower at **0.632830 instruction / 0.725007 verifier / 0.804290 fingerprint**, deterministic static checks passed, and read-only review passed 28/31 but correctly blocked `solution_quality`, `solution_explanation_quality`, and borderline `difficulty_explanation_quality`. The reference had pasted the 24 recovered policy values and never opened `transition_log.tsv`, contradicting metadata that said it reconstructed them; the difficulty field also omitted provenance and real-world audience. Validation and all pass stages were skipped, so there is no new trajectory or suggestion to adopt. Implement the advertised inference rather than weakening the explanation: normalize the otherwise additive-equivalent score tables with disclosed `base_right[0]=0`, recover the score model by enumerating hinge/alignment breakpoints and solving the overdetermined interior rows modulo a large prime, uniquely decode the phase cap/weight and bucket, then backtrack the first-match ladder and its thresholds against all 421 labels. The reference now reads `/app/transition_log.tsv`, finds exactly one full policy, and reproduces every row before using it. Add deterministic-synthetic provenance plus controls/data-reliability audience to metadata. Final candidate image `sha256:e0613b42b24e2d55811529d898230c39006319959ed5708b92da2d36c2d2aaae`: **19/19 in 107.90s, oracle 1, nop 0**, eight post-inference formula mutants killed; 300s verifier retains substantial headroom.
+
+- 2026-08-23 `dynamo-3fc7e1b-data-processing-and-etl` (`dynamo/quench-weave`, PR #11), head `7eb3792`, run `32591535737`: hosted gates through validation were green, including enforced cosine **0.663961 instruction / 0.730480 verifier / 0.806484 fingerprint**, but Pass@2 was a clean **2 solved / 0 valid-fail / 0 timeout / 0 infra**. Both agents produced all 15 exact outputs: one used the same threshold/subset DP shape as the reference in ~3,042s and one used DFS/branch-and-bound in ~28m. All specification, reward-hacking, approach-validity, and timeout classifications passed; `INFRA_ONLY=false`; Pass@5 was skipped. The suggestion job had exhausted its daily slots and only exposed stale earlier advice, so there is no fresh advisory to adopt. The measured finding is that another stated graph optimization/size ratchet remains recognizable transcription. Reject another board-count or objective-volume increase. The cohesive v8 response changes the task shape: a visible **421-row retired-controller decision log** determines two hidden tables, 18 integer constants, a nonlinear score, six refusal predicates, and their first-match ladder. The recovered policy deletes directed port edges, assigns surviving strain, emits a new graded `transition_policy.tsv`, and changes the optimal ring plus every downstream decoded put. The corpus kills every +/-1 scalar/table mutation, every ladder transposition, and six rival formula shapes, and all protected feature queries stay within visible column ranges. This is evidence-mined reusable inference rather than an undisclosed convention; retain the codec/runtime plumbing so work stays on policy recovery, fold identity, and graph optimization. Final local candidate `sha256:166fba89867e37a2a7a855e1123f98b59c24d34f11761720174a62ccc112f33f`: **18/18, oracle reward 1, nop 0**, 12/12 implementation mutants killed (including cap/hinge/gates/clamp/refusal/feature formulas), log-tamper 0, baked `/tests` oracle-import cheat 0, deterministic refreeze/pins, and 40/40 arbitrary digest-derived cohorts generated without a disconnected case. Local token-cosine vs the last three heads is instruction **0.842-0.857**, verifier **0.533-0.547**, joined **0.759-0.771**; latest hosted cosine sticky remains enforced and green at **0.663575 / 0.732236 / 0.813024**.
+
 - 2026-08-22 `dynamo-a8b2707-regulated-knowledge-work-and-business-operations` (`dynamo/sentinel-trace`, PR #1) head `7724496`, **the irreversibility lever measured and dead on a third concept and a second model**: `/app/sentinel_pack` stopped being a read-only pack and became a live ward register — the transaction folds a pending `intake/` queue against six ordered refusal causes, files `refused.tsv`, **unlinks each batch it spends**, and the register's end state is graded byte-for-byte alongside the four reports. Verified in-container before pushing that the trap really bites: a second tool run scores **0**, a mis-folded draft followed by a corrected rerun scores **0**, an unspent queue scores **0**. pass@2 still came back **2 solved / 0 valid-fail**, ~22 and ~39 min of 60, `difficulty_crux` NA, both agents iterating on failures and still never spending the live queue on a draft. With [[dynamo-irreversibility-does-not-fire-on-a-careful-agent]] (dynamo-65cf2ab, 2/2) and c1fed49 (0/2) that is **three concepts and two different models**; treat operational irreversibility as retired rather than reaching for it again. The stateful-fold misread it carried — judging each batch against the register as it stood *before* the transaction, rather than as the fold has left it — is genuinely blind (it passes the shipped register untouched, fails only protected ones), and it did not convert either. **What the pincer actually leaves**, and what head `1549bca` reaches for: a quantity that is *cheap to state and expensive to compute*. `minimum_cut` — the fewest admitted contacts whose joint refusal would have averted a case — is a minimum edge cut between the seed states and that case's states, so it adds no rule and stays fully determined for QC B5, but subset enumeration cannot reach it. Measured in the task image on a protected register: 40 admitted contacts, deepest cut **4**, enumeration needs ~91,000 closures and covered 13,355 in 60s against a 150s per-register budget, while max flow settles the register in **0.07s**. The shipped register has 4 contacts and every cut is 1, so enumeration is instant there and the obvious shortcut (1 when a single contact is already critical, else 0) is exactly right — installed as the submission it passes the whole visible register byte-for-byte and fails only the protected ones. Make the harness turn a submission timeout into a *failed transaction* assertion rather than letting `subprocess.TimeoutExpired` escape, so a brute-forcer counts as a merit failure instead of a harness error. Also note: a mutant guarding arcs into beyond-horizon states was **provably equivalent** (dead-end arcs carry no flow) and was retired rather than witnessed — the playbook's "unless provably equivalent" branch, exercised for real.
 - 2026-08-22 `dynamo-3fc7e1b-data-processing-and-etl` (`dynamo/quench-weave`, PR #11), head `d7e4e0c`, run `32573682636`: every deterministic, static, cosine, validation, Pass@2, Deep Review, AVA, Tier 1, and QC stage passed, but the final difficulty gate blocked at **pass@5 3/5 solved, 2 good-valid failures, 0 soft timeout, 0 task/verifier issue, 0 infra**. The pass@2 suggestion job was skipped, so there is no new advisory to adopt. Pass@2's two reward-0 trajectories were pre-execution failures (one never wrote the executable after a P-vs-Q agreement debug spiral; one omitted `chmod +x`); the analyser marked both approaches valid and one low-timeout FAIL, so those are weak difficulty evidence. Pass@5 is decisive: three agents finished byte-exactly, two using factorial permutation × port enumeration because 7-9 binary-port boards made that shortcut practical. The two good-valid failures were an unconfirmed final witness/ring bug and a missing required `[:12]` model truncation; all five `task_specification`, `reward_hacking`, `low_timeout`, and `approach_validity` checks passed. Adopt the measured shortcut finding with one cohesive v7 contract: **10-11 boards, three ports, exact balanced port populations, cyclic unequal adjacency, a quantized directed strain, and a bottleneck/cadence/canonical-order objective solved by threshold subset DP**. Port 2 has its own key and raw-decode abscissa, so every new decision propagates through the ring and downstream ETL. The smaller strain range makes cadence observable; direct visible mutations for missing port 2, wrong population, linear/closing adjacency, closing edge, cadence, direction, threshold, and both port-2 key terms are all killed. Reject AVA's suggestion to require a literal helper import: the helper is recommended rather than semantically mandatory, and byte-exact outputs are the real acceptance boundary. Adopt Deep Review's CLI completeness advisory by testing repeated `--out` and repeated equals-form options. Keep the 3,600-second agent cap and shrink only redundant ungraded algebra repetitions to the stated 40 identities so the full verifier remains inside 300 seconds.
 
@@ -4268,654 +4272,81 @@ shortest chain — left the live loft byte-identical yet failed 15 held-out test
   probe reported reward `1` because the patch script read EOF and never ran.
   Any `docker exec container python3 - <<PY` needs `-i`, or it proves nothing.
 
-## Data Querying and Databases / SQL querying — dynamo-0a86356 (in flight)
 
-Repo `handshake-project-dynamo/dynamo-0a86356-data-querying-and-databases`, PR #1,
-head `b75b6d4` (2026-08-22). Task `dynamo/headgate-settle`.
-
-**Mold:** analyzer-tool over a SQLite ledger. The agent writes
-`/app/headgate_settle.py <season_dir>`, which closes an irrigation district's
-water season out of an eleven-table ledger and writes `carriage.tsv`,
-`statements.tsv`, `disputes.tsv` and `settle_report.json` back into the season
-directory; the ledger stays read-only. `DITCH_BYLAWS.md` is a complete 14-section
-contract, so QC B1/B5 have nothing to withhold-hunt.
-
-**Crux — the shipped instance is quiet, not the spec.** `factor(R,S)` is the sum
-over *every* route down the canal of the product of the per-link carry losses.
-The shipped district's `flowpath` graph is a tree, so a first-route walk, a
-best-route walk and a seen-set queue are byte-identical there and wrong wherever
-two laterals rejoin. Same shape in the two statement columns: on a tree the
-immediate feeder always carries the most (`keystone`) and one reach always
-suffices to cut a member off (`severance`, a minimum vertex cut).
-
-**Measured before pushing:** blindness table 19 of 29 plausible misreadings
-byte-identical on the shipped season, the headline ones wrong on 17–19 of 19
-held-out seasons; mutation sweep 97 probes, 0 survivors, 0 caught-by-one, control
-green; Harbor-style oracle 1.0 (36 tests, 27 s) and nop 0.0; seven adversarial
-probes (nop, blank, replay, symlink, overlay-peek, ledger rewrite,
-first-route-only) all 0.0.
-
-**Gate results on push 1:** cosine PASS (instruction `0.7068`, verifier `0.8239`,
-fingerprint `0.8046`, threshold 0.9); static checks all green; Dynamo eval
-**31/31 PASS, no failures**; duplicate UNIQUE (closest TB2 lexical 0.089);
-validation Docker/Oracle/Nop ✅✅✅.
-
-**Reusable operational findings:**
-
-- *Rebuilding SQLite fixtures per mutation probe dominates the verifier.* The
-  first in-container oracle took **634 s**; caching one built ledger per slot and
-  `shutil.copyfile`-ing it per probe, plus dropping the (never-modified) ledger
-  digest from the probe comparison, took it to **27 s**. Do this before measuring
-  anything else on a database task.
-- *Never grade a SQLite file by its bytes.* Compare it by its rows (a canonical
-  dump) so page layout cannot decide a verdict, and exclude `ledger.sqlite3*`
-  from the tree digest.
-- *A prefix cap is order-independent.* "Spend the allotment in `(taken_on,
-  tie-break)` order" makes the tie-break provably inert: total within is
-  `min(total, cap)` whatever the order. Ordering only becomes load-bearing once
-  the *rate* moves mid-season. Splitting rate cards mid-season took the
-  "don't sort at all" misreading from wrong on 2 of 19 seasons to wrong on 14.
-- *Equal-weight ties need a reason to exist.* Keystone ties never arise when
-  every link loses something; giving lined reaches a carry of `12/12` created
-  them, and the tie-break clause stopped being an unwitnessed C3 hole.
-- *Witness-planting collides with slot indexing.* Closed-turnout and no-allotment
-  witnesses indexed from `len(members)` silently landed on the two synthetic
-  half-cent members and destroyed their witnesses; index witness cohorts from the
-  base member count, not the roster length.
-
-## 2026-08-22 — dynamo-c31fb12 (dynamo/trumpline-reckon): two generator lessons from a Board-and-card-games port
-
-Repo `handshake-project-dynamo/dynamo-c31fb12-games-puzzles-and-interactive-simulation`,
-PR #1, head `eca02ee`. Category **Games Puzzles and Interactive Simulation /
-Board and card games** — a fresh subcategory for this mold. The repair-in-place
-engine from `dynamo-e320824` was ported to a card league's season reckoning; the
-crux moved from a delegated-authority closure to three standings columns:
-`crown` (a run over hands, not players, constrained by both the clock and a
-rising stake), `hold` (a winning run at *one* table), and a recursive tie-break
-that restricts each level to the group it is separating until a group locks.
-
-Front gates on push 1: **cosine PASS** (instruction `0.651`, verifier `0.825`,
-fingerprint `0.786`, threshold `0.9`) — a fresh domain in a subcategory that
-already had two delivered tasks. Push 2 changed only `task.toml` and left both
-compared facets **byte-identical**; cosine passed again, which is a third
-confirmation that in-flight PR heads are not in the comparison corpus.
-
-Only static blocked, on one line: `[metadata].artifact_type` value
-`report_or_summary` is not in the closed set — the taxonomy calls it
-`document_or_report`. Check `references/diversity-taxonomy.toml` before writing
-those two lists; the failure skips every downstream gate.
-
-Two generator lessons worth carrying, both measured here:
-
-- **Emergent structure has to be planted, not seed-searched.** The tie-break
-  crux needed held-out circuits whose recursion ran two levels deep. Points ties
-  among 26 entrants collide in pairs and never in threes: **0 hits in 400
-  seeds**, and the three "no recursion" readings survived every circuit in the
-  corpus. Constructing five reserved entrants with a designed six-hand
-  mini-tournament took them to caught on **19 of 19**. The expensive half is
-  protecting the plant — four separate later passes (the contending post, the
-  repeat-id fault, a same-instant plant sampling the whole roster, and holding
-  records back as posts when the pending tree is absent) each silently corrupted
-  it. Keep a `protected` id set, derive a `plain` list, and make every later pass
-  draw from `plain` only.
-- **Search the fixture for its own measure-zero witness.** A sheet landing
-  *exactly* on the byte budget is ~1-in-230 per sheet, and pinning it to a lucky
-  seed lost it three times in a row as unrelated generator edits reshuffled the
-  packing. A `brim_search` flag with a deterministic retry loop inside
-  `build_store` — build, reckon into a temp dir, keep the first plan that lands a
-  sheet on the bound — is stable across pins and self-heals across every later
-  change.
-
-Final local gate on the pushed head: blindness table **14 of 39 readings blind on
-the shipped circuit and wrong on 4–19 of 19 protected ones**, all eleven crux
-readings among them; mutation sweep **161 probes, 0 anchor misses, 0 survivors,
-none caught by a single circuit**, no-op control green; Harbor-style oracle
-`1.0` / nop `0.0`; and candidates carrying the naive `crown`, `hold` and knot
-readings each pass every live-circuit check and still score `0`.
-
-## Games Puzzles and Interactive Simulation / Interactive text games — dynamo-568d798 first push (2026-08-22)
-
-Repo `handshake-project-dynamo/dynamo-568d798-games-puzzles-and-interactive-simulation`,
-PR #1, head `d122117`, task `dynamo/lanternfall-restage`.
-
-**Mold:** the e320824 repair-in-place engine ported into a parser-game world
-build. The agent writes `/app/lanternfall_restage.py`, which sifts packed
-"passages" and unapplied "revisions" against six ordered refusal causes, applies
-moves in sequence order, fuses twins on a five-part key, re-takes marks, repacks
-under a record bound and a byte bound, rebuilds a per-leaf byte-offset index,
-walks a progression table, files refusals with ordinals, spends `revisions/` and
-`drafts/`, and writes 39 counters. `STAGE_CANON.md` states everything.
-
-**The crux (new, and the reusable part):** a *puzzle-progression* least fixed
-point. A way is walked only once its `head` has been stood in AND every token in
-its `keys` is in hand, and lands the walker `cost` turns after the LATEST of
-those moments — so scene turns and token turns are one mutually recursive fixed
-point, not a BFS. Two further columns are second computations over the same
-structure: `route` (distinct scenes on SOME self-supporting run, a union over
-runs) and `linchpin` (lowest token a scene cannot be reached without, answered by
-striking every way demanding a code and re-walking).
-
-**The starve is graph shape, exactly as in the auth/network-forensics
-playbooks.** The shipped playhouse is one act, every way one turn, every key in
-hand before the way that wants it, one run into each scene. On it a single sweep
-in packed order settles every turn, `route == depth + 1`, and the lowest key
-demanded on the way IS the linchpin. Blindness table: **13 of 24 plausible
-one-line misreadings left the shipped house byte-identical and were wrong on 9 to
-19 of 19 protected houses.**
-
-**First-push gate results:** changes ✅, cosine ✅ (instruction 0.6343, verifier
-0.8563, fingerprint 0.8006 — a fresh domain in a subcategory with many delivered
-tasks), static 25/25 ✅, Dynamo eval **30 PASS + 1 N/A, zero failures**,
-duplicate check UNIQUE ✅, validation ✅ (platform oracle 1.0 / nop 0.0),
-ratelimit ✅. pass@2 in flight.
-
-**Two mechanical findings worth carrying:**
-
-- Two probes in the first sweep were *provably* unkillable rather than
-  unwitnessed: a `(seq, file, line)` sort tie-break (Python's stable sort already
-  gives line order, so dropping `line` is a no-op) and preserving twin-group
-  insertion order (a later sort erases it). Both were **removed from the engine
-  and the canon** rather than witnessed — an inert clause QC C3 can mutate for
-  free is worse than no clause. Reaching 0 survivors then needed forge work:
-  near-twins differing only in `cost` and only in `first`, twins whose `seq`
-  ties, redraws that genuinely change the `drop`, a stale `refused/*.rej` the
-  restage must clear, sweep houses whose stranded warren holds more leaf files
-  than the restage writes back, and four new fault kinds.
-- An empty-satchel `-` marker in the roster was an unwitnessed branch. Removing
-  the convention outright (satchels are always one or more codes joined by `+`)
-  was cheaper than planting a witness — and handing some acts TWO satchel tokens
-  is what makes the `+` split load-bearing.
-
-## Systems Infrastructure and Operations / Network configuration
-
-**Repo:** `dynamo-07ecbf9-systems-infrastructure-and-operations` PR #1 ·
-`dynamo/fabric-recompile` · head `1030da4` · **ALL-GREEN and `accepted` on the
-first substantive push** (2026-08-22). Local playbook with full detail:
-`~/.claude/projects/-Users-utkarsha-Documents-Project-1/memory/dynamo-systems-infrastructure-network-configuration-playbook.md`.
-
-### The mold
-
-The `warrantbook-reissue` repair-in-place engine (Security / Authentication and
-authorization) ported into a fresh subcategory — third confirmation that porting
-a proven engine into a subcategory it has never appeared in clears the front
-gates first try. A stranded route-plan compiler leaves packed `plan/` bundles, an
-unapplied `pending/` queue and a scratch tree; the agent writes
-`/app/fabric_recompile.py <fabric_dir>`, which sifts against six ordered refusal
-causes, applies changes in `seq` order (files numbered in flush order), merges
-coincident sessions on a five-part key, re-takes digests, repacks under two
-bundle bounds, rebuilds a per-bundle byte-offset index, settles the
-advertisement scope into `SCOPE.tsv`, files refusals with collision ordinals,
-spends the evidence and writes 38 counters. `RECOMPILE_RULES.md` states all
-twelve sections with no gaps, which is what keeps QC B5 and Dynamo eval
-`unambiguous` green.
-
-### The crux: put the state variable in the state, not on the node
-
-A route class travels as a state `(router, allowance)`. A zone border seeds its
-classes at 5; an active session of relay allowance `r` takes a state of
-allowance `a` to `min(r, a - 1)`, carrying a `(cost, hops)` label relaxed to a
-least fixed point. The cheapest chain into a router may arrive with nothing left
-to relay while a dearer chain is the only one that carries on, so a per-router
-best-cost-plus-best-allowance reading is wrong. `carriers` is a second walk over
-the same product graph, backwards over tight steps from every landing that
-attains the keystone's least label.
-
-The shipped fabric hides all of it: one uplink per router (a tree, so one chain
-and one state per router), every session at the relay ceiling (so
-`min(r, a-1) == a-1`), no chain long enough to spend its allowance (so
-`installs == adverts` on every row), nothing back-dated, no equal-cost pairs (so
-`carriers == hops + 1`). **Blindness table before the push: 15 of 26 plausible
-misreadings left the shipped fabric byte-identical and were wrong on 15 to 20 of
-20 protected fabrics; the headline was wrong on 20 of 20.**
-
-### Measured
-
-Cosine instruction `0.6468`, verifier `0.8681`, fingerprint `0.7966` (threshold
-`0.9`). Dynamo eval 30 PASS / 1 N/A / 0 failures. Duplicate UNIQUE. Validation
-Docker/Oracle/Nop all green. **pass@2 1 solved / 1 valid-fail / 0 timeouts,
-"Rerun Recommended: NO".** AVA PASS, deep review PASS with three advisories,
-tier1 PASS, all 37 QC checks and qc_gate PASS on the first push with an empty
-`QC-FIXES-B64`. **pass@5 0 solved / 3 good-valid-fail / 0 soft-timeout / 2
-in-progress-timeout, avg@5 0.000.** Local: 144 mutation probes, 144 built, 0
-survivors, 0 caught-by-one; the same 144 installed as the submitted solution and
-graded over the whole 14-fabric graded corpus also had 0 survivors; verifier
-runs in 113 s under `--cpus=2 --memory=4g` against an 1800 s budget.
-
-### What actually drew the failures
-
-The algorithmic crux was the decisive limiter in only 1 of 5 pass@5 trials. Three
-trials failed on operational discipline — one ran the tool zero times on the live
-fabric, two ran it correctly once and then again as an idempotence check, which
-consumed the already-empty `pending/`, zeroed the counters and cleared
-`refused/`. Two more were in-progress timeouts at 5400 s, one of them at 40/43
-with residual `SCOPE.tsv` allowance-propagation bugs. **Irreversibility fired 3
-of 5.** What makes it fire is that the report is a graded artefact the second run
-overwrites with an account of a recompile that had nothing left to do — a
-redundant re-run is self-destructive rather than merely wasteful. AVA predicted
-the ratio before pass@5 ran and was wrong about the outcome; the gate passed
-comfortably.
-
-### Traps this build hit, all caught locally
-
-1. **A merge can produce a record its own sieve refuses.** The ascending *union*
-   of a coincident group's classes is capped at 8 by the schema; an amendment
-   that replaced one member's classes pushed a union to 9, so the second
-   recompile refused its own output and idempotence broke on one fabric. Fix:
-   restrict amendment targets to sids whose merge key is nobody else's, and
-   assert in the cross-check that every packed record passes the sieve. No
-   mutation sweep can see this.
-2. **A padding helper that overshoots by one group** made the "exactly at the tag
-   limit" witness count silently zero. Check witness *counts*, never just that
-   the planting code ran.
-3. **Unbounded state under mutation.** Deleting the spent-allowance guard sends
-   the allowance to -1, -2, ... and the probe never halts. Write that mutant as
-   `if budget < 0:` — still a real semantic change, and it terminates.
-4. **A provably-redundant guard is an unkillable probe.** Delete the guard and
-   the probe rather than trying to witness it.
-5. **Inert contract clauses** (group ordering, standing order) were immaterial
-   once the packing sort is total; reworded as set statements before pushing so
-   C3 has nothing unobservable to find.
-6. **Two bounds that cut at the same place are each inert.** With ~235-byte
-   records, `(11, 2740)` left the count bound surviving on 6 of 7 sweep fabrics.
-   A joint search over `limit x bytes`, scoring each bound's removal separately,
-   found `(13, 3335)`. Seed-search brimful fabrics separately: a bundle landing
-   exactly on the byte bound has measure ~1/230, and it is needed in two sweep
-   fabrics and one graded fabric.
-7. **Equal-cost multipath does not arise by chance.** Duplicating a session at
-   the same weight left all three `carriers` misreadings wrong on 0 of 20. An
-   explicit diamond — one border, two fresh intermediates, one fresh tip,
-   weights chosen so the two chains cost the same, and the two last hops at
-   different relay allowances — lit up all three at 16 of 20.
-8. **Docker Desktop on macOS cannot bind-mount `~/Documents`;** stage
-   `solution/`, `tests/` and `logs/` into `/tmp` and mount from there.
-
-### Reusable lesson
-
-Porting a proven repair-in-place engine into a fresh subcategory, with the crux
-re-keyed to that subcategory's own mathematics (here a product-graph shortest
-path over `(node, budget)` states rather than a delegation closure), cleared
-every gate on one push. The generalisable form of the crux is: **make the
-quantity that must be carried part of the state, and ship an instance whose
-shape makes the per-node collapse of that state exactly right.**
-
-## Machine Learning and AI / Model evaluation and benchmarking
-
-**Repo:** `handshake-project-dynamo/dynamo-942ec30-machine-learning-and-ai` ·
-PR #1 · head **`cce8a17`** · **ALL-GREEN on the first substantive commit**
-(2026-08-22). Earlier delivered task in this subcategory on this account:
-`dynamo/seal-foundry` (`dynamo-56ae913`, repo already deleted → assume it is in
-the cosine corpus; avoid foundry/docket/chit/seat/panel vocabulary).
-
-### The mold
-
-**Repair-in-place with a complete contract**, ported from the
-`Security / Authentication and authorization` playbook. `dynamo/benchloft-refold`:
-an offline evaluation service's **result-reuse carryover store** whose
-consolidation job died mid-fold. The agent writes `/app/benchloft_refold.py` —
-one stdlib file — which sifts packed `shelf/` leaves and an unfolded `pending/`
-queue against six ordered refusal causes, folds operations in `seq` order (files
-numbered in flush order), fuses twins on a five-part key, re-takes stamps,
-repacks under a record bound *and* a byte bound, rebuilds a byte-offset index,
-resolves reuse provenance into `PROVENANCE.tsv`, files refusals with collision
-ordinals, spends `pending/` and `scratch/`, and writes forty counters.
-`BENCHLOFT_CONTRACT.md` states every bit of it, which is what keeps QC B1/B5
-green.
-
-A carryover is a genuinely ML-eval object — run `donor` → run `heir`, naming
-benchmark `tasks`, with a `depth` (how far the reuse may be passed on) and a
-`drift` (the divergence one reuse hop introduces). That is real eval-harness
-caching, not a renamed access broker.
-
-### The crux: a second *minimum* over the same graph, not another rule
-
-The closure keeps **five** maps, not three: report-steps, relay-steps,
-**report-slip, relay-slip**, reach.
-
-- `slip` is the **least total drift** over the chains that let a run report the
-  keystone. It is a different minimum from the fewest-carryovers count and
-  routinely comes from a different chain — a long chain of quiet hops carries
-  less drift than a short chain of noisy ones.
-- `witnesses` counts the distinct donors on a chain whose total drift is
-  *exactly* that least, which needs a forward prefix plus a **backward priced
-  continuation**.
-
-This confirms the auth-playbook finding directly: a stated rule converts nobody,
-however intricate; what breaks the ceiling is a **second, different computation
-over the same structure**. The shipped loft is starved so that computation is
-invisible on it — `parents=1` (a tree), every live carryover at the depth
-ceiling, and **drift 0 on every live carryover**, so `report == relay`,
-`slip == 0` everywhere and `witnesses == span` on every row. The analyser's own
-words: *"the tree-shaped live loft (drift=0, one donor per heir) masked all
-bugs, consistent with the author's blindness table warning."*
-
-### Measured
-
-| gate | result |
-|---|---|
-| cosine | PASS — instruction **0.6502**, verifier **0.8551**, fingerprint **0.8212** (thr 0.9) |
-| Dynamo eval | **30/30 PASS + 1 N/A**, zero failures |
-| duplicate | UNIQUE, closest lexical 0.093 |
-| validation | Docker / Oracle / Nop ✅ |
-| **pass@2** | **PASS** — 1 valid fail on the crux, 1 excluded harness timeout |
-| deep_review | PASS, **no blocking issues** |
-| ava_review, tier1 | PASS |
-| qc_eval, qc_exec, **qc_gate** | PASS — 34 checks, **empty `QC-FIXES-B64:W10=`** |
-| **pass@5 (`trials`)** | **0 solved · 4 good-valid · 0 soft-timeout · 1 in-progress-timeout · avg@5 = 0.000 — "Difficulty OK"** |
-
-`difficulty_crux`, `task_specification`, `reward_hacking` and
-`approach_validity` **PASS on all five** trials.
-
-**Blindness table before the push: 22 of 29 plausible misreadings were
-byte-identical on the shipped loft and wrong on 9 to 22 of the 22 protected
-lofts** (12 graded + 10 sweep) — better than `e320824`'s 16 of 22. The strongest
-family were the six drift variants plus `witnesses == span`, wrong on **22/22**.
-
-### What drew the four valid fails
-
-Four independent agents, one sub-problem:
-
-1. `_witnesses` written as **unbounded recursion** with the memo dict keyed only
-   *after* the recursive calls return → `RecursionError` at depth ~997.
-2. **`witnesses` returns 0 on every row** — backward walk absent; drift tracking
-   conflated with length-improvement tracking.
-3. `witnesses` **tracking only the immediate donor** rather than every donor on a
-   minimum-drift chain.
-4. **Closure relaxation terminating short of a fixed point** — right on the tree,
-   wrong on back-dated / looping DAGs.
-5. (near-miss, 47/49) **orphan adjustments vs void adjustments conflated** in the
-   counters — the only non-provenance failure.
-6. (operational) one agent ran the buggy script on the live loft at step ~11 and
-   spent `pending/`+`scratch/` irreversibly.
-
-Every one is the *natural code*, not a misreading of the prose.
-
-### Hurdles — nothing blocked on the pipeline; all four were local
-
-1. **Mutation-sweep survivors.** First run left 4: `sift_calls_at_one`,
-   `shelf_capacity_binds`, `shelf_capacity_at_the_bound`,
-   `shelf_budget_at_the_bound`. Fixes: raise `history` to ≥15 on every sweep loft
-   so the bound-planter has ≥9 non-live singletons to sit on the edges; add a
-   `label_long_odds=0.0` loft so shelves fill on **count** before bytes (at 30%
-   long labels the two bounds cut in the same place and each is inert — the same
-   finding as Security / Network Forensics); seed-search two sweep lofts for a
-   shelf landing *exactly* on 2790 bytes.
-2. **Thin probes** (killed by one loft only) → added `sweep-h/-i/-j` and a
-   `stray_history` knob that makes some settled carryovers name a run no live
-   carryover ever reaches.
-3. **A permanently thin probe was a design smell, not a corpus gap.** Two
-   separate `live = [... state == "live"]` filters gave two flippable anchors and
-   the second was killable by one loft only. Passing the already-filtered list
-   into the closure left **one** filter site and the probe went away — the
-   "remove provably-equivalent comparisons rather than witness them" lever.
-   Ended at **158 probes, 0 survivors, 0 thin, control green, ~50 s**.
-4. **Instruction cosine, caught locally before pushing** — see below.
-
-### The cosine finding: restructure the instruction, do not reskin it
-
-A first draft written in the mold's **paragraph skeleton** ("Overnight the X job
-died mid-fold… Put the tool at… Do not work from what the files look like… Two
-warnings…") measured **0.9108 local token-cosine against the delivered
-`e320824` instruction** despite an entirely different domain vocabulary.
-Rewriting it with a different opening (deliverable first), a different order,
-shorter sentences and a **much shorter enumeration** took local self-sim to
-**0.79** and the service score to **0.6502 — the lowest this mold has scored**.
-The enumerated *"the A, the B, the C, … and how the result is judged"* sentence
-is the single highest-overlap object in the file.
-
-**Counter-movement: the verifier facet has crept up, 0.805 (`e320824`) → 0.8551
-here.** Any follow-up push on this lineage must change `tests/test_outputs.py`
-substantively, not cosmetically.
-
-### Gate tensions
-
-The QC-B5-vs-pass@ tension resolved the same way as in Security / Authentication:
-**state everything, and put the difficulty in the shape of the shipped
-instance.** The cost is that no single stated rule converts solvers — which is
-exactly why the crux had to be a *second minimum* over the same graph rather
-than a further clause.
-
-### Advisories deliberately not acted on
-
-All non-blocking, and any follow-up push would have re-run cosine against a
-now-indexed 0.855 verifier facet for no gate benefit: missing per-function
-docstrings in `test_outputs.py` (graded PASS); QC's note that widening
-`SHELF_BYTE_BUDGET` 2790 → 2792 still earns reward 1 (inherent to a byte budget
-with ~250-byte records); and `require_isolation()` failing closed off-root
-(intentional, and `e320824` shipped the same).
-
-### Operational notes
-
-- `[agent] timeout_sec = 5400`, `[verifier] timeout_sec = 1800`; the suite runs
-  in 37–75 s in-container. **pass@2 pins its own 3600 s override** and cut one of
-  the two trials off ~1800 s early; deep_review classified it as a harness
-  artifact and excluded it.
-- **`docker exec` without `-i` silently swallows a heredoc.** A wrong-output
-  probe reported reward `1` because the patch script read EOF and never ran.
-  Always `docker exec -i <container> python3 - <<PY`.
-- Seed-search the exact-byte-bound shelf **last**, after the forge is final — any
-  forge change reshuffles it.
-
-## Build Dependency and Release Management / CI/CD pipelines
-
-`handshake-project-dynamo/dynamo-6459436-build-dependency-and-release-management`,
-PR #1, head `5300911` — **ALL-GREEN on the first substantive push** (2026-08-22).
-Full playbook in the auto-memory file
-`dynamo-build-dependency-and-release-management-ci-cd-pipelines-playbook.md`.
-
-**The mold.** Repair-in-place with a complete contract, ported from the
-Security / Authentication-and-authorization ALL-GREEN. `dynamo/gantry-cutover`: a
-monorepo build gantry's overnight *incremental* cutover died mid-pass. The agent
-writes `/app/gantry_cutover.py`, which sifts a flushed `spool/` against five ordered
-causes, applies a `queue/` of `enlist`/`revise`/`retire` amendments in **sequence**
-order (queue files are numbered in flush order) judged against the state at that
-instant, prunes dead edges, resolves fingerprints and surfaces, computes critical
-seconds, times the rebuild against per-suite runner slots and gate exclusivity, and
-writes `CUTOVER.tsv`, `plan.ndjson`, `refused.tsv`, a repacked/resealed `spool/` and
-31 counters. `CUTOVER_HANDBOOK.md` states everything, in twelve normative sections.
-
-**The crux is early cutoff.** A target's *fingerprint* folds its files' `body`
-digests with the resolved *surface* of each dependency; it runs when that differs
-from its recorded stamp. Its *surface* folds its files' exported `face` digests with
-the surfaces of the dependencies it **re-exports** (`carries ⊆ deps`), and a cached
-target keeps the surface it already had. A body-only change therefore rebuilds a
-target and leaves everything below it cached — real ABI-hash behaviour, and exactly
-what cone invalidation gets wrong.
-
-**The shipped pipeline is a quiet estate**, with five measured degeneracies: target
-ids already in dependency order; every target re-exporting all its dependencies;
-every revised file moving its `face` as well as its `body`; runner slots to spare;
-no two targets sharing a gate. A blindness table over 32 plausible misreadings
-measured **12 byte-identical on the shipped pipeline and wrong on 8–16 of 22
-protected ones**. The other 20 are caught on the shipped pipeline on purpose, so the
-sieve, the ordering, the byte layout and the counters all give honest local signal.
-
-**Measured.** cosine instruction **0.6607** / verifier 0.8382 / fingerprint 0.7608
-(threshold 0.9); static 25/25; rubric PASS; duplicate UNIQUE; validation
-oracle ✅ nop ✅; **pass@2 1 solved · 1 valid-fail · Rerun Recommended: NO**; AVA PASS
-with no findings; deep_review PASS with 0 blocking; tier1 + qc_eval + qc_exec +
-qc_gate clean with **37 checks and an empty `QC-FIXES-B64` on push 1**;
-**pass@5 1 solved · 3 good-valid · 0 soft-timeout · 1 in-progress-timeout ·
-avg@5 0.200**.
-
-**What drew the valid fails.** One was the intended crux — the analyser's words:
-*"All 9 complex held-out pipelines failed; the 3 simplest passed — a signature of the
-fingerprint/surface shape trap the author identified as the intended crux."* That
-trial marked **every** target `cached` (`bundles_run` 0 vs 4). The other two were
-**operational**: one ran draft scripts on the live pipeline at steps 8–18 and spent
-`queue/`/`stage/` before its (correct, 40/42) script ever ran; one built a correct
-tool, passed all twelve held-out pipelines on `/tmp` copies, then explicitly declined
-to run it on production. **The irreversibility lever fired twice as hard as the
-algorithmic one, now on two consecutive ALL-GREENs of the repair-in-place mold.**
-
-**Two reusable findings.**
-
-1. *An unobservable rule is not a starve.* The scheduler was first designed with a
-   per-runner **lane id** reported in `CUTOVER.tsv`. With no contention the pick
-   *order* still decides which lane id each job gets, so every scheduler misreading
-   was DIFFERENT on the shipped pipeline and the starve was worth nothing. Replacing
-   lane ids with a **per-suite slot count**, and reporting only `start`/`finish`,
-   made five misreadings blind in one edit. Ask what the graded output *reports*, not
-   what the rule *does*.
-2. *The mirror mistake is an inert rule.* Writing the cached `crit` column as a
-   literal `"0"` made the `crit[tid] = 0` assignment dead code and its mutation
-   survived the sweep. Same session also removed a `cost` tie-break in the priority
-   key and a `retire` self-dependency guard, both unwitnessable.
-
-**Operational.** `[agent] timeout_sec = 5400`, `[verifier] timeout_sec = 1800`; the
-suite runs in 35 s in-container (42 tests, 151 mutation probes, 0 survivors, 0 caught
-by one pipeline). pass@2 took 1h6m, trials 1h38m. The single in-progress timeout was a
-textbook Terminus-2 heredoc wedge — ~40 of 90 minutes on two LLM calls generating a
-~600-line script, both corrupted by heredoc artifacts, timing out with a 17-line stub
-on disk. Treat ~600 lines as the ceiling for this agent. **`ctrf.json` was absent in
-all seven trials** because `test.sh` omits `--ctrf`; nothing failed, but the analyser
-had to read golden-vs-agent values out of `verifier/test-stdout.txt`. Pass
-`--ctrf /logs/verifier/ctrf.json` next time.
-
-## File and Media Operations / Text editing and manipulation
-
-### 2026-08-23 — `dynamo-84f73e9-file-and-media-operations` (`dynamo/folio-recompose`) — ALL-GREEN, PR #1, head `eba1b8f`
-
-- **Mold:** repair-in-place with a complete contract, ported from the
-  `dynamo-e320824-security` engine into a typesetting skin. Quires of packed
-  passages + an unapplied `markup/` + a workbench tree → sift on six ordered
-  causes, apply in `seq` order, fuse co-set passages, re-stamp, repack under a
-  record bound and a byte bound with a byte-offset index, resolve an
-  inherited-trait closure into `TRAITS.tsv`, file spoiled lines with ordinals,
-  spend the evidence, write 33 counters. `COMPOSITION_RULES.md` states
-  everything in twelve sections; nothing is withheld.
-- **Measured:** pass@2 `db1cbcf` 0 solved / 0 valid / **2 in-progress timeouts
-  (BLOCKED)**; `eba1b8f` 0 solved / 1 valid-fail / 1 timeout ("plausibly hard",
-  Rerun: NO). pass@5 on `eba1b8f`: **0 solved · 4 good valid · 1 timeout ·
-  avg@5 0.000 — PASS.** Cosine 0.681 / 0.809 / 0.789 on both pushes. QC clean
-  on the first cycle (`QC-FIXES-B64` = `[]`), AVA no findings, deep_review,
-  tier1 and Dynamo eval (17/17) all first-time green.
-- **The crux that drew the fails**, analyser verbatim: *"All five trials fail
-  this graph-shape trap — the intended crux."* The shipped folio is a depth-3
-  tree with every live passage at the depth ceiling, so what a partial may set
-  and what it may hand on coincide, `reach == span + 1`, and one pass in packed
-  order settles the closure. Held-out folios carry depth-zero leaf inclusions,
-  spent budgets, back-dated passages and two-route partials.
-- **Second, text-native starve worth reusing in this subcategory:** `text` is
-  capped in **characters** while the quire fill, the `offset` column and the
-  `bytes` column are **UTF-8 bytes**, and canonical JSON uses
-  `ensure_ascii=False`. The shipped edition is plain seven-bit English, so the
-  two counts coincide there and diverge on every graded edition. Fully stated,
-  structurally invisible on the sample, and cheap to build.
-- **The lever that mattered: trim volume, never traps.** The blocked head had
-  2/2 in-progress timeouts — one agent 12 seconds from the live run, the other
-  stuck on `repeat_pid` scope — and *neither reached either crux*. The sticky
-  and the difficulty suggestion both asked for a bigger `[agent].timeout_sec`;
-  that is not available, because **pass@2 pins 3600 s regardless of task.toml
-  while pass@5 honours the declared value** (5400 here). What worked instead,
-  in one commit: dropped `slug`/`uses` from the schema (14 → 12 keys), dropped
-  the six per-cause counters (39 → 33), gave `root` its own stated `d-NN` shape
-  clause, stated which causes can arise on an `amend`/`strike`, and replaced
-  the "never run a draft" framing with "a tool that is right and has been run
-  beats one still being polished". Timeouts 2/2 → 1/5, `difficulty_crux` FAIL →
-  PASS on every trial, and the blindness table barely moved (20 → 19 of 27).
-- **Cosine needed designing around before the first push.** A first draft of
-  the two compared facets measured **0.9237 / 0.9478** locally against the
-  delivered task whose engine was ported. Rewriting both from scratch — a
-  handover-note format for the instruction, a class-grouped suite with the
-  corpus surveys moved into the private audit module — gave 0.866 / 0.826
-  locally and 0.681 / 0.809 at the service. Porting a mold to a fresh
-  subcategory clears cosine on push 1 only if the *prose skeleton* is rewritten
-  too, not just the nouns.
-- **Local gate lessons:** the first mutation sweep left 9 survivors, every one
-  a missing fixture rather than a bad probe (no bound planting on small folios,
-  no text with more bytes than characters, no DEL fault, no trailing blank
-  line, no brimful quire). Both quire bounds must *strictly* decide a split
-  somewhere — measure `only_count` / `only_bytes`, not "closed at N"; trimming
-  the schema shrank passages and forced a re-tune to 7 records / 2200 bytes.
-- **Known gap for the next task here:** one pass@5 trial hard-coded
-  `2 <= len(charter) <= 8` for the `ROOTS.tsv` roster and crashed on the nine
-  folios with single-trait charters — the rules bound the *passage* traits list
-  but never bound the roster's charter. Bound every list the fixtures vary, not
-  only the ones the schema section describes. QC also advised (non-blocking)
-  that canonical-JSON escaping of `"` and `\` is left implicit and unwitnessed.
-  Neither was fixed: an all-green head must not be redrawn.
-
-
-## Games Puzzles and Interactive Simulation / Board and card games
-
-`dynamo-c31fb12` (`dynamo/trumpline-reckon`), PR #1, **ALL-GREEN on head
-`8b592c3`** (2026-08-23). Three pushes. Two delivered tasks already sat in this
-subcategory — `dynamo/veilbound-policy` and `dynamo/calibrate-cairns`, both
-optimise/recover molds — so the repair-in-place shape is a third here, and it
-cleared enforced cosine comfortably on push 1.
-
-**The mold.** A card league's season reckoning died mid-fold. The agent writes
-`/app/trumpline_reckon.py`, which sifts packed `sheets/` and an unapplied
-`pending/` against six ordered causes, applies what stood in posting order, fuses
-the hands two scorers wrote down twice on a four-part key, re-takes the sigils,
-repacks under a record bound *and* a byte bound with a per-sheet byte-offset
-index, reckons `PLACINGS.tsv`, files refusals with collision ordinals, spends the
-pending and scratch trees and writes 39 counters. `TRUMPLINE_CODEX.md` states all
-of it in twelve sections, which is what keeps QC B5 green.
-
-**The crux** is three standings columns whose consequences the shipped circuit
-hides: `crown` (a run is a chain of *hands*, not players, each dealt strictly
-after the one before settled and carrying a strictly greater stake), `hold`
-(longest winning run at **one** table), and a knot of equal-points entrants
-reckoned apart **recursively**, each level restricted to the group it is
-separating. The shipped circuit gives every entrant one table, deals in bands so
-stake and clock rise together, and knots nothing deeper than one reckoning.
+## Data Querying and Databases / SQL querying
+
+Repo `handshake-project-dynamo/dynamo-0a86356-data-querying-and-databases`,
+PR #1, heads `b75b6d4` → `75e86fa` → **`ebeebbd` ALL-GREEN** (2026-08-23).
+Task `dynamo/headgate-settle`.
+
+**Mold.** Analyzer-tool over a read-only SQLite ledger with a complete contract.
+The agent writes `/app/headgate_settle.py <season_dir>`, which closes an
+irrigation district's water season out of a 13-table ledger and writes four TSVs
+and a JSON report back into the season directory. `DITCH_BYLAWS.md` states all
+16 sections, so qc_eval/qc_exec/qc_gate passed clean on every push and B5 never
+came up. The difficulty is entirely in the shape of the shipped instance.
 
 **Measured.**
 
 | head | pass@2 | pass@5 |
 |---|---|---|
-| `eca02ee` | 2 solved · 0 valid-fail — BLOCKED, "too easy" | — |
-| `8b592c3` | **0 solved · 1 valid-fail · 1 in-progress-timeout**, Rerun: NO | **2 solved · 3 good-valid · 0 soft-timeout · avg@5 0.400 — PASS** |
+| `b75b6d4` | 0 solved · 2 valid · 0 timeouts | 4 solved · 1 good valid · avg 0.800 — BLOCKED |
+| `75e86fa` | 1 solved · 0 valid · 1 in-progress timeout · "Rerun: YES" | never ran |
+| `ebeebbd` | 0 solved · 2 valid · 0 timeouts · "Rerun: NO" | **1 solved · 4 good valid · 0 timeouts · avg 0.200 — PASS** |
 
-Cosine passed all three pushes at instruction `0.651` / verifier `0.825` /
-fingerprint `0.786`. qc_eval + qc_exec + qc_gate clean with an empty
-`QC-FIXES-B64:W10=` (37 checks); AVA, deep_review, tier1, Dynamo eval and the
-duplicate check never blocked. Blindness table on the final head: **15 of 40
-readings byte-identical on the shipped circuit and wrong on 2–19 of 19**
-protected ones. Mutation sweep: **172 probes, 0 survivors, none caught by a
-single circuit**.
+Cosine passed 3/3 (instruction 0.707 → 0.706, verifier 0.824 → 0.814,
+threshold 0.9). Dynamo eval 31/31, duplicate UNIQUE, AVA PASS, deep_review PASS
+with zero blocking issues, tier1 PASS.
 
-**What broke the 2/2 ceiling — third confirmation of the sampling-point-counter
-lever.** Head 2 had every rule stated and eleven natural misreadings already
-byte-identical on the shipped circuit, and both agents still got all three cruxes
-right in 41 and ~60 minutes of the 60-minute cap. The advisory suggestion asked
-to make the cruxes *inferential*; that was rejected, because the disclosure axis
-has been measured with both endpoints solving 2/2 and anything underdetermined
-draws a QC B5 Major. What worked was splitting the report 33 → 39 counters, six
-of them one line each — and the new idea worth copying is that **two of them are
-the cruxes counted rather than tabulated, chosen so each is an identity on the
-shipped circuit and only there**: `lanes_scanned` (entrant-and-table pairs)
-equals `entrants_placed` exactly when nobody moves tables, and `knots_reckoned`
-(groups reckoned apart at every depth) equals `knots_formed` exactly when every
-knot settles in one pass. Each crux gets a second, independent chance to be
-caught for one line of code, and B5 stays green because each counter is defined
-precisely in the report table.
+**What drew the fails.** 3 of the 4 pass@5 failures were the carriage factor,
+quoted: *"a network traversal that is correct on Bellcourt's branching-only
+(tree-shaped) topology but wrong on held districts with rejoining laterals …
+Bellcourt masks the defect entirely."* The rule is stated in full; it converts
+anybody because the natural code — a DFS that marks nodes seen — coincides with
+the correct answer on a tree and only on a tree.
 
-**Which crux drew the valid fails.** The three pass@5 failures were stratified,
-with `task_specification` and `approach_validity` PASS on all five trials: one
-ran an incomplete draft on the live circuit at step 9 and destroyed it while the
-finished script was algorithmically correct; one wrote a structurally correct
-tool whose `HANDS.tsv` differed by **5 bytes across 59 records on every circuit**
-(`difficulty_crux` PASS — the intended crux); one stored the refusal `text` with
-a trailing newline where the reference splits on `"\n"`. Only one of three landed
-on the algorithmic crux — the byte-level conventions and the one-shot operational
-discipline carried the other two, so keep all three surfaces.
+**The ratchet that broke a 4/5 ceiling.** A complete, intricate spec on its own
+solved 4/5. What flipped it to 1/5 was three subsystems that *re-key the whole
+computation* and are each degenerate on the shipped season: dated reach outages
+(so the network and every carriage factor become functions of the day), a daily
+headgate capacity filled in water-right seniority order with orders that do not
+fit passed over rather than ending the walk, and works charges carried only by
+water taken on or after the day they were incurred. Blindness went 19/29 →
+33/40 misreadings byte-identical on the shipped season.
 
-**Hurdles, in order.** (1) static rejected `[metadata].artifact_type` value
-`report_or_summary`; the closed set calls it `document_or_report` — one line, but
-it skips every downstream gate and costs a whole cycle. (2) pass@2 "too easy" on
-head 2. Nothing else blocked on any push.
+**Levers measured not to work here.** 45 report counters drew zero attributed
+failures across ten trials; the credit subsystem (scope, expiry, issue order)
+was never once named in a fail analysis; widening the implementation surface
+measured zero.
 
-**Levers measured not to work here.** A shape starve alone (head 2). Adding
-volume — one head-2 trial used the entire cap. And the restorable spare archive
-from `dynamo-2d0d4c3`: prepared and fully validated here (seven abuse routes
-graded — restore-and-stop 0, reckon-then-restore-over-it 0, unpack-inside-the-
-graded-dir 0, leave-a-copy-there 0, reckon-a-copy-only 0, restore-twice-then-
-reckon 1, delete-the-spare-after 1) and then deliberately **not pushed**, because
-head 2's taxonomy showed 0 timeouts. That fix is for the timeout signature, not
-for irreversibility as such — here irreversibility fired as a *graded* failure.
+**Reusable operational findings.**
 
-**Operational.** `[agent] timeout_sec = 5400`, `[verifier] timeout_sec = 1800`.
-AVA flagged that pass@2 ran under the pinned 3600 s override, which is what
-produced the one in-progress timeout on a ~400–600 line implementation.
+- *Rebuilding SQLite fixtures per mutation probe dominates the verifier.* The
+  first in-container oracle took **634 s**; caching one built ledger per slot and
+  copying it per probe, plus dropping the never-modified ledger digest from the
+  probe comparison, took it to **21 s**.
+- *Never grade a `.sqlite3` by its bytes.* Compare it by its rows, and exclude
+  the file and its sidecars from the tree digest.
+- *A prefix cap is order-independent.* A "spend in order" rule with a tie-break
+  is provably inert — total within is `min(total, cap)` whatever the order.
+  Ordering only bites once the rate moves mid-season.
+- *An exact-equality bound needs integer units.* `head <= spare` was
+  unwitnessable while heads were fractions; rounding the head up to whole units
+  and setting one season's capacity to an exact prefix sum of the busiest day's
+  queue made the inclusive bound bite on 10 of 21 seasons.
+- *Index witness cohorts from the base member count, not the roster length* —
+  cohorts indexed from `len(members)` landed on synthetic members added at the
+  end and silently destroyed their witnesses.
+- *pass@2 pins `override_timeout_sec=3600` whatever `task.toml` says*; pass@5
+  honours the file. An in-progress timeout is not a difficulty verdict: the fix
+  was cutting seven bare `len(table)` counters and asking for a runnable tool to
+  be left behind whatever state the run reaches — no rule, bound or crux
+  touched, exactly as the difficulty suggestion advised.
+
+**Known limitation left in.** §11's `keystone` says the pool leaves out reaches
+the member drew from and is `-` when nothing is left, but never says the pool is
+restricted to reaches with non-zero weight; the reference restricts it. One
+pass@5 trial read it literally and failed, with `decisive_rule_disclosed` and
+`spec_consistency` FAIL in its sub-analysis (the gating `task_specification`
+column was PASS on all five). One sentence fixes it; held back because the head
+was already all-green and a redraw is a coin flip.
