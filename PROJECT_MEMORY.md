@@ -4420,3 +4420,115 @@ ratelimit ✅. pass@2 in flight.
   the convention outright (satchels are always one or more codes joined by `+`)
   was cheaper than planting a witness — and handing some acts TWO satchel tokens
   is what makes the `+` split load-bearing.
+
+## Systems Infrastructure and Operations / Network configuration
+
+**Repo:** `dynamo-07ecbf9-systems-infrastructure-and-operations` PR #1 ·
+`dynamo/fabric-recompile` · head `1030da4` · **ALL-GREEN and `accepted` on the
+first substantive push** (2026-08-22). Local playbook with full detail:
+`~/.claude/projects/-Users-utkarsha-Documents-Project-1/memory/dynamo-systems-infrastructure-network-configuration-playbook.md`.
+
+### The mold
+
+The `warrantbook-reissue` repair-in-place engine (Security / Authentication and
+authorization) ported into a fresh subcategory — third confirmation that porting
+a proven engine into a subcategory it has never appeared in clears the front
+gates first try. A stranded route-plan compiler leaves packed `plan/` bundles, an
+unapplied `pending/` queue and a scratch tree; the agent writes
+`/app/fabric_recompile.py <fabric_dir>`, which sifts against six ordered refusal
+causes, applies changes in `seq` order (files numbered in flush order), merges
+coincident sessions on a five-part key, re-takes digests, repacks under two
+bundle bounds, rebuilds a per-bundle byte-offset index, settles the
+advertisement scope into `SCOPE.tsv`, files refusals with collision ordinals,
+spends the evidence and writes 38 counters. `RECOMPILE_RULES.md` states all
+twelve sections with no gaps, which is what keeps QC B5 and Dynamo eval
+`unambiguous` green.
+
+### The crux: put the state variable in the state, not on the node
+
+A route class travels as a state `(router, allowance)`. A zone border seeds its
+classes at 5; an active session of relay allowance `r` takes a state of
+allowance `a` to `min(r, a - 1)`, carrying a `(cost, hops)` label relaxed to a
+least fixed point. The cheapest chain into a router may arrive with nothing left
+to relay while a dearer chain is the only one that carries on, so a per-router
+best-cost-plus-best-allowance reading is wrong. `carriers` is a second walk over
+the same product graph, backwards over tight steps from every landing that
+attains the keystone's least label.
+
+The shipped fabric hides all of it: one uplink per router (a tree, so one chain
+and one state per router), every session at the relay ceiling (so
+`min(r, a-1) == a-1`), no chain long enough to spend its allowance (so
+`installs == adverts` on every row), nothing back-dated, no equal-cost pairs (so
+`carriers == hops + 1`). **Blindness table before the push: 15 of 26 plausible
+misreadings left the shipped fabric byte-identical and were wrong on 15 to 20 of
+20 protected fabrics; the headline was wrong on 20 of 20.**
+
+### Measured
+
+Cosine instruction `0.6468`, verifier `0.8681`, fingerprint `0.7966` (threshold
+`0.9`). Dynamo eval 30 PASS / 1 N/A / 0 failures. Duplicate UNIQUE. Validation
+Docker/Oracle/Nop all green. **pass@2 1 solved / 1 valid-fail / 0 timeouts,
+"Rerun Recommended: NO".** AVA PASS, deep review PASS with three advisories,
+tier1 PASS, all 37 QC checks and qc_gate PASS on the first push with an empty
+`QC-FIXES-B64`. **pass@5 0 solved / 3 good-valid-fail / 0 soft-timeout / 2
+in-progress-timeout, avg@5 0.000.** Local: 144 mutation probes, 144 built, 0
+survivors, 0 caught-by-one; the same 144 installed as the submitted solution and
+graded over the whole 14-fabric graded corpus also had 0 survivors; verifier
+runs in 113 s under `--cpus=2 --memory=4g` against an 1800 s budget.
+
+### What actually drew the failures
+
+The algorithmic crux was the decisive limiter in only 1 of 5 pass@5 trials. Three
+trials failed on operational discipline — one ran the tool zero times on the live
+fabric, two ran it correctly once and then again as an idempotence check, which
+consumed the already-empty `pending/`, zeroed the counters and cleared
+`refused/`. Two more were in-progress timeouts at 5400 s, one of them at 40/43
+with residual `SCOPE.tsv` allowance-propagation bugs. **Irreversibility fired 3
+of 5.** What makes it fire is that the report is a graded artefact the second run
+overwrites with an account of a recompile that had nothing left to do — a
+redundant re-run is self-destructive rather than merely wasteful. AVA predicted
+the ratio before pass@5 ran and was wrong about the outcome; the gate passed
+comfortably.
+
+### Traps this build hit, all caught locally
+
+1. **A merge can produce a record its own sieve refuses.** The ascending *union*
+   of a coincident group's classes is capped at 8 by the schema; an amendment
+   that replaced one member's classes pushed a union to 9, so the second
+   recompile refused its own output and idempotence broke on one fabric. Fix:
+   restrict amendment targets to sids whose merge key is nobody else's, and
+   assert in the cross-check that every packed record passes the sieve. No
+   mutation sweep can see this.
+2. **A padding helper that overshoots by one group** made the "exactly at the tag
+   limit" witness count silently zero. Check witness *counts*, never just that
+   the planting code ran.
+3. **Unbounded state under mutation.** Deleting the spent-allowance guard sends
+   the allowance to -1, -2, ... and the probe never halts. Write that mutant as
+   `if budget < 0:` — still a real semantic change, and it terminates.
+4. **A provably-redundant guard is an unkillable probe.** Delete the guard and
+   the probe rather than trying to witness it.
+5. **Inert contract clauses** (group ordering, standing order) were immaterial
+   once the packing sort is total; reworded as set statements before pushing so
+   C3 has nothing unobservable to find.
+6. **Two bounds that cut at the same place are each inert.** With ~235-byte
+   records, `(11, 2740)` left the count bound surviving on 6 of 7 sweep fabrics.
+   A joint search over `limit x bytes`, scoring each bound's removal separately,
+   found `(13, 3335)`. Seed-search brimful fabrics separately: a bundle landing
+   exactly on the byte bound has measure ~1/230, and it is needed in two sweep
+   fabrics and one graded fabric.
+7. **Equal-cost multipath does not arise by chance.** Duplicating a session at
+   the same weight left all three `carriers` misreadings wrong on 0 of 20. An
+   explicit diamond — one border, two fresh intermediates, one fresh tip,
+   weights chosen so the two chains cost the same, and the two last hops at
+   different relay allowances — lit up all three at 16 of 20.
+8. **Docker Desktop on macOS cannot bind-mount `~/Documents`;** stage
+   `solution/`, `tests/` and `logs/` into `/tmp` and mount from there.
+
+### Reusable lesson
+
+Porting a proven repair-in-place engine into a fresh subcategory, with the crux
+re-keyed to that subcategory's own mathematics (here a product-graph shortest
+path over `(node, budget)` states rather than a delegation closure), cleared
+every gate on one push. The generalisable form of the crux is: **make the
+quantity that must be carried part of the state, and ship an instance whose
+shape makes the per-node collapse of that state exactly right.**
