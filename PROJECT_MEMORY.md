@@ -4689,3 +4689,79 @@ with ~250-byte records); and `require_isolation()` failing closed off-root
   Always `docker exec -i <container> python3 - <<PY`.
 - Seed-search the exact-byte-bound shelf **last**, after the forge is final — any
   forge change reshuffles it.
+
+## Build Dependency and Release Management / CI/CD pipelines
+
+`handshake-project-dynamo/dynamo-6459436-build-dependency-and-release-management`,
+PR #1, head `5300911` — **ALL-GREEN on the first substantive push** (2026-08-22).
+Full playbook in the auto-memory file
+`dynamo-build-dependency-and-release-management-ci-cd-pipelines-playbook.md`.
+
+**The mold.** Repair-in-place with a complete contract, ported from the
+Security / Authentication-and-authorization ALL-GREEN. `dynamo/gantry-cutover`: a
+monorepo build gantry's overnight *incremental* cutover died mid-pass. The agent
+writes `/app/gantry_cutover.py`, which sifts a flushed `spool/` against five ordered
+causes, applies a `queue/` of `enlist`/`revise`/`retire` amendments in **sequence**
+order (queue files are numbered in flush order) judged against the state at that
+instant, prunes dead edges, resolves fingerprints and surfaces, computes critical
+seconds, times the rebuild against per-suite runner slots and gate exclusivity, and
+writes `CUTOVER.tsv`, `plan.ndjson`, `refused.tsv`, a repacked/resealed `spool/` and
+31 counters. `CUTOVER_HANDBOOK.md` states everything, in twelve normative sections.
+
+**The crux is early cutoff.** A target's *fingerprint* folds its files' `body`
+digests with the resolved *surface* of each dependency; it runs when that differs
+from its recorded stamp. Its *surface* folds its files' exported `face` digests with
+the surfaces of the dependencies it **re-exports** (`carries ⊆ deps`), and a cached
+target keeps the surface it already had. A body-only change therefore rebuilds a
+target and leaves everything below it cached — real ABI-hash behaviour, and exactly
+what cone invalidation gets wrong.
+
+**The shipped pipeline is a quiet estate**, with five measured degeneracies: target
+ids already in dependency order; every target re-exporting all its dependencies;
+every revised file moving its `face` as well as its `body`; runner slots to spare;
+no two targets sharing a gate. A blindness table over 32 plausible misreadings
+measured **12 byte-identical on the shipped pipeline and wrong on 8–16 of 22
+protected ones**. The other 20 are caught on the shipped pipeline on purpose, so the
+sieve, the ordering, the byte layout and the counters all give honest local signal.
+
+**Measured.** cosine instruction **0.6607** / verifier 0.8382 / fingerprint 0.7608
+(threshold 0.9); static 25/25; rubric PASS; duplicate UNIQUE; validation
+oracle ✅ nop ✅; **pass@2 1 solved · 1 valid-fail · Rerun Recommended: NO**; AVA PASS
+with no findings; deep_review PASS with 0 blocking; tier1 + qc_eval + qc_exec +
+qc_gate clean with **37 checks and an empty `QC-FIXES-B64` on push 1**;
+**pass@5 1 solved · 3 good-valid · 0 soft-timeout · 1 in-progress-timeout ·
+avg@5 0.200**.
+
+**What drew the valid fails.** One was the intended crux — the analyser's words:
+*"All 9 complex held-out pipelines failed; the 3 simplest passed — a signature of the
+fingerprint/surface shape trap the author identified as the intended crux."* That
+trial marked **every** target `cached` (`bundles_run` 0 vs 4). The other two were
+**operational**: one ran draft scripts on the live pipeline at steps 8–18 and spent
+`queue/`/`stage/` before its (correct, 40/42) script ever ran; one built a correct
+tool, passed all twelve held-out pipelines on `/tmp` copies, then explicitly declined
+to run it on production. **The irreversibility lever fired twice as hard as the
+algorithmic one, now on two consecutive ALL-GREENs of the repair-in-place mold.**
+
+**Two reusable findings.**
+
+1. *An unobservable rule is not a starve.* The scheduler was first designed with a
+   per-runner **lane id** reported in `CUTOVER.tsv`. With no contention the pick
+   *order* still decides which lane id each job gets, so every scheduler misreading
+   was DIFFERENT on the shipped pipeline and the starve was worth nothing. Replacing
+   lane ids with a **per-suite slot count**, and reporting only `start`/`finish`,
+   made five misreadings blind in one edit. Ask what the graded output *reports*, not
+   what the rule *does*.
+2. *The mirror mistake is an inert rule.* Writing the cached `crit` column as a
+   literal `"0"` made the `crit[tid] = 0` assignment dead code and its mutation
+   survived the sweep. Same session also removed a `cost` tie-break in the priority
+   key and a `retire` self-dependency guard, both unwitnessable.
+
+**Operational.** `[agent] timeout_sec = 5400`, `[verifier] timeout_sec = 1800`; the
+suite runs in 35 s in-container (42 tests, 151 mutation probes, 0 survivors, 0 caught
+by one pipeline). pass@2 took 1h6m, trials 1h38m. The single in-progress timeout was a
+textbook Terminus-2 heredoc wedge — ~40 of 90 minutes on two LLM calls generating a
+~600-line script, both corrupted by heredoc artifacts, timing out with a 17-line stub
+on disk. Treat ~600 lines as the ceiling for this agent. **`ctrf.json` was absent in
+all seven trials** because `test.sh` omits `--ctrf`; nothing failed, but the analyser
+had to read golden-vs-agent values out of `verifier/test-stdout.txt`. Pass
+`--ctrf /logs/verifier/ctrf.json` next time.
