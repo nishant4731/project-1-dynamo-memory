@@ -4134,3 +4134,37 @@ fixture (14 of 30 in the blindness table) — is implemented correctly by this m
 Every counted failure at pass@2 and pass@5 came from operational discipline or an
 ordinary prose misreading, never from the starve. Blindness tables predict what an
 agent *could* not verify, not what it will get wrong.
+
+### 2026-08-22 — dynamo-3fc7e1b PR #11, plumbing overcorrected to 2/2 solved
+
+Run `32568256829` on head `731f335` cleared changes, enforced cosine
+(instruction `0.6232275`, verifier `0.7242849`, fingerprint `0.7802316`), static
+review 31/31, duplicate, hosted Docker oracle/nop validation, and rate limit. Its
+Pass@2 result was a real difficulty failure: both trajectories (`task__EqbHgCu`,
+`task__Cndc3BV`) earned reward 1 and passed all 12 tests with byte-exact six-file
+output. Both independently used the pinned decoder, tried four phases, peeled all
+eight degree frontiers, validated the recurrence, and completed the downstream
+ETL. There were 2 solved, 0 valid fails, 0 task issues, and 0 infrastructure
+failures. One agent finished substantive work before the cutoff; the other was
+still doing post-solution checks about 1.6 minutes before 3600 seconds, but its
+program already passed. This is not an operational wedge and must not be
+retriggered.
+
+The current `pass2_suggestion` job was quota-skipped: `daily limit reached (2/2)
+for this task today`. The older advisory to raise the timeout by 10–15% is rejected:
+`[agent].timeout_sec` is already at the 3600-second platform cap, and more time
+would not correct two fully solved trajectories. The earlier pinned decoder was
+the right response to 0/2 productive Berlekamp-Welch timeouts, but it made the
+remaining fold sufficiently prescriptive that both agents converged exactly.
+
+The next cohesive revision keeps generic decoding plumbing, adds a second pinned
+runtime for mechanical quarantine/replay/routing/serialization, and moves
+difficulty into a compact output-affecting global crux: seven to nine recovered
+boards, two ports each, a directed constrained Hamiltonian cycle, exact port
+population, cyclic no-three rule, and lexicographic bottleneck/sum/cadence/order
+objective including the closing edge. The selected predecessor strain and port
+weights alter every put abscissa and add a seventh graded ring artifact. Protected
+cohorts must kill greedy next-edge, minimum-sum, omitted-close, reversed-edge,
+wrong-port-population, missing-wrap, wrong-cost, bad-phase, and bad-recurrence
+mutants. This deliberately aims for complete plausible wrong outputs rather than
+another all-run implementation timeout.
