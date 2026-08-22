@@ -4168,3 +4168,19 @@ cohorts must kill greedy next-edge, minimum-sum, omitted-close, reversed-edge,
 wrong-port-population, missing-wrap, wrong-cost, bad-phase, and bad-recurrence
 mutants. This deliberately aims for complete plausible wrong outputs rather than
 another all-run implementation timeout.
+
+**Static-review follow-up on the ring revision.** Commit `890c507` and run
+`32572848774` passed changes and enforced cosine with ample margin (instruction
+`0.6339351`, verifier `0.7115238`, fingerprint `0.7726089`; threshold `0.9`).
+Static review recognized the error correction, fold inversion, and joint ring as
+genuine essential difficulty, found the contract unambiguous, and passed every
+criterion except `difficulty_explanation_quality`. The single failure was that
+`task.toml` did not explicitly say the intakes are deterministic synthetic-but-
+realistic telemetry or name the intended real-world practitioner/utility. The
+review also called realism borderline only because that same audience/provenance
+context was absent. Pass@2, validation, suggestion, deep/AVA/QC, and trials were
+skipped; the run has no pass2 artifact and produced no new trajectory or
+suggestion evidence. Fix provenance/audience directly; do not alter the ring
+algorithm based on this run. The cohesive follow-up should also make provenance
+load-bearing by round-tripping an exact `source_kind` from `run.json` into the
+graded report and adding a protected assertion, so it is not a prose-only retry.
