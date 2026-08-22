@@ -4261,3 +4261,58 @@ shortest chain — left the live loft byte-identical yet failed 15 held-out test
 - **`docker exec` without `-i` silently swallows a heredoc.** A wrong-output
   probe reported reward `1` because the patch script read EOF and never ran.
   Any `docker exec container python3 - <<PY` needs `-i`, or it proves nothing.
+
+## Data Querying and Databases / SQL querying — dynamo-0a86356 (in flight)
+
+Repo `handshake-project-dynamo/dynamo-0a86356-data-querying-and-databases`, PR #1,
+head `b75b6d4` (2026-08-22). Task `dynamo/headgate-settle`.
+
+**Mold:** analyzer-tool over a SQLite ledger. The agent writes
+`/app/headgate_settle.py <season_dir>`, which closes an irrigation district's
+water season out of an eleven-table ledger and writes `carriage.tsv`,
+`statements.tsv`, `disputes.tsv` and `settle_report.json` back into the season
+directory; the ledger stays read-only. `DITCH_BYLAWS.md` is a complete 14-section
+contract, so QC B1/B5 have nothing to withhold-hunt.
+
+**Crux — the shipped instance is quiet, not the spec.** `factor(R,S)` is the sum
+over *every* route down the canal of the product of the per-link carry losses.
+The shipped district's `flowpath` graph is a tree, so a first-route walk, a
+best-route walk and a seen-set queue are byte-identical there and wrong wherever
+two laterals rejoin. Same shape in the two statement columns: on a tree the
+immediate feeder always carries the most (`keystone`) and one reach always
+suffices to cut a member off (`severance`, a minimum vertex cut).
+
+**Measured before pushing:** blindness table 19 of 29 plausible misreadings
+byte-identical on the shipped season, the headline ones wrong on 17–19 of 19
+held-out seasons; mutation sweep 97 probes, 0 survivors, 0 caught-by-one, control
+green; Harbor-style oracle 1.0 (36 tests, 27 s) and nop 0.0; seven adversarial
+probes (nop, blank, replay, symlink, overlay-peek, ledger rewrite,
+first-route-only) all 0.0.
+
+**Gate results on push 1:** cosine PASS (instruction `0.7068`, verifier `0.8239`,
+fingerprint `0.8046`, threshold 0.9); static checks all green; Dynamo eval
+**31/31 PASS, no failures**; duplicate UNIQUE (closest TB2 lexical 0.089);
+validation Docker/Oracle/Nop ✅✅✅.
+
+**Reusable operational findings:**
+
+- *Rebuilding SQLite fixtures per mutation probe dominates the verifier.* The
+  first in-container oracle took **634 s**; caching one built ledger per slot and
+  `shutil.copyfile`-ing it per probe, plus dropping the (never-modified) ledger
+  digest from the probe comparison, took it to **27 s**. Do this before measuring
+  anything else on a database task.
+- *Never grade a SQLite file by its bytes.* Compare it by its rows (a canonical
+  dump) so page layout cannot decide a verdict, and exclude `ledger.sqlite3*`
+  from the tree digest.
+- *A prefix cap is order-independent.* "Spend the allotment in `(taken_on,
+  tie-break)` order" makes the tie-break provably inert: total within is
+  `min(total, cap)` whatever the order. Ordering only becomes load-bearing once
+  the *rate* moves mid-season. Splitting rate cards mid-season took the
+  "don't sort at all" misreading from wrong on 2 of 19 seasons to wrong on 14.
+- *Equal-weight ties need a reason to exist.* Keystone ties never arise when
+  every link loses something; giving lined reaches a carry of `12/12` created
+  them, and the tie-break clause stopped being an unwitnessed C3 hole.
+- *Witness-planting collides with slot indexing.* Closed-turnout and no-allotment
+  witnesses indexed from `len(members)` silently landed on the two synthetic
+  half-cent members and destroyed their witnesses; index witness cohorts from the
+  base member count, not the roster length.
