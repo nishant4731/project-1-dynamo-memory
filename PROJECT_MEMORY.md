@@ -4186,3 +4186,77 @@ suggestion evidence. Fix provenance/audience directly; do not alter the ring
 algorithm based on this run. The cohesive follow-up should also make provenance
 load-bearing by round-tripping an exact `source_kind` from `run.json` into the
 graded report and adding a protected assertion, so it is not a prose-only retry.
+
+## 2026-08-22 — Machine Learning and AI / Model evaluation and benchmarking (dynamo-942ec30, PR #1)
+
+`dynamo/benchloft-refold`, head `cce8a17`. The `e320824` repair-in-place mold
+ported into a fresh ML-evaluation domain: a crashed consolidation of an offline
+eval service's **result-reuse carryover store**. The agent writes
+`/app/benchloft_refold.py`, which sifts packed `shelf/` leaves and an unfolded
+`pending/` queue against six ordered refusal causes, folds operations in `seq`
+order, fuses twins on a five-part key, repacks under a record bound *and* a byte
+bound, rebuilds a byte-offset index, resolves reuse provenance into
+`PROVENANCE.tsv`, files refusals with collision ordinals, spends the evidence
+and writes forty counters. `BENCHLOFT_CONTRACT.md` states all of it.
+
+**The new crux — a second minimum over the same graph.** Warrantbook's closure
+kept three maps (two hop-minima and a carry-maximum). This one keeps **five**:
+report-steps, relay-steps, **report-slip, relay-slip** and reach. `slip` is the
+*least total drift* over the chains that let a run report a task, and it is a
+different minimum from the fewest-carryovers count — a long chain of quiet hops
+carries less drift than a short chain of noisy ones. `witnesses` counts the
+distinct donors on a chain whose total drift is exactly that least, which needs
+the cheapest continuation priced backwards. The shipped loft is a tree at the
+depth ceiling with **drift 0 on every live carryover**, so slip is 0 everywhere,
+the two minima coincide and `witnesses == span` on every row.
+
+**Blindness table, measured before the first push: 22 of 29 plausible
+misreadings were byte-identical on the shipped loft and wrong on 9 to 22 of the
+22 protected lofts.** That is a better ratio than e320824's 16 of 22, and the
+best-performing family were the six drift variants (slip riding the shortest
+chain, first-found, greatest-not-least, grown from the reporting chain,
+drift ignored) plus `witnesses == span`, which was wrong on 22/22.
+
+**First-push gate results (all green through validation):**
+
+| gate | result |
+|---|---|
+| `review / cosine_similarity` | **PASS** — instruction `0.6502`, verifier `0.8551`, fingerprint `0.8212`, threshold 0.9 |
+| `review / changes`, `ratelimit` | pass |
+| `review / review` (Dynamo eval) | **PASS 30/30 + 1 N/A**, no failures |
+| `review / similarity` (duplicate) | **UNIQUE**, closest lexical 0.093 |
+| `review / validation` | Docker ✅ Oracle ✅ Nop ✅ |
+
+**New cosine datapoint — restructure the instruction, do not just reskin it.**
+A first draft written in the warrantbook *paragraph skeleton* measured **0.9108
+local token-cosine against the delivered `e320824` instruction**. Rewriting it
+with a different opening, a different order (deliverable first, layout second,
+contract pointer third) and a much shorter enumeration took local self-sim to
+**0.79** and the *service* instruction score came in at **0.650** — the lowest
+this mold has ever scored. Confirms
+`dynamo-cosine-matches-your-house-prose`: the enumerated
+"the A, the B, the C, and how the result is judged" sentence is the highest-
+overlap object in the whole file. **The verifier facet, by contrast, has crept
+up: 0.805 (e320824) → 0.855 here.** Any follow-up push on this repo must change
+`tests/test_outputs.py` substantively, not cosmetically.
+
+**Local gate before the push:** 158 single-rule mutation probes, **0 survivors,
+0 caught-by-one, no-op control green**, 50 s over 10 sweep lofts; 24 lofts
+cross-checked for idempotence, leaf bounds, planted-fault refusal and counter
+thinness; Harbor-shaped Docker run oracle `1` / nop `0`; harness-tamper attack
+contained (49 tests still ran) and reference-delegation attack failed (reward 0,
+20 failures); and a *blind-variant* wrong-output probe — `slip` read off the
+shortest chain — left the live loft byte-identical yet failed 15 held-out tests.
+
+**Two build lessons worth reusing:**
+
+- **Consolidate duplicate `live = [... state == "live"]` filters into one site.**
+  Two separate filters gave two flippable anchors, and the second one
+  (inside `provenance_rows`) was only ever killed by one sweep loft — a
+  permanently thin probe. Passing the already-filtered list into the closure
+  removed the question, exactly as
+  `dynamo-security-network-forensics-playbook` says to do with
+  provably-equivalent comparisons.
+- **`docker exec` without `-i` silently swallows a heredoc.** A wrong-output
+  probe reported reward `1` because the patch script read EOF and never ran.
+  Any `docker exec container python3 - <<PY` needs `-i`, or it proves nothing.
