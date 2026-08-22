@@ -4770,3 +4770,68 @@ on disk. Treat ~600 lines as the ceiling for this agent. **`ctrf.json` was absen
 all seven trials** because `test.sh` omits `--ctrf`; nothing failed, but the analyser
 had to read golden-vs-agent values out of `verifier/test-stdout.txt`. Pass
 `--ctrf /logs/verifier/ctrf.json` next time.
+
+## File and Media Operations / Text editing and manipulation
+
+### 2026-08-23 — `dynamo-84f73e9-file-and-media-operations` (`dynamo/folio-recompose`) — ALL-GREEN, PR #1, head `eba1b8f`
+
+- **Mold:** repair-in-place with a complete contract, ported from the
+  `dynamo-e320824-security` engine into a typesetting skin. Quires of packed
+  passages + an unapplied `markup/` + a workbench tree → sift on six ordered
+  causes, apply in `seq` order, fuse co-set passages, re-stamp, repack under a
+  record bound and a byte bound with a byte-offset index, resolve an
+  inherited-trait closure into `TRAITS.tsv`, file spoiled lines with ordinals,
+  spend the evidence, write 33 counters. `COMPOSITION_RULES.md` states
+  everything in twelve sections; nothing is withheld.
+- **Measured:** pass@2 `db1cbcf` 0 solved / 0 valid / **2 in-progress timeouts
+  (BLOCKED)**; `eba1b8f` 0 solved / 1 valid-fail / 1 timeout ("plausibly hard",
+  Rerun: NO). pass@5 on `eba1b8f`: **0 solved · 4 good valid · 1 timeout ·
+  avg@5 0.000 — PASS.** Cosine 0.681 / 0.809 / 0.789 on both pushes. QC clean
+  on the first cycle (`QC-FIXES-B64` = `[]`), AVA no findings, deep_review,
+  tier1 and Dynamo eval (17/17) all first-time green.
+- **The crux that drew the fails**, analyser verbatim: *"All five trials fail
+  this graph-shape trap — the intended crux."* The shipped folio is a depth-3
+  tree with every live passage at the depth ceiling, so what a partial may set
+  and what it may hand on coincide, `reach == span + 1`, and one pass in packed
+  order settles the closure. Held-out folios carry depth-zero leaf inclusions,
+  spent budgets, back-dated passages and two-route partials.
+- **Second, text-native starve worth reusing in this subcategory:** `text` is
+  capped in **characters** while the quire fill, the `offset` column and the
+  `bytes` column are **UTF-8 bytes**, and canonical JSON uses
+  `ensure_ascii=False`. The shipped edition is plain seven-bit English, so the
+  two counts coincide there and diverge on every graded edition. Fully stated,
+  structurally invisible on the sample, and cheap to build.
+- **The lever that mattered: trim volume, never traps.** The blocked head had
+  2/2 in-progress timeouts — one agent 12 seconds from the live run, the other
+  stuck on `repeat_pid` scope — and *neither reached either crux*. The sticky
+  and the difficulty suggestion both asked for a bigger `[agent].timeout_sec`;
+  that is not available, because **pass@2 pins 3600 s regardless of task.toml
+  while pass@5 honours the declared value** (5400 here). What worked instead,
+  in one commit: dropped `slug`/`uses` from the schema (14 → 12 keys), dropped
+  the six per-cause counters (39 → 33), gave `root` its own stated `d-NN` shape
+  clause, stated which causes can arise on an `amend`/`strike`, and replaced
+  the "never run a draft" framing with "a tool that is right and has been run
+  beats one still being polished". Timeouts 2/2 → 1/5, `difficulty_crux` FAIL →
+  PASS on every trial, and the blindness table barely moved (20 → 19 of 27).
+- **Cosine needed designing around before the first push.** A first draft of
+  the two compared facets measured **0.9237 / 0.9478** locally against the
+  delivered task whose engine was ported. Rewriting both from scratch — a
+  handover-note format for the instruction, a class-grouped suite with the
+  corpus surveys moved into the private audit module — gave 0.866 / 0.826
+  locally and 0.681 / 0.809 at the service. Porting a mold to a fresh
+  subcategory clears cosine on push 1 only if the *prose skeleton* is rewritten
+  too, not just the nouns.
+- **Local gate lessons:** the first mutation sweep left 9 survivors, every one
+  a missing fixture rather than a bad probe (no bound planting on small folios,
+  no text with more bytes than characters, no DEL fault, no trailing blank
+  line, no brimful quire). Both quire bounds must *strictly* decide a split
+  somewhere — measure `only_count` / `only_bytes`, not "closed at N"; trimming
+  the schema shrank passages and forced a re-tune to 7 records / 2200 bytes.
+- **Known gap for the next task here:** one pass@5 trial hard-coded
+  `2 <= len(charter) <= 8` for the `ROOTS.tsv` roster and crashed on the nine
+  folios with single-trait charters — the rules bound the *passage* traits list
+  but never bound the roster's charter. Bound every list the fixtures vary, not
+  only the ones the schema section describes. QC also advised (non-blocking)
+  that canonical-JSON escaping of `"` and `\` is left implicit and unwitnessed.
+  Neither was fixed: an all-green head must not be redrawn.
+
