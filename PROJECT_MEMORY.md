@@ -4316,3 +4316,53 @@ validation Docker/Oracle/Nop ✅✅✅.
   witnesses indexed from `len(members)` silently landed on the two synthetic
   half-cent members and destroyed their witnesses; index witness cohorts from the
   base member count, not the roster length.
+
+## 2026-08-22 — dynamo-c31fb12 (dynamo/trumpline-reckon): two generator lessons from a Board-and-card-games port
+
+Repo `handshake-project-dynamo/dynamo-c31fb12-games-puzzles-and-interactive-simulation`,
+PR #1, head `eca02ee`. Category **Games Puzzles and Interactive Simulation /
+Board and card games** — a fresh subcategory for this mold. The repair-in-place
+engine from `dynamo-e320824` was ported to a card league's season reckoning; the
+crux moved from a delegated-authority closure to three standings columns:
+`crown` (a run over hands, not players, constrained by both the clock and a
+rising stake), `hold` (a winning run at *one* table), and a recursive tie-break
+that restricts each level to the group it is separating until a group locks.
+
+Front gates on push 1: **cosine PASS** (instruction `0.651`, verifier `0.825`,
+fingerprint `0.786`, threshold `0.9`) — a fresh domain in a subcategory that
+already had two delivered tasks. Push 2 changed only `task.toml` and left both
+compared facets **byte-identical**; cosine passed again, which is a third
+confirmation that in-flight PR heads are not in the comparison corpus.
+
+Only static blocked, on one line: `[metadata].artifact_type` value
+`report_or_summary` is not in the closed set — the taxonomy calls it
+`document_or_report`. Check `references/diversity-taxonomy.toml` before writing
+those two lists; the failure skips every downstream gate.
+
+Two generator lessons worth carrying, both measured here:
+
+- **Emergent structure has to be planted, not seed-searched.** The tie-break
+  crux needed held-out circuits whose recursion ran two levels deep. Points ties
+  among 26 entrants collide in pairs and never in threes: **0 hits in 400
+  seeds**, and the three "no recursion" readings survived every circuit in the
+  corpus. Constructing five reserved entrants with a designed six-hand
+  mini-tournament took them to caught on **19 of 19**. The expensive half is
+  protecting the plant — four separate later passes (the contending post, the
+  repeat-id fault, a same-instant plant sampling the whole roster, and holding
+  records back as posts when the pending tree is absent) each silently corrupted
+  it. Keep a `protected` id set, derive a `plain` list, and make every later pass
+  draw from `plain` only.
+- **Search the fixture for its own measure-zero witness.** A sheet landing
+  *exactly* on the byte budget is ~1-in-230 per sheet, and pinning it to a lucky
+  seed lost it three times in a row as unrelated generator edits reshuffled the
+  packing. A `brim_search` flag with a deterministic retry loop inside
+  `build_store` — build, reckon into a temp dir, keep the first plan that lands a
+  sheet on the bound — is stable across pins and self-heals across every later
+  change.
+
+Final local gate on the pushed head: blindness table **14 of 39 readings blind on
+the shipped circuit and wrong on 4–19 of 19 protected ones**, all eleven crux
+readings among them; mutation sweep **161 probes, 0 anchor misses, 0 survivors,
+none caught by a single circuit**, no-op control green; Harbor-style oracle
+`1.0` / nop `0.0`; and candidates carrying the naive `crown`, `hold` and knot
+readings each pass every live-circuit check and still score `0`.
