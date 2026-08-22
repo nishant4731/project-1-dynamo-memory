@@ -4835,3 +4835,87 @@ had to read golden-vs-agent values out of `verifier/test-stdout.txt`. Pass
   that canonical-JSON escaping of `"` and `\` is left implicit and unwitnessed.
   Neither was fixed: an all-green head must not be redrawn.
 
+
+## Games Puzzles and Interactive Simulation / Board and card games
+
+`dynamo-c31fb12` (`dynamo/trumpline-reckon`), PR #1, **ALL-GREEN on head
+`8b592c3`** (2026-08-23). Three pushes. Two delivered tasks already sat in this
+subcategory — `dynamo/veilbound-policy` and `dynamo/calibrate-cairns`, both
+optimise/recover molds — so the repair-in-place shape is a third here, and it
+cleared enforced cosine comfortably on push 1.
+
+**The mold.** A card league's season reckoning died mid-fold. The agent writes
+`/app/trumpline_reckon.py`, which sifts packed `sheets/` and an unapplied
+`pending/` against six ordered causes, applies what stood in posting order, fuses
+the hands two scorers wrote down twice on a four-part key, re-takes the sigils,
+repacks under a record bound *and* a byte bound with a per-sheet byte-offset
+index, reckons `PLACINGS.tsv`, files refusals with collision ordinals, spends the
+pending and scratch trees and writes 39 counters. `TRUMPLINE_CODEX.md` states all
+of it in twelve sections, which is what keeps QC B5 green.
+
+**The crux** is three standings columns whose consequences the shipped circuit
+hides: `crown` (a run is a chain of *hands*, not players, each dealt strictly
+after the one before settled and carrying a strictly greater stake), `hold`
+(longest winning run at **one** table), and a knot of equal-points entrants
+reckoned apart **recursively**, each level restricted to the group it is
+separating. The shipped circuit gives every entrant one table, deals in bands so
+stake and clock rise together, and knots nothing deeper than one reckoning.
+
+**Measured.**
+
+| head | pass@2 | pass@5 |
+|---|---|---|
+| `eca02ee` | 2 solved · 0 valid-fail — BLOCKED, "too easy" | — |
+| `8b592c3` | **0 solved · 1 valid-fail · 1 in-progress-timeout**, Rerun: NO | **2 solved · 3 good-valid · 0 soft-timeout · avg@5 0.400 — PASS** |
+
+Cosine passed all three pushes at instruction `0.651` / verifier `0.825` /
+fingerprint `0.786`. qc_eval + qc_exec + qc_gate clean with an empty
+`QC-FIXES-B64:W10=` (37 checks); AVA, deep_review, tier1, Dynamo eval and the
+duplicate check never blocked. Blindness table on the final head: **15 of 40
+readings byte-identical on the shipped circuit and wrong on 2–19 of 19**
+protected ones. Mutation sweep: **172 probes, 0 survivors, none caught by a
+single circuit**.
+
+**What broke the 2/2 ceiling — third confirmation of the sampling-point-counter
+lever.** Head 2 had every rule stated and eleven natural misreadings already
+byte-identical on the shipped circuit, and both agents still got all three cruxes
+right in 41 and ~60 minutes of the 60-minute cap. The advisory suggestion asked
+to make the cruxes *inferential*; that was rejected, because the disclosure axis
+has been measured with both endpoints solving 2/2 and anything underdetermined
+draws a QC B5 Major. What worked was splitting the report 33 → 39 counters, six
+of them one line each — and the new idea worth copying is that **two of them are
+the cruxes counted rather than tabulated, chosen so each is an identity on the
+shipped circuit and only there**: `lanes_scanned` (entrant-and-table pairs)
+equals `entrants_placed` exactly when nobody moves tables, and `knots_reckoned`
+(groups reckoned apart at every depth) equals `knots_formed` exactly when every
+knot settles in one pass. Each crux gets a second, independent chance to be
+caught for one line of code, and B5 stays green because each counter is defined
+precisely in the report table.
+
+**Which crux drew the valid fails.** The three pass@5 failures were stratified,
+with `task_specification` and `approach_validity` PASS on all five trials: one
+ran an incomplete draft on the live circuit at step 9 and destroyed it while the
+finished script was algorithmically correct; one wrote a structurally correct
+tool whose `HANDS.tsv` differed by **5 bytes across 59 records on every circuit**
+(`difficulty_crux` PASS — the intended crux); one stored the refusal `text` with
+a trailing newline where the reference splits on `"\n"`. Only one of three landed
+on the algorithmic crux — the byte-level conventions and the one-shot operational
+discipline carried the other two, so keep all three surfaces.
+
+**Hurdles, in order.** (1) static rejected `[metadata].artifact_type` value
+`report_or_summary`; the closed set calls it `document_or_report` — one line, but
+it skips every downstream gate and costs a whole cycle. (2) pass@2 "too easy" on
+head 2. Nothing else blocked on any push.
+
+**Levers measured not to work here.** A shape starve alone (head 2). Adding
+volume — one head-2 trial used the entire cap. And the restorable spare archive
+from `dynamo-2d0d4c3`: prepared and fully validated here (seven abuse routes
+graded — restore-and-stop 0, reckon-then-restore-over-it 0, unpack-inside-the-
+graded-dir 0, leave-a-copy-there 0, reckon-a-copy-only 0, restore-twice-then-
+reckon 1, delete-the-spare-after 1) and then deliberately **not pushed**, because
+head 2's taxonomy showed 0 timeouts. That fix is for the timeout signature, not
+for irreversibility as such — here irreversibility fired as a *graded* failure.
+
+**Operational.** `[agent] timeout_sec = 5400`, `[verifier] timeout_sec = 1800`.
+AVA flagged that pass@2 ran under the pinned 3600 s override, which is what
+produced the one in-progress timeout on a ~400–600 line implementation.
