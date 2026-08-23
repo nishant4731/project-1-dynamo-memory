@@ -437,6 +437,68 @@ def test_every_inclusive_bound_sits_on_a_planted_record():
     assert not missing, "no graded dragnet sits on the bound for %s" % missing
 
 
+def test_a_merge_group_disagrees_about_its_label():
+    """Two observations of one flow carry different labels somewhere in the corpus.
+
+    Section 5 says whose `label` carries.  If every co-observation agreed on it
+    the rule would be inert, and a reading that took the lowest `fid`'s label
+    instead would be indistinguishable from the one the charter states.
+    """
+    seen = 0
+    for slot in rig.HELD_OUT:
+        plan = rig.plan_for(slot)
+        groups = {}
+        for holder in ("segments", "inbox"):
+            for _name, lines in sorted(plan.get(holder, {}).items()):
+                for line in lines:
+                    try:
+                        record = json.loads(line)
+                    except Exception:
+                        continue
+                    if not isinstance(record, dict):
+                        continue
+                    if record.get("op") in ("amend", "retract"):
+                        continue
+                    if not isinstance(record.get("label"), str):
+                        continue
+                    key = tuple(record.get(name) for name in
+                                ("src", "dst", "sport", "dport", "first"))
+                    if any(part is None for part in key):
+                        continue
+                    groups.setdefault(key, set()).add(record["label"])
+        seen += sum(1 for labels in groups.values() if len(labels) > 1)
+    assert seen > 0, (
+        "no graded dragnet holds a merge group whose observations disagree "
+        "about `label`, so section 5's provenance for it is never exercised")
+
+
+def test_the_duplicate_rule_is_witnessed_inside_the_inbox_too():
+    """A held-out dragnet refuses an admit whose fid an earlier admit took.
+
+    Every other planted twin duplicates a record the segments already held, so
+    without this the reading "the duplicate rule only guards the segments" is
+    never exercised anywhere in the graded corpus.
+    """
+    seen = 0
+    for slot in rig.HELD_OUT:
+        held = rig.reference_artifacts(slot)
+        admitted = set()
+        for name in sorted(held["refused"]):
+            for line in held["refused"][name].rstrip("\n").split("\n"):
+                row = json.loads(line)
+                if row["cause"] != "duplicate_id" or not row["source"].startswith("inbox/"):
+                    continue
+                fid = json.loads(row["text"])["fid"]
+                # the fid it duplicates must not be one the segments carried
+                if any(fid in body.decode("ascii") for body in held["segments"].values()):
+                    continue
+                admitted.add(fid)
+        seen += len(admitted)
+    assert seen > 0, (
+        "no graded dragnet refuses an inbox admit whose fid only an earlier "
+        "inbox admit had taken; the duplicate rule is unwitnessed across the sift")
+
+
 def test_every_bound_is_also_witnessed_from_just_outside_it():
     """A turned-away line sits one step outside each bound, not only on it."""
     outside = {

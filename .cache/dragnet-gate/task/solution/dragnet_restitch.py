@@ -17,7 +17,8 @@ import os
 import re
 import sys
 
-sys.path.insert(0, "/app")
+if "/app" not in sys.path:
+    sys.path.append("/app")
 import dragnet_io
 
 RECORD_FIELDS = dragnet_io.RECORD_FIELDS
@@ -442,7 +443,7 @@ def restitch(dragnet):
     ordinalled = 0
     for source, name, number, cause, text in refusals:
         if source not in filed:
-            stem = name.rsplit(".", 1)[0]
+            stem = name.rpartition(".")[0]
             claimed[stem] = claimed.get(stem, 0) + 1
             if claimed[stem] == 1:
                 filed[source] = "%s.rej" % stem

@@ -509,7 +509,7 @@ def restitch(dragnet):
     ordinalled = 0
     for source, name, number, cause, text in refusals:
         if source not in filed:
-            stem = name.rsplit(".", 1)[0]
+            stem = name.rpartition(".")[0]
             claimed[stem] = claimed.get(stem, 0) + 1
             if claimed[stem] == 1:
                 filed[source] = "%s.rej" % stem

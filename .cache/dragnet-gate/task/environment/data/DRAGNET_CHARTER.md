@@ -127,8 +127,10 @@ observations of one flow and become one record:
 - `fid` is the lowest `fid` among them;
 - `last`, `bytes` and `pkts` are each the greatest among them;
 - `src`, `dst`, `sport`, `dport` and `first` they already agree on;
-- `sensor`, `state` and `seq` are those of the observation with the greatest
-  `seq`, and the lowest `fid` among those settles a tie.
+- `sensor`, `label`, `state` and `seq` are those of the observation with the
+  greatest `seq`, and the lowest `fid` among those settles a tie. Two sensors may
+  attribute the same wire differently, so the observations of one flow need not
+  agree on `label`; the one that carries is the same one that carries `sensor`.
 
 Flows that differ in any of the five are separate flows even when the same pair
 of hosts is involved. Every surviving flow's `sum` is then re-taken over its
@@ -292,24 +294,24 @@ you do not have; reproducing them proves nothing about a restitch.
 
 One line of `segments/0002.jsonl`, the second record in that segment:
 
-    {"bytes":7353939,"dport":5985,"dst":"h-014","fid":"f-00014","first":810543,"label":"dns/dcom-activation/shell-run","last":837268,"pkts":156926,"sensor":"tap-02","seq":6,"sport":14071,"src":"h-002","state":"closed","sum":"186210c0620068e1"}
+    {"bytes":9126008,"dport":4444,"dst":"h-004","fid":"f-50003","first":798382,"label":"mssql/tds-login/tunnel-established/epmapper","last":808734,"pkts":389743,"sensor":"tap-05","seq":0,"sport":48860,"src":"h-012","state":"closed","sum":"ea55c65b615ef39f"}
 
 The two rows of `CONTACT.tsv` that name that segment first, which is where the
 offset column starts again:
 
-    f-00019	0002.jsonl	0	h-014	h-012	reset	804080	813115
-    f-00014	0002.jsonl	265	h-002	h-014	closed	810543	837268
+    f-00008	0002.jsonl	0	h-012	h-004	closed	798382	808734
+    f-50003	0002.jsonl	255	h-012	h-004	closed	798382	808734
 
 Two rows of `REACH.tsv`, following its header row:
 
-    h-002	1	837268	h-014
+    h-002	2	837268	h-014
     h-004	3	1269117	h-001
 
 Two rows of `PIVOT.tsv`, following its header row:
 
     h-001	1	1247594	h-004
-    h-002	2	30065	h-010
+    h-002	1	879099	h-009
 
 One row of a file under `refused/`:
 
-    {"cause":"tampered","line":5,"source":"inbox/0001.ndjson","text":"{\"bytes\":7218259,\"dport\":389,\"dst\":\"h-005\",\"fid\":\"f-60013\",\"first\":445387,\"label\":\"ftp/session-setup/tgs-rep/pssession/named-pipe/bind-simple/named-pipe\",\"last\":465644,\"op\":\"admit\",\"pkts\":545972,\"sensor\":\"tap-05\",\"seq\":526,\"sport\":23934,\"src\":\"h-010\",\"state\":\"closed\",\"sum\":\"266c5f6ecf9c48e1\"}"}
+    {"cause":"tampered","line":5,"source":"inbox/0001.ndjson","text":"{\"bytes\":59098,\"dport\":8080,\"dst\":\"h-009\",\"fid\":\"f-60013\",\"first\":51400,\"label\":\"edge/witness\",\"last\":55721,\"op\":\"admit\",\"pkts\":702,\"sensor\":\"tap-03\",\"seq\":524,\"sport\":40002,\"src\":\"h-008\",\"state\":\"closed\",\"sum\":\"755fbaf0562ee70a\"}"}

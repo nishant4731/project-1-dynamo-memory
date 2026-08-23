@@ -1,0 +1,44 @@
+{
+  "task_id": "task",
+  "routing": "FAIL",
+  "blocking": [
+    "C3-exec"
+  ],
+  "findings": [
+    {
+      "check_id": "A1",
+      "status": "PASS",
+      "evidence": "reference solution scores reward=1 through the shipped verifier"
+    },
+    {
+      "check_id": "E5",
+      "status": "PASS",
+      "evidence": "symlinking output(s)/parent dir to the golden did not score reward=1 (guarded or recomputed from pristine /tests inputs)"
+    },
+    {
+      "check_id": "C1",
+      "status": "PASS",
+      "evidence": "trivial empty/degenerate outputs did not score reward=1"
+    },
+    {
+      "check_id": "D4",
+      "status": "PASS",
+      "evidence": "verifier reward stable across repeats ([1, 1])"
+    },
+    {
+      "check_id": "A6",
+      "status": "PASS",
+      "evidence": "Independently reimplemented the \u00a77 reach (BFS over (host,arrival-last) states) and pivot (fixpoint reachability) algorithms and compared to the oracle's arrivals_from/approaches_to on 200k+ random adversarial contact graphs plus the live dragnet (22 origins): zero mismatches. Sift/merge/pack logic matches the charter. No oracle-vs-independent divergence could be produced."
+    },
+    {
+      "check_id": "B5",
+      "status": "PASS",
+      "evidence": "DRAGNET_CHARTER.md is exhaustive and self-declares 'This charter is the whole contract'; every tie-break (lowest fid/host/name as text), ordering (ascending seq then file then line), each of the 35 counters and both graph tables are fully pinned. The 'disclosed examples' come from a dragnet not provided and prove nothing. No rival rule reproducing the examples yet diverging on held-out could be co"
+    },
+    {
+      "check_id": "C3",
+      "status": "FAIL",
+      "evidence": "Mutated the reference so an inbox 'admit' no longer adds its fid to `taken` (line: `if obj[\"op\"]==\"admit\": pass` instead of `taken.add(obj[\"fid\"])`), violating the \u00a73 duplicate_id rule. On a valid input (inbox 0001.ndjson with two admits sharing fid f-00001), reference refuses the 2nd as duplicate_id (report refused_duplicate_id=1, contact first=1000) while the mutant admits both (ops_admitted=2, "
+    }
+  ]
+}

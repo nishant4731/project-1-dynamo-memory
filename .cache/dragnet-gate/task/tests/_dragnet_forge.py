@@ -60,6 +60,31 @@ def _plant_ties(flows):
         if two["last"] <= two["first"]:
             two["last"] = two["first"] + 1
         two.update(_sealed(two))
+    # two different hosts opening an approach to the SAME host on the same
+    # instant, earlier than anything else in the dragnet, so `opened` is settled
+    # for that target and `origin` is decided by the lowest host id rather than
+    # by the clock.  Emergent ties of this shape are rare enough that a graph
+    # built without one leaves the tie-break unexercised.
+    inbound = {}
+    for flow in flows:
+        if flow["state"] == "closed":
+            inbound.setdefault(flow["dst"], []).append(flow)
+    for _target, arrivals in sorted(inbound.items()):
+        rivals = {}
+        for flow in arrivals:
+            rivals.setdefault(flow["src"], flow)
+        if len(rivals) < 2:
+            continue
+        pair = [rivals[host] for host in sorted(rivals)[:2]]
+        opening = min(flow["first"] for flow in flows) - 1
+        if opening < 1:
+            opening = 1
+        for flow in pair:
+            span = max(1, flow["last"] - flow["first"])
+            flow["first"] = opening
+            flow["last"] = opening + span
+            flow.update(_sealed(flow))
+        break
     return flows
 
 
@@ -78,6 +103,43 @@ def _plant_bounds(flows):
         flow.update(_sealed(flow))
     room[6]["last"] = room[6]["first"] + 1
     room[6].update(_sealed(room[6]))
+    return flows
+
+
+def _plant_edges(rng, spec, flows, fleet, hosts):
+    """Append fresh flows that sit on the record bounds and nothing else touches.
+
+    ``_plant_bounds`` moves an existing flow onto each edge, which is enough for a
+    value to *appear* in the restitched segments but not enough for the bound to
+    be load-bearing: the flow it lands on may already be refused for an earlier
+    cause, or merged away.  These carry reserved ids of their own, are valid in
+    every other respect, and are therefore accepted -- so tightening the bound
+    refuses them and the graded output moves.
+    """
+    if not spec.get("edges", 0):
+        return flows
+    base = flows[0]
+    made = []
+    edges = (("bytes", 1), ("pkts", 1), ("seq", 0),
+             ("label", "smb2/tds-login3/proxy-connect9/epmapper42"))
+    for index, (key, value) in enumerate(edges[: spec["edges"]]):
+        flow = dict(base)
+        flow["fid"] = "f-5%04d" % (index + 1)
+        flow["src"] = hosts[(index * 3 + 1) % len(hosts)]
+        flow["dst"] = hosts[(index * 3 + 2) % len(hosts)]
+        flow["sport"] = 40000 + index
+        flow["dport"] = 8080
+        flow["first"] = base["first"] + 17 * (index + 1)
+        flow["last"] = flow["first"] + 4321
+        flow["bytes"] = 55000 + index
+        flow["pkts"] = 700 + index
+        flow["sensor"] = fleet[index % len(fleet)]
+        flow["label"] = "edge/witness"
+        flow["state"] = "closed"
+        flow["seq"] = 90000 + index
+        flow[key] = value
+        made.append(_sealed(flow))
+    flows.extend(made)
     return flows
 
 
@@ -210,6 +272,35 @@ def _contacts(rng, spec, hosts):
         follower[2] = anchor[2] + max(1, (anchor[3] - anchor[2]) // 2)
         follower[3] = follower[2] + rng.randrange(
             spec.get("dur_low", DUR_LOW), spec.get("dur_high", DUR_HIGH))
+    # Convergence knots, built rather than hoped for: two contacts land the same
+    # host at times far enough apart that the relay window covers one and not the
+    # other, and an onward contact opens inside the LATER arrival's window only.
+    # A walk that keeps a single earliest arrival per host cannot take it; the
+    # shipped dragnet has one contact into each host, so it holds no such knot.
+    for _ in range(spec.get("converge", 0)):
+        if len(edges) < 3:
+            break
+        pivot = rng.choice(edges)
+        early = [e for e in edges if e[1] == pivot[1] and e is not pivot]
+        onward = [e for e in edges if e[0] == pivot[1]]
+        if not early or not onward:
+            continue
+        first_in = rng.choice(early)
+        step = rng.choice(onward)
+        # Move the LATE arrival forward rather than the early one back: pushing
+        # backwards runs a contact off the front of the clock, and a negative
+        # `first` is refused as malformed, which quietly deletes the knot.
+        low = spec.get("dur_low", DUR_LOW)
+        high = spec.get("dur_high", DUR_HIGH)
+        pivot[3] = first_in[3] + engine.RELAY_WINDOW + rng.randrange(1, 90000)
+        pivot[2] = max(1, pivot[3] - rng.randrange(low, high))
+        if pivot[2] >= pivot[3]:
+            pivot[2] = pivot[3] - 1
+        # and the onward contact opens inside the late arrival's window only,
+        # which is necessarily past the early arrival's window
+        step[2] = pivot[3] + rng.randrange(0, engine.RELAY_WINDOW)
+        step[3] = step[2] + rng.randrange(low, high)
+
     # Both edges of the relay window, alternating: a hand-off that opens exactly
     # a window after its predecessor closed, which a trail may take, and one that
     # opens a single unit later, which it may not.  Neither can be found by
@@ -302,6 +393,13 @@ def _flows(rng, spec):
                 other["last"] = flow["last"] + rng.randrange(1, 5000)
                 other["bytes"] = flow["bytes"] + rng.randrange(1, 40000)
                 other["pkts"] = flow["pkts"] + rng.randrange(1, 300)
+                # two taps attribute the same wire differently, so the merge has
+                # to say which attribution carries
+                for _try in range(6):
+                    rival = _label(rng)
+                    if rival != flow["label"]:
+                        other["label"] = rival
+                        break
             twins.append(_sealed(other))
     flows.extend(twins)
 
@@ -313,6 +411,7 @@ def _flows(rng, spec):
     if spec.get("bounds"):
         flows = _plant_bounds(flows)
         flows = _plant_ties(flows)
+    flows = _plant_edges(rng, spec, flows, fleet, hosts)
     return flows
 
 
@@ -540,12 +639,17 @@ def build_plan(seed, spec):
     for index in range(spec["amends"]):
         fid = resident_ids[(index * 11 + 5) % len(resident_ids)]
         target = [flow for flow in resident if flow["fid"] == fid][0]
-        seq = next(pool)
+        # one amend sits on the lowest sequence the charter allows, so the
+        # `seq` floor is load-bearing on the operation path as well
+        seq = 0 if (index == 0 and spec.get("zero_seq_amend")) else next(pool)
+        floor = spec.get("zero_seq_amend") and index == 1
         quiet = spec["quiet_amends"] > index
         operations.append((seq, json.dumps(
             {"op": "amend", "seq": seq, "fid": fid,
-             "bytes": target["bytes"] if quiet else target["bytes"] + 3300,
-             "pkts": target["pkts"] if quiet else target["pkts"] + 17,
+             "bytes": 1 if floor else (target["bytes"] if quiet
+                                       else target["bytes"] + 3300),
+             "pkts": 1 if floor else (target["pkts"] if quiet
+                                      else target["pkts"] + 17),
              "state": (_restate(target["state"])
                        if index < spec.get("restate", 0) else target["state"]),
              "last": target["last"] if quiet else target["last"] + 2600},
@@ -554,7 +658,9 @@ def build_plan(seed, spec):
     taken_away = []
     for index in range(spec["retracts"]):
         fid = resident_ids[(index * 17 + 9) % len(resident_ids)]
-        seq = next(pool)
+        # and one retract sits on the sequence floor, which is stated separately
+        # from the record's and the amend's and so needs its own witness
+        seq = 0 if (index == 0 and spec.get("zero_seq_amend")) else next(pool)
         taken_away.append((fid, seq))
         operations.append((seq, json.dumps(
             {"op": "retract", "seq": seq, "fid": fid},
@@ -650,6 +756,25 @@ def build_plan(seed, spec):
         head = sorted(inbox)[0]
         inbox[head] = [text for _seq, text in contended] + inbox[head]
 
+    # A second admit claiming a fid an EARLIER *inbox* admit already took.  The
+    # duplicate rule is judged in reading order over the whole sift, not just
+    # against the fids the segments held, and nothing else in the corpus says so:
+    # every other twin duplicates a resident record.  These go at the very end of
+    # the last inbox file, so the genuine admit is always read first.
+    reclaimed = []
+    for flow in admits[:spec.get("reclaim", 0)]:
+        twin = dict(flow)
+        twin["seq"] = next(pool)
+        twin["bytes"] = flow["bytes"] + 90100
+        twin["pkts"] = flow["pkts"] + 37
+        twin["dport"] = 8080
+        body = json.loads(_text(_sealed(twin)))
+        body["op"] = "admit"
+        reclaimed.append(json.dumps(body, sort_keys=True, separators=(",", ":")))
+    if reclaimed and inbox:
+        tail = sorted(inbox)[-1]
+        inbox[tail] = inbox[tail] + reclaimed
+
     scratch = {}
     for number in range(spec["scratch"]):
         scratch["part-%03d.tmp" % (number + 1)] = (
@@ -700,7 +825,8 @@ def write_plan(target, plan):
 BASE = {
     "hosts": 46,
     "span": SPAN,
-    "window_edge": 6,
+    "window_edge": 10,
+    "converge": 9,
     "dur_low": DUR_LOW,
     "dur_high": DUR_HIGH,
     "sensors": 6,
@@ -725,6 +851,9 @@ BASE = {
     "orphan_retracts": 5,
     "incoherent": 5,
     "contend": 6,
+    "reclaim": 3,
+    "edges": 4,
+    "zero_seq_amend": True,
     "segments": 4,
     "inbox_files": 3,
     "scratch": 3,
@@ -745,20 +874,21 @@ PLANS = {
     # wide gaps between the bands, and co-observations that agree
     "dragnet-live": (20260214, shape(
         hosts=44, layers=5, parents=1, touch=0, stall=0, noise=16, merges=5,
-        span=8000, dur_low=45000, dur_high=60000, window_edge=0,
+        span=8000, dur_low=45000, dur_high=60000, window_edge=0, converge=0,
         merge_agree=True, twin_end=0, retries=0, restate=0, late_amends=0,
         bounds=False, seq_tie=0,
         admits=5, amends=4, quiet_amends=0, retracts=2,
         orphan_amends=1, orphan_retracts=0, incoherent=0, contend=1,
+        reclaim=0, edges=0, zero_seq_amend=False,
         segments=3, inbox_files=2, scratch=2,
         segment_faults=("cut", "edited", "missing"),
         inbox_faults=("garbage", "twin"))),
-    "held-broad": (770311, shape(parents=5, touch=5, stall=4)),
+    "held-broad": (770444, shape(parents=5, touch=5, stall=4)),
     "held-webbed": (770312, shape(hosts=52, layers=6, parents=6, touch=13,
                                   stall=10, merges=12, segments=5)),
     "held-stalled": (770313, shape(hosts=40, layers=5, parents=4, touch=14,
                                    stall=15, noise=26)),
-    "held-crowded": (770314, shape(merges=18, admits=16, amends=13,
+    "held-crowded": (770612, shape(merges=18, admits=16, amends=13,
                                    quiet_amends=5, retracts=7,
                                    parents=5, touch=10, stall=8)),
     "held-orphaned": (770315, shape(orphan_amends=8, orphan_retracts=7,
@@ -788,7 +918,7 @@ PLANS = {
                                       stall=3, noise=10, merges=6, segments=0,
                                       admits=40, amends=6, retracts=2,
                                       inbox_files=4, segment_faults=())),
-    "held-brimful": (882534, shape(hosts=38, layers=5, parents=5, touch=10,
+    "held-brimful": (884423, shape(hosts=38, layers=5, parents=5, touch=10,
                                    stall=8, noise=18, merges=8, segments=4,
                                    inbox_files=3)),
     "held-onesegment": (770321, shape(hosts=20, layers=3, parents=4, noise=6,
@@ -814,10 +944,10 @@ PLANS = {
                             noise=4, merges=4, admits=2, amends=2, retracts=1,
                             segments=1, inbox_files=1, scratch=1,
                             inbox_faults=INBOX_FAULTS[:12])),
-    "sweep-f": (770953, shape(hosts=24, layers=4, parents=3, touch=4, stall=3,
+    "sweep-f": (965626, shape(hosts=24, layers=4, parents=3, touch=4, stall=3,
                               noise=7, merges=5, admits=4, amends=3, retracts=2,
                               segments=2, inbox_files=2, scratch=1)),
-    "sweep-g": (771065, shape(hosts=24, layers=4, parents=3, touch=4, stall=3,
+    "sweep-g": (983246, shape(hosts=24, layers=4, parents=3, touch=4, stall=3,
                               noise=7, merges=5, admits=4, amends=3, retracts=2,
                               segments=2, inbox_files=2, scratch=1)),
     "sweep-e": (5514, shape(hosts=28, layers=4, parents=4, touch=9, stall=7,
