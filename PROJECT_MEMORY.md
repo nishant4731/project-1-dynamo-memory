@@ -4350,3 +4350,60 @@ pass@5 trial read it literally and failed, with `decisive_rule_disclosed` and
 `spec_consistency` FAIL in its sub-analysis (the gating `task_specification`
 column was PASS on all five). One sentence fixes it; held back because the head
 was already all-green and a redraw is a coin flip.
+
+## Data Science and Reporting / Data visualization
+
+`dynamo-d8a8539-data-science-and-reporting` · PR #1 · head **`408808a`**
+(2026-08-23). Every review gate green: pass2, ava_review, deep_review, tier1,
+qc_eval, qc_exec, qc_gate, review, validation, cosine_similarity, similarity,
+ratelimit. Full playbook in auto-memory as
+`dynamo-data-science-and-reporting-data-visualization-playbook.md`.
+
+**Mold.** Rebuild a byte-exact chart renderer from its house standard.
+`dynamo/particulate-board`: sift a day of monitor readings against six ordered
+causes, reduce to per-bin medians, scale per band off a 1/2/5/25 ladder, thin
+each series to a fixed point, place label callouts, emit `board.svg` +
+`ladder.tsv` + `callouts.tsv` + a 38-counter manifest. `BOARD_STANDARD.md`
+states the whole contract in twelve sections, which is what keeps QC B5 green.
+
+**Crux — feedback edges, not clauses.** Three heads of sharper clauses each
+measured 2/2 solved with `difficulty_crux: NA`, while the blindness table grew
+32/57 → 39/66 with *no* effect on pass@2. What converted a solver was making
+layout a fixed point: a band that drops a label raises its ladder and re-settles
+(≤3); a label still dropped spills into a right-hand margin (first three only);
+the margin takes its column out of the plot, moving every bin, changing which
+labels fit, changing what the margin carries — so the sheet re-settles from every
+band's unraised ladder until the margin stops widening. The margin is never
+narrowed, which is what makes it terminate: 2 seeds in 420 oscillate for ever
+otherwise. pass@2 → 1 solved / 1 failed, `difficulty_crux` PASS, the failing
+agent's 23 failing tests being exactly those loops.
+
+**The starve.** The shipped estate drops no label, so it raises no band, reserves
+no column and never narrows a plot. Its `board.svg`, `ladder.tsv` and
+`callouts.tsv` are byte-identical across all three difficulty commits — a
+renderer implementing none of it draws the shipped board perfectly.
+
+**What decided the gate.** pass@2 pins `override_timeout_sec = 3600` whatever
+`task.toml` says. Declaring `[agent].timeout_sec = 5400` made `low_timeout` FAIL
+on the *conflict* (the failing agent was mid-fix at the cut) while every other
+criterion was 2/2 PASS. Setting it to **3600** turned pass2 green with no other
+change. Declare 3600; calibrate so a competent agent finishes well inside it (the
+passing trial took ~39 of the 60 minutes).
+
+**Two traps that cost cycles.**
+1. Growing the corpus silently invalidates every number in `task.toml`. The
+   `review` gate failed `verification_explanation_quality` because the metadata
+   still said 57 probes / 7 sweep networks after the corpus reached 78 / 16, and
+   omitted the raise and margin probe families. Sweep the numbers
+   programmatically against the live modules, and fix `solution_explanation` in
+   the same pass — it had the same defect and is the next criterion to fail.
+2. A monotone rule's natural misreading often does **not halt**. One probe wedged
+   the verifier for 13 minutes against a 900s budget and `dev/blind.py` for 59.
+   Every tool that runs a mutant needs a deadline that scores an overrun as a
+   wrong board.
+
+**Numbers.** Blindness 51/78 invisible on the shipped board (19 of them the two
+loops); corpus 21 networks, 16 in the probe sweep; suite 69 tests in 55s against
+a 900s verifier timeout. Witnesses were searched for, not assumed: 4 seeds in 140
+re-settle the margin, 2 in 420 oscillate, 9 in 400 refuse a label wider than any
+they took — that last one was a real discrimination hole.
