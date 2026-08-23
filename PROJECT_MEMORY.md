@@ -4506,3 +4506,127 @@ not carry an unkillable probe: three were provably equivalent given surrounding
 guards — delete the redundancy in the reference instead of keeping the probe green
 by exception. And keep the worked example degenerate for every crux, since it is
 the only disclosed answer.
+
+## Games Puzzles and Interactive Simulation / Interactive text games
+
+**ALL-GREEN 2026-08-23.** Repo `dynamo-568d798-games-puzzles-and-interactive-simulation`,
+PR #1, accepted head **`df461d2`**, task `dynamo/lanternfall-restage`. Four heads,
+one PR, no reskin ever needed.
+
+### The mold
+
+Repair-in-place on the only copy, with the crux in a **puzzle-progression fixed
+point**. A parser game's world build died mid-fold; the agent writes
+`/app/lanternfall_restage.py`, which sifts packed `warren/` passages and an
+unapplied `revisions/` against six ordered refusal causes, applies moves in `seq`
+order (files numbered in flush order), fuses twins on a five-part key, re-takes
+marks, repacks under two leaf bounds, rebuilds a byte-offset index, walks the
+progression into `PROGRESS.tsv`, files refusals with ordinals, spends
+`revisions/` and `drafts/`, and writes 39 counters. `STAGE_CANON.md` states
+everything.
+
+The crux: a way is walked only once its `head` has been stood in **and** every
+token in its `keys` is in hand, landing the walker `cost` turns after the
+**latest** of those — so scene turns and token turns are one mutually recursive
+least fixed point, not a BFS. Plus two second computations over the same
+structure: `route` (distinct scenes on *some* run to a scene, a union over runs)
+and `linchpin` (lowest token a scene cannot be reached without, by striking every
+way demanding a code and re-walking).
+
+The starve is graph shape: the shipped playhouse is one act, every way one turn,
+every key in hand before the way that wants it, one run per scene. On it a single
+sweep settles every turn, `route == depth + 1`, and the lowest key demanded on
+the way *is* the linchpin.
+
+### Measured
+
+| head | change | pass@2 |
+|---|---|---|
+| `d122117` | first substantive push | 0 solved / 0 valid / **2 timeout** |
+| `52bbfa6` | ship the byte-layout I/O as `stagecraft` | **1 solved / 1 valid / 0 timeout** |
+| `cb22ad0` | QC run-definition fix + held-out density | 0 solved / 0 valid / **2 timeout** |
+| `df461d2` | ship the sieve too; ask for an early first version | **0 solved / 1 valid / 1 timeout — PASS** |
+
+**pass@5 on `df461d2`: 0 solved / 3 good-valid-fail / 0 soft-timeout / 2
+in-progress-timeout / avg@5 0.000 — "Difficulty OK".** All five trials PASS on
+`task_specification`, `reward_hacking`, `difficulty_crux`, `near_miss`,
+`refusals` and `approach_validity`; only `low_timeout` FAIL twice.
+
+Cosine passed all four pushes (instruction 0.634 to 0.632, verifier 0.856 to
+0.803, fingerprint 0.801 to 0.778). Dynamo eval 30 PASS + 1 N/A. Duplicate
+UNIQUE. qc_gate ended 37 checks clean, 3 minor advisories.
+
+### What drew the fails
+
+The analyser: *"every failure lands exactly on the route/PROGRESS.tsv crux the
+task author identified."* Two independent misimplementations:
+
+1. **Backward dependency closure for `route`** (2 trials) — *"on the live
+   playhouse (one act, trivially linear runs) this happens to coincide with the
+   reference. On complex held-out playhouses with multiple acts, key detours,
+   and back-walks, the closure either over- or under-counts."* This is the whole
+   design working.
+2. **Exponential DFS for `route`** (2 trials) — semantically correct, one agent
+   logged the O(n!) risk at step 27 and submitted anyway; fine on the small
+   shipped house, 120 s subprocess timeout on 17 held-out runs. A **performance
+   trap is a free second discriminator** when the shipped instance is small and
+   the held-out ones are not.
+
+### The lever that decided it: cut volume by measurement, not by guess
+
+Both timeout heads showed the hard-side signature (`difficulty_crux` PASS +
+`approach_validity` PASS + `task_specification` PASS + `low_timeout` FAIL). The
+fix is to remove budget without removing difficulty — and to pick *what* to
+remove by counting lines per function in the intended solution:
+
+| region | lines | share | ever decided a trial? |
+|---|---|---|---|
+| sieve (6 causes + shape predicates) | 97 | 22% | never |
+| walk / route / linchpin | 145 | 33% | every failure |
+| restage body | 204 | 46% | once (a trailing newline) |
+
+Two cuts took the intended solution **685 to 564 to 416 lines**. On the head
+before the cuts, agents finished at **49 and 57 minutes of 60** — the
+distribution sat on the wall, so every slow LLM call tipped a trial over. One
+`cb22ad0` trial lost 774 s to a single call; another had one streaming response
+in flight for **57 minutes** and wrote no code at all.
+
+`[agent].timeout_sec` is honoured at pass@5 but **not** at pass@2, which pins
+3600 s. Size the cut to clear 3600 s; pass@5's 5400 s then lets agents finish and
+be wrong, which is what a countable valid fail needs.
+
+### Shipping a plumbing module safely
+
+Slice it out of the reference **by name** (`ast` + a declared list) at freeze
+time so it cannot drift; **stage the verifier's own copy into every graded run**
+so editing the shipped one buys nothing; make the **oracle import it**; install
+into `sysconfig.get_paths()["purelib"]` so `python3 -s -E` still finds it.
+`chmod 0444` does **not** stop the agent — it runs as root — so pin both copies'
+digests and say in the instruction that the module is graded as it shipped.
+Guard the "it gives nothing away" invariant **structurally** (the module defines
+exactly the declared functions); a word blacklist false-fires on column names
+like `depth` and `route`.
+
+### The QC defect worth remembering
+
+qc_gate B1 **and** B5 on one wording. A run was defined as *"a sequence in which
+every passage's `head` is an act's opening or the `tail` of an earlier passage"*.
+A passage whose head **is** an opening satisfies that **at any position**, so an
+unrelated passage could be parked at the front and its scenes would count. The
+reference computed the least fixed point, so the canon described a strictly
+larger answer than the verifier graded. Fix: four numbered rules, the fourth
+being that every passage other than the last is one a later passage needs. Then
+**brute-force the definition** over every subset of the open passages of two
+small hand-built instances and compare to the reference column — 0 mismatches.
+Any definition stated as an enumeration deserves that check.
+
+### Levers measured not to work here
+
+- Raising back-walk/braid/cost density on 8 held-out houses moved the blindness
+  table not at all (13 of 24 before and after). It is free — the agent never sees
+  those houses — so pair it with an ambiguity fix, but it is not what converts.
+- Two probes were **provably unkillable rather than unwitnessed**: a
+  `(seq, file, line)` sort tie-break (stable sort already gives line order) and
+  twin-group insertion order (a later sort erases it). Both were deleted from the
+  engine and the canon. An inert clause QC C3 can mutate for free is worse than
+  no clause.
