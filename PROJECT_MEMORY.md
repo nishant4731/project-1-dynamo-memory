@@ -1,5 +1,7 @@
 # Project 1 Memory
 
+- 2026-08-23 `dynamo-3fc7e1b-data-processing-and-etl` (`dynamo/quench-weave`, PR #11), head `bf9ba09`, run `32600611703`: every gate through Pass@2, Deep Review, AVA, Tier 1, and the 37-check QC gate passed, but final trials blocked on a hard-side timeout taxonomy. Pass@5 was **0 solved / 1 good-valid-fail / 0 soft-timeout / 4 in-progress-timeout / 0 task-verifier issue / 0 infra**. All five trajectories passed `task_specification`, `reward_hacking`, `difficulty_crux`, and `approach_validity`; four had `low_timeout=FAIL` because they were actively inferring the 18-value policy at the 3,600-second cap, and only one idle-loop timeout counted. Four agents never wrote the executable; the fifth wrote one but missed `chmod +x`. `pass2_suggestion` was quota-skipped, so there is no fresh advisory. Reject hardening, timeout increases, and close/reopen retriggers: this is real budget evidence, not infrastructure and not evidence that the task needs more difficulty. Adopt the learning-file rule to remove non-crux clock cost while retaining the policy/ring crux: ship pinned answer-free `quench_policy_tools.py` for typed log parsing, disclosed affine-row assembly, dependency-free modular elimination, and phase-pair enumeration; agents still recover every value, nonlinear hinge/floor, phase pair, threshold, first-match ladder, fold, and ring. Lower the inflated expert estimate 12h to 8h. Local candidate image `sha256:72d8ee0fc45e4e8bb1bedc075a482314a733ef0364167fa0a32a536d18192f1c`: fresh and repeated oracle **20/20 reward 1**, nop **10 failed / reward 0**, helper-tamper **reward 0**, four targeted policy/ring mutants **4/4 killed**, pins/LF/doc names/image preflight green. Both cosine surfaces were rewritten around the load-bearing helper contract; local token cosine against HEAD..HEAD~3 is instruction **0.841-0.860**, verifier **0.510-0.541**, joined **0.738-0.743**.
+
 - 2026-08-23 `dynamo-3fc7e1b-data-processing-and-etl` (`dynamo/quench-weave`, PR #11), head `3ed8135`, run `32599486642`: enforced cosine passed lower at **0.632830 instruction / 0.725007 verifier / 0.804290 fingerprint**, deterministic static checks passed, and read-only review passed 28/31 but correctly blocked `solution_quality`, `solution_explanation_quality`, and borderline `difficulty_explanation_quality`. The reference had pasted the 24 recovered policy values and never opened `transition_log.tsv`, contradicting metadata that said it reconstructed them; the difficulty field also omitted provenance and real-world audience. Validation and all pass stages were skipped, so there is no new trajectory or suggestion to adopt. Implement the advertised inference rather than weakening the explanation: normalize the otherwise additive-equivalent score tables with disclosed `base_right[0]=0`, recover the score model by enumerating hinge/alignment breakpoints and solving the overdetermined interior rows modulo a large prime, uniquely decode the phase cap/weight and bucket, then backtrack the first-match ladder and its thresholds against all 421 labels. The reference now reads `/app/transition_log.tsv`, finds exactly one full policy, and reproduces every row before using it. Add deterministic-synthetic provenance plus controls/data-reliability audience to metadata. Final candidate image `sha256:e0613b42b24e2d55811529d898230c39006319959ed5708b92da2d36c2d2aaae`: **19/19 in 107.90s, oracle 1, nop 0**, eight post-inference formula mutants killed; 300s verifier retains substantial headroom.
 
 - 2026-08-23 `dynamo-3fc7e1b-data-processing-and-etl` (`dynamo/quench-weave`, PR #11), head `7eb3792`, run `32591535737`: hosted gates through validation were green, including enforced cosine **0.663961 instruction / 0.730480 verifier / 0.806484 fingerprint**, but Pass@2 was a clean **2 solved / 0 valid-fail / 0 timeout / 0 infra**. Both agents produced all 15 exact outputs: one used the same threshold/subset DP shape as the reference in ~3,042s and one used DFS/branch-and-bound in ~28m. All specification, reward-hacking, approach-validity, and timeout classifications passed; `INFRA_ONLY=false`; Pass@5 was skipped. The suggestion job had exhausted its daily slots and only exposed stale earlier advice, so there is no fresh advisory to adopt. The measured finding is that another stated graph optimization/size ratchet remains recognizable transcription. Reject another board-count or objective-volume increase. The cohesive v8 response changes the task shape: a visible **421-row retired-controller decision log** determines two hidden tables, 18 integer constants, a nonlinear score, six refusal predicates, and their first-match ladder. The recovered policy deletes directed port edges, assigns surviving strain, emits a new graded `transition_policy.tsv`, and changes the optimal ring plus every downstream decoded put. The corpus kills every +/-1 scalar/table mutation, every ladder transposition, and six rival formula shapes, and all protected feature queries stay within visible column ranges. This is evidence-mined reusable inference rather than an undisclosed convention; retain the codec/runtime plumbing so work stays on policy recovery, fold identity, and graph optimization. Final local candidate `sha256:166fba89867e37a2a7a855e1123f98b59c24d34f11761720174a62ccc112f33f`: **18/18, oracle reward 1, nop 0**, 12/12 implementation mutants killed (including cap/hinge/gates/clamp/refusal/feature formulas), log-tamper 0, baked `/tests` oracle-import cheat 0, deterministic refreeze/pins, and 40/40 arbitrary digest-derived cohorts generated without a disconnected case. Local token-cosine vs the last three heads is instruction **0.842-0.857**, verifier **0.533-0.547**, joined **0.759-0.771**; latest hosted cosine sticky remains enforced and green at **0.663575 / 0.732236 / 0.813024**.
@@ -3838,68 +3840,67 @@ coverage passed enforced cosine without a needless domain reskin.
 
 ## Security / Network Forensics
 
-**Repo:** `dynamo-2d0d4c3-security` PR #1 · `dynamo/dragnet-restitch` · head `d05e34c`
-(2026-08-20). Earlier delivered task in this subcategory: `dynamo/tapline-recut`
-(`dynamo-6bb0151`). Local playbook with full detail:
-`dynamo-security-network-forensics-playbook.md` in the auto-memory directory.
+### `dynamo/dragnet-restitch` — ALL-GREEN on `646d13b` (2026-08-23)
 
-**Mold — repair in place, crux hidden in graph shape.** A flow-correlation
-appliance died mid-fold; the agent writes `/app/dragnet_restitch.py`, which sifts
-packed `segments/` and an unfolded `inbox/` against six ordered rejection causes,
-folds operations in `seq` order (files are numbered in *flush* order), merges
-co-observations, re-takes every check value, repacks under two segment bounds,
-rebuilds a byte-offset index, walks a contact graph into `REACH.tsv`, files
-refusals with collision ordinals, consumes the evidence and writes 33 counters.
+`handshake-project-dynamo/dynamo-2d0d4c3-security` PR #1, run `32613614960`: all
+17 jobs green together, **pass@5 1 solved · 3 good-valid-fail · 0 soft-timeout ·
+1 in-progress-timeout · avg@5 0.200**, pass@2 0 solved · 1 valid-fail (Rerun
+Recommended: NO), enforced cosine passed 24 consecutive times.
 
-**The crux is temporal reachability starved by graph shape.** `REACH.tsv` gives,
-per host that opens a contact, the number of **distinct** hosts a time-respecting
-trail reaches, the greatest of the earliest arrival times, and which host that is.
-The shipped dragnet is built with one contact into each host, so its graph is a
-**forest** with widely separated time bands: summing children instead of unioning,
-ignoring the time constraint, and reading "not below" as "strictly after" are all
-byte-identical there and wrong on every graded dragnet. Blindness table: **14 of
-30 one-line misreadings left the shipped dragnet byte-identical and were wrong on
-2–12 of 12 held out**; the headline was wrong on 12/12.
+**Mold:** repair-in-place with a complete 317-line charter; the agent writes one
+file that sifts packed segments and an unfolded inbox against six ordered causes,
+folds inbox operations in `seq` order (files numbered in flush order), merges
+co-observations, repacks under two segment bounds, rebuilds a byte-offset index,
+walks the contact graph forward into `REACH.tsv` and backward into `PIVOT.tsv`,
+and writes 35 counters.
 
-**Measured pass@2 across eight completed draws, both sides of the band:**
-without the supplied plumbing 0/2-valid-fail ×2 (plus two draws lost to
-in-progress timeouts, and later 1 solved/1 valid fail and 0 solved/2 valid fails);
-with a read-only `/app/dragnet_io.py` handing over the mechanical half, 2 solved
-×2 and 1 solved/1 valid fail. **Handing over the plumbing cured the timeouts and
-moved the task to the easy side; it was withdrawn.** Every genuine valid failure
-across every draw came from the *operational* one-shot rule — an agent running the
-irreversible restitch on the live dragnet before its tool was right, or a second
-time "to verify idempotency" — never from the algorithmic crux, which agents
-master. That is the reusable finding for this subcategory.
+**What converted solvers — the reusable fact.** Four heads with a fully *stated*
+crux solved 2/2 or 3/5; the analyser's verdict on the last of them was *"No trial
+failed due to algorithmic deficiency."* What broke the ceiling was a **relay
+window** (a host holds what a contact brought it for 380000 and no longer) plus
+**convergence knots that are built, not hoped for**: hold an early arrival, move a
+later arrival at the same host forward by more than a window, and open an onward
+contact inside the later arrival's window only. That makes a single scalar
+"earliest arrival per host" wrong, while the shipped dragnet — one contact into
+each host — structurally cannot contain such a knot. Measured: the naive reading
+went from 10/13 to **12/13** held-out dragnets wrong, still byte-identical on the
+live one. Build the gap by moving the LATE arrival *forward*; pushing the early
+one backwards drove 51 flows to a negative `first`, which is refused as malformed,
+so the knot deletes a share of itself.
 
-**Gate-by-gate.** Cosine never blocked (8 passes; instruction 0.673 / verifier
-0.816 / fingerprint 0.764 on a fresh domain). Static + Dynamo eval 31/31 on push 1.
-Duplicate UNIQUE. Validation green. Deep review green throughout. **qc_gate blocked
-five times, every one the same C3 family** — a rule stated but never *exercised*:
-the incoherent-amend boundary (`last == first`), the inclusive bounds witnessed on
-the edge but not just outside it, the merge keeper's `fid` tie-break (no group
-shared a top `seq`), nested consumption (`discard`'s recursive walk vs a top-level
-count), and then a B1 the nesting fix itself created. AVA blocked twice: once
-fail-closed noise (`confirmed_major=0`, `parse_failures=1`), once a real item —
-"lowest host id" never said ids compare as text. Tier-1 held on E5 because the
-symlink guard predated its pinned base.
+The three pass@5 failures were stratified: an edge-case trap where *"all bugs were
+invisible on the quieter live dragnet"*; an analytical failure applying
+`duplicate_id` to inbox amend/retract as well as admits — **the exact rule a QC
+C3-exec finding had forced me to witness two heads earlier**; and one operational,
+running the tool twice on the live dragnet without restoring.
 
-**The instrument that found four of the five QC blocks before QC did, once I
-started using it:** reproduce QC's own method — mutate the **submitted solution**,
-not the reference, with single-token changes to every constant, comparison,
-pattern and tie-break the contract states, install each as the graded deliverable
-and run the whole graded corpus. A reference-side mutation table tests whether
-*grading* discriminates; only the solution-side sweep tests whether the *corpus*
-contains the row that makes the discrimination possible.
+**Gates, in the order they blocked.** (1) pass@2 twice on the *clock*, not
+difficulty — the instruction claimed the live store was the only copy, so agents
+deferred the single run until certain and ran out of time; shipping
+`/app/data/dragnet.spare.tar` and asking for an early first pass fixed it.
+(2) pass@2 "too easy" once they could finish. (3) `qc_exec` C3-exec: reproducing
+QC's method locally (mutate the **submitted solution**, grade through the
+verifier) found 12 survivors of 107, six real unwitnessed rules — a value merely
+*appearing* in graded output is not a bound *deciding* one, and the record, amend
+and retract paths each state their own floors. (4) `qc_gate` B5: §5 gave
+provenance for every merged field except `label`, and no merge group disagreed
+about one; both stating it and planting the disagreement were needed. (5) trials.
 
-**Infrastructure was the dominant cost, not the task.** Six of eleven pipeline
-runs died on platform faults with distinct signatures, all cleared by close/reopen
-with no task change: `the platform's 'harbor / pass@k' status did not finish
-within 60 minutes` with the analyser reporting `0 of 0 runs` (twice, on push
-events); `##[error]other side closed` after validation had already set
-`ORACLE="true"` and `NOP="true"`; and `DaytonaNotFoundError` with the sticky
-saying outright "not a problem with your task". `0 of 0 runs` is the diagnostic —
-a real too-easy verdict says `2 of 2`.
+**Measured NOT to work here:** a fewest-contacts column (layering forces hop count
+— naive agrees 13/13); a "moments stood" column (11→12 of 13); more blind branches
+(14 of 21 blind and still 3/5 solved); raising `[agent].timeout_sec` (pass@2 caps
+at `min(timeout_sec, 3600)`, and at pass@5 more clock turns a failure into a
+solve); contention density alone (blind surface unchanged at 14 of 21).
+
+**Costs to budget for:** every witness you plant moves every record, which
+destroys the measure-zero byte-budget witnesses — script that re-search rather
+than doing it by hand (four times here), and check two sweep slots do not get
+pinned to the same seed. `docker cp dir container:/tests` nests when `/tests`
+exists, so re-copying into a live container silently measures stale code.
+
+Full detail in the memory playbook `dynamo-security-network-forensics-playbook.md`.
+
+Earlier task in this subcategory: `dynamo/tapline-recut` (`dynamo-6bb0151`).
 
 ## Security / Authentication and authorization
 
