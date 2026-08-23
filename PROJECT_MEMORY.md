@@ -4407,3 +4407,102 @@ loops); corpus 21 networks, 16 in the probe sweep; suite 69 tests in 55s against
 a 900s verifier timeout. Witnesses were searched for, not assumed: 4 seeds in 140
 re-settle the margin, 2 in 420 oscillate, 9 in 400 refuse a label wider than any
 they took — that last one was a real discrimination hole.
+
+## Security / Reverse Engineering
+
+**Repo:** `handshake-project-dynamo/dynamo-24cfb9b-security` · PR #1 · accepted head
+**`39ba1f7`** (2026-08-23). Heads: `f9ce205` → `ee61598` → `a385abf` → `58a0869` →
+`39ba1f7`. No prior PRs on the repo.
+
+**Mold — disassemble and audit an undocumented firmware container.**
+`dynamo/slate-teardown`: a discontinued door controller ran applets on an in-house
+stack machine; the agent writes `/app/slate_teardown.py`, which reads one `.slate`
+image and writes `listing.txt`, `frames.tsv` and `audit.json`. `SLATE_TEARDOWN.md`
+is complete — header, five drop causes in order, 25 opcodes with operands, stack
+effects and successors, decode, frame depth, latch closure, gates, chokes, the cut,
+all three output formats, and one whole image worked end to end. Nothing is
+withheld. **The difficulty is the shape of the three images the container ships:**
+every byte covered by a reachable instruction in address order, branches forward
+only, every join reached at one depth, a shallow call tree, one gate per
+latch-reaching applet sitting in its entry block. The thirteen graded images are
+none of those. The agent has no ground truth for the bench images, so self-testing
+cannot catch a naive pass.
+
+**Measured.** pass@2 1 solved/1 valid, "Rerun Recommended: NO". pass@5 **1 solved ·
+4 good valid fails · 0 timeouts · avg@5 = 0.200**. Cosine passed 5/5 pushes
+(instruction 0.661, verifier 0.828, fingerprint 0.790, threshold 0.9). 93 probes
+over 16 sweep images, 0 survivors, none caught by one image; 46 of 93 leave all
+three bench images byte-identical. `[agent] 5400`, `[verifier] 1800`; agents
+finished in 22–55 min of the 90-minute budget, so no timeout pressure.
+
+**The ceiling, and the one lever that broke it.** Two heads measured **4 solved / 1
+valid** with the spec naming three algorithms outright (worklist decode, relaxation
+to a fixed point, iterative closure). The analyser: *"the convergence on the same
+algorithm across five independent agents strongly suggests the worklist +
+relaxation + fixed point pattern is well-represented in training data and is
+reliably retrieved given the spec."* Adding a **fourth stated rule** (chokes,
+"no run reaches a gate without it") fired — all nine wrong values in that head were
+in the choke column, `difficulty_crux` PASS — but converted only 1 of 5, because
+*"the four passing trials each used the golden approach directly (per-instruction
+reachability walk), not the dominator shortcut."* **A rule that maps onto a
+six-line loop is not a wall, however carefully it is stated.**
+
+What broke it was a quantity **expensive to compute rather than hard to know**:
+`cut`, the fewest instructions that must come out of the applet's decoded graph for
+no gate to be reachable from its entry, with neither the entry nor a gate cuttable
+— a minimum **vertex** cut, wanting a flow with every instruction split in two.
+Every gated bench applet is a straight chain to one gate, so the cut is 1 there and
+so is every shortcut; the graded corpus needs 2 and 3, `-1`, and three applets
+carrying two ways that share an instruction but no edge (the only thing separating
+a vertex cut from an edge cut). Same resolution as the
+Authentication-and-authorization playbook.
+
+**What drew the valid fails.** Two of four were the designed bench-vs-graded
+asymmetry, with fully correct bench output: chokes by dominator intersection on a
+**gate-truncated** graph (identical for single-gate applets, collapses on chained
+ones — `undercroft` 26→4, `saltmarsh` 17→0); and a listing writer advancing by
+`addr += size` instead of iterating `sorted(decoded)`, which skips a correctly
+decoded instruction that overlaps a `PUSHI`. The other two were opcode-table slips
+that break the bench images too (`NOP` missing from the handler switch; `NOP
+pushes=1`; `SPILL`/`PACK` with no `#n`) — reliable, but `difficulty_crux` FAIL, so
+not creditable difficulty. `stormgate`, the densest graded image, was the one image
+every failing agent got wrong.
+
+**The local candidate battery predicted pass@5 exactly.** Install plausible-wrong
+*programs* as the submission and grade them the way Harbor does. Each of these
+passes every bench-image test: front-to-back decoder (18 held-out failures), chokes
+by address order (16), "one cut is always enough" (10), a correct minimum edge cut
+(4) — all reward 0; a correct teardown with reversed worklists and compact JSON
+scores 1.0; a candidate that `exec`s the reference out of `/tests` is blocked.
+
+**The equivalence candidate is a soundness test, not just anti-cheat.** Grading a
+correct program written differently (`pop()` → `pop(0)`) exposed a real
+order-dependence defect: classifying underflow/overflow *during* the depth
+relaxation makes the answer depend on queue order. Fix — settle the depth map to
+its fixed point first, cap the leaving depth one slot past the frame so the lattice
+is finite and the system monotone, then read the sites off the settled map. A
+permanent test runs each walk as a queue and as a stack and requires agreement.
+
+**Hurdles, per gate.** (1) Dynamo eval `accurate_taxonomy_labels`, the only FAIL of
+31 on push 1: `artifact_type` claimed a binary and a firmware artifact, but the
+firmware is a read-only input and the agent produces one script. (2) qc_gate **A6 +
+B5 off one sentence** — §7's "runs follow edges backwards as readily as forwards"
+(meant: a step may land lower) reads as *undirected* reachability; QC found the
+rival reproduces every disclosed answer. Fixed by saying a step leaves an
+instruction by one of its own successors in the direction that successor runs, and
+by **rebuilding the worked example so its answers exclude the rival**. (3) trials,
+twice at 4 solved / 1 valid. Cosine, static, review, similarity, validation, AVA,
+deep_review, tier1, qc_eval, qc_exec never blocked on any push.
+
+**Operational.** A mutation sweep that writes every mutant to the same
+`variant.py` silently reports same-length single-character edits as survivors —
+`.pyc` invalidation is mtime+size at 1-second granularity, so the stale cache is
+reused. Write a uniquely named file per probe and pass `-B` with
+`PYTHONDONTWRITEBYTECODE=1`. Seal the overlay (`chmod 0700` on `/tests` at rig
+import) as well as dropping to `nobody` — privilege-dropping alone leaves `/tests`
+world-readable. Run the candidate from a copy in a scratch dir under `python3 -I`
+so `sys.path[0]` holds only the submission; that is what enforces "one file". Do
+not carry an unkillable probe: three were provably equivalent given surrounding
+guards — delete the redundancy in the reference instead of keeping the probe green
+by exception. And keep the worked example degenerate for every crux, since it is
+the only disclosed answer.
