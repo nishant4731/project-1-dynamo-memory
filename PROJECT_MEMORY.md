@@ -1,5 +1,12 @@
 # Project 1 Memory
 
+- 2026-08-23 `dynamo-a8b2707-regulated-knowledge-work-and-business-operations` (`dynamo/sentinel-trace`, PR #1) **`ecd61e8` ALL-GREEN**: every required check green including the final `gate` — enforced cosine, static/rubric, duplicate UNIQUE, Docker oracle/nop, **pass@2 0 solved / 2 valid-fail / 0 timeouts**, deep_review, ava_review, tier1, qc_eval, qc_exec, the 37-check qc_gate, and **pass@5 1 solved / 3 good-valid-fail / 1 in-progress-timeout, avg@5 0.200**. Eleven heads. The converting crux was `minimum_cut` — a stated quantity that is cheap to know and expensive to compute — with all four pass@5 failures pivoting on it. Full playbook in the `## Regulated Knowledge Work and Business Operations / Medical and Clinical Workflows` section below and in [[dynamo-regulated-knowledge-medical-and-clinical-workflows-playbook]].
+- 2026-08-23 — `dynamo-3fc7e1b` PR #11 run `32634106030` at `40ff6e6`: the duplicate-option QC fix worked; cosine, review, validation, Pass@2, Deep Review, AVA, Tier1, QC eval/exec/gate all passed. Pass@2 was healthy at **0/2 solved, 2/2 good-valid, no timeout/infra**, but final Pass@5 was **0/5 solved, 2 good-valid, 3 in-progress timeouts**, below the required three qualifying trials. All five approaches and specifications were valid. The two completed failures were shallow operational misses (wrong transition-log path and missing executable bit); the three timeout trajectories spent most of the hour rebuilding the score system and only reached ring implementation/debugging near the cap. `pass2_suggestion` was quota-skipped, so no new sticky advice exists; Deep Review's advisory to make the already-pinned modular path more prominent matches the measured taxonomy. Reject hardening, timeout increase, and infrastructure retrigger. Adopt an answer-free `score_model_candidates(observations)` helper that derives exact bounded score candidates from the public log and validates clamped rows, while leaving calibration, fitness ceiling/bucket, all six thresholds, ladder order, graph construction, and the complete ring optimizer to the agent. This deliberately removes non-crux algebra volume so trajectories finish with gradable ring/policy outcomes.
+
+- 2026-08-23 — `dynamo-3fc7e1b` PR #11 run `32625723250` at `06a2c04`: the prior equals-form acceptance fix worked through cosine, review, validation, Pass@2, Deep Review, AVA, Tier 1, and static QC. Pass@2 was **0/2 solved**, with **1 valid analytical failure** on the disclosed ring-DP crux and **1 in-progress timeout**; every task-specification, difficulty-crux, and approach-validity check passed, `INFRA_ONLY=false`, and `Rerun Recommended: NO`. `pass2_suggestion` was quota-skipped, so there is no new advisory to adopt. QC execution alone found a different concrete C3 survivor: a mutant counted detached `--intake` occurrences but collapsed all attached `--intake=...` occurrences to one, so duplicate attached intake flags exited 0, wrote all eight outputs, and still passed 20/20. This is a real held-out CLI coverage gap, not infrastructure or difficulty evidence; final Pass@5 was correctly skipped. Adopt the narrow fix in one load-bearing commit: explicitly define duplicate occurrence semantics, add a separate graded command-boundary case covering all detached/attached duplicate pairs for both options plus interleaving, and retain fail-closed filesystem snapshots. Reject close/reopen or empty retrigger. Local candidate evidence: oracle **21/21 reward 1**, nop **reward 0**, and the exact attached-intake-collapse mutant **20/21 reward 0**.
+
+- 2026-08-23 — `dynamo-3fc7e1b` PR #11 run `32620593198` at `86bb1ba`: pass@2 became healthy after answer-free policy plumbing (`0/2 solved`, `2/2 valid-fail`, `0` in-progress timeout; all `low_timeout`/`difficulty_crux`/`approach_validity` PASS). Deep Review, AVA, Tier1, QC eval, and 36/37 QC probes passed. QC exec alone blocked on a surviving mutant that rejected valid `--intake=/path --out=/path` equals-form arguments; the verifier exercised spaced arguments for successful protected cohorts but equals form only in a repeated-option invalid case. Adopt the concrete QC fix: disclose both standard option-value spellings and run the visible sample through equals form while protected cohorts retain spaced form. This is a real held-out coverage gap, not infrastructure; final trials were correctly skipped.
+
 - 2026-08-23 `dynamo-a8b2707-regulated-knowledge-work-and-business-operations` (`dynamo/sentinel-trace`, PR #1) heads `1549bca` → `9638c35`: **the first lever that ever converted this model, plus a hard lesson about inert rules.** `1549bca` cleared pass@2 (**1 solved / 1 valid-fail**, `difficulty_crux` PASS, `Rerun Recommended: NO`) and then **deep_review, ava_review, tier1, qc_eval, qc_exec and the 44-check qc_gate all passed first try with an empty `QC-FIXES-B64`**; pass@5 was 3 solved / 1 good-valid / 1 in-progress-timeout (avg 0.600). **What converted was `minimum_cut`: a quantity cheap to state and expensive to compute** — the fewest admitted contacts whose joint refusal averts a case, i.e. a minimum edge cut between the seed states and that case's states. It adds no rule (B5-safe) but subset enumeration cannot reach it: measured in the task image, 40 admitted contacts with a deepest cut of 4 needs ~91,000 closures and covered 13,355 in 60 s against a 150 s per-pack budget, while max flow settles a pack in 0.2 s. Trial after trial died on exactly that: *"The agent's min-cut implementation used brute-force subset enumeration... this timed out at 150 s against a reference runtime of 0.2 s."* This is [[dynamo-b5-vs-pass2-determinability-pincer]]'s closing advice — "a stated computation where the naive algorithm is infeasible at the shipped scale" — vindicated after three heads of stated-computation ratchets went 2/2 solved. **Second converter:** `origin_set` (every index case on a conferring chain, of which `source_index` is only the least) killed a trial whose BFS closure merged origin sets without re-enqueuing the state. **Levers measured dead here:** more stated computation (3 heads, 6 trials, all solved); operational irreversibility (a destructive intake fold whose second run and mis-folded-draft both scored 0 locally — both agents still validated before touching the live copy); and **raising `[agent].timeout_sec` to 5400, which took pass@5 from 3/5 to 4/5 — extra clock buys solves, not merit failures, because `low_timeout` FAILed on a *passing* trial.** Reverted to 3600. **The volume finding:** the intake fold was 99 of the deliverable's 700 lines and produced 1 failure in ~14 trials against the cut machinery's 5, so it was buying clock and not failures; cutting it (deliverable 700 → 580 lines) is the documented response to a pass@2 blocked on an in-progress timeout, since **pass@2 is pinned at 3600 s whatever `task.toml` says**, so the platform's own "raise the timeout" advice cannot reach that gate. **The trap that cost a head:** the crowding-cap rule shipped at `1791e13` was **inert** — its mutation sweep was green because mutants that reduced *more* fired, while deleting the rule outright changed no graded byte, since every crowded landing sat where the cap was not binding. See [[dynamo-mutation-sweep-green-on-an-inert-rule]]; the fix is an isolated cap-1 bay held strictly over its limit, plus a generator assertion that crowding changes at least one conferred grade. Finally, a pass@2 draw here lost ~50 of 60 minutes to two stalled LLM calls (one 37 minutes) with the algorithm already correct — provider latency, `Rerun Recommended: YES`, redrawn with a README-only push outside `task/`.
 - 2026-08-23 `dynamo-3fc7e1b-data-processing-and-etl` (`dynamo/quench-weave`, PR #11), head `bf9ba09`, run `32600611703`: every gate through Pass@2, Deep Review, AVA, Tier 1, and the 37-check QC gate passed, but final trials blocked on a hard-side timeout taxonomy. Pass@5 was **0 solved / 1 good-valid-fail / 0 soft-timeout / 4 in-progress-timeout / 0 task-verifier issue / 0 infra**. All five trajectories passed `task_specification`, `reward_hacking`, `difficulty_crux`, and `approach_validity`; four had `low_timeout=FAIL` because they were actively inferring the 18-value policy at the 3,600-second cap, and only one idle-loop timeout counted. Four agents never wrote the executable; the fifth wrote one but missed `chmod +x`. `pass2_suggestion` was quota-skipped, so there is no fresh advisory. Reject hardening, timeout increases, and close/reopen retriggers: this is real budget evidence, not infrastructure and not evidence that the task needs more difficulty. Adopt the learning-file rule to remove non-crux clock cost while retaining the policy/ring crux: ship pinned answer-free `quench_policy_tools.py` for typed log parsing, disclosed affine-row assembly, dependency-free modular elimination, and phase-pair enumeration; agents still recover every value, nonlinear hinge/floor, phase pair, threshold, first-match ladder, fold, and ring. Lower the inflated expert estimate 12h to 8h. Local candidate image `sha256:72d8ee0fc45e4e8bb1bedc075a482314a733ef0364167fa0a32a536d18192f1c`: fresh and repeated oracle **20/20 reward 1**, nop **10 failed / reward 0**, helper-tamper **reward 0**, four targeted policy/ring mutants **4/4 killed**, pins/LF/doc names/image preflight green. Both cosine surfaces were rewritten around the load-bearing helper contract; local token cosine against HEAD..HEAD~3 is instruction **0.841-0.860**, verifier **0.510-0.541**, joined **0.738-0.743**.
 
@@ -2762,6 +2769,73 @@ fix, commit. A trap now only survives if no independent oracle can be constructe
 which leaves either information the agent lacks (unfair, QC B5) or genuine computational hardness
 (timeouts, which count for nothing). Any further attempt should state which of those it escapes
 before a line is written.
+
+## Regulated Knowledge Work and Business Operations / Medical and Clinical Workflows
+
+**Repo** `handshake-project-dynamo/dynamo-a8b2707-regulated-knowledge-work-and-business-operations`,
+PR #1, accepted head **`ecd61e8`** (2026-08-23), eleven heads. Task `dynamo/sentinel-trace`.
+
+**The mold.** A read-only ward surveillance pack (`bays.tsv`, bitemporal `stays.tsv` and
+`screens.tsv`, `calibration.tsv`) plus a complete protocol document. The agent writes
+`/app/sentinel_trace.py PACK CASE LINE REVIEW CUT` and emits four SHA-256-chained
+byte-graded reports. Attribution is a least fixed point over patient carriage
+`(day, grade)` states.
+
+**Measured on the accepted head.** pass@2 **0 solved / 2 valid-fail / 0 timeouts**;
+pass@5 **1 solved / 3 good-valid / 1 in-progress-timeout, avg@5 0.200**. Enforced cosine
+passed all eleven heads (~0.65-0.71 instruction, 0.68-0.72 verifier). static/rubric,
+duplicate, validation, deep_review, ava_review, tier1, qc_eval and qc_exec were green on
+every head that reached them; qc_gate blocked once, on C3.
+
+**Which crux drew the valid fails — the single most reusable fact.** All four failures
+pivot on `minimum_cut`: the fewest admitted contacts whose *joint* refusal averts a case,
+i.e. a minimum edge cut between the seed states and that case's states. The analyser:
+*"Across all four failing trials the minimum-cut computation is the pivot point - either
+wrong, too slow, or partially fixed but not complete."* And on why it is blind: *"The
+shipped pack has all single-contact cuts (depth <= 1), so the flaw is invisible there -
+both agents produced byte-exact shipped-pack output and passed 6 of 7 tests."* The scale
+that made it bite: 41-55 admitted contacts, deepest cut **5**, 6-11 of 34 attributed
+patients needing a joint cut made of contacts that are not individually critical, against
+4 contacts and depth 1 on the shipped pack. Reference 0.5s per pack; depth-5 enumeration
+~3.5M combinations against a 150s per-pack budget. `least_cut` (the lexicographically
+least minimum cut, which one max-flow run does not give) rides on the same machinery.
+
+**This is [[dynamo-b5-vs-pass2-determinability-pincer]]'s closing advice vindicated:** a
+*stated* computation that is expensive to compute rather than hard to know. B5 stays green
+because nothing is withheld; pass@ converts because the obvious algorithm is infeasible at
+the graded scale and the shipped instance never reveals that.
+
+**Levers measured NOT to work here.** More stated computation, however intricate: 3 heads,
+6 trials, all solved with `difficulty_crux` NA. Operational irreversibility (a destructive
+intake fold that spent its batches, verified locally to score 0 on a second run and on a
+mis-folded draft): 2/2 solved, agents validate before touching the live copy. Raising
+`[agent].timeout_sec` 3600 -> 5400: pass@5 went **3/5 -> 4/5** with `low_timeout` FAILing
+on a *passing* trial - extra clock buys solves, not merit failures. Volume for its own
+sake: the intake fold was 99 of 700 deliverable lines and produced 1 failure in ~14 trials
+against the cut machinery's 5; cutting it is what let agents finish and fail on merit.
+
+**Gate tensions and how they resolved.** pass@2 is pinned at 3600s whatever `task.toml`
+says, so the platform's own "raise the timeout" remedy cannot reach a pass@2 blocked on an
+in-progress timeout - only cutting non-crux volume can. Make the harness turn a
+submission's own timeout into an `AssertionError`, not a bare `TimeoutExpired`, so a
+brute-forcer is a merit failure rather than a harness error.
+
+**Two traps that each cost a head.** (1) A mutation sweep can be green while a rule is
+**inert**: the crowding cap was placed only where the cap was not binding, so mutants that
+reduced *more* fired while deleting the rule outright changed nothing - always test the
+delete-the-rule direction; see [[dynamo-mutation-sweep-green-on-an-inert-rule]]. (2) QC C3
+builds its own conforming packs, so it finds precedence holes a sweep over your packs
+cannot: it mutated `crowded_acquisitions` from `elif` to `if` and constructed a pack where
+a contact was *both* horizon-clipped and landing in an over-crowded bay. An `A else B`
+precedence needs a case satisfying **both**, not one case of each.
+
+**Three smaller operational notes.** A verifier test comparing the protocol document
+against the emitted reports **in both directions** catches spec/reference drift - a rubric
+FAIL here came from trimming two report keys while the matching spec edit silently did not
+apply. A probe that *passes* may be testing a correct variant: my first min-cut-restriction
+probe used `flow == width - 1`, which selects contacts in some minimum cut and is correct.
+And run `/tests` isolation probes against a **baked** tests directory - `chmod` on a macOS
+bind mount is a no-op and reports a false all-clear.
 
 ## Security / Vulnerability analysis
 
