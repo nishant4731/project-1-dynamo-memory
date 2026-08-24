@@ -4429,280 +4429,59 @@ was already all-green and a redraw is a coin flip.
 
 ## Data Science and Reporting / Data visualization
 
-`dynamo-d8a8539-data-science-and-reporting` · PR #1 · head **`408808a`**
-(2026-08-23). Every review gate green: pass2, ava_review, deep_review, tier1,
-qc_eval, qc_exec, qc_gate, review, validation, cosine_similarity, similarity,
-ratelimit. Full playbook in auto-memory as
+`dynamo-d8a8539-data-science-and-reporting` · PR #1 · head **`a5dc643`** ·
+**ALL-GREEN, label `accepted`** (2026-08-24). pass@2 pass; pass@5 **1 solved /
+4 good-valid-fail / 0 timeouts, avg@5 0.200**. Thirteen heads; the first nine all
+failed pass@2 as "too easy". Full playbook in auto-memory as
 `dynamo-data-science-and-reporting-data-visualization-playbook.md`.
 
-**Mold.** Rebuild a byte-exact chart renderer from its house standard.
-`dynamo/particulate-board`: sift a day of monitor readings against six ordered
-causes, reduce to per-bin medians, scale per band off a 1/2/5/25 ladder, thin
-each series to a fixed point, place label callouts, emit `board.svg` +
-`ladder.tsv` + `callouts.tsv` + a 38-counter manifest. `BOARD_STANDARD.md`
-states the whole contract in twelve sections, which is what keeps QC B5 green.
+**Mold.** Rebuild a byte-exact chart renderer from its house standard: sift a day
+of monitor readings against six ordered causes, per-bin medians, a 1/2/5/25 value
+ladder per band, fixed-point thinning, label callouts, and four graded outputs
+including a 38-counter manifest. The standard is complete in twelve sections,
+which is what keeps QC B5 green.
 
-**Crux — feedback edges, not clauses.** Three heads of sharper clauses each
-measured 2/2 solved with `difficulty_crux: NA`, while the blindness table grew
-32/57 → 39/66 with *no* effect on pass@2. What converted a solver was making
-layout a fixed point: a band that drops a label raises its ladder and re-settles
-(≤3); a label still dropped spills into a right-hand margin (first three only);
-the margin takes its column out of the plot, moving every bin, changing which
-labels fit, changing what the margin carries — so the sheet re-settles from every
-band's unraised ladder until the margin stops widening. The margin is never
-narrowed, which is what makes it terminate: 2 seeds in 420 oscillate for ever
-otherwise. pass@2 → 1 solved / 1 failed, `difficulty_crux` PASS, the failing
-agent's 23 failing tests being exactly those loops.
+**What did not work — nine heads of it.** Adding *stated rules* never added
+difficulty. A fixed-point thinning crux, a band-raise closure, a margin that
+narrows the plot and forces a re-settle, raises carrying across passes: all
+transcribed faithfully, all 2/2 solved. Blindness went 32/57 → 55/82 invisible
+misreadings with **no** effect on pass@2. Withholding the anchor order was
+checked and rejected — no worked strip pins it uniquely, so it would have been
+B5 underdetermination rather than difficulty.
 
-**The starve.** The shipped estate drops no label, so it raises no band, reserves
-no column and never narrows a plot. Its `board.svg`, `ladder.tsv` and
-`callouts.tsv` are byte-identical across all three difficulty commits — a
-renderer implementing none of it draws the shipped board perfectly.
+**What worked — state an optimum, not an algorithm.** Placement became: *the
+strip takes the allowed placement labelling the most candidates*, plus a total
+tie-break. Determined, so B5 holds; but every sweep is wrong. Greedy differs from
+the optimum on **26 of 29** networks and **agrees byte-for-byte on the shipped
+one**. All four pass@5 failures were exactly this — agents reach for O(5^n) DFS,
+one noting "n=12 definitely too slow… could fail for adversarial data" and
+shipping it anyway because the home network has one candidate per strip.
 
-**What decided the gate.** pass@2 pins `override_timeout_sec = 3600` whatever
-`task.toml` says. Declaring `[agent].timeout_sec = 5400` made `low_timeout` FAIL
-on the *conflict* (the failing agent was mid-fix at the cut) while every other
-criterion was 2/2 PASS. Setting it to **3600** turned pass2 green with no other
-change. Declare 3600; calibrate so a competent agent finishes well inside it (the
-passing trial took ~39 of the 60 minutes).
+**The other half — bound a wedged submission.** The exponential DFS hung the
+verifier. With a 300s per-run timeout over 32 runs, one hang ate the whole 900s
+before pytest wrote a line, and a silent verifier is scored `infra/setup-timeout`
+— the task's fault. That trial was reward 0 with every rubric column PASS and was
+still discarded. Now: 30s per run (reference: 0.26s) and a latch that refuses all
+remaining runs once one wedges. The identical failure is then read as a **good
+valid fail**. This single change is what turned the result green.
 
-**Two traps that cost cycles.**
-1. Growing the corpus silently invalidates every number in `task.toml`. The
-   `review` gate failed `verification_explanation_quality` because the metadata
-   still said 57 probes / 7 sweep networks after the corpus reached 78 / 16, and
-   omitted the raise and margin probe families. Sweep the numbers
-   programmatically against the live modules, and fix `solution_explanation` in
-   the same pass — it had the same defect and is the next criterion to fail.
-2. A monotone rule's natural misreading often does **not halt**. One probe wedged
-   the verifier for 13 minutes against a 900s budget and `dev/blind.py` for 59.
-   Every tool that runs a mutant needs a deadline that scores an overrun as a
-   wrong board.
+**The oscillation to avoid.** Squeeze the hour and agents die on their own
+plumbing bugs (uncounted timeouts); give it back and they solve 2/2. Do not tune
+volume. Hand the plumbing over instead — `board_intake.py` ships sections 1-4 and
+`render_svg`, while the tables and counters stay with the agent — and put the
+difficulty in correctness.
 
-**Numbers.** Blindness 51/78 invisible on the shipped board (19 of them the two
-loops); corpus 21 networks, 16 in the probe sweep; suite 69 tests in 55s against
-a 900s verifier timeout. Witnesses were searched for, not assumed: 4 seeds in 140
-re-settle the margin, 2 in 420 oscillate, 9 in 400 refuse a label wider than any
-they took — that last one was a real discrimination hole.
+**Gate lessons.** `difficulty_explanation` **forbids results-based framing** (no
+agent-run anecdotes, no measured blindness tables) — a defect I carried for many
+heads. Growing the corpus invalidates every count in `task.toml`; re-derive them
+from the modules. Declare `[agent].timeout_sec = 3600`, the value pass@2 enforces.
+`gh run rerun` 404s from a fork — close/reopen the PR to retrigger an infra flake.
+And QC C3 will mutate §11's "leave anything already there alone": every graded run
+now starts with a planted file and subdirectory, and probe renders start lived-in.
 
-## Security / Reverse Engineering
-
-**Repo:** `handshake-project-dynamo/dynamo-24cfb9b-security` · PR #1 · accepted head
-**`39ba1f7`** (2026-08-23). Heads: `f9ce205` → `ee61598` → `a385abf` → `58a0869` →
-`39ba1f7`. No prior PRs on the repo.
-
-**Mold — disassemble and audit an undocumented firmware container.**
-`dynamo/slate-teardown`: a discontinued door controller ran applets on an in-house
-stack machine; the agent writes `/app/slate_teardown.py`, which reads one `.slate`
-image and writes `listing.txt`, `frames.tsv` and `audit.json`. `SLATE_TEARDOWN.md`
-is complete — header, five drop causes in order, 25 opcodes with operands, stack
-effects and successors, decode, frame depth, latch closure, gates, chokes, the cut,
-all three output formats, and one whole image worked end to end. Nothing is
-withheld. **The difficulty is the shape of the three images the container ships:**
-every byte covered by a reachable instruction in address order, branches forward
-only, every join reached at one depth, a shallow call tree, one gate per
-latch-reaching applet sitting in its entry block. The thirteen graded images are
-none of those. The agent has no ground truth for the bench images, so self-testing
-cannot catch a naive pass.
-
-**Measured.** pass@2 1 solved/1 valid, "Rerun Recommended: NO". pass@5 **1 solved ·
-4 good valid fails · 0 timeouts · avg@5 = 0.200**. Cosine passed 5/5 pushes
-(instruction 0.661, verifier 0.828, fingerprint 0.790, threshold 0.9). 93 probes
-over 16 sweep images, 0 survivors, none caught by one image; 46 of 93 leave all
-three bench images byte-identical. `[agent] 5400`, `[verifier] 1800`; agents
-finished in 22–55 min of the 90-minute budget, so no timeout pressure.
-
-**The ceiling, and the one lever that broke it.** Two heads measured **4 solved / 1
-valid** with the spec naming three algorithms outright (worklist decode, relaxation
-to a fixed point, iterative closure). The analyser: *"the convergence on the same
-algorithm across five independent agents strongly suggests the worklist +
-relaxation + fixed point pattern is well-represented in training data and is
-reliably retrieved given the spec."* Adding a **fourth stated rule** (chokes,
-"no run reaches a gate without it") fired — all nine wrong values in that head were
-in the choke column, `difficulty_crux` PASS — but converted only 1 of 5, because
-*"the four passing trials each used the golden approach directly (per-instruction
-reachability walk), not the dominator shortcut."* **A rule that maps onto a
-six-line loop is not a wall, however carefully it is stated.**
-
-What broke it was a quantity **expensive to compute rather than hard to know**:
-`cut`, the fewest instructions that must come out of the applet's decoded graph for
-no gate to be reachable from its entry, with neither the entry nor a gate cuttable
-— a minimum **vertex** cut, wanting a flow with every instruction split in two.
-Every gated bench applet is a straight chain to one gate, so the cut is 1 there and
-so is every shortcut; the graded corpus needs 2 and 3, `-1`, and three applets
-carrying two ways that share an instruction but no edge (the only thing separating
-a vertex cut from an edge cut). Same resolution as the
-Authentication-and-authorization playbook.
-
-**What drew the valid fails.** Two of four were the designed bench-vs-graded
-asymmetry, with fully correct bench output: chokes by dominator intersection on a
-**gate-truncated** graph (identical for single-gate applets, collapses on chained
-ones — `undercroft` 26→4, `saltmarsh` 17→0); and a listing writer advancing by
-`addr += size` instead of iterating `sorted(decoded)`, which skips a correctly
-decoded instruction that overlaps a `PUSHI`. The other two were opcode-table slips
-that break the bench images too (`NOP` missing from the handler switch; `NOP
-pushes=1`; `SPILL`/`PACK` with no `#n`) — reliable, but `difficulty_crux` FAIL, so
-not creditable difficulty. `stormgate`, the densest graded image, was the one image
-every failing agent got wrong.
-
-**The local candidate battery predicted pass@5 exactly.** Install plausible-wrong
-*programs* as the submission and grade them the way Harbor does. Each of these
-passes every bench-image test: front-to-back decoder (18 held-out failures), chokes
-by address order (16), "one cut is always enough" (10), a correct minimum edge cut
-(4) — all reward 0; a correct teardown with reversed worklists and compact JSON
-scores 1.0; a candidate that `exec`s the reference out of `/tests` is blocked.
-
-**The equivalence candidate is a soundness test, not just anti-cheat.** Grading a
-correct program written differently (`pop()` → `pop(0)`) exposed a real
-order-dependence defect: classifying underflow/overflow *during* the depth
-relaxation makes the answer depend on queue order. Fix — settle the depth map to
-its fixed point first, cap the leaving depth one slot past the frame so the lattice
-is finite and the system monotone, then read the sites off the settled map. A
-permanent test runs each walk as a queue and as a stack and requires agreement.
-
-**Hurdles, per gate.** (1) Dynamo eval `accurate_taxonomy_labels`, the only FAIL of
-31 on push 1: `artifact_type` claimed a binary and a firmware artifact, but the
-firmware is a read-only input and the agent produces one script. (2) qc_gate **A6 +
-B5 off one sentence** — §7's "runs follow edges backwards as readily as forwards"
-(meant: a step may land lower) reads as *undirected* reachability; QC found the
-rival reproduces every disclosed answer. Fixed by saying a step leaves an
-instruction by one of its own successors in the direction that successor runs, and
-by **rebuilding the worked example so its answers exclude the rival**. (3) trials,
-twice at 4 solved / 1 valid. Cosine, static, review, similarity, validation, AVA,
-deep_review, tier1, qc_eval, qc_exec never blocked on any push.
-
-**Operational.** A mutation sweep that writes every mutant to the same
-`variant.py` silently reports same-length single-character edits as survivors —
-`.pyc` invalidation is mtime+size at 1-second granularity, so the stale cache is
-reused. Write a uniquely named file per probe and pass `-B` with
-`PYTHONDONTWRITEBYTECODE=1`. Seal the overlay (`chmod 0700` on `/tests` at rig
-import) as well as dropping to `nobody` — privilege-dropping alone leaves `/tests`
-world-readable. Run the candidate from a copy in a scratch dir under `python3 -I`
-so `sys.path[0]` holds only the submission; that is what enforces "one file". Do
-not carry an unkillable probe: three were provably equivalent given surrounding
-guards — delete the redundancy in the reference instead of keeping the probe green
-by exception. And keep the worked example degenerate for every crux, since it is
-the only disclosed answer.
-
-## Games Puzzles and Interactive Simulation / Interactive text games
-
-**ALL-GREEN 2026-08-23.** Repo `dynamo-568d798-games-puzzles-and-interactive-simulation`,
-PR #1, accepted head **`df461d2`**, task `dynamo/lanternfall-restage`. Four heads,
-one PR, no reskin ever needed.
-
-### The mold
-
-Repair-in-place on the only copy, with the crux in a **puzzle-progression fixed
-point**. A parser game's world build died mid-fold; the agent writes
-`/app/lanternfall_restage.py`, which sifts packed `warren/` passages and an
-unapplied `revisions/` against six ordered refusal causes, applies moves in `seq`
-order (files numbered in flush order), fuses twins on a five-part key, re-takes
-marks, repacks under two leaf bounds, rebuilds a byte-offset index, walks the
-progression into `PROGRESS.tsv`, files refusals with ordinals, spends
-`revisions/` and `drafts/`, and writes 39 counters. `STAGE_CANON.md` states
-everything.
-
-The crux: a way is walked only once its `head` has been stood in **and** every
-token in its `keys` is in hand, landing the walker `cost` turns after the
-**latest** of those — so scene turns and token turns are one mutually recursive
-least fixed point, not a BFS. Plus two second computations over the same
-structure: `route` (distinct scenes on *some* run to a scene, a union over runs)
-and `linchpin` (lowest token a scene cannot be reached without, by striking every
-way demanding a code and re-walking).
-
-The starve is graph shape: the shipped playhouse is one act, every way one turn,
-every key in hand before the way that wants it, one run per scene. On it a single
-sweep settles every turn, `route == depth + 1`, and the lowest key demanded on
-the way *is* the linchpin.
-
-### Measured
-
-| head | change | pass@2 |
-|---|---|---|
-| `d122117` | first substantive push | 0 solved / 0 valid / **2 timeout** |
-| `52bbfa6` | ship the byte-layout I/O as `stagecraft` | **1 solved / 1 valid / 0 timeout** |
-| `cb22ad0` | QC run-definition fix + held-out density | 0 solved / 0 valid / **2 timeout** |
-| `df461d2` | ship the sieve too; ask for an early first version | **0 solved / 1 valid / 1 timeout — PASS** |
-
-**pass@5 on `df461d2`: 0 solved / 3 good-valid-fail / 0 soft-timeout / 2
-in-progress-timeout / avg@5 0.000 — "Difficulty OK".** All five trials PASS on
-`task_specification`, `reward_hacking`, `difficulty_crux`, `near_miss`,
-`refusals` and `approach_validity`; only `low_timeout` FAIL twice.
-
-Cosine passed all four pushes (instruction 0.634 to 0.632, verifier 0.856 to
-0.803, fingerprint 0.801 to 0.778). Dynamo eval 30 PASS + 1 N/A. Duplicate
-UNIQUE. qc_gate ended 37 checks clean, 3 minor advisories.
-
-### What drew the fails
-
-The analyser: *"every failure lands exactly on the route/PROGRESS.tsv crux the
-task author identified."* Two independent misimplementations:
-
-1. **Backward dependency closure for `route`** (2 trials) — *"on the live
-   playhouse (one act, trivially linear runs) this happens to coincide with the
-   reference. On complex held-out playhouses with multiple acts, key detours,
-   and back-walks, the closure either over- or under-counts."* This is the whole
-   design working.
-2. **Exponential DFS for `route`** (2 trials) — semantically correct, one agent
-   logged the O(n!) risk at step 27 and submitted anyway; fine on the small
-   shipped house, 120 s subprocess timeout on 17 held-out runs. A **performance
-   trap is a free second discriminator** when the shipped instance is small and
-   the held-out ones are not.
-
-### The lever that decided it: cut volume by measurement, not by guess
-
-Both timeout heads showed the hard-side signature (`difficulty_crux` PASS +
-`approach_validity` PASS + `task_specification` PASS + `low_timeout` FAIL). The
-fix is to remove budget without removing difficulty — and to pick *what* to
-remove by counting lines per function in the intended solution:
-
-| region | lines | share | ever decided a trial? |
-|---|---|---|---|
-| sieve (6 causes + shape predicates) | 97 | 22% | never |
-| walk / route / linchpin | 145 | 33% | every failure |
-| restage body | 204 | 46% | once (a trailing newline) |
-
-Two cuts took the intended solution **685 to 564 to 416 lines**. On the head
-before the cuts, agents finished at **49 and 57 minutes of 60** — the
-distribution sat on the wall, so every slow LLM call tipped a trial over. One
-`cb22ad0` trial lost 774 s to a single call; another had one streaming response
-in flight for **57 minutes** and wrote no code at all.
-
-`[agent].timeout_sec` is honoured at pass@5 but **not** at pass@2, which pins
-3600 s. Size the cut to clear 3600 s; pass@5's 5400 s then lets agents finish and
-be wrong, which is what a countable valid fail needs.
-
-### Shipping a plumbing module safely
-
-Slice it out of the reference **by name** (`ast` + a declared list) at freeze
-time so it cannot drift; **stage the verifier's own copy into every graded run**
-so editing the shipped one buys nothing; make the **oracle import it**; install
-into `sysconfig.get_paths()["purelib"]` so `python3 -s -E` still finds it.
-`chmod 0444` does **not** stop the agent — it runs as root — so pin both copies'
-digests and say in the instruction that the module is graded as it shipped.
-Guard the "it gives nothing away" invariant **structurally** (the module defines
-exactly the declared functions); a word blacklist false-fires on column names
-like `depth` and `route`.
-
-### The QC defect worth remembering
-
-qc_gate B1 **and** B5 on one wording. A run was defined as *"a sequence in which
-every passage's `head` is an act's opening or the `tail` of an earlier passage"*.
-A passage whose head **is** an opening satisfies that **at any position**, so an
-unrelated passage could be parked at the front and its scenes would count. The
-reference computed the least fixed point, so the canon described a strictly
-larger answer than the verifier graded. Fix: four numbered rules, the fourth
-being that every passage other than the last is one a later passage needs. Then
-**brute-force the definition** over every subset of the open passages of two
-small hand-built instances and compare to the reference column — 0 mismatches.
-Any definition stated as an enumeration deserves that check.
-
-### Levers measured not to work here
-
-- Raising back-walk/braid/cost density on 8 held-out houses moved the blindness
-  table not at all (13 of 24 before and after). It is free — the agent never sees
-  those houses — so pair it with an ambiguity fix, but it is not what converts.
-- Two probes were **provably unkillable rather than unwitnessed**: a
-  `(seq, file, line)` sort tie-break (stable sort already gives line order) and
-  twin-group insertion order (a later sort erases it). Both were deleted from the
-  engine and the canon. An inert clause QC C3 can mutate for free is worse than
-  no clause.
+**Self-inflicted, worth remembering.** `open(p,"w").write(open(p).read()...)`
+truncated the standard to 0 bytes and the oracle still scored reward 1, because
+the only check was a hash against a pin regenerated from the damaged file.
+`python3 -I` implies `-P` and hides the script's own directory, so a shipped
+helper module could not be imported — use `-s -E`. And a regression probe written
+for the variant that already worked proves nothing.
