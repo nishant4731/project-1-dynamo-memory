@@ -4487,3 +4487,103 @@ the only check was a hash against a pin regenerated from the damaged file.
 `python3 -I` implies `-P` and hides the script's own directory, so a shipped
 helper module could not be imported — use `-s -E`. And a regression probe written
 for the variant that already worked proves nothing.
+
+## Games Puzzles and Interactive Simulation / Game AI and Strategy
+
+`handshake-project-dynamo/dynamo-8865ada-games-puzzles-and-interactive-simulation`
+· PR #1 · head **`c50bd48` — ALL-GREEN on the FIRST substantive push**
+(2026-08-25). Task `dynamo/ashfen-resolve`.
+
+**The mold.** Repair-in-place with a complete contract, ported from
+`dynamo/trumpline-reckon` and `dynamo/lanternfall-restage`. An archive of a
+two-sided siege duel died mid-build; the agent writes `/app/ashfen_resolve.py`,
+which sifts packed `folios/` and an unapplied `amendments/` against seven
+ordered discard causes, applies what stood in sequence order, fuses twins on a
+five-part key, repacks under a record and a byte bound with a per-folio
+byte-offset index, **solves the duel** into `VERDICTS.tsv`, files discards with
+ordinals, spends two trees and writes 47 counters. `ASHFEN_RULES.md` states it
+all in fifteen sections; `/app/data/wardwork.py` ships the mechanical half,
+sliced out of the reference by name so the two cannot drift. Intended solution
+487 lines.
+
+**Measured.**
+
+| gate | result |
+|---|---|
+| pass@2 | 0 solved · 1 good-valid · 1 in-progress-timeout — "Rerun Recommended: NO" |
+| pass@5 | **2 solved · 3 good-valid · 0 timeouts · 0 task-issue · avg@5 = 0.400 — "Difficulty OK"** |
+
+Cosine push 1: instruction 0.6512, verifier 0.8248, fingerprint 0.7885.
+Dynamo eval 30 PASS + 1 N/A. Duplicate UNIQUE (best lexical rival 0.104). AVA
+PASS with no blocking items; deep_review PASS "Blocking Issues: None"; tier1
+PASS; qc_gate PASS with 37 checks clean and an **empty fix list**. Blindness
+table 23 of 36 readings byte-identical on the shipped ward and wrong on 8–20 of
+20 protected wards. Mutation sweep 162 probes, 0 survivors, 0 thin.
+
+**The crux that drew every valid fail — quote this.** Not the verdict fixed
+point; the *cost* settlement. > *"all three agents failed to implement the
+iterative ascending-value (Dijkstra-style) fixed-point cost settling required by
+ASHFEN_RULES.md Section 9/10. No trial shows a different primary root cause."*
+`tempo` and `plies` are the same adversarial game valued twice; the settled side
+minimises and the other maximises, so a winning stance takes the least over its
+winning sorties and a losing stance the greatest over **every** sortie — over
+weighted edges that is a priority-queue sweep, not BFS and not DFS, and a
+memoised recursion cannot tell a drawn position from one it is mid-visit.
+**Two of three failures independently reached for memoised recursive DFS** —
+the analyser calls it *"a training-data-influenced default for 'cheapest path'
+problems"*. **The transferable lever: pick a computation whose textbook default
+is silently wrong on your instance class.**
+
+**The starve.** The shipped ward is a short, quiet siege where seven identities
+hold there and only there: one front; every `spend == 1` (so `tempo == plies`,
+`tempo_total == plies_total`, `book_spends == booked_stances`); acyclic (so
+`stalls_open == 0` and a DFS memo agrees); every losing stance pinned to one
+sortie (max == min, `losses_pinned == losses_faced`); every winning stance with
+one winning sortie (every book tie-break inert); no open sortie behind a reached
+fallen stance; nothing named that a duel cannot reach. pass@2 confirmed it:
+*"The live ward, whose graph topology did not expose this bug, passed
+byte-for-byte; the harder held-out wards did not."*
+
+**Hurdles — all local, none on GitHub.** Every gate passed on push 1; the work
+was in the mutation sweep. First run: 19 survivors, **seven of them provably
+equivalent mutations, i.e. inert rules** — delete the clause, not the probe (an
+already-alphabetical dict literal made `sort_keys` a no-op; a record can never
+exceed the byte budget so "a folio never starts empty" was unreachable; sorting
+a stance's sorties never reached an answer; fusion + repack erase insertion
+order). Two structural fixes worth carrying: (a) **both folio bounds must be
+able to bind *decisively*** — at capacity 7 / budget 1663 an 8th record could
+never fit anyway, so the `>=`→`>` probe was inert; capacity 6 / budget 1279 with
+~180-byte records fixed it; (b) **a secondary tie-break on the other cost column
+can essentially never fire** — splitting the two decided book classes across the
+two columns (winning settles on `tempo`, losing on `plies`) made both columns
+primary somewhere, fired every probe, and made the rules simpler.
+
+**Verifier runtime.** 162 probes × 7 sweep wards ran 17m44s in-container at
+`cpus=2`; raising `[environment].cpus` to 4 and `ThreadPoolExecutor(max_workers)`
+to 4 took it to **8m40s**, with `[verifier].timeout_sec = 3600` for ~7× headroom.
+
+**Levers measured NOT to work.** (i) Raising `[agent].timeout_sec` for pass@2 —
+pass@2 pins 3600 s regardless, confirmed again; one trial wrote a fully correct
+resolver (13/13 unseen wards) and was ~2 minutes from the live-ward run when the
+override fired, while pass@5 at 5400 s had **0 timeouts in 5 trials**. (ii)
+Trimming volume in response to that timeout — rejected; the
+`provide-the-plumbing` reflex applies to `difficulty_crux PASS + low_timeout
+FAIL` *repeated across trials*, not to one trial at 99% of a pinned budget.
+(iii) Pushing the advisory cleanup (a stray inert docstring in the generated
+oracle, flagged twice as never-blocking) — not pushed, because a push re-runs
+pass@2 and redraws pass@5 on a head already in the band.
+
+**Gate tension.** `instruction.md` points at section 9's second (fixed-point)
+statement as a fairness/B5 guard. Dynamo eval called it *"Borderline
+(instruction_concision / §9 pointer)"* but graded PASS, and pass@5 settled it:
+**three of five agents still failed on exactly that stage**, one after quoting
+the material. Disclosing the *reading* does not disclose the *algorithm*.
+
+**Generator lesson.** The quiet-ward guarantees are not reachable by a random
+graph plus seed search — build **verdict-first, in ranks**: lay every stance
+down with the side it is meant to fall to, then wire sorties to realise it;
+every rank must hold both owners and both verdicts; attach an unreached stance
+under a *winning* parent of the opposite owner. Then **verify the guarantees
+after the fact and seed-search**, because amendments perturb the graph (a strike
+can remove the one winning sortie). And **pin measure-zero seeds LAST** — any
+forge edit re-packs everything and invalidates an exact-byte-bound seed.
