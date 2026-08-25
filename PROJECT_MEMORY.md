@@ -4759,7 +4759,8 @@ a deliverable; four of its misreadings are blind on the shipped pack and wrong o
 
 ## Software Engineering / Refactoring and Code Modernization (dynamo-2a4ed10, PR #1)
 
-**In flight, not yet accepted.** Recorded now because the pass@2 → pass@5 sequence here
+**ALL-GREEN on head `4848934` (2026-08-25) — pass@5 0 solved / 5 good valid / 0 timeouts /
+avg@5 0.000, and all sixteen checks green.** Recorded now because the pass@2 → pass@5 sequence here
 is the cleanest example in this repo of the two *operational* failure modes being mistaken
 for difficulty problems, and of what the fix actually is.
 
@@ -4952,3 +4953,38 @@ and the agent still has to invent the algorithm.
 panels, so the gate rests partly on instance variance. Widening the minimum
 panel across the corpus would sharpen it at the cost of a slower reference;
 held back because the head is all-green and a redraw is a coin flip.
+
+### Outcome (head `4848934`, ALL-GREEN)
+
+**pass@5: 0 solved · 5 good-valid-fails · 0 in-progress timeouts · avg@5 0.000.** Every
+trial finished and every trial was wrong — the band this repo has been chasing. All
+sixteen checks green: cosine (4/4 heads, never near 0.9), similarity, validation, review,
+pass2, tier1, ava_review, deep_review, qc_eval, qc_exec, qc_gate, trials, gate.
+
+**Head 3 (`99cea09`) blocked pass@2 with two more in-progress timeouts**, both killed at
+exactly 3600 s and both mid-fix on the **same** thing: the §3b scope walk. That made
+7 of the first 9 trials in-progress timeouts, with `difficulty_crux` PASS on every one.
+
+**Head 4 (`4848934`) moved the §3b scope walk and section 3's binder counting into the
+shipped helper** (`portkit.module_uses`, `portkit.top_level_binders`). This was a
+deliberate departure from the difficulty suggestion, which listed §3b *among the cruxes to
+preserve*. It was ~160 lines of faithful Python-scoping AST enumeration — no insight, and
+nothing in it about porting a package across releases — and it was where two consecutive
+heads had agents spend their final hour. The next head returned 5/5 good valid fails.
+
+**The generalisable heuristic: if two consecutive heads show agents dying on the same
+mechanical sub-problem, that sub-problem is volume, not difficulty, however clever it
+looks.** Hand it over and re-measure; the blindness table and the mutation sweep are the
+proof you have not weakened the task. Here 20 of 25 misreadings stayed blind on the
+shipped checkout and all 143 probes still bit in ≥2 sweep trees.
+
+**What actually drew the failures, quoted from the pass@5 analysis:** *"each implementation
+had bugs that the Benchtop sample tree (a tidy, single-package, single-release tree) never
+exercises. The gap becomes visible only on held-collide (quarantine propagation through
+star imports), held-nest/held-deep (scope shadowing), held-window/held-mixed (multi-release
+symbol chain replay)."* Five trees failed in all five trials — `held-collide`, `held-nest`,
+`held-window`, `held-deep`, `held-mixed` — and `held-collide` alone beat the strongest
+agent seen on this task (39/41 tests, 10/12 trees correct, dead on that one).
+
+Full playbook: `dynamo-software-engineering-refactoring-and-code-modernization-playbook.md`
+in the auto-memory directory.
