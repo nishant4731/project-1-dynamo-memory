@@ -4756,3 +4756,102 @@ the same balances and sharing no state with the first run, reporting `credit_hel
 and `credit_held_cents`. A second run of the same machinery adds a subsystem without adding
 a deliverable; four of its misreadings are blind on the shipped pack and wrong on 10-13 of
 23 protected packs.
+
+## Software Engineering / Refactoring and Code Modernization (dynamo-2a4ed10, PR #1)
+
+**In flight, not yet accepted.** Recorded now because the pass@2 → pass@5 sequence here
+is the cleanest example in this repo of the two *operational* failure modes being mistaken
+for difficulty problems, and of what the fix actually is.
+
+**The mold.** `dynamo/slipway-port`: the agent writes `/app/slipway_port.py <project_dir>`,
+a codemod that ports a plugin package across releases of an invented host SDK and leaves a
+`ported/` tree plus `edits.tsv`, `deferred.tsv`, `surface.tsv` and `port_report.json`.
+`SLIPWAY_PORTING.md` states all sixteen sections; nothing is withheld. Difficulty lives
+entirely in the **degeneracy of the shipped checkout** — Benchtop's own package has no
+aliases, no re-exports, no star imports, no `__all__`, no shadowing, no nested calls, no
+collisions, and a plan window crossing exactly one release, so the natural implementation
+of every stated rule is byte-identical there and wrong on the twelve held-out packages.
+Measured blindness table: **21 of 25** plausible misreadings byte-identical on the shipped
+checkout and wrong on 1–10 of 13 held-out ones.
+
+**Cruxes that actually drew the failures** (quoted from the pass@5 analysis): the
+least-fixed-point export closure over cyclic package imports and star chains; §3b scope
+resolution (class bodies stepped over, comprehensions and lambdas as scopes, `global`/
+`nonlocal`); re-deriving bindings *before every change* rather than once per step;
+quarantine propagating through re-exports; and rewriting a nested call innermost-first so
+the outer call carries the rewritten text.
+
+**Head 1 (`547efac`) — pass@2 blocked, 0 solved / 0 valid / 1 in-progress timeout /
+1 "infra".** Both trials PASS on `difficulty_crux`, `task_specification` and
+`approach_validity`. Two distinct operational causes:
+1. One agent read the 449-line contract in 90-line chunks (~40% of the budget), wrote a
+   29,855-char heredoc at step 19, and the clock ended before step 20 — it never *ran* it.
+2. The other agent **finished correctly on the shipped checkout** and then the **verifier**
+   hit the 900 s `[verifier].timeout_sec` and wrote *nothing* — no ctrf, no reward — so a
+   completed run scored 0.
+
+**The verifier-stall lesson, which is the reusable one.** I had cut `[verifier].timeout_sec`
+from 2400 to 900 an hour before pushing, on the strength of a **clean-oracle** measurement
+of 58 s. That is the trap: a *wrong or slow* submission makes the verifier do far more work
+than the oracle does — here 13 graded runs + 5 double runs = 23 subprocess invocations at
+`RUN_TIMEOUT = 300` each, i.e. 6900 s worst case. **Never size the verifier budget from the
+oracle.** Size it from the worst case, and bound the worst case explicitly: cap each run of
+the handed-in program (`RUN_TIMEOUT = 60`, ~500× the reference's cost) *and* give all of
+them a shared ceiling (`RUN_BUDGET = 480`), so once it is spent the remaining checkouts
+fail immediately instead of each waiting out its own timeout. Measured after the fix: a
+program that sleeps for ever and one that sleeps 30 s per checkout both leave the suite
+finishing in ~500 s with a reward written, against a 2700 s budget.
+
+**The `pass2_suggestion` sticky independently named the same fix** (RUN_TIMEOUT 300 → ~60,
+verifier 900 → 1800), which I had already made from the trial detail. Adopted, with the
+addition of the shared budget — the per-run cap alone still allows 23 × 60 = 1380 s, and
+bounding the total is what actually guarantees the suite finishes.
+
+**Head 2 (`ca52895`) — pass@2 PASS** (0 solved / **1 valid fail** / 1 in-progress timeout,
+"Rerun Recommended: NO"), and with it AVA, deep_review, tier1, qc_eval, qc_exec, qc_gate,
+cosine, similarity, validation and the Dynamo eval (31/31). **pass@5 blocked at 0 solved,
+avg@5 0.000** — and this is the second operational mode: `difficulty_crux` PASS on all
+five, every trial produced a running tool, every trial was wrong on the held-out packages,
+but **four of the five were in-progress timeouts**, so only one failure was *counted*
+against a gate that wants three. 0/5 solved is the right band; the trials just have to
+*finish*.
+
+**What converts an in-progress timeout into a counted fail: give the clock back, never the
+crux.** Reading the five trajectories, three lost their hour to bookkeeping rather than to
+the crux — one read `node.module`/`node.level` off the AST instead of reassembling `.core`
+and silently dropped every intra-package import from its closure; one took
+`calls_reordered` to mean an argument's *text* had changed; one sorted the finished tables
+instead of building them in the order the rewrites were made. So head 3 hands exactly those
+to the shipped helper (`portkit.top_imports`, `portkit.tally_call`, sharper §§11–12
+wording) and lifts `[agent].timeout_sec` 5400 → 7200. Nothing the trials died on moves.
+
+**Provide-the-plumbing, generalised.** Across heads 2 and 3 the shipped `portkit.py` took
+over: reading the project, ordering releases and steps, replaying the catalogue into the
+starting symbol table, moving that table on per change, reading a module's top-level `from`
+statements, the per-call tally, **all twenty-nine report counters**, splicing, and writing
+the five outputs. That is ~190 lines of transcription the agent no longer types and 29
+definitions it can no longer get subtly wrong — none of which was ever the difficulty. The
+judgements stay: what binds, where a name still means its binding, what a module lets out,
+what each change rewrites, what defers.
+
+**A helper you ship to the agent is an attack surface and a drift risk.** `portkit.py`
+lives under `/app/data` and is agent-writable, so (a) the reference must **never** import
+it — cf. [[dynamo-verifier-must-not-import-agent-paths]] — and (b) it can silently disagree
+with the reference and fail every honest solver. Both are handled by one test that verifies
+the file's digest against the pin *first*, then loads it from those bytes into a scratch
+namespace and checks its symbol table, step window, import reading, per-call tally and
+twenty-nine counters against the reference on every graded checkout. An attack case that
+appends one comment line to `portkit.py` scores 0.
+
+**Reusable machinery.** `dev/blind.py` (patch the reference into N plausible misreadings;
+report byte-identical-on-shipped vs wrong-on-held-out *and* how many sweep checkouts each
+kills, which doubles as a pre-check that every mutation probe will have ≥2 witnesses);
+143 mutation probes, 0 survivors and 0 caught-by-one after three rounds of corpus
+enrichment driven by that same table; a `sheet` project built by the forge purely so §16's
+worked example is generated rather than hand-written, with an audit test that its quoted
+rows obey the table specs.
+
+**Gate tension seen here.** None of the usual B1-versus-pass@2 pincer: nothing is withheld,
+every rule is stated, and QC passed clean on the first head that reached it. The tension
+was entirely **difficulty versus the clock** — the task is hard enough that agents cannot
+finish it, and an agent that does not finish produces no evidence at all.
