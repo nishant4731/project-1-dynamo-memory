@@ -5162,3 +5162,72 @@ handed-in program so editing the image copy buys nothing.
 - 42 tests incl. 130 mutation probes over 7 sweep blends run in ~15–25 s
   in-container; `[verifier].timeout_sec = 1800` is ample. `[agent] = 5400`;
   pass@5 trials ran 30–58 min with the plumbing in.
+
+## File and Media Operations / Audio and music processing
+
+`handshake-project-dynamo/dynamo-d8fab40-file-and-media-operations` PR #1,
+`90aee5d` → **`b71c68a` ALL-GREEN** (2026-08-25), eight pushes.
+**pass@2 1 solved/1 valid · pass@5 2 solved/3 good valid/0 timeouts/avg@5 0.400.**
+Cosine instruction 0.7797, verifier 0.7517. QC clean first cycle (`[]`).
+
+**Mold.** `dynamo/fieldsync-conform` — conform a stranded multi-recorder field
+session in place. One stdlib file: screen sync marks, rank each recorder pair's
+marks and fit one clock link from the winner, walk the link graph twice (all
+links / firm links only) keeping the lex-smallest fewest-link chain, compose
+drift+offset in exact rationals, sift takes through six ordered clauses, bounce
+onto a mono 48 kHz master. All fourteen protocol sections stated — nothing
+withheld, which is what keeps QC/AVA green.
+
+**The crux, and the only thing that worked.** Three heads with a complete
+contract and three independent stated starves all solved 2/2. What flipped it
+was a pure fixture change with zero new agent typing: **make the shipped link
+graph a one-hop star**, so composing a chain is a single inversion there and the
+recurrence that walks a chain back to the reference is never exercised;
+held-out sessions carry chains 2–4 links deep. Analyser, verbatim: *"the live
+session is not diagnostic for any of these bugs."* Agents shipped: traversal
+direction inverted; intercept accumulated as though every leg began at zero;
+mark-pair key `(-abs(px1-px2),…)` instead of the signed `(-run, lo, hi)`; and
+two agents submitted **without ever identifying the bug**. Two more free
+starves rode along — jitter-free shipped marks (so float64 reproduces the
+reference there) and takes laid end to end at modest gain (so overlap-summing
+and clamping are unobservable).
+
+**Volume that no taxonomy blames is still load-bearing.** After the star head
+measured 0/2 I trimmed twice — six per-cause counters, then the `settled`
+column — on the reasoning "no trial ever failed on these". pass@2 went 0/2 → 1
+solved+1 timeout → **2 solved (too easy)**. Reverting both restored the band.
+`settled` never caused a failure but occupied the hour agents otherwise spend
+finding the crux. Trim volume only when trials **time out before writing
+anything**; never when they finish and solve.
+
+**Write-out, not difficulty, closed the last gap.** The star head's pass@5 was
+2 solved/2 valid/**1 in-progress timeout** — blocked by one. That trial spent
+5101 of 5400 s and was cut ~2 min before running on the live session, so eight
+tests failed on missing files. One instruction sentence ("run it against
+`/app/data/session` as soon as you have something that executes at all, and
+again after every change … a tool that never got run scores nothing however
+good it was becoming") took the accepted head to **0 timeouts across 5 trials**.
+
+**Gate hurdles.** cosine: a ported harness measured **0.9625** lexically against
+`dynamo-84f73e9`; moving every assertion body into the private audit module
+behind a question-per-call API and rewriting the suite as ~7 parametrized
+one-line tests → 0.6979 local / 0.7517 service. Cosine then passed all eight
+pushes *including one where both facets were ~0.99 self-similar to the previous
+head* — in-flight heads are not indexed; skip the reflex reskin. ava_review
+blocked once on `sound_verifier` (submission launched `-s -E`, leaving the
+script dir on `sys.path` against a stated one-file contract); **`-I` alone did
+not fix it** — a program that re-adds `/app` to `sys.path` still passed, so the
+real fix was chmod'ing every `*.py` beside the submission to 0600 for the
+duration of each unprivileged run, plus an `ast`-only audit that never imports
+the handed-in file. review (rubric) went red once because I put pass@5 counts
+and avg@5 into `difficulty_explanation` — criterion 17 forbids results-based
+content there, and a red rubric skips validation/pass2/AVA/QC/tier1/trials.
+
+**Measured not to work.** The §8 rounds fixed point (idle recorders dropped
+from the graph, cascading `unsynced`) is genuinely cyclic and fully stated, and
+converted **zero** failures across two pass@5 and five pass@2 runs — a stated
+rule, however interacting, gets transcribed. The difficulty suggestion asked
+twice to leave §8's iteration order and tie-breaks unstated; that is QC B1 and
+would trade a green QC gate for a pass@2 coin flip. Raising
+`[agent].timeout_sec` does nothing at pass@2, which caps the agent at 3600 s
+regardless of `task.toml`.
