@@ -4668,3 +4668,91 @@ bullet list is the biggest lexical block — replace with a prose section-pointe
 turning `test_outputs.py` from classes into flat module-level functions with the
 report/channel helpers moved into the private rig. The verifier facet alone fell
 0.93 → 0.51 locally.
+
+## Regulated Knowledge Work and Business Operations / Finance and quantitative workflows
+
+**Repo** `handshake-project-dynamo/dynamo-50b6824-regulated-knowledge-work-and-business-operations`
+· PR #1 · heads `e52d3df` → `86c06ff` → `7f1c19d` → **`d9d64d5` ALL-GREEN** (2026-08-25).
+Full playbook in [[dynamo-regulated-knowledge-finance-and-quantitative-workflows-playbook]].
+The already-delivered sibling in this exact subcategory is `dynamo-e2765c3`
+(`covenant-margin`, collateral allocation); its concept was deliberately not reused and
+cosine never came near blocking.
+
+**The mold.** `dynamo/marchmont-release`, an RTGS-style end-of-day queue release. Six
+read-only pack files at `/app/data/cycle`; the agent writes `/app/marchmont_release.py
+<pack_dir>` and puts back `released.tsv`, `queued.tsv`, `positions.tsv` and a 32-key
+`release_report.json`. All fourteen sections of `MARCHMONT_CODE.md` are stated, so QC B5
+never came up; the difficulty is entirely in the degeneracy of the shipped day.
+
+**Measured on `d9d64d5`.** pass@2 **0 solved / 2 valid-fail / 0 timeouts**, `Rerun: NO`.
+pass@5 **0 solved / 4 good-valid-fail / 0 soft-timeout / 0 task-verifier-issue /
+1 in-progress-timeout, avg@5 0.000**, with `task_specification`, `reward_hacking`,
+`difficulty_crux` and `approach_validity` PASS on all five. Enforced cosine 0.687-0.693
+instruction, 0.775-0.891 verifier, 0.775-0.796 fingerprint. Static/rubric 31/31 every
+head; duplicate UNIQUE; deep_review, ava_review and tier1 green first try with zero
+blocking issues; qc_gate finally **37/37 clean with an empty QC-FIXES-B64**.
+
+**What converted, quoted from the pass@5 analysis.** The release is a stated extremum —
+largest releasable set, then heaviest, then earliest-keeping — over three bounds whose
+coefficients change sign, because being paid relaxes the bound that paying tightens. All
+five trials died on it: *"agents seed their candidate set from outgoing orders of
+participants that violate under the full eligible set. When removing one candidate
+reduces another participant's inflow enough to trigger a new violation (cascade/ring),
+those second-tier orders are absent from the candidate set. All enumerated subsets then
+remain infeasible; the code falls back to an empty release."* Two agents named the risk
+in their own reasoning and shipped anyway. **My own first reference implementation had
+exactly this bug** — `dev/xcheck.py`, flat subset enumeration against the exact search on
+small random packs, caught it at 285 mismatches in 500 cycles. If the author's obvious
+implementation is wrong, the agents' will be too; that is the test to run before designing
+anything else.
+
+**The second converter.** `held-thicket` is one wide day (contested set 21, groups <= 3).
+An unpruned `2^n` submission exceeds a **30-second per-pack limit** and a `_WEDGED` latch
+then refuses the rest instantly, so it scores a good valid fail rather than losing the
+run to infra. One pass@5 trial died there having written *"2^26 = 67 million ... too slow
+in Python"* at step 19. Two conditions: disclose the limit in `instruction.md`, and set it
+more than three orders of magnitude above the reference (0.01 s here).
+
+**Hurdles, per gate.** (1) **qc_gate B1** — `liquidity_bounds_short` was defined as what
+"releasing all of that cycle's eligible orders would have broken" without naming the base
+state, and both pass@2 agents took the other reading, so the B1 *was* the discriminator.
+(2) **qc_gate A6+B5+B4** — one real reference bug: the counter was computed from the
+search's internal liveness test (`sum of positive coefficients > bound`, which correctly
+ignores relieving inflows for pruning) instead of its own stated definition; they disagree
+on `held-cross`. **Never let an internal pruning predicate be the source of a graded
+number.** (3) **qc_gate C3** — QC flipped `half = "up" if whole % 2 else "down"` and still
+got reward 1, because `fee_half_up` and `fee_half_down` held the same value on every graded
+day; my probe for that swap was green only because the *sweep* days carried an extra
+half-up tariff and the *graded* days did not. **QC probes the graded corpus, your mutation
+sweep probes yours — the witnesses have to be in both.** (4) **cosine verifier facet
+0.891 against a 0.9 wall on head 1**; moving the fourteen corpus-audit assertions into a
+private `audit.CLAIMS` table walked by one parametrized test cut `test_outputs.py`
+9564 -> 6371 bytes and the facet **0.891 -> 0.775** — a 0.116 drop from a pure relocation
+that changed no grading behaviour. pass@2, review, similarity, validation, deep_review,
+ava and tier1 never blocked on any head.
+
+**Levers measured not to work.** Raising `[agent].timeout_sec` above 3600, which AVA
+advised after one trial diagnosed both its bugs at 56 of 60 minutes — rejected on the
+medical playbook's measurement that 3600 -> 5400 took pass@5 from 3/5 to 4/5 *solved*.
+A complete intricate spec on its own: both pass@2 agents implemented all fourteen sections
+correctly and still failed on the ring. More report counters: the failures cluster on
+`positions.tsv`, and only `bilateral_bounds_short` and `fee_cap_orders` were ever named.
+
+**Reusable machinery.** `dev/xcheck.py` (exact search vs flat enumeration, 1600 cycles,
+0 mismatches on the final head); `dev/blind.py` (patch the reference into N plausible
+misreadings and report byte-identical-on-shipped vs wrong-on-held-out — **37 of 38** here,
+the best table recorded in this repo); an **anti-twin claim** that no two integer report
+keys may hold the same value on every graded day, which generalises QC's C3 finding and
+caught six pairs; an **ordering-leg probe** that patches each leg of every ordering key out
+and counts graded days that move, which found `rev_seq` in `(effective_at, booked_at,
+rev_seq)` completely inert; requiring **all** ordered cause pairs rather than adjacent ones
+(only 6 of 21 were witnessed) with the unreachable pair recorded explicitly; and retiring
+provably-equivalent mutants rather than witnessing them.
+
+**Gate tension and how it resolved.** The B1-versus-pass@2 pincer fired hard: the ambiguity
+QC demanded I fix was the thing drawing the failures. Resolved by pairing the fix with a
+new §10 — the whole day re-run with the net debit and bilateral bounds lifted, opening at
+the same balances and sharing no state with the first run, reporting `credit_held_orders`
+and `credit_held_cents`. A second run of the same machinery adds a subsystem without adding
+a deliverable; four of its misreadings are blind on the shipped pack and wrong on 10-13 of
+23 protected packs.
