@@ -18,6 +18,10 @@ For form-filling or submission tasks, also read:
 
 - `HANDSHAKE_DYNAMO_FORM_FILLING_GUIDE.md`
 
+For a task sent back for rework (a `[Task Feedback]` issue on the task repo), also read:
+
+- `PROJECT_DYNAMO_REWORK_GUIDE.md`
+
 Then:
 
 - Apply the pipeline lessons proactively instead of rediscovering them.

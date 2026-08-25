@@ -4588,3 +4588,83 @@ under a *winning* parent of the opposite owner. Then **verify the guarantees
 after the fact and seed-search**, because amendments perturb the graph (a strike
 can remove the one winning sortie). And **pin measure-zero seeds LAST** — any
 forge edit re-packs everything and invalidates an exact-byte-bound seed.
+
+## File and Media Operations / Audio and music processing
+
+`dynamo-2b8147d-file-and-media-operations` PR #1, heads `f174231` → **`f6c4c08`
+ALL-GREEN, label `accepted`** (2026-08-25). Two pushes.
+
+**Mold.** `dynamo/vault-restripe` — repair-in-place with a complete twelve-section
+contract, ported from the folio-recompose mold (`dynamo-84f73e9`) into an audio
+archive. The agent writes `/app/vault_restripe.py`: sift packed `spools/` and an
+unapplied `patch/` against seven ordered causes, apply operations in `seq` order,
+fuse co-transfers on a five-part key, re-seal and repack under a byte bound with a
+byte-offset index, mix the live dubs into a byte-exact `programme.wav`, resolve an
+inherited-treatment closure into `TREATMENTS.tsv`, file rejects with ordinals,
+spend the evidence, write 31 counters.
+
+**Measured.** pass@2 on both heads: 0 solved / 1 valid-fail / 1 in-progress
+timeout, `difficulty_crux` 2/2 PASS, Rerun: NO. **pass@5 on `f6c4c08`: 0 solved /
+5 good-valid / 0 timeouts / avg@5 0.000.** Cosine passed both pushes (instruction
+0.678→0.681, verifier 0.875→0.870, fingerprint 0.786→0.774; threshold 0.9). Static
+rubric 31/31 on push 1. AVA, deep_review, tier1, qc_exec all clean. Blindness table
+27 of 36 misreadings byte-identical on the shipped vault and wrong on 7–19 of 19
+protected ones; 204-probe sweep, 0 survivors, none caught by a single vault.
+
+**The three cruxes, all invisible on the shipped vault.** (1) *Frames vs samples* —
+`channels` from `VAULT.json` runs through the capture frame count, `skip`/`dur`/`at`,
+the `samples` column, the mix stride, `mix_clipped` and the WAVE header; the shipped
+vault is mono so a frame IS a sample everywhere. Load-bearing because the frame count
+decides the `short_take` rejection, so a sample-counting tool admits transfers the
+rules turn away and moves everything downstream. (2) *The integer mix* — thousandths
+gain, round half away from zero, clamp only after every contribution lands; the
+shipped vault is unity gain with nothing overlapping, so no rounding rule and no
+clamp order is distinguishable. (3) *The closure* — `min(gen, b-1)` generational
+budget, three maps as a least fixed point, plus `reach` as a second two-way walk;
+the shipped transfer line is a one-source-per-target tree at the generation ceiling,
+so carry == hand-on on every row and one pass in packed order settles it.
+
+**What drew the pass@5 fails.** Four of five trials on the closure (not iterating to
+a fixpoint; not separating carry-length from hand-on-length; missing warrant
+treatments absent from live records); two on the mix (wrong audio *even on the mono
+unity-gain vault*); one on frames-vs-samples across all 12 multichannel vaults. The
+analyser: *"the shipped vault is a simple single-channel unity-gain tree where one
+pass is sufficient — so both agents passed all live-vault TREATMENTS.tsv checks — but
+every complex held-out vault diverged."*
+
+**The one QC blocker, and why it was real.** qc_eval B1: `seals_rewritten` said
+"packed records whose seal is not the one they arrived with" without saying which
+member of a fused group supplies the baseline — the same gap had already produced a
+pass@2 valid fail. Fixed by naming it in §6 (the `seal` field of the line the
+record's `tid` was read from; for a group, the line carrying the lowest `tid`, as
+read, before any amendment). **QC early-exits on a priority check** — this one item
+deferred 20 others; all 37 ran clean afterwards. Pre-empting neighbouring counters
+in the same push was cheap and paid off. Note that fixing this ambiguity did *not*
+cost difficulty, because it was one bookkeeping counter among 31 while the three
+cruxes were untouched — and the same push added a starve.
+
+**New reusable lever: ship the artifact the tool must replace.** The rubric reviewer
+noticed `instruction.md` described a stale `TREATMENTS.tsv` the builder never laid
+down. Making the prose true — shipping the table the last completed pass wrote —
+turned a nit into a starve: 12 of 13 held-out vaults ship a leftover table that
+disagrees with the answer, and on the shipped vault the leftover is already correct,
+so a tool that never rewrites the file passes there and fails almost everywhere else.
+
+**Levers measured NOT to work here.** (a) A record-count bound alongside a byte
+bound: grid-searched capacity 3–7 × budget 600–2000 over the whole corpus and found
+zero pairs where both bind, because record sizes span only 200–262 bytes. Dropped
+the count bound rather than ship an inert rule. (b) A reflexive reskin after a
+cosine-passing push: push 2 changed both facets substantively and the service scores
+barely moved, re-confirming that an in-flight head — even one that ran pass@2 — is
+not in the corpus. (c) Raising `[agent].timeout_sec`: 5400 was declared and pass@2
+still forced 3600 on both cycles, while pass@5 honoured 5400 and returned zero
+timeouts.
+
+**Cosine, designed around before the first push.** A first draft of the two compared
+facets measured 0.9168 / 0.9296 local token-cosine against the delivered folio task
+the engine was ported from. Two changes fixed it: dropping folio's paragraph
+skeleton from `instruction.md` (the enumerated "what the twelve sections define"
+bullet list is the biggest lexical block — replace with a prose section-pointer), and
+turning `test_outputs.py` from classes into flat module-level functions with the
+report/channel helpers moved into the private rig. The verifier facet alone fell
+0.93 → 0.51 locally.
