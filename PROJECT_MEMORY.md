@@ -4855,3 +4855,100 @@ rows obey the table specs.
 every rule is stated, and QC passed clean on the first head that reached it. The tension
 was entirely **difficulty versus the clock** — the task is hard enough that agents cannot
 finish it, and an agent that does not finish produces no evidence at all.
+
+## Scientific Computing and Domain Science / Biology and bioinformatics
+
+`dynamo-0e75ffc-scientific-computing-and-domain-science` · PR #1 · heads
+`7d11f99` → **`e8104dd` ALL-GREEN** (2026-08-25). Task
+`dynamo/blightline-typing`. Full playbook in auto-memory as
+`dynamo-scientific-computing-and-domain-science-biology-and-bioinformatics-playbook.md`.
+
+**Mold.** Rebuild-the-lost-program over a read-only typing run with a complete
+house protocol. The agent writes `/app/blightline_type.py <run_dir> <out_dir>`,
+which settles one week of SNP typing off a plant clinic's sequencers into
+`matrix.tsv`, `types.tsv`, `panel.tsv` and a 51-counter manifest, all graded
+byte for byte on the shipped run, thirty held-out runs and one run derived from
+the SHA-256 of the submitted file. `BENCH_PROTOCOL.md` states all sixteen
+sections, so `task_specification` was unanimous PASS and B5 never came up.
+`bench_intake.py` ships in the image and does parsing and the byte-exact
+writers, which kept solve times at 12–46 min rather than turning it into typing.
+
+**Measured.**
+
+| head | pass@2 | pass@5 |
+|---|---|---|
+| `7d11f99` | 2 solved · 0 valid — **BLOCKED, "too easy"** | never ran |
+| `e8104dd` | 1 solved · 1 valid · "Rerun: NO" | **2 solved · 3 good valid · 0 timeouts · avg@5 0.400 — PASS** |
+
+Cosine passed both pushes; commit 2 changed `tests/test_outputs.py` and left
+`instruction.md` alone, and the in-flight head was not in the corpus. Dynamo
+eval 31/31, duplicate UNIQUE (closest TB2 lexical 0.126), validation
+Docker/Oracle/Nop ✅, AVA PASS, deep_review PASS, tier1 PASS,
+qc_eval/qc_exec/qc_gate PASS — none of the back-half gates ever raised an item.
+
+**What drew the fails, quoted.** *"All three failures share a single root
+cause: brute-force exhaustive enumeration (`itertools.combinations`) for
+minimum panel selection timed out on the first held-out run"*, and *"every
+agent used `itertools.combinations` over sorted marker IDs … strong evidence of
+a shared training-data pattern for minimum-set-cover in Python."* The crux is
+an **optimum whose idiomatic implementation is correct and too slow**, over a
+shipped instance (3-marker panel from 34 retained) small enough to hide it.
+
+**The 2/2 → 1/2 ratchet, one commit.** Head 1 already had five interacting
+subsystems and 38 of 80 single-rule misreadings byte-identical on the shipped
+week — per-record lot windows, repeat-plate supersession, the lead factor,
+comparability, opaque pairs — and was still solved 2/2 in 15 and 23 minutes,
+because a rule that is written down gets transcribed however well the sample
+hides it. What worked: (1) **stop narrating** — §6 stopped saying "in rounds …
+until a round marks nothing" and instead stated *the largest pair of sets that
+support each other* with a uniqueness argument, which keeps determinability and
+puts the one-pass reading back on the table (8 of 31 runs separate them);
+(2) **ask the optimum twice** — a confirming panel drawn only from the markers
+the screening panel left, empty where nothing suffices, which doubles the
+search and compounds a wrong first answer; (3) **nine sampling-point counters**,
+two of them the crux counted rather than tabulated (`isolates_short` /
+`markers_short` are the one-pass reading of §6 reported beside what the property
+keeps, equal on our own week and almost nowhere else). A `private` column in
+`types.tsv` drew the pass@2 valid fail on its own — an agent indexed "outside
+the type" by DFS discovery order after sorting types by date.
+
+**Levers measured not to work here.** Sample-starving alone (38 blind branches,
+2/2 solved). Volume (solve times were a third of the budget). Stating the
+optimum plainly — §10 said "smallest possible size" from commit 1 and both
+head-1 agents wrote a bounded search; it was the *cost*, not the rule, that
+converted anyone.
+
+**Operational findings.**
+
+- *Cap the graded run and latch after the first wedge.* `RUN_SECONDS = 30` plus
+  a latch refusing the remaining thirty-odd runs is what made this crux
+  scorable: all three pass@5 failures were wedges and each was read as a **good
+  valid fail**. Without it one hanging submission spends the 900 s verifier
+  budget and the trial is discarded as `infra/setup-timeout` — the task's fault.
+- *Give the probe control its own deadline.* One shared deadline
+  (`PROBE_SECONDS = 8`) passed locally and failed the behaviour-preserving
+  control in-container on slower CPU, turning a green oracle red. Split them:
+  10 s for mutants, 90 s for the control.
+- *Stop the mutation sweep at two catches.* The test only asks for ≥2 graded
+  runs per probe; early exit took the sweep 466 s → 74 s.
+- *Demand-domination pruning plus branching on the most-constrained demand.* A
+  plain include/exclude walk hit 65 s on one seed; with the reduction and an
+  antichain lower bound the worst graded run is under 0.6 s. The reference needs
+  it, and it is exactly what the agents did not write.
+- *Any forge change invalidates a chosen seed set* — freeze the generator, then
+  pick seeds.
+- *A helper must live where the deliverable lives.* `bench_intake.py` under
+  `/app/data/` was unimportable from `/app/blightline_type.py`; moving it to
+  `/app/bench_intake.py` fixed the oracle.
+
+**The gate-vs-gate tension.** QC wants every deciding rule stated precisely;
+pass@2 punishes exactly that. Resolved here without withholding anything:
+state the rule as a **property** rather than a procedure, and choose a property
+whose obvious implementation is correct but intractable. Determinability holds,
+and the agent still has to invent the algorithm.
+
+**Known limitation left in.** Both passing pass@5 trials also wrote
+`itertools.combinations` and passed because their held-out draws needed narrow
+panels, so the gate rests partly on instance variance. Widening the minimum
+panel across the corpus would sharpen it at the cost of a slower reference;
+held back because the head is all-green and a redraw is a coin flip.
