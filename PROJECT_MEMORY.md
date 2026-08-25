@@ -4988,3 +4988,69 @@ agent seen on this task (39/41 tests, 10/12 trees correct, dead on that one).
 
 Full playbook: `dynamo-software-engineering-refactoring-and-code-modernization-playbook.md`
 in the auto-memory directory.
+
+## Model Training and ML Infrastructure / Reinforcement learning
+
+**Repo:** `handshake-project-dynamo/dynamo-a687f92-model-training-and-ml-infrastructure`
+PR #1 · `ee6b7c8` → `9c7b11e` → `753d23c` → `d8c4fd1` → **`113d8bc` ALL-GREEN** (2026-08-25).
+Full playbook: `dynamo-model-training-reinforcement-learning-playbook.md` in auto-memory.
+
+**Mold.** `dynamo/redrive-epoch` — replay one epoch of an off-policy tabular RL
+trainer out of a read-only SQLite ledger; the agent writes
+`/app/redrive.py <run_dir>` and leaves five TSVs plus a 34-key integer report
+beside the ledger. `REDRIVE_RULES.md` states all 16 sections; the difficulty is
+that the shipped epoch is the quiet one of four clusters.
+
+**Measured, head by head.** Complete spec with 5 degenerate subsystems: pass@5
+**4 solved / 1 valid, avg 0.800 — blocked**. Add a strike/suspension closure
+and a slot carry (7 subsystems, ~14 blind graded quantities): pass@5 **again
+4 solved / 1 valid, avg 0.800 — blocked**. Redefine one quantity so the
+agents' own prior is the wrong answer: pass@5 **1 solved / 4 good stratified
+valid, avg 0.200 — PASS**.
+
+**The lesson.** *Stacking degenerate subsystems does not move this model.*
+Every stated rule is discoverable and gets implemented; the pass@5 write-up on
+the 4/5 head says all five agents converged on the same six algorithmic
+decisions "without privileged knowledge". What converted them was changing §4's
+reach weight from the **discounted occupancy** — the row of `(I − γP)⁻¹`, which
+every trial reached for by reflex — to the **discounted first-passage weight**,
+that row divided by the diagonal. Identical on an acyclic graph, so the shipped
+epoch cannot tell them apart; wrong on 15 of 21 held-out epochs. Cost: a full
+inverse is only ~2× a single solve.
+
+**Second lever, worth reusing.** Couple the environment to the verdicts: an arc
+a rollout keeps using after it goes out of service collects strikes, and
+`strike_limit` of them suspends it *from the next step*, which re-enters the
+out-of-service set. That makes the environment a function of the verdicts and
+the verdicts a function of the environment, so the clean four-phase pipeline
+every agent writes by default (revisions → verdicts → intake → updates) cannot
+express it — it has to become one forward pass. Three of the four winning valid
+fails live in that subsystem.
+
+**Rejected the difficulty suggestion, and was right to.** It asked for the
+shipped epoch to exercise an intake crux. The blindness table measured
+`budget_never_bites`, `budget_stops_at_first_refusal` and `slots_never_carry`
+as wrong on 4, 14 and 16 of 21 held-out epochs while invisible on the shipped
+one; a refusal in the shipped epoch makes all three self-checkable. The head
+that followed the rejection went all-green.
+
+**In-progress timeout → plumbing, never difficulty.** One head lost pass@2 to a
+productive timeout at the 3600 s cap (pass@2 pins 3600 whatever
+`[agent].timeout_sec` says). Shipping `/app/data/ridgeline_io.py` — ledger
+reader, rational spelling, quantise-with-tie-direction, two file writers, and
+nothing that decides a value, told to be copied rather than imported — took
+timeouts to 0 and kept them there. The verifier checks that file's SHA-256
+against a pin **before** importing it, because execing bytes from the agent's
+image is a hole.
+
+**deep_review's one block: name a counter for what it counts.** §14 defined
+`arcs_patched` as "distinct arcs held out of service on at least one epoch
+step" while §3 and §9 both say a suspended arc joins that set — the union
+reading was at least as sound, and the only disambiguating text lived in
+`task.toml`'s `difficulty_explanation`, which never reaches the agent. Renaming
+it `arcs_out_by_patch` and saying suspensions do not count cleared it.
+
+**Cosine never came close, 5/5 pushes:** instruction 0.646 → 0.693 → 0.692,
+verifier 0.850 → 0.840 → 0.795. Commit 2 scored the same as commit 1 on
+near-identical surfaces, confirming again that in-flight PR heads are not in
+the corpus.
