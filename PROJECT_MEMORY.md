@@ -5054,3 +5054,111 @@ it `arcs_out_by_patch` and saying suspensions do not count cleared it.
 verifier 0.850 → 0.840 → 0.795. Commit 2 scored the same as commit 1 on
 near-identical surfaces, confirming again that in-flight PR heads are not in
 the corpus.
+
+## Model Training and ML Infrastructure / Fine tuning
+
+`handshake-project-dynamo/dynamo-7aea78b-model-training-and-ml-infrastructure`
+PR #1, head **`2b131ee` ALL-GREEN** (2026-08-25). Task `dynamo/skein-blend`:
+compile a supervised fine-tuning blend out of a sharded corpus — licences and
+takedown notices over training data, provenance back to human-authored seeds
+through synthetic derivation, near-duplicate clustering, and a per-stage token
+mixture policy. Agent writes `/app/skein_blend.py <blend_dir>`; five files come
+back beside the inputs. `SKEIN_PROTOCOL.md` states all 16 sections, so B5 and
+qc content checks never came up.
+
+**Final band:** pass@2 0 solved / 1 valid / 1 in-progress timeout (PASS, "Rerun
+Recommended: NO"); pass@5 **1 solved · 4 good valid · 0 timeouts · avg@5 =
+0.200**, failures stratified, `difficulty_crux` PASS on all four,
+`task_specification` / `approach_validity` / `reward_hacking` PASS on all five.
+Cosine passed 5/5 with no reskin.
+
+**Earlier delivered task in this same subcategory on this account:**
+`dynamo/lora-replay` (`dynamo-ee83fbf`, repo deleted → assume indexed). Avoid
+adapters, optimizer replay, influence/Shapley, and bitemporal record selection.
+
+### The measurement worth carrying forward
+
+| head | ratchet added | pass@5 |
+|---|---|---|
+| `82c1376` | carry between domains | **4 solved / 1 valid / avg 0.800 — BLOCKED** |
+| (next) | domain ceiling + source ceiling + cross-stage carry | **5 solved / 0 valid / avg 1.000 — BLOCKED** |
+| `2b131ee` | per-stage settlement day + shipped I/O module | **1 solved / 4 good valid / avg 0.200 — PASS** |
+
+Three whole *stated* subsystems made the task **easier**. The trial analysis said
+why: "the specification is unambiguous enough that the implementation is
+effectively determined by the spec once read correctly." What converted solvers
+was making sections 4–8 settle **as of a day** — every stage carries its own
+`stage_on`, licences have terms that can lapse and be re-granted, notices have
+`lifted_on` — so the refusals, the removal closure, the lineage graph, the
+strains, the anchors and the cluster election are all functions of the day and
+move in both directions. The shipped blend settles every stage on `compiled_on`,
+so one global settlement is right there and wrong for every stage of every other
+blend (`stage_reads_its_own_day`: BLIND on shipped, wrong on 21 of 21 held).
+**When pass@5 says too easy, add a dimension the shipped instance is constant in,
+not another subsystem.** Same shape as the dated outages in the SQL playbook.
+
+### The in-progress timeout, and the fix that is measurable
+
+Head `d8aae8e` lost its only valid failure to the clock: the agent had a real
+`held_back` bug, localised it at step 26, broke its own file patching it at 28,
+recovered at 29, and re-ran **53 s** before the 3600 s override fired. The cure
+was not difficulty and not `[agent].timeout_sec` (pass@2 pins 3600 s whatever
+`task.toml` says) — it was **shipping `/app/skeinio.py`**, a read-only module
+that reads the blend directory and writes the four tables and the report in the
+exact shape, so no parsing, spelling or digesting is the solver's problem. Next
+head: **0 in-progress timeouts, 4 counted valid fails.** Generate the module at
+freeze time from a fenced "portable region" of the reference so the two cannot
+drift, pin its digest, and have the rig stage its **own** copy beside the
+handed-in program so editing the image copy buys nothing.
+
+### What drew the four valid fails
+
+1. §5 severance fixed point — `status[pid]` read before the "parent not in
+   corpus" guard → `KeyError` on every held blend naming a dangling parent; the
+   shipped blend has none. One line; crash → full pass.
+2. §9–10 apportionment broadly wrong — leftover tie-break, multi-round
+   ceiling-freeze pool re-adjustment, carry-across-stage init and source-ceiling
+   capping all wrong at once; 16 of 42 tests over 10 held blends.
+3. near-miss: `blend.tsv` on `held-sparse` only (40/42 passed).
+4. near-miss: `verdicts_moved` +4 on `held-wide`, only under heterogeneous
+   `stage_on` dates (40/42 passed).
+
+### Gates, in the order they blocked
+
+1. **pass@2 "task/verifier problem", both trials.** §2 still *guaranteed* parents
+   appear earlier in corpus order after the fixtures had been made arbitrary.
+   Agents implemented §2 literally and crashed; `approach_validity` FAIL — read
+   correctly as my bug. Fix: drop the guarantee **without** saying "topologically
+   sort", and plant a child-before-parent pair in the shipped blend so the
+   requirement is discoverable from the agent's own data.
+2. **pass@5 too easy, twice.** See above.
+3. **qc_gate B1, early-exit, 20 checks deferred.** `verdicts_moved` was defined
+   over a sample's *verdict*, but §11 fixes `verdict` as exactly `admit`/`refuse`
+   while the reference compared the *cause*. **Any counter defined over a term
+   the spec formally defines elsewhere must say which reading it means.**
+4. **pass@2 in-progress timeout.** See above.
+5. cosine, static review, duplicate, validation, AVA, deep_review, tier1: never
+   blocked on any push.
+
+### Levers measured NOT to work
+
+- More stated rules (4/5 → 5/5).
+- **Folding the drift cap into the removal closure.** Looked like a deep mutual
+  fixed point; measured **inert** — strain is monotone along edges, so
+  `{strain > cap}` is already closed downward and removal changes nothing for
+  survivors bar one `depth` in two blends. Dropped before pushing; would have
+  been a QC C3 hole. *Measure anything you are calling a closure before shipping.*
+- Raising `[agent].timeout_sec` against a pass@2 timeout.
+
+### Operational
+
+- **Engineered edge witnesses are the last thing you pin.** Exact landings
+  (`size == spare`, `drawn + size == room`, a licence term opening exactly on a
+  stage day) are measure-zero and every forge change reshuffles them; the seed
+  search was re-run four times. Freeze the forge first, then search.
+- **Make a tie-break decisive by construction.** The strain tie-break stayed thin
+  until the builder made one member a seed and the other two drifts away *from
+  that member*, with the lighter one given the later authoring day.
+- 42 tests incl. 130 mutation probes over 7 sweep blends run in ~15–25 s
+  in-container; `[verifier].timeout_sec = 1800` is ample. `[agent] = 5400`;
+  pass@5 trials ran 30–58 min with the plumbing in.
