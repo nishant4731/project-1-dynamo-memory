@@ -166,84 +166,105 @@ where `gh` resolves and reads the proxy-supplied token.
 rendered the index. The auto-memory mirror is readable from cloud sessions.
 
 
-## Docker builds do NOT work in cloud sessions (measured 2026-08-26)
+## Building a task image in a cloud session (measured 2026-08-26)
 
-Establishing this took ~11 minutes of session time on `dynamo-79656fb`. Do not
-re-derive it. Three layers, in the order they block:
+A plain `docker build` fails. It is fixable, and the fix never touches the
+committed Dockerfile. Three layers block the naive attempt, in the order they
+bite:
 
-1. **`dockerd` has no `HTTPS_PROXY`.** It egresses directly instead of through
-   the agent proxy, so the environment's Allowed-domains list does not apply to
-   `docker pull`. `curl` through the proxy reaches a host that `docker` cannot.
-2. **ECR Public rate-limits the shared egress IP**, returning
-   `429 TOOMANYREQUESTS / "Data limit exceeded"` for anonymous pulls.
-3. **The blocker: TLS interception breaks in-container installs.** Outbound TLS
-   is intercepted by `Anthropic ... sandbox-egress-gateway-production Egress
-   Gateway CA`. The VM **host** trusts that CA; a **build container** carries
-   only its own CA bundle. So the `pip install pytest==8.4.1 ...` layer in
-   `task/environment/Dockerfile` dies on an untrusted certificate.
+1. **`dockerd` carries no `HTTPS_PROXY`.** It egresses directly rather than
+   through the agent proxy, so the environment's Allowed-domains list does not
+   govern `docker pull`. `curl` reaches hosts that `docker` cannot.
+2. **ECR Public rate-limits the shared egress IP**, answering
+   `429 TOOMANYREQUESTS / "Data limit exceeded"` on anonymous pulls.
+3. **TLS interception breaks in-container installs.** Outbound TLS is
+   intercepted by `Anthropic ... sandbox-egress-gateway-production Egress
+   Gateway CA`. The VM **host** trusts it; a **build container** carries only
+   its own CA bundle, so the `pip install pytest==8.4.1 ...` layer dies on an
+   untrusted certificate. `apt` is unaffected — Ubuntu's archives are plain
+   HTTP.
 
-Fixing (3) needs either an exemption from TLS interception for `pypi.org` and
-`files.pythonhosted.org`, which is not a user-configurable setting, or injecting
-the egress CA into the build container, which means editing the Dockerfile that
-ships to Handshake in the PR diff. Neither is acceptable.
+### The procedure
 
-What *does* work: running containers. `--privileged --cgroupns=host` is fine and
-an image already on disk runs normally. It is specifically **building** an image
-that performs network installs that cannot be done.
-
-**Therefore: Harbor/Docker oracle-nop validation stays on the laptop.**
-
-## The cloud middle path: run the gate on the VM host
-
-TLS interception only bites *inside build containers*. The host trusts the
-gateway CA and already has Python, so the task's own scripts can run there. A
-cloud session runs as root, so the container's absolute paths can be recreated
-exactly. For the `dynamo-79656fb` shape:
+Build from a *generated* Dockerfile outside the repo. `task/environment/Dockerfile`
+is never modified, so nothing reaches the PR diff.
 
 ```bash
-pip install --break-system-packages pytest==8.4.1 pytest-json-ctrf==0.3.5
-mkdir -p /app/data /logs/verifier /solution /tests
-cp -r task/environment/data/. /app/data/
-install -m 0444 /app/data/dykework.py \
-  "$(python3 -c 'import sysconfig; print(sysconfig.get_paths()["purelib"])')/dykework.py"
-cp task/solution/. /solution/ -r
-cp task/tests/. /tests/ -r
-
-# ORACLE
-bash /solution/solve.sh && bash /tests/test.sh; cat /logs/verifier/reward.txt   # expect 1
-
-# NOP - solve.sh mutates the live reach in place, so restore it first
-rm -rf /app/data && mkdir -p /app/data && cp -r task/environment/data/. /app/data/
-bash /tests/test.sh; cat /logs/verifier/reward.txt                             # expect 0
+cp -r task/environment /tmp/ctx          # keep the repo context pristine
+# In /tmp/ctx/Dockerfile ONLY, before the pip layer:
+#   RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates
+#   COPY ca-certificates.crt /usr/local/share/ca-certificates/egress.crt
+#   RUN update-ca-certificates
+# Keep the FROM line and its sha256 digest byte-identical. Change nothing else.
+docker build -f /tmp/ctx/Dockerfile -t dynamo-task-local /tmp/ctx
 ```
 
-Adapt the copy steps to whatever the task's own Dockerfile does; read it rather
-than assuming this layout.
+Then run oracle and nop as in `CLOUD_AGENT_DOCKER_HARBOR.md`, mounting the
+repo's `task/solution` read-only and `task/tests` **read-write**.
 
-**This is a pre-flight, not validation. Never report it as a green gate.** It
-catches engine bugs, wrong pins, verifier logic errors and missing fixtures. It
-does **not** catch:
+Measured result: `Build succeeded with real TLS verification`, and
+`git status --porcelain` empty afterwards.
 
-- the image build itself
-- Python version drift (host 3.11 vs `ubuntu:24.04`'s 3.12)
-- missing apt packages the image would have installed
-- file permissions, the `X_OK` executable-bit abort, and privilege-drop
-  behaviour, all of which have cost real cycles before
+### Rules and gotchas
 
-Do not push a task's first-ever version on a host-run alone; those misses are
-exactly the ones that burn a full pipeline cycle.
+- **Never use `--trusted-host` and never disable certificate verification.**
+  Injecting the gateway's own CA makes the container *trust* the sanctioned
+  proxy; traffic still flows through it and is still inspected. Skipping
+  verification is circumventing a security control. Only the former is
+  acceptable.
+- **The base image ships no CA store at all.** `update-ca-certificates` does
+  nothing until `ca-certificates` is installed, so that install must come first.
+- **Start `dockerd` with `setsid`.** It is reaped when the background task that
+  launched it ends; it died twice mid-run before being detached.
+- **`*.cloudfront.net` must be in Allowed domains**, alongside `*.docker.com`,
+  `*.docker.io`, `public.ecr.aws` and `*.amazonaws.com`. ECR redirects layer
+  downloads to a CloudFront host, which is `cloudfront.net`, not
+  `amazonaws.com`.
+- The built image carries one extra CA layer, so it is not byte-identical to
+  what Harbor builds. Irrelevant for oracle/nop, which check that reward is `1`
+  and `0`.
 
-## Give a cloud session the playbooks: attach this repo, never add CLAUDE.md
+### Still unmeasured
 
-A cloud session on a task repo clones **only that repo**. It cannot see
-`Project 1`, so none of the playbooks or `memory/` load by default.
+The ORACLE run was left executing after ~24 minutes with no output on
+`dynamo-79656fb`, so **no `REWARD:` pair has been observed in a cloud session
+yet**. The build is proven; the gate result is not. Treat cloud oracle/nop as
+promising and unconfirmed, and keep the laptop gate authoritative until a run
+produces `1` and `0`.
 
-**Attach `nishant4731/project-1-dynamo-memory` as a second repository on every
-task cloud session.** Sessions support multiple repos, and this brings
-`AGENTS.md`, `CLAUDE.md`, `PROJECT_MEMORY.md` and all 157 files in `memory/`
-into the session.
+## Give every cloud session the playbooks automatically
 
-**Do not solve this by committing a `CLAUDE.md` into a task repo.** That file
-would appear in the PR diff to `handshake-project-dynamo` and expose the
-authoring playbook to reviewers. The second-repo attachment achieves the same
-thing and ships nothing.
+A cloud session clones **only** the task repo. It cannot see `Project 1`, so no
+playbook and nothing in `memory/` loads by default.
+
+Attaching this repo as a second repository works, but it is a manual step on
+every session and easy to forget. The setup script does it once, for good:
+
+- it clones `project-1-dynamo-memory` to `/opt/dynamo-memory` on the VM
+  (`git pull --ff-only` on later cache rebuilds), and
+- it writes a **user-level** `CLAUDE.md` to `/root/.claude/CLAUDE.md` and the
+  other plausible homes, telling the session to read `AGENTS.md`, the
+  `memory/MEMORY.md` index and the matching subcategory playbook first, and
+  carrying the Docker-with-CA procedure in summary.
+
+A user-level `CLAUDE.md` loads in every session and belongs to no repo, so it
+cannot appear in a PR diff. See `.claude/cloud-setup.sh`.
+
+**Never create a `CLAUDE.md`, `AGENTS.md` or notes file inside a task repo.**
+It would ship to reviewers in the diff to `handshake-project-dynamo` and hand
+them the authoring playbook.
+
+Two limits of the clone worth knowing. The environment cache is a filesystem
+snapshot, so `/opt/dynamo-memory` is frozen at cache-build time and only
+refreshes when the cache rebuilds — on a setup-script or allowlist change, or
+after about seven days. And `PROJECT_MEMORY.md` is ~686KB against 157 files in
+`memory/`: a session cannot hold all of it, which is why the generated
+`CLAUDE.md` tells it to work from the index and open only what the task needs.
+
+## Not verified
+
+Whether a cloud session working on a task repo can **push** a memory update back
+to `project-1-dynamo-memory`. Push protection restricts `git push` to the
+session's own working branch, which on a task session is that task's
+`submission`. Assume lessons must be recorded and pushed from the laptop until
+this is measured.

@@ -43,17 +43,23 @@ Cloud Agent VM, also read:
 
 Two rules for cloud sessions that are easy to get wrong:
 
-- **Attach `nishant4731/project-1-dynamo-memory` as a second repository.** A
-  cloud session on a task repo clones only that repo, so without this it sees
-  none of these playbooks and none of `memory/`. Never fix this by committing a
-  `CLAUDE.md` into a task repo: it would show up in the PR diff to
+- **The playbooks are at `/opt/dynamo-memory`, not in the task repo.** A cloud
+  session clones only the task repo. The environment's setup script clones this
+  repo onto the VM and writes a user-level `CLAUDE.md` pointing at it, so it
+  loads on its own; attaching this repo as a second repository also works.
+  **Never** fix it by committing a `CLAUDE.md`, `AGENTS.md` or notes file into a
+  task repo — that ships to reviewers in the PR diff to
   `handshake-project-dynamo`.
-- **Docker oracle/nop cannot run in a cloud session.** Building any task image
-  fails because the sandbox intercepts TLS with a CA that build containers do
-  not trust, so the Dockerfile's `pip install` layer dies. Validation stays on
-  the laptop. `CLAUDE_CLOUD_SETUP.md` documents a host-level pre-flight that
-  runs `solve.sh` and `test.sh` directly on the VM; it is a smoke test, not a
-  gate, and must never be reported as one.
+- **Docker validation in a cloud session needs a CA layer.** A plain
+  `docker build` fails: the sandbox intercepts TLS with a gateway CA that build
+  containers do not trust, so the Dockerfile's `pip` layer dies. Build instead
+  from a generated Dockerfile outside the repo, inserting a CA layer and keeping
+  the `FROM` digest byte-identical — never `--trusted-host`, never with
+  verification disabled. Install `ca-certificates` first, since the base image
+  ships no CA store, and start `dockerd` with `setsid` or it gets reaped. Full
+  procedure and the required Allowed-domains list are in
+  `CLAUDE_CLOUD_SETUP.md`. The build is proven; a cloud `REWARD` pair has not
+  been observed yet, so the laptop gate stays authoritative until one is.
 
 For a task sent back for rework (a `[Task Feedback]` issue on the task repo), also read:
 

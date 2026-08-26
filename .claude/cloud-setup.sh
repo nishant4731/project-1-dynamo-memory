@@ -74,6 +74,59 @@ fi
 
 chmod 666 /var/run/docker.sock 2>/dev/null || true
 
+# --- Standing context: clone the memory repo and point CLAUDE.md at it -------
+# A cloud session clones ONLY the task repo, so none of the Dynamo playbooks
+# load by default. Cloning here puts them on the VM without adding anything to
+# the task repo, so nothing can leak into a PR diff to handshake-project-dynamo.
+MEMDIR=/opt/dynamo-memory
+if [ -d "$MEMDIR/.git" ]; then
+  git -C "$MEMDIR" pull --ff-only >/dev/null 2>&1 || true
+else
+  git clone --depth 50 https://github.com/nishant4731/project-1-dynamo-memory.git \
+    "$MEMDIR" >/dev/null 2>&1 || true
+fi
+
+# User-level CLAUDE.md loads in every session and is NOT part of any repo.
+# Written to each plausible home so it applies whichever user Claude runs as.
+for H in /root "$HOME" /home/ubuntu /home/node; do
+  [ -n "$H" ] && [ -d "$H" ] || continue
+  mkdir -p "$H/.claude"
+  cat > "$H/.claude/CLAUDE.md" <<'CLAUDEMD'
+# Dynamo task session (cloud)
+
+The Dynamo playbooks and per-lesson memory are checked out at
+`/opt/dynamo-memory`. They are NOT part of the task repo you are working in.
+
+**Before touching the task, read, in this order:**
+
+1. `/opt/dynamo-memory/AGENTS.md` — the canonical list of what else to read.
+2. `/opt/dynamo-memory/memory/MEMORY.md` — one-line index of 157 lessons. Open
+   only the entries relevant to this task; do not read them all.
+3. The `## <Category> / <Subcategory>` section of
+   `/opt/dynamo-memory/PROJECT_MEMORY.md` matching this task's `task.toml`
+   `[metadata]`, plus
+   `/opt/dynamo-memory/memory/dynamo-<category>-<subcategory>-playbook.md`
+   if it exists. What clears the gates is subcategory-specific.
+
+`PROJECT_MEMORY.md` is ~686KB. Never read it whole; grep or jump to the section.
+
+**Docker validation in a cloud session.** It works, but not with a plain
+`docker build`. Outbound TLS is intercepted by Anthropic's egress gateway CA,
+which the VM host trusts but a build container does not, so the Dockerfile's
+`pip` layer fails. The procedure, which never modifies the committed Dockerfile,
+is in `/opt/dynamo-memory/CLAUDE_CLOUD_SETUP.md`. In short: copy the build
+context to `/tmp/ctx`, insert a CA layer into `/tmp/ctx/Dockerfile` only
+(install `ca-certificates` first, the base image ships no CA store), keep the
+`FROM` digest byte-identical, and build with `-f /tmp/ctx/Dockerfile`. Never use
+`--trusted-host` and never disable certificate verification. Start `dockerd`
+with `setsid` or it gets reaped when its background task ends.
+
+**Never create a `CLAUDE.md`, `AGENTS.md`, or notes file inside the task repo.**
+Those ship to reviewers in the PR diff. This file lives outside every repo for
+exactly that reason.
+CLAUDEMD
+done
+
 # --- Report what the session actually got -----------------------------------
 {
   echo "=== cloud-setup report ==="
