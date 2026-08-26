@@ -5231,3 +5231,84 @@ twice to leave §8's iteration order and tie-breaks unstated; that is QC B1 and
 would trade a green QC gate for a pass@2 coin flip. Raising
 `[agent].timeout_sec` does nothing at pass@2, which caps the agent at 3600 s
 regardless of `task.toml`.
+
+## Mathematics and Formal Reasoning / Number theory and exact arithmetic
+
+Repo `dynamo-3c6d4c5-mathematics-and-formal-reasoning`, PR #1, accepted head **1938e33**.
+ALL-GREEN. Full playbook in the auto-memory file
+`dynamo-mathematics-and-formal-reasoning-number-theory-and-exact-arithmetic-playbook.md`.
+
+**Mold.** Twelve exact readings per entry of a "reel", plus a fourteen-key report, both
+byte-compared. Each entry is an exact rational `numer/denom` in radix `radix`; the
+denominator splits as `shared * coprime` and the readings are quantities over the unit
+group modulo `coprime` — multiplicative order, Carmichael exponent, Euler totient,
+Möbius-inversion counts, discrete log, a two-generator subgroup size, a window count. A
+shipped sample reel to develop against; graded held-out reels built the same way.
+
+**Measured on the accepted head.** pass@2 **1/2** (1 solved · 1 valid-fail · 0 timeout,
+"Rerun Recommended: NO"). pass@5 **0/5 passed** — 0 solved · **3 good-valid-fail** ·
+0 soft-timeout · 0 task/verifier-issue · **2 in-progress-timeout** · **avg@5 = 0.000**.
+
+**The crux that drew the fails — put the trap in a PRIMITIVE, not in a rule.** Every rule
+was stated in full (QC demands it, and a fully-specified spec is transcription). The
+difficulty is that the readings are composed out of primitives the submission writes
+itself, and one of those can be silently, scale-dependently wrong. Two stratified cruxes:
+
+1. **`(Z/2^e)* ≅ C₂ × C_{2^(e-2)}` for e ≥ 3 (3 of 5).** Agents computed the
+   two-generator subgroup size as "roughly 2× the correct value … The development reel is
+   constructed so that every entry has spur ∈ ⟨radix⟩, making brace = cycle everywhere on
+   it — the bug was invisible locally and only exposed on graded reels."
+2. **A pseudoprime liar (1 of 5).** ψ₁₂ = `318665857834031151167461` =
+   `399165290221 × 798330580441` is the smallest strong pseudoprime to the first twelve
+   prime bases; ψ₁₃ = `3317044064679887385961981` for the first thirteen. Planted as a
+   coprime part on graded reels only, 2–4 rows each. A base-list Miller-Rabin stops
+   factoring one step short and every unit-group reading on that row comes from the wrong
+   group at once.
+
+**Why the primitive trap beat every earlier attempt.** Sample-starving a *rule* kept
+failing because agents brute-force small cases they invent, and those exercise the rule.
+The smallest composite the standard 12-base list gets wrong has 24 digits, so a self-made
+harness agrees with a base list everywhere it can afford to look. One trial named the
+pseudoprime and its factors in its own reasoning and shipped anyway.
+
+**Hurdles, per gate, in the order they blocked.** cosine — never blocked (fresh domain,
+fresh prose, passed even right after an indexed commit). review/Dynamo eval — two prose
+FAILs in `task.toml`: `instruction_concision` (a numbered development loop reads as a
+forbidden step-by-step procedure) and `difficulty_explanation_quality` (never embed
+pass@2 trial counts or model-run outcomes; keep only intrinsic corpus measurements).
+validation — verifier runtime; the chain-cover generator took a reel build to 22–222 s,
+and deleting that column took the whole suite to 175 s. **pass@2 — the wall**, repeatedly
+2/2 solved; the `pass2_suggestion` sticky named the cause exactly ("`reel_io.py` … hands
+the agent every primitive the readings compose"). AVA A6 — caught that the *reference*
+used the same 12-base Miller-Rabin, i.e. the Oracle was wrong on the number about to be
+planted; replaced with Baillie-PSW. deep_review — duplicate `def`s left by block edits.
+qc_gate/qc_exec C3 — a graded column was byte-compared but never defined in the shipped
+spec, which alone made pass@2 classify the run as a task/verifier problem; fixed by a
+permanent guard test that walks every graded name and fails unless the spec defines it.
+trials — passed first time on this head.
+
+**Levers measured NOT to work.** A minimum chain cover / Dilworth column: 5 of 5 trials
+reached it by bipartite matching, none took the greedy trap — **0 conversions in 10
+trials** while drawing ~60% of generator redraws. Sample-starving a readable rule.
+Adding more independent readings (raised solve time, not failures). An inert reading
+whose value was mathematically forced (would have been a C3 hole). Cutting
+`[agent].timeout_sec` below 3600 — 2 of 5 trials still timed out at 3600 s, and those
+count for nothing.
+
+**Gate-vs-gate tensions.** (a) QC C3 wants every stated rule exercised by a graded
+fixture, while the starve wants the shipped sample blind to it — resolved because C3
+inspects the *graded* fixtures: held-out reels carry the liars and the `U(2^e)`
+witnesses, the sample carries neither, and a standing test pins both pseudoprimes.
+(b) The suggestion asked for all four primitives removed; removing all four risks
+in-progress timeouts. Only `factorise` and `is_probable_prime` went — the two that can be
+*silently* wrong. `divisors`, `totient`, `multiplicative_order`, `discrete_log`, the
+sieve, the digit extraction, the parsing and both serialisers stayed: named routines cost
+time without separating anybody. Vindicated — the 2 timeouts were agents debugging the
+crux, not agents still typing plumbing.
+
+**Two self-inflicted leaks to check for.** Entry ids were built as `stem-kind-NN`, so
+every graded row shipped labelled with the planting class it existed to separate
+(`…-liar-…`, `…-squared-…`); ids now carry a neutral tag. And a quoted worked example was
+itself built on a liar, with a girth sitting a few digits from the published pseudoprime;
+worked-example ids now use stems the generator can never emit, so a quoted row cannot
+collide with a real graded entry.
