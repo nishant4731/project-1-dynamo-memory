@@ -165,3 +165,85 @@ where `gh` resolves and reads the proxy-supplied token.
 `ls memory/*.md | wc -l` returned **157**, and `head -5 memory/MEMORY.md`
 rendered the index. The auto-memory mirror is readable from cloud sessions.
 
+
+## Docker builds do NOT work in cloud sessions (measured 2026-08-26)
+
+Establishing this took ~11 minutes of session time on `dynamo-79656fb`. Do not
+re-derive it. Three layers, in the order they block:
+
+1. **`dockerd` has no `HTTPS_PROXY`.** It egresses directly instead of through
+   the agent proxy, so the environment's Allowed-domains list does not apply to
+   `docker pull`. `curl` through the proxy reaches a host that `docker` cannot.
+2. **ECR Public rate-limits the shared egress IP**, returning
+   `429 TOOMANYREQUESTS / "Data limit exceeded"` for anonymous pulls.
+3. **The blocker: TLS interception breaks in-container installs.** Outbound TLS
+   is intercepted by `Anthropic ... sandbox-egress-gateway-production Egress
+   Gateway CA`. The VM **host** trusts that CA; a **build container** carries
+   only its own CA bundle. So the `pip install pytest==8.4.1 ...` layer in
+   `task/environment/Dockerfile` dies on an untrusted certificate.
+
+Fixing (3) needs either an exemption from TLS interception for `pypi.org` and
+`files.pythonhosted.org`, which is not a user-configurable setting, or injecting
+the egress CA into the build container, which means editing the Dockerfile that
+ships to Handshake in the PR diff. Neither is acceptable.
+
+What *does* work: running containers. `--privileged --cgroupns=host` is fine and
+an image already on disk runs normally. It is specifically **building** an image
+that performs network installs that cannot be done.
+
+**Therefore: Harbor/Docker oracle-nop validation stays on the laptop.**
+
+## The cloud middle path: run the gate on the VM host
+
+TLS interception only bites *inside build containers*. The host trusts the
+gateway CA and already has Python, so the task's own scripts can run there. A
+cloud session runs as root, so the container's absolute paths can be recreated
+exactly. For the `dynamo-79656fb` shape:
+
+```bash
+pip install --break-system-packages pytest==8.4.1 pytest-json-ctrf==0.3.5
+mkdir -p /app/data /logs/verifier /solution /tests
+cp -r task/environment/data/. /app/data/
+install -m 0444 /app/data/dykework.py \
+  "$(python3 -c 'import sysconfig; print(sysconfig.get_paths()["purelib"])')/dykework.py"
+cp task/solution/. /solution/ -r
+cp task/tests/. /tests/ -r
+
+# ORACLE
+bash /solution/solve.sh && bash /tests/test.sh; cat /logs/verifier/reward.txt   # expect 1
+
+# NOP - solve.sh mutates the live reach in place, so restore it first
+rm -rf /app/data && mkdir -p /app/data && cp -r task/environment/data/. /app/data/
+bash /tests/test.sh; cat /logs/verifier/reward.txt                             # expect 0
+```
+
+Adapt the copy steps to whatever the task's own Dockerfile does; read it rather
+than assuming this layout.
+
+**This is a pre-flight, not validation. Never report it as a green gate.** It
+catches engine bugs, wrong pins, verifier logic errors and missing fixtures. It
+does **not** catch:
+
+- the image build itself
+- Python version drift (host 3.11 vs `ubuntu:24.04`'s 3.12)
+- missing apt packages the image would have installed
+- file permissions, the `X_OK` executable-bit abort, and privilege-drop
+  behaviour, all of which have cost real cycles before
+
+Do not push a task's first-ever version on a host-run alone; those misses are
+exactly the ones that burn a full pipeline cycle.
+
+## Give a cloud session the playbooks: attach this repo, never add CLAUDE.md
+
+A cloud session on a task repo clones **only that repo**. It cannot see
+`Project 1`, so none of the playbooks or `memory/` load by default.
+
+**Attach `nishant4731/project-1-dynamo-memory` as a second repository on every
+task cloud session.** Sessions support multiple repos, and this brings
+`AGENTS.md`, `CLAUDE.md`, `PROJECT_MEMORY.md` and all 157 files in `memory/`
+into the session.
+
+**Do not solve this by committing a `CLAUDE.md` into a task repo.** That file
+would appear in the PR diff to `handshake-project-dynamo` and expose the
+authoring playbook to reviewers. The second-repo attachment achieves the same
+thing and ships nothing.

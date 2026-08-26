@@ -41,6 +41,20 @@ Cloud Agent VM, also read:
 
 - `CLAUDE_CLOUD_SETUP.md`
 
+Two rules for cloud sessions that are easy to get wrong:
+
+- **Attach `nishant4731/project-1-dynamo-memory` as a second repository.** A
+  cloud session on a task repo clones only that repo, so without this it sees
+  none of these playbooks and none of `memory/`. Never fix this by committing a
+  `CLAUDE.md` into a task repo: it would show up in the PR diff to
+  `handshake-project-dynamo`.
+- **Docker oracle/nop cannot run in a cloud session.** Building any task image
+  fails because the sandbox intercepts TLS with a CA that build containers do
+  not trust, so the Dockerfile's `pip install` layer dies. Validation stays on
+  the laptop. `CLAUDE_CLOUD_SETUP.md` documents a host-level pre-flight that
+  runs `solve.sh` and `test.sh` directly on the VM; it is a smoke test, not a
+  gate, and must never be reported as one.
+
 For a task sent back for rework (a `[Task Feedback]` issue on the task repo), also read:
 
 - `PROJECT_DYNAMO_REWORK_GUIDE.md`
