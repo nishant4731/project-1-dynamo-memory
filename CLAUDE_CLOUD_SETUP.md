@@ -43,8 +43,10 @@ Platform contract for that script:
 - the result is snapshotted to disk and reused by later sessions; installed
   packages and pulled images persist, **running processes do not**
 
-Network access: leave at **Trusted**. It already covers PyPI, npm, Docker Hub,
-and GitHub. Only switch to **Custom** if a task needs a host outside that list.
+Network access: set to **Custom**, tick **Also include default list**, and list
+`*.docker.com` and `*.docker.io`. **Trusted alone is not enough** — it reaches
+Docker Hub's registry but not its blob CDN, so every image pull dies with a 403.
+Measured, see below.
 
 Do **not** put `GH_TOKEN`, `NISHANT_GH_TOKEN`, or any PAT in the environment
 variables box. There is no secrets store: anyone using the environment can read
@@ -100,16 +102,66 @@ a cloud session. Only committed repo files load. This is exactly why
 `CLAUDE.md` requires every accepted playbook to be written into
 `PROJECT_MEMORY.md` and pushed — that copy is the only one a cloud session sees.
 
-## Unverified — check on the first real session
+## Measured on Anthropic-hosted VMs (2026-08-26)
 
-The Dynamo manual oracle/nop fallback uses `docker run --privileged
---cgroupns=host`. Whether Anthropic-hosted VMs permit `--privileged` has not
-been tested. Confirm it before trusting a cloud session for Harbor validation:
+Two sessions on `nishant4731/project-1-dynamo-memory`, environment `Default`.
 
-```bash
-docker run --rm --privileged --cgroupns=host hello-world
+**`--privileged --cgroupns=host` works.** `docker run --rm --privileged
+--cgroupns=host hello-world` printed `Hello from Docker!`. The Dynamo manual
+oracle/nop fallback in `CLOUD_AGENT_DOCKER_HARBOR.md` is therefore viable in a
+cloud session; validation does not have to stay on the laptop.
+
+**The stock daemon uses overlayfs**, reported as `dockerd: UP (overlayfs)`. The
+vfs fallback in `.claude/cloud-setup.sh` never fires, which confirms that
+copying the Cursor `daemon.json` would have downgraded storage and disabled
+container networking for nothing.
+
+Versions seen: Docker 29.3.1, Docker Compose v5.1.1, Python 3.11.15.
+
+### Trusted network access is NOT enough to pull from Docker Hub
+
+First run failed with exit 125:
+
+```
+docker: unknown: failed to copy: httpReadSeeker: failed open: unexpected status
+from GET request to https://production.cloudfront.docker.com/registry-v2/... :
+403 Forbidden
 ```
 
-If that is refused, Harbor oracle/nop must stay on this laptop or on Cursor
-VMs, and cloud sessions are limited to authoring, static checks, and review.
-Record the outcome here once measured.
+The manifest fetch succeeded and only the blob fetch was refused: Docker Hub's
+registry host is on the Trusted allowlist but its CloudFront blob CDN is not.
+Note this failure aborts before container creation, so it is **not** evidence
+about `--privileged`; it only looks like one.
+
+Fix applied to the `Default` environment — network access **Custom**, with
+**Also include default list** checked, and:
+
+```
+*.docker.com
+*.docker.io
+```
+
+The same pull then succeeded. Any environment used for Dynamo work needs this;
+a fresh environment left on Trusted will fail every image pull.
+
+### harbor is not installed, and that is not a regression
+
+The setup script reports `harbor: MISSING`. The `harbor` PyPI package does not
+provide the Dynamo Harbor CLI, `harbor` is not installed on the laptop either,
+and the local gate (`.tools/vitrail/gate.sh`) drives oracle/nop with plain
+`docker run`. The `pip install harbor || true` line in
+`.cursor/install-docker.sh` has always been failing silently. Use the manual
+Docker fallback, not `harbor run`.
+
+### gh is missing from the setup script's PATH
+
+The setup script logged `gh: command not found`, even though `gh` is
+pre-installed for the session itself. The init script runs in a different PATH
+context, so **a setup script cannot call `gh`**. Do GitHub work in the session,
+where `gh` resolves and reads the proxy-supplied token.
+
+### The memory mirror works
+
+`ls memory/*.md | wc -l` returned **157**, and `head -5 memory/MEMORY.md`
+rendered the index. The auto-memory mirror is readable from cloud sessions.
+
