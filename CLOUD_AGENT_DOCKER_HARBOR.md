@@ -2,6 +2,11 @@
 
 Use this on Cursor Cloud Agent VMs for every Dynamo task when local Harbor oracle/nop is required.
 
+**Scope: Cursor Cloud Agent VMs and this laptop.** Claude Code cloud
+sessions (claude.ai/code) are a different platform — Docker is pre-installed,
+GitHub auth goes through a proxy, and the `daemon.json` below would break
+container networking there. See `CLAUDE_CLOUD_SETUP.md` for that path.
+
 Cloud Agent environments are often nested containers (`/.dockerenv` present) with cgroup v2 quirks. Docker Desktop assumptions from a laptop do not apply.
 
 ## Make Docker available for ALL chats (required)

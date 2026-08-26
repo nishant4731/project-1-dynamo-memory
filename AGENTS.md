@@ -14,9 +14,32 @@ Before starting any task in this folder, always read:
 - `project_dynamo_reviewer_notes.md`
 - `CLOUD_AGENT_DOCKER_HARBOR.md`
 
+**Auto-memory mirror (`memory/`).** The per-lesson memory files that this
+workspace accumulates locally under
+`~/.claude/projects/-Users-utkarsha-Documents-Project-1/memory/` are mirrored
+into `memory/` in this repo, because a Claude Code cloud session sees only
+committed repo files — nothing under `~/.claude/` reaches it. Start from
+`memory/MEMORY.md`, which indexes every entry in one line each, then open only
+the entries relevant to the task at hand. These are lesson-level notes and are
+narrower than `PROJECT_MEMORY.md`; the two overlap only partly, so read both.
+
+The mirror is a copy, not a link. After recording a new playbook locally,
+refresh and commit it, or cloud sessions keep reading a stale set:
+
+```bash
+cp ~/.claude/projects/-Users-utkarsha-Documents-Project-1/memory/*.md \
+   "/Users/utkarsha/Documents/Project 1/memory/"
+```
+
 For form-filling or submission tasks, also read:
 
 - `HANDSHAKE_DYNAMO_FORM_FILLING_GUIDE.md`
+
+When the work runs in a Claude Code cloud session (claude.ai/code,
+`claude --cloud`, mobile, or a routine) rather than locally or on a Cursor
+Cloud Agent VM, also read:
+
+- `CLAUDE_CLOUD_SETUP.md`
 
 For a task sent back for rework (a `[Task Feedback]` issue on the task repo), also read:
 

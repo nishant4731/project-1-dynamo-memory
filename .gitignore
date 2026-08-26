@@ -2,7 +2,8 @@
 # Only root markdown playbooks (+ Cursor rules) are tracked.
 
 .DS_Store
-.claude/
+.claude/*
+!.claude/cloud-setup.sh
 
 # Everything under task folders / local workspaces
 dynamo-*/
