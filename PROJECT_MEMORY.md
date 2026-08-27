@@ -5312,3 +5312,64 @@ every graded row shipped labelled with the planting class it existed to separate
 itself built on a liar, with a girth sitting a few digits from the published pseudoprime;
 worked-example ids now use stems the generator can never emit, so a quoted row cannot
 collide with a real graded entry.
+
+## Machine Learning and AI / Model inference and prediction
+
+**Repo** `handshake-project-dynamo/dynamo-fd2dfd0-machine-learning-and-ai` · PR #2 ·
+nine heads · **ALL-GREEN on `c5f6c42`** (2026-08-26).
+Full playbook: `dynamo-machine-learning-and-ai-model-inference-and-prediction-playbook.md`.
+
+**Mold.** `dynamo/cascade-replay` — analyzer tool over a read-only window
+directory, ported from the SQL-querying mold. The agent writes
+`/app/cascade_replay.py <window_dir>`, replaying a batch-inference gateway's lost
+billing job out of `window.json` + ten TSVs into seven files.
+`CASCADE_CHARTER.md` states all 17 sections.
+
+**Measured.** pass@2 pass; **pass@5 1 solved / 4 good valid / 0 timeouts /
+avg@5 = 0.200 — "Difficulty OK"**. Cosine 0.722 / 0.859 / 0.801 (thr 0.9). Eval
+30/30 + 1 N/A. QC 37 checks clean, empty fix list. deep_review zero blocking.
+Duplicate UNIQUE (closest lexical 0.107).
+
+**The finding that matters.** Four stated-but-degenerate subsystems (dated
+rollouts, a budget walk with pass-over, dated load carriage, and serving slots
+that shut a stage mid-week and change the graph under the admission walk) left
+pass@5 at **4 solved / avg 0.800 — twice**. So did un-narrating the traps,
+rewriting the charter semantically, and adding two more tree-degenerate graded
+quantities (`exposure`, `sever`), both blind on the shipped pool and wrong on
+22/22 held-out. None of them appears in any fail analysis.
+
+What broke the ceiling was moving a constant out of the configuration and into
+the evidence. The deferral shares are written nowhere; `probes.tsv` holds
+historic load-test runs (a known volume pushed into the entry stage with some
+stages out, counting what arrived where), and what arrived at a stage is what
+its live feeders passed it. **The shipped pool is a tree, so every stage has one
+feeder, every share is one division, and the pool kept exactly one run (13
+rows); sister pools have up to four feeders and keep 11–22 runs, where the
+shares only come out of an exact-rational solve across several.** "Divide by the
+first run" is byte-identical on the shipped pool and wrong on 22 of 22 others.
+
+**What the four valid fails were** (stratified, no shared cause): skipping probe
+equations instead of giving absent feeders a 0 coefficient (the recovery crux —
+*"On Brayling no equation is ever skipped… on rejoining cascades skipping them
+makes the system underdetermined"*); share propagation as a tree walk plus a set
+mutated while iterated; DFS path enumeration for shares (exponential, 300 s
+verifier timeout) plus `carriage.tsv` in file order; and a generator stored and
+re-iterated, masked because the shipped pool's `drains.tsv` is empty.
+
+**Volume ceiling.** Recovery pushed the deliverable past pass@2's hard 3600 s
+override (`[agent].timeout_sec = 5400` is ignored there). Two heads died on the
+clock — one cut off on its 45th call with all seven files already correct.
+Cutting ten bare counters was not enough. What worked: ship
+`/app/data/cascade_io.py`, read-only plumbing that reads the ten tables and
+writes the six and spells quantities per §13, carrying no rule and no
+accounting, pinned by digest with a graded test that it still parses the shipped
+window. pass@2 cleared at once and pass@5 landed with zero timeouts. **Hand over
+the I/O, never the traps.**
+
+**Two gate lessons.** (1) AVA `sound_verifier`: `-s -E` still leaves the image's
+site-packages importable, so "standard library only" was unenforced — use
+`-I -S`. (2) AVA `no_false_rejection`: an early-write nudge saying a partial
+answer "is worth more to us" reads as a promise of partial credit against an
+exact verifier; keep the nudge, drop the value claim. (3) QC B5 vs pass@2 is
+resolved by stating what a quantity **means**, not how to compute it — still
+uniquely determined, no longer transcription.
